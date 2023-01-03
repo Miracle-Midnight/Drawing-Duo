@@ -29,7 +29,7 @@ export class User extends BaseEntity {
   @Column({ default: false })
   ready: boolean;
 
-  @OneToOne(() => Profile)
+  @OneToOne(() => Profile, (profile) => profile.user)
   @JoinColumn()
   profile: Profile;
 
