@@ -9,10 +9,24 @@ import { ResultController } from './result/result.controller';
 import { ResultService } from './result/result.service';
 import { ResultModule } from './result/result.module';
 
+import { TypeOrmModule } from '@nestjs/typeorm';
+// import { ConfigModule } from '@nestjs/config';
+// import { typeOrmConfig } from './config/typeorm.config';
+import { dataSourceOptions } from 'db/data-source';
+
 @Module({
-  imports: [UserModule, RoomModule, LobbyModule, GameModule, ResultModule],
+  imports: [
+    UserModule,
+    RoomModule,
+    LobbyModule,
+    GameModule,
+    ResultModule,
+    // ConfigModule.forRoot({
+    //   isGlobal: true,
+    // }),
+    TypeOrmModule.forRoot(dataSourceOptions),
+  ],
   controllers: [AppController, ResultController],
   providers: [ResultService],
-
 })
 export class AppModule {}
