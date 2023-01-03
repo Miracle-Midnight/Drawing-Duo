@@ -1,8 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-
-import { NestExpressApplication } from '@nestjs/platform-express';
 import { resolve } from 'path';
 import * as path from 'path';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -11,7 +10,7 @@ async function bootstrap() {
   app.setBaseViewsDir(resolve('./src/views'));
   app.setViewEngine('hbs');
 
-  app.useStaticAssets(path.join(__dirname, './common', 'uploads'), { //path: Drawing-Duo\backend\src\common\uploads
+  app.useStaticAssets(path.join(__dirname, './common', 'uploads'), {
     prefix: '/media',
   });
 

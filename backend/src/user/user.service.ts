@@ -18,7 +18,7 @@ export class UserService {
     //   userid: userDto.userid,
     //   password: userDto.password,
     // });
-    console.log(userDto);
+    // console.log(user);
     res.redirect('/lobby');
   }
 }
