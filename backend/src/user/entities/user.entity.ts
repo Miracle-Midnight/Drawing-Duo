@@ -3,7 +3,6 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  Unique,
   OneToOne,
   ManyToOne,
   JoinColumn,
@@ -31,8 +30,8 @@ export class User extends BaseEntity {
   @JoinColumn()
   profile: Profile;
 
-  @ManyToOne(() => Room)
-  rooms: Room[];
+  @ManyToOne(() => Room, (room) => room.users)
+  room: Room;
 
   @ManyToOne(() => Image)
   images: Image[];
