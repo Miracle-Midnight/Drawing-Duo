@@ -13,6 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 // import { ConfigModule } from '@nestjs/config';
 // import { typeOrmConfig } from './config/typeorm.config';
 import { dataSourceOptions } from 'db/data-source';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { dataSourceOptions } from 'db/data-source';
     //   isGlobal: true,
     // }),
     TypeOrmModule.forRoot(dataSourceOptions),
+    AuthModule,
   ],
   controllers: [AppController, ResultController],
   providers: [ResultService],

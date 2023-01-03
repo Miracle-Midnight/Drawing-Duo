@@ -13,15 +13,25 @@ import { Response } from 'express';
 import { UserService } from './user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/common/utils/multer.options';
+import { AuthService } from 'src/auth/auth.service';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
+
+  @Post('signup')
+  signUp(@Body() userDto: UserDto) {
+    return this.userService.signUp(userDto);
+  }
 
   @Post('login')
-  GetUserId(@Body() userDto: UserDto, @Res() res: Response) {
+  GetUserId(@Body() userDto: UserDto) {
     // return 'GetUserId';
-    return this.userService.GetUserId(userDto, res);
+    // return this.userService.GetUserId(userDto, res);
+    return this.authService.jwtLogIn(userDto);
   }
 
   @Get('logout')
