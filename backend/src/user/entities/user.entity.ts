@@ -27,6 +27,9 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
+  @Column({ default: false })
+  ready: boolean;
+
   @OneToOne(() => Profile)
   @JoinColumn()
   profile: Profile;

@@ -14,11 +14,11 @@ export class UserService {
 
   async GetUserId(@Body() userDto: UserDto, @Res() res: Response) {
     console.log(userDto.userid, userDto.password);
-    const user = this.userRepository.findOneBy({
-      userid: userDto.userid,
-      password: userDto.password,
-    });
-    console.log(user);
+    // const user = this.userRepository.findOneBy({
+    //   userid: userDto.userid,
+    //   password: userDto.password,
+    // });
+    console.log(userDto);
     res.redirect('/lobby');
   }
 }
