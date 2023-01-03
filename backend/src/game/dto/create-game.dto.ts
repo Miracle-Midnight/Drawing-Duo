@@ -1,1 +1,3 @@
-export class CreateGameDto {}
+export class CreateGameDto {
+  name: string;
+}

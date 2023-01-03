@@ -1,3 +1,4 @@
+import { Game } from 'src/game/entities/game.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
   BaseEntity,
@@ -7,6 +8,8 @@ import {
   OneToMany,
   ManyToMany,
   JoinTable,
+  JoinColumn,
+  OneToOne,
 } from 'typeorm';
 
 import { Image } from './image.entity';
@@ -27,6 +30,10 @@ export class Room extends BaseEntity {
 
   @OneToMany(() => User, (user) => user.room)
   users: User[];
+
+  @OneToOne(() => Game, (game) => game.room)
+  @JoinColumn()
+  game: Game;
 
   @ManyToMany(() => Image)
   @JoinTable()
