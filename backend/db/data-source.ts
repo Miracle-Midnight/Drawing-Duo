@@ -9,6 +9,7 @@ export const dataSourceOptions: DataSourceOptions = {
   database: 'drawingduo',
   entities: ['dist/src/*/entities/*.entity.{js,ts}'],
   migrations: ['dist/db/migrations/*.js'],
+  synchronize: true,
 };
 
 const dataSource = new DataSource(dataSourceOptions);
