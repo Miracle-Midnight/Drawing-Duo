@@ -17,7 +17,7 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: false })
   type: boolean;
 
   @Column()
@@ -29,7 +29,7 @@ export class User extends BaseEntity {
   @Column({ default: false })
   ready: boolean;
 
-  @OneToOne(() => Profile)
+  @OneToOne(() => Profile, (profile) => profile.user)
   @JoinColumn()
   profile: Profile;
 
