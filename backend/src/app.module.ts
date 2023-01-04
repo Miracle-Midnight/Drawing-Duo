@@ -13,6 +13,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 // import { ConfigModule } from '@nestjs/config';
 // import { typeOrmConfig } from './config/typeorm.config';
 import { dataSourceOptions } from 'db/data-source';
+import { DrawGatewayModule } from './gateway/draw.gateway/draw.gateway.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -25,6 +28,11 @@ import { dataSourceOptions } from 'db/data-source';
     //   isGlobal: true,
     // }),
     TypeOrmModule.forRoot(dataSourceOptions),
+    DrawGatewayModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+      exclude: ['api/*'],
+    }),
   ],
   controllers: [AppController, ResultController],
   providers: [ResultService],

@@ -14,7 +14,7 @@ import { UserService } from './user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/common/utils/multer.options';
 
-@Controller('users')
+@Controller('api/users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
