@@ -1,10 +1,14 @@
-import { Body, Injectable, Res } from '@nestjs/common';
+import { Body, Injectable, Res, UnauthorizedException } from '@nestjs/common';
 import { UserDto } from './dto/user.dto';
 import { Response } from 'express';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
+import * as bcrypt from 'bcrypt';
+
 import { Profile } from './entities/profile.entity';
+
 
 @Injectable()
 export class UserService {
@@ -20,6 +24,25 @@ export class UserService {
 
     res.redirect('/lobby');
   }
+
+
+  async signUp(@Body() userDto: UserDto) {
+    console.log(userDto);
+    const { userid, password } = userDto;
+    const isUserExist = await this.userRepository.findOne({
+      where: { userid: userDto.userid },
+    });
+    console.log(isUserExist);
+    if (isUserExist !== undefined) {
+      const newuser = await this.userRepository.create();
+      const hashedPassword = await bcrypt.hash(password, 10);
+      newuser.userid = userid;
+      newuser.password = hashedPassword;
+      const user = await this.userRepository.save(newuser);
+      console.log(user);
+      return user;
+    }
+    throw new UnauthorizedException('이미 존재하는 아이디입니다.');
 
   // Make a new user(테스트용)
   async createUser(body) {
@@ -50,5 +73,6 @@ export class UserService {
     });
     console.log(profile);
     return profile;
+
   }
 }
