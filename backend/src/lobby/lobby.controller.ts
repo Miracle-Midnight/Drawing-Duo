@@ -1,6 +1,6 @@
 import { Controller, Get, Render } from '@nestjs/common';
 
-@Controller('lobby')
+@Controller('api/lobby')
 export class LobbyController {
   @Get()
   async GetLobby(): Promise<void> {
