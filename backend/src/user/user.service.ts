@@ -14,7 +14,6 @@ export class UserService {
   ) {}
 
   async GetUserId(@Body() userDto: UserDto, @Res() res: Response) {
-    console.log(userDto.userid, userDto.password);
     // const user = this.userRepository.findOneBy({
     //   userid: userDto.userid,
     //   password: userDto.password,
@@ -24,19 +23,18 @@ export class UserService {
   }
 
   async signUp(@Body() userDto: UserDto) {
-    console.log(userDto);
     const { userid, password } = userDto;
     const isUserExist = await this.userRepository.findOne({
       where: { userid: userDto.userid },
     });
-    console.log(isUserExist);
+
     if (isUserExist !== undefined) {
       const newuser = await this.userRepository.create();
       const hashedPassword = await bcrypt.hash(password, 10);
       newuser.userid = userid;
       newuser.password = hashedPassword;
       const user = await this.userRepository.save(newuser);
-      console.log(user);
+
       return user;
     }
     throw new UnauthorizedException('이미 존재하는 아이디입니다.');
