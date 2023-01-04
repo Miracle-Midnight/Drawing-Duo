@@ -24,7 +24,7 @@ export class LobbyService {
       relations: ['users'],
     });
     if (checkUser.users.length >= 4) {
-      throw new UnauthorizedException('방이 꽉 찼습니다.');
+      throw new Error('방이 꽉 찼습니다.');
     }
 
     // user에 room 추가(user에 roomid 추가하면 자동으로 romm의 users에 user 추가됨)

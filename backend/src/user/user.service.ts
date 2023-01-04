@@ -28,15 +28,16 @@ export class UserService {
       where: { userid: userDto.userid },
     });
 
-    if (isUserExist !== undefined) {
-      const newuser = await this.userRepository.create();
-      const hashedPassword = await bcrypt.hash(password, 10);
-      newuser.userid = userid;
-      newuser.password = hashedPassword;
-      const user = await this.userRepository.save(newuser);
-
-      return user;
+    if (isUserExist != undefined) {
+      throw new Error('이미 존재하는 아이디입니다.');
     }
-    throw new UnauthorizedException('이미 존재하는 아이디입니다.');
+
+    const newuser = await this.userRepository.create();
+    const hashedPassword = await bcrypt.hash(password, 10);
+    newuser.userid = userid;
+    newuser.password = hashedPassword;
+    const user = await this.userRepository.save(newuser);
+
+    return user;
   }
 }
