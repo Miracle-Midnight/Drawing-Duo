@@ -12,6 +12,7 @@ export class LobbyController {
 
   @Post(':id')
   inRoom(@Body() userid, @Param('id') roomid: string) {
+    console.log(userid);
     return this.lobbyService.inRoom(userid, +roomid);
   }
 }

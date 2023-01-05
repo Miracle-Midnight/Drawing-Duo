@@ -17,6 +17,7 @@ export class LobbyService {
 
   async inRoom(@Body() uid, roomid: number) {
     const { userid } = uid;
+    console.log(typeof userid);
 
     // 룸에 몇명의 user가 있는지 확인하고 4명이 넘으면 에러
     const checkUser = await this.roomRepository.findOne({
@@ -36,6 +37,6 @@ export class LobbyService {
     userinfo.room = await this.roomRepository.findOneBy({ id: roomid });
     await this.userRepository.save(userinfo);
 
-    return userinfo.userid;
+    return { userid: userinfo.userid };
   }
 }

@@ -36,6 +36,6 @@ export class User extends BaseEntity {
   @ManyToOne(() => Room, (room) => room.users)
   room: Room;
 
-  @ManyToOne(() => Image)
-  images: Image[];
+  @OneToOne(() => Image)
+  image: Image;
 }

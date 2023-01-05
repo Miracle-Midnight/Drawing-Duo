@@ -40,4 +40,17 @@ export class UserService {
 
     return user;
   }
+
+  async uploadImg(@Body() UserDto, file: Express.Multer.File) {
+    const { userid } = UserDto;
+    const path = `http://localhost:3000/media/profile/${file.filename}`;
+    const user = await this.userRepository.findOne({
+      where: { id: userid },
+      relations: ['image'],
+    });
+    user.image.image = path;
+    user.image.type = false;
+    await this.userRepository.save(user);
+    return user;
+  }
 }

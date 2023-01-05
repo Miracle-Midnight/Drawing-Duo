@@ -37,12 +37,12 @@ export class UserController {
   Logout(@Res() res: Response) {
     res.redirect('/');
   }
-
+  // form-data와 json 같이 받는 작업
   @UseInterceptors(FileInterceptor('image', multerOptions('profile')))
   @Post('upload')
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
+  uploadFile(@UploadedFile() file: Express.Multer.File, @Body() userDto) {
     console.log(file);
     return { image: `http://localhost:3000/media/profile/${file.filename}` };
-    // return this.userService.uploadImg(userid, file);
+    // return this.userService.uploadImg(userDto, file);
   }
 }
