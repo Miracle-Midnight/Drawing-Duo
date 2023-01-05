@@ -5,12 +5,15 @@ import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Image } from 'src/room/entities/image.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(Image)
+    private imageRepository: Repository<Image>,
   ) {}
 
   async GetUserId(@Body() userDto: UserDto, @Res() res: Response) {
@@ -44,13 +47,18 @@ export class UserService {
   async uploadImg(@Body() UserDto, file: Express.Multer.File) {
     const { userid } = UserDto;
     const path = `http://localhost:3000/media/profile/${file.filename}`;
-    const user = await this.userRepository.findOne({
-      where: { id: userid },
-      relations: ['image'],
+    const newImage = await this.imageRepository.create({
+      type: false,
+      image: path,
     });
-    user.image.image = path;
-    user.image.type = false;
-    await this.userRepository.save(user);
-    return user;
+    await this.imageRepository.save(newImage);
+    // const user = await this.userRepository.findOne({
+    //   where: { id: userid },
+    //   relations: ['image'],
+    // });
+    // user.image.image = path;
+    // user.image.type = false;
+    // await this.userRepository.save(user);
+    return newImage;
   }
 }
