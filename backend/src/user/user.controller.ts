@@ -22,9 +22,11 @@ export class UserController {
     private readonly authService: AuthService,
   ) {}
 
+  @UseInterceptors(FileInterceptor('image', multerOptions('profile')))
   @Post('signup')
-  signUp(@Body() userDto: UserDto) {
-    return this.userService.signUp(userDto);
+  signUp(@UploadedFile() file: Express.Multer.File, @Body() userDto: UserDto) {
+    console.log(userDto);
+    return this.userService.signUp(userDto, file);
   }
 
   @Post('login')
@@ -34,10 +36,10 @@ export class UserController {
     return this.authService.jwtLogIn(userDto);
   }
 
-  @Get('logout')
-  Logout(@Res() res: Response) {
-    res.redirect('/');
-  }
+  // @Get('logout')
+  // Logout(@Res() res: Response) {
+  //   res.redirect('/');
+  // }
   // form-data와 json 같이 받는 작업
   @UseInterceptors(FileInterceptor('image', multerOptions('profile')))
   @Post('upload')

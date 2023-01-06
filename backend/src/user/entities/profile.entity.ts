@@ -1,7 +1,9 @@
+import { Image } from 'src/room/entities/image.entity';
 import {
   BaseEntity,
   Column,
   Entity,
+  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -26,4 +28,8 @@ export class Profile extends BaseEntity {
 
   @OneToOne(() => User, (user) => user.profile)
   user: User;
+
+  @OneToOne(() => Image)
+  @JoinColumn()
+  image: Image;
 }
