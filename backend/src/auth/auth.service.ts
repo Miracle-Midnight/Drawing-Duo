@@ -24,7 +24,7 @@ export class AuthService {
     });
 
     if (isUserExist === undefined) {
-      throw new UnauthorizedException('이메일과 비밀번호를 확인해주세요.');
+      throw new Error('이메일과 비밀번호를 확인해주세요.');
     }
 
     //* password가 일치하는지
@@ -34,7 +34,7 @@ export class AuthService {
     );
 
     if (!isPasswordValidated) {
-      throw new UnauthorizedException('이메일과 비밀번호를 확인해주세요.');
+      throw new Error('이메일과 비밀번호를 확인해주세요.');
     }
 
     const payload = { userid: isUserExist.userid, sub: isUserExist.id };
@@ -44,15 +44,5 @@ export class AuthService {
 
       token: this.JwtService.sign(payload),
     };
-    //   constructor(private readonly usersService: UsersService) {}
-
-    //   async validateUser(username: string, pass: string): Promise<any> {
-    //     const user = await this.usersService.findOne(username);
-    //     if (user && user.password === pass) {
-    //       const { password, ...result } = user;
-    //       return result;
-    //     }
-    //     return null;
-    //   }
   }
 }

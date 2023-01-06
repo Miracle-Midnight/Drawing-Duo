@@ -9,6 +9,4 @@ export class UserDto {
   type: boolean;
   ready: boolean;
   profile: Profile;
-  room: Room;
-  images: Image[];
 }
