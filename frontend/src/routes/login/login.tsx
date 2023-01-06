@@ -4,7 +4,7 @@ import "./login.css";
 function Login() {
   return (
     <Container className="center">
-      <div className="flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
+      <div className="flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
         <div>
           <img
             src="https://github.com/Miracle-Midnight/Drawing-Duo/blob/refactor/ksd/makeLayout/frontend/src/assets/drawing-duo-logo.png?raw=true"
@@ -56,16 +56,7 @@ function Login() {
                 />
               </div>
             </div>
-            <div className="flex items-center mb-6 -mt-4">
-              <div className="flex ml-auto">
-                <a
-                  href="#"
-                  className="inline-flex text-xs font-thin text-gray-500 sm:text-sm dark:text-gray-100 hover:text-gray-700 dark:hover:text-white"
-                >
-                  Forgot Your Password?
-                </a>
-              </div>
-            </div>
+
             <div className="flex w-full">
               <button
                 type="submit"
@@ -88,9 +79,9 @@ function Login() {
           <a
             href="#"
             target="_blank"
-            className="inline-flex items-center text-xs font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-100 dark:hover:text-white"
+            className="inline-flex items-center text-xs font-thin text-center text-gray-500 hover:text-gray-700 "
           >
-            <span className="ml-2">You don&#x27;t have an account?</span>
+            <span className="ml-2">Forgot Your Password?</span>
           </a>
         </div>
       </div>
