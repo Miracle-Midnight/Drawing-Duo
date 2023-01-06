@@ -1,7 +1,7 @@
 import { Button, Container, Row, Col, InputGroup, Form } from "react-bootstrap"; // 꼭 import를 해와야한다
 import "./register.css";
 
-function Login() {
+function Register() {
   return (
     <Container className="center">
       <div className="flex flex-col max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
@@ -88,4 +88,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
