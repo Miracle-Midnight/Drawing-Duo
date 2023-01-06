@@ -1,9 +1,8 @@
 import { Get, Controller, Render } from '@nestjs/common';
 
-@Controller()
+@Controller('api')
 export class AppController {
   @Get()
-  @Render('index')
   root() {
     return {
       data: {

@@ -15,6 +15,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from 'db/data-source';
 import { ChatsModule } from './chats/chats.module';
 
+import { DrawGatewayModule } from './gateway/draw.gateway/draw.gateway.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
+import { AuthModule } from './auth/auth.module';
+
 @Module({
   imports: [
     UserModule,
@@ -27,6 +33,13 @@ import { ChatsModule } from './chats/chats.module';
     // }),
     TypeOrmModule.forRoot(dataSourceOptions),
     ChatsModule,
+    DrawGatewayModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+      exclude: ['api/*'],
+    }),
+
+    AuthModule,
   ],
   controllers: [AppController, ResultController],
   providers: [ResultService],

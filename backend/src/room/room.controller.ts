@@ -3,7 +3,7 @@ import { Body, Delete, Post } from '@nestjs/common/decorators';
 import { RoomService } from './room.service';
 import { CreateRoomDto } from './dto/create-room.dto';
 
-@Controller('room')
+@Controller('api/room')
 export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
