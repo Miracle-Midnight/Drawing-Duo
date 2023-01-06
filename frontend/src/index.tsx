@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./routes/login/login";
 import Lobby from "./routes/lobby/lobby";
 import Register from "./routes/register/register";
+import GameLobby from "./routes/gameLobby/gameLobby";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -18,8 +19,8 @@ root.render(
       <Route path="/" element={<App />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/Lobby" element={<Lobby />} />
-      {/* <Route path="/room" element={<GameLobby />} />
-      <Route path="/room/:id" element={<GameLobby />} /> */}
+      <Route path="/room" element={<GameLobby />} />
+      <Route path="/room/:id" element={<GameLobby />} />
       <Route path="/Register" element={<Register />} />
     </Routes>
   </BrowserRouter>

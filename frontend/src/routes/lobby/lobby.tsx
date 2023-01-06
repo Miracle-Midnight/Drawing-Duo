@@ -52,19 +52,21 @@ function Lobby(props: any) {
       return;
     }
 
-    axios
-      .post("/lobby/" + e.target.id, {
-        userid: usersession,
-        roomid: e.target.id,
-      })
-      .then((res) => {
-        navigate("/room/" + e.target.id);
-        sessionStorage.setItem("roomNumber", res.data.userid);
-      })
-      .catch((err) => {
-        alert("방에 참여할 수 없습니다.");
-        console.log(err);
-      });
+    navigate("/room/" + e.target.id);
+
+    // axios
+    //   .post("/lobby/" + e.target.id, {
+    //     userid: usersession,
+    //     roomid: e.target.id,
+    //   })
+    //   .then((res) => {
+    //     navigate("/room/" + e.target.id);
+    //     sessionStorage.setItem("roomNumber", res.data.userid);
+    //   })
+    //   .catch((err) => {
+    //     alert("방에 참여할 수 없습니다.");
+    //     console.log(err);
+    //   });
   };
 
   const handleCreateRoom = () => {
@@ -176,6 +178,20 @@ function Lobby(props: any) {
                     </Row>
                   </div>
                 ))}
+
+                <div className="roomListCss">
+                  <Row>
+                    <Col sm={1}>1</Col>
+                    <Col sm={7}>방 제목</Col>
+                    <Col sm={1}>뭐요</Col>
+                    <Col sm={1}>ㄱㄱ</Col>
+                    <Col sm={1}>
+                      <Button onClick={handleJoinRoom} type="button">
+                        입장
+                      </Button>
+                    </Col>
+                  </Row>
+                </div>
               </div>
             </Container>
           </Col>
