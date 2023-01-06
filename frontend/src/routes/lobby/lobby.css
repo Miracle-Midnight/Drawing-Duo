@@ -1,123 +1,16 @@
-.logoutLine {
-  color: black;
+.lobby-container {
   display: flex;
-  flex-direction: column;
-}
-
-.logoutButton {
-  margin: 1% 5% 0% 0%;
-  border: none;
-  background-color: #5983b3;
-  color: white;
-}
-
-.logoutButton:hover {
-  background-color: #3a5e86;
-}
-
-.logoutButton:active {
-  background-color: #3a5e86 !important;
-  box-shadow: inset 5px 5px 2px black;
-}
-
-.roomListLine {
-  margin: 0%;
+  justify-content: center;
+  padding-top: 50px;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
-.roomList {
-  background-color: #b3d6ff;
-  margin: 1% 0% 0% 1%;
-  border-radius: 10px;
-  height: 90vh;
-  width: 70vw;
-}
-
-.roomMenuLine {
-  background-color: #5983b3;
-  border-radius: 10px;
-  padding: 0.7% 0% 1% 0%;
-  font-size: 1.3em;
-  color: white;
-  text-align: center;
-}
-
-.roomListScroll {
-  background-color: #98c8ff;
+.room-container {
+  width: 800px;
+  height: 500px;
   overflow: auto;
-  border-radius: 10px;
-  margin-top: 1%;
-  width: 100%;
-  height: 90%;
 }
 
-.roomListScroll::-webkit-scrollbar {
-  width: 20px;
-}
-
-.roomListScroll::-webkit-scrollbar-track {
-  background-color: #f2f1e4;
-  border-radius: 20px;
-  box-shadow: inset 0 0 5px white;
-}
-
-.roomListScroll::-webkit-scrollbar-thumb {
-  background-color: #735a3d;
-  border-radius: 20px;
-  background-clip: padding-box;
-  border: 3px solid transparent;
-}
-
-.profileLine {
-  height: 100vh;
-}
-
-.profile {
-  background-color: #b3d6ff;
-  margin: 2% 0% 0% 1%;
-  border-radius: 10px;
-  height: 70vh;
-  width: 26vw;
-  display: align-items;
-}
-
-.createRoom {
-  background-color: #b3d6ff;
-  margin: 1% 0% 0% 1%;
-  border-radius: 10px;
-  height: 19.5vh;
-  width: 26vw;
-  display: align-items;
-  text-align: center;
-}
-
-.createRoomButton {
-  margin-top: 3%;
-  height: 80%;
-  width: 95%;
-  background-color: #5983b3;
-  border: none;
-  font-size: 4em;
-}
-
-.createRoomButton:hover {
-  background-color: #3a5e86;
-}
-
-.createRoomButton:active {
-  background-color: #3a5e86 !important;
-  box-shadow: inset 5px 5px 2px black;
-}
-
-.roomListCss {
-  padding-top: 0.5%;
-  border: white solid 1px;
-  background-color: #5983b3;
-  border-radius: 10px;
-  width: 99%;
-  height: 8%;
-  font-family: monospace;
-  font-size: 1.5em;
+.room-container ul {
+  padding: 0;
 }
