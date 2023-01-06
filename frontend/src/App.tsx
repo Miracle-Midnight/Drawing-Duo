@@ -8,7 +8,7 @@ import GameLobby from "./routes/gameLobby/gameLobby";
 function App() {
   return (
     <>
-      <Login />
+      <Register />
     </>
   );
 }

@@ -5,6 +5,12 @@ function Register() {
   return (
     <Container className="center">
       <div className="flex flex-col max-w-md px-4 py-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
+        <div>
+          <img
+            src="https://github.com/Miracle-Midnight/Drawing-Duo/blob/refactor/ksd/makeLayout/frontend/src/assets/drawing-duo-logo.png?raw=true"
+            alt="logo"
+          />
+        </div>
         <div className="self-center mb-2 text-xl font-light text-gray-800 sm:text-2xl">
           회원가입
         </div>
