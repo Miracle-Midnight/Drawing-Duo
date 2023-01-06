@@ -1,0 +1,16 @@
+.lobby-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  height: 100vh;
+}
+
+.room-container {
+  width: 800px;
+  height: 500px;
+  overflow: auto;
+}
+
+.room-container ul {
+  padding: 0;
+}
