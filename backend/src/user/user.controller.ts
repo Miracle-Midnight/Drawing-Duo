@@ -49,11 +49,14 @@ export class UserController {
   }
 
   //이미지 두개 이상 받아서 유사도 측정 api
-  // @UseInterceptors(FilesInterceptor('files', multerOptions('similarity')))
-  // @Post('uploads')
-  // Similarity(@UploadedFiles() files: Array<Express.Multer.File>) {
-  //   console.log(files);
-  //   return { image: `http://localhost:3000/media/profile/${file.filename}` };
-  //   // return this.userService.uploadImg(userDto, file);
-  // }
+  @UseInterceptors(FilesInterceptor('image', 2, multerOptions('similarity')))
+  @Post('uploads')
+  Similarity(@UploadedFiles() files: Array<Express.Multer.File>) {
+    console.log(files);
+    return {
+      image1: `http://localhost:3000/media/similarity/${files[0].filename}`,
+      image2: `http://localhost:3000/media/similarity/${files[1].filename}`,
+    };
+    // return this.userService.similarity(files);
+  }
 }

@@ -61,4 +61,28 @@ export class UserService {
     // await this.userRepository.save(user);
     return newImage;
   }
+
+  async similarity(files: Array<Express.Multer.File>) {
+    const path1 = `http://localhost:3000/media/similarity/${files[0].filename}`;
+    const path2 = `http://localhost:3000/media/similarity/${files[1].filename}`;
+
+    const cv = require('opencv.js');
+
+    // Load the images into OpenCV
+    const img1 = await cv.imreadAsync(path1);
+    const img2 = await cv.imreadAsync(path2);
+
+    // Convert the images to grayscale
+    const img1Gray = img1.cvtColor(cv.COLOR_RGBA2GRAY);
+    const img2Gray = img2.cvtColor(cv.COLOR_RGBA2GRAY);
+
+    // Use matchTemplate to measure the similarity between the two images
+    const result = img1Gray.matchTemplate(img2Gray, cv.TM_CCOEFF_NORMED);
+
+    // Calculate the minimum and maximum values in the result image
+    const minMax = result.minMaxLoc();
+
+    // Return the maximum value as the similarity score
+    return minMax.maxVal;
+  }
 }
