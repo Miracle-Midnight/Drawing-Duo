@@ -1,14 +1,13 @@
-import { Controller, Get, Param, Render } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { Body, Post } from '@nestjs/common/decorators';
 import { RoomService } from './room.service';
 import { CreateRoomDto } from './dto/create-room.dto';
 
-@Controller('room')
+@Controller('api/room')
 export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
   @Get(':id')
-  @Render('room')
   findOne(@Param('id') id: string) {
     return this.roomService.findOne(+id);
   }

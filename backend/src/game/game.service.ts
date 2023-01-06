@@ -16,28 +16,37 @@ export class GameService {
     private userRepository: Repository<User>,
   ) {}
 
-  async findOne(id: number) {
+  async userReady(id: number, userId: string) {
     const oldgame = await this.gameRepository.findOne({
       where: { id: id },
       relations: ['room'],
     });
-    return oldgame;
-  }
 
-  async findUser(id: number, userId: string) {
-    const oldgame = await this.gameRepository.findOne({
-      where: { id: id },
-      relations: ['room'],
-    });
-    console.log('DEBUGG');
-    console.log(oldgame.room.id);
-
-    const olduser = await this.roomRepository.findOne({
+    const oldroom = await this.roomRepository.findOne({
       where: { id: oldgame.room.id },
       relations: ['users'],
     });
+    console.log(oldroom);
+    for (let i = 0; i < oldroom.users.length; i++) {
+      if (oldroom.users[i].userid === userId) {
+        if (oldroom.users[i].ready === true) {
+          oldroom.users[i].ready = false;
+          await this.userRepository.save(oldroom.users[i]);
+          return oldroom;
+        }
+        oldroom.users[i].ready = true;
+        await this.userRepository.save(oldroom.users[i]);
+      }
+    }
+    return oldroom;
+  }
 
-    console.log(olduser);
+  // 게임 생성과 동시에 room과 game이 연결됨
+  async createGame(id: number) {
+    const oldgame = await this.gameRepository.create();
+    const oldroom = await this.roomRepository.findOne({ where: { id: id } });
+    oldgame.room = oldroom;
+    await this.gameRepository.save(oldgame);
     return oldgame;
   }
 }

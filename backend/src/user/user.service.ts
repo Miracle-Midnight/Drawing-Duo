@@ -4,8 +4,12 @@ import { Response } from 'express';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 import * as bcrypt from 'bcrypt';
 import { Image } from 'src/room/entities/image.entity';
+
+import { Profile } from './entities/profile.entity';
+
 
 @Injectable()
 export class UserService {
@@ -24,6 +28,7 @@ export class UserService {
     // console.log(user);
     res.redirect('/lobby');
   }
+
 
   async signUp(@Body() userDto: UserDto) {
     const { userid, password } = userDto;
@@ -84,5 +89,6 @@ export class UserService {
 
     // Return the maximum value as the similarity score
     return minMax.maxVal;
+
   }
 }

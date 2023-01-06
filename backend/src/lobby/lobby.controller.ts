@@ -1,11 +1,10 @@
 import { Body, Controller, Get, Param, Post, Render } from '@nestjs/common';
 import { LobbyService } from './lobby.service';
 
-@Controller('lobby')
+@Controller('api/lobby')
 export class LobbyController {
   constructor(private readonly lobbyService: LobbyService) {}
   @Get()
-  @Render('lobby')
   async GetLobby(): Promise<void> {
     return;
   }

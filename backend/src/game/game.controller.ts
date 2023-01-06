@@ -1,17 +1,18 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { GameService } from './game.service';
 
-@Controller('game')
+@Controller('api/game')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.gameService.findOne(+id);
+  @Post(':id/user/:userId')
+  userReady(@Param('id') id: string, @Param('userId') userId: string) {
+    return this.gameService.userReady(+id, userId);
   }
 
-  @Get(':id/user/:userId')
-  findUser(@Param('id') id: string, @Param('userId') userId: string) {
-    return this.gameService.findUser(+id, userId);
+  // 게임 생성과 동시에 room과 game이 연결됨
+  @Post(':id')
+  createGame(@Param('id') id: string) {
+    return this.gameService.createGame(+id);
   }
 }

@@ -15,7 +15,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/common/utils/multer.options';
 import { AuthService } from 'src/auth/auth.service';
 
-@Controller('users')
+@Controller('api/users')
 export class UserController {
   constructor(
     private readonly userService: UserService,
@@ -58,5 +58,24 @@ export class UserController {
       image2: `http://localhost:3000/media/similarity/${files[1].filename}`,
     };
     // return this.userService.similarity(files);
+  }
+
+  // Make a new user(테스트용)
+  //   {
+  //     "userid":"kcw2297",
+  // "password":"1234",
+  // "nickname":"master"
+
+  // }
+  // 위를 postman으로 보내면 생성됩니다
+  @Post('create')
+  createUser(@Body() body) {
+    return this.userService.createUser(body);
+  }
+
+  // Make a new user(테스트용)
+  @Get(':id')
+  getProfile(@Param('id') id: string) {
+    return this.userService.getProfile(+id);
   }
 }
