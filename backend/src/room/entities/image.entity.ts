@@ -3,9 +3,9 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  ManyToMany,
+  // ManyToMany,
 } from 'typeorm';
-import { Room } from './room.entity';
+// import { Room } from './room.entity';
 
 @Entity()
 export class Image extends BaseEntity {
@@ -15,7 +15,7 @@ export class Image extends BaseEntity {
   @Column()
   type: boolean;
 
-  @ManyToMany(() => Room)
+  // @ManyToMany(() => Room)
   @Column()
   image: string;
 }

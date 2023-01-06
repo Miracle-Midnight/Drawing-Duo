@@ -1,10 +1,11 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { LobbyService } from './lobby.service';
 
 @Controller('lobby')
 export class LobbyController {
+  constructor(private readonly lobbyService: LobbyService) {}
   @Get()
-  @Render('lobby')
-  async GetLobby(): Promise<void> {
-    return;
+  getLobby() {
+    return this.lobbyService.getLobby();
   }
 }

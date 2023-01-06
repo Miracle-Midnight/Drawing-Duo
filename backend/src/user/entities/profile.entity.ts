@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { User } from './user.entity';
 
 @Entity()
 export class Profile extends BaseEntity {
@@ -16,4 +23,7 @@ export class Profile extends BaseEntity {
 
   @Column('text')
   introduction: string;
+
+  @OneToOne(() => User, (user) => user.profile)
+  user: User;
 }
