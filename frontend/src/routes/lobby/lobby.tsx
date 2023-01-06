@@ -6,18 +6,18 @@ function Lobby() {
     <Container className="lobby-container flex flex-row">
       <div>
         <div className="container flex flex-col items-center justify-center w-full mx-auto">
-          <div className="w-full px-4 py-5 mb-2 bg-white border rounded-md shadow sm:px-6 ">
-            <h3 className="text-lg font-medium leading-6 text-gray-900 grid grid-rows-3 grid-flow-col gap-4">
-              <div className="row-start row-span-2">방 번호</div>
-              <div className="row-start row-span-2">제목</div>
-              <div className="row-end-3 row-span-2">모드</div>
-              <div className="row-start-1 row-end-4">현재 인원</div>
+          <div className="w-full px-4 pt-5 pb-2 mb-2 bg-white border rounded-md shadow sm:px-6">
+            <h3 className="text-lg font-medium leading-6 text-gray-900 grid grid-rows-3 grid-flow-col gap-3">
+              <div className="row-start row-span-2 text-center">방 번호</div>
+              <div className="row-start row-span-2 text-center">제목</div>
+              <div className="row-end-3 row-span-2 text-center">모드</div>
+              <div className="row-start-1 row-end-4 text-center">현재 인원</div>
             </h3>
           </div>
           <div className="room-container w-full">
             <ul className=" flex flex-col ">
-              <li className="flex flex-row mb-2 border-gray-400">
-                <div className="shadow border select-none cursor-pointer bg-white  rounded-md flex flex-1 items-center p-4">
+              <li className="flex flex-row mb-2 border-gray-400 ">
+                <div className="shadow border select-none bg-white rounded-md flex flex-1 items-center p-4">
                   <div className="flex-1 pl-1 md:mr-16">
                     <div className="font-medium ">Jean Marc</div>
                     <div className="text-sm text-gray-600 ">Developer</div>
@@ -37,6 +37,7 @@ function Lobby() {
                   </button>
                 </div>
               </li>
+
               <li className="flex flex-row mb-2 border-gray-400">
                 <div className="shadow border select-none cursor-pointer bg-white  rounded-md flex flex-1 items-center p-4">
                   <div className="flex-1 pl-1 md:mr-16">
@@ -167,8 +168,8 @@ function Lobby() {
           </div>
         </div>
       </div>
-      <div>
-        <div className="bg-white shadow-lg rounded-2xl w-80 ">
+      <div className="flex flex-col">
+        <div className="bg-white shadow-lg rounded-2xl w-80 h-50">
           <img
             alt="profil"
             src="https://cdn.pixabay.com/photo/2018/01/24/18/05/background-3104413__480.jpg"
@@ -184,28 +185,15 @@ function Lobby() {
             </a>
             <p className="mt-2 text-xl font-medium text-gray-800 ">Charlie</p>
             <p className="mb-4 text-xs text-gray-400">Nantes</p>
-            <p className="p-2 px-4 text-xs text-white bg-pink-500 rounded-full">
+            <button className="p-2 px-4 text-xs text-white bg-pink-500 rounded-full">
               로그아웃
-            </p>
+            </button>
             <div className="w-full p-2 mt-4 rounded-lg">
-              <div className="flex items-center justify-between text-sm text-gray-600 ">
-                <p className="flex flex-col">
-                  Articles
-                  <span className="font-bold text-black ">34</span>
-                </p>
-                <p className="flex flex-col">
-                  Followers
-                  <span className="font-bold text-black ">455</span>
-                </p>
-                <p className="flex flex-col">
-                  Rating
-                  <span className="font-bold text-black ">9.3</span>
-                </p>
-              </div>
+              <div className="flex items-center justify-between text-sm text-gray-600 "></div>
             </div>
           </div>
         </div>
-        <div className="pt-50">
+        <div className="mt-60">
           <button
             className="px-4 w-full py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200 justify-center place-self-center"
             type="submit"
