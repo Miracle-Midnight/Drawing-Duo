@@ -76,7 +76,13 @@ function Register() {
             <div className="flex w-full my-4">
               <button
                 type="submit"
-                className="py-2 px-4  bg-blue-700 hover:bg-blue-500 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                className="py-2 px-4 mr-2  bg-gray-700 hover:bg-gray-500 focus:ring-gray-300 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+              >
+                취소
+              </button>
+              <button
+                type="submit"
+                className="py-2 px-4 ml-2 bg-blue-700 hover:bg-blue-500 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
               >
                 회원 가입
               </button>
