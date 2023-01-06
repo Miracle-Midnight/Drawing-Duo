@@ -15,6 +15,10 @@ export class LobbyService {
     private roomRepository: Repository<Room>,
   ) {}
 
+  async getLobby(): Promise<Room[]> {
+    return this.roomRepository.find();
+  }
+
   async inRoom(@Body() uid, roomid: number) {
     const { userid } = uid;
     console.log(typeof userid);

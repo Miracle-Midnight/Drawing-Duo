@@ -5,8 +5,8 @@ import { LobbyService } from './lobby.service';
 export class LobbyController {
   constructor(private readonly lobbyService: LobbyService) {}
   @Get()
-  async GetLobby(): Promise<void> {
-    return;
+  getLobby() {
+    return this.lobbyService.getLobby();
   }
 
   @Post(':id')

@@ -4,6 +4,10 @@ import { Get, Controller, Render } from '@nestjs/common';
 export class AppController {
   @Get()
   root() {
-    return { message: 'Hello world!' };
+    return {
+      data: {
+        title: 'Chattings',
+      },
+    };
   }
 }

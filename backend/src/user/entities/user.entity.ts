@@ -23,6 +23,9 @@ export class User extends BaseEntity {
   @Column()
   userid: string;
 
+  @Column({ nullable: true })
+  socketid: string;
+
   @Column()
   password: string;
 
@@ -33,7 +36,7 @@ export class User extends BaseEntity {
   @JoinColumn()
   profile: Profile;
 
-  @ManyToOne(() => Room, (room) => room.users)
+  @ManyToOne(() => Room, (room) => room.users, { onDelete: 'SET NULL' })
   room: Room;
 
   @OneToOne(() => Image)
