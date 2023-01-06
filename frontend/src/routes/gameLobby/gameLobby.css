@@ -9,5 +9,10 @@
 }
 .chat {
   width: 400px;
-  
+}
+.chat-container {
+  height: 500px;
+  overflow: auto;
+  padding-left: 10px;
+  padding-right: 10px;
 }
