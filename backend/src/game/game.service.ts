@@ -27,12 +27,21 @@ export class GameService {
       relations: ['users'],
     });
     console.log(oldroom);
+    let endGame = 0;
+
     for (let i = 0; i < oldroom.users.length; i++) {
+      if (oldroom.users[i].ready === true) {
+        endGame++;
+      }
       if (oldroom.users[i].userid === userId) {
         if (oldroom.users[i].ready === true) {
           oldroom.users[i].ready = false;
           await this.userRepository.save(oldroom.users[i]);
           return oldroom;
+        }
+        // 만약 기존의 ready 한 유저가 3명이고 현재 유저가 ready를 true로 바꾸면 게임끝.
+        if (endGame == 3) {
+          throw new Error('게임이 끝났습니다.');
         }
         oldroom.users[i].ready = true;
         await this.userRepository.save(oldroom.users[i]);
