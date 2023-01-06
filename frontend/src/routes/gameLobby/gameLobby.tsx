@@ -6,7 +6,7 @@ function Login() {
   return (
     <div className="center">
       <Container className="flex">
-        <div>
+        <div className="pr-5">
           <Canvas></Canvas>
           <div className="flex w-full justify-between pt-3">
             <div className="shadow rounded-2xl bg-white  p-4">
@@ -53,7 +53,7 @@ function Login() {
             </div>
           </div>
         </div>
-        <div>
+        <div className="pl-5">
           <Canvas></Canvas>
           <div className="flex w-full justify-between pt-3">
             <div className="shadow rounded-2xl bg-white  p-4">
