@@ -1,18 +1,13 @@
 import { Button, Container, Row, Col, InputGroup, Form } from "react-bootstrap"; // 꼭 import를 해와야한다
-import "./gameLobby.css";
+import "./inGame.css";
 import Canvas from "../../components/canvas/canvas";
 
-function Login() {
-  const canvasSize = {
-    width: "400px",
-    height: "90%",
-  } as React.CSSProperties;
-
+function InGame() {
   return (
     <div className="center">
       <Container className="flex">
         <div className="pr-5">
-          <Canvas style={canvasSize}></Canvas>
+          <Canvas></Canvas>
           <div className="flex w-full justify-between pt-3">
             <div className="shadow rounded-2xl bg-white  p-4">
               <div className="flex-row gap-4 flex justify-center items-center">
@@ -235,4 +230,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default InGame;
