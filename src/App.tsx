@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 
 import * as Y from "yjs";
 import { getStroke } from "perfect-freehand";
 import { getSvgPathFromStroke } from "./utils/drawing/drawing.utils";
+import { DrawLine } from "./components/drawing/drawing-component";
 
 const ydoc = new Y.Doc();
 const ystrokes = ydoc.getArray("stroke");
@@ -19,23 +20,12 @@ const newStorke = new Y.Array();
 newStorke.push(coords);
 ystrokes.push([newStorke]);
 
-// console.log(ystrokes.toJSON());
-// console.log(newStorke.toJSON());
-const stroke = getStroke(coords);
-// console.log(stroke);
-
-// 강의 밑에 함수는 getSvgPathFromStroke 정의와 svgPath를 만든 후 svg에 추가하는 부분이다.
-
-console.log(getSvgPathFromStroke(stroke));
-
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <p>Hi!</p>
-        <svg width="400" height="210">
-          <path d={getSvgPathFromStroke(stroke)} />
-        </svg>
+        <DrawLine ystrokes={ystrokes} />
       </header>
     </div>
   );

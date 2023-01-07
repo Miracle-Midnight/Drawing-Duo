@@ -13,3 +13,5 @@ export const getSvgPathFromStroke = (stroke) => {
   d.push("Z");
   return d.join(" ");
 };
+
+export default getSvgPathFromStroke;
