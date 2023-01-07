@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post, Render } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { EnterRoomDto } from './dto/enter-room.dto';
 import { LobbyService } from './lobby.service';
 
 @Controller('api/lobby')
@@ -9,9 +10,13 @@ export class LobbyController {
     return this.lobbyService.getLobby();
   }
 
-  @Post(':id')
-  inRoom(@Body() userid, @Param('id') roomid: string) {
-    console.log(userid);
-    return this.lobbyService.inRoom(userid, +roomid);
+  @Post('in')
+  inRoom(@Body() enterRoomDto: EnterRoomDto) {
+    return this.lobbyService.inRoom(enterRoomDto);
+  }
+
+  @Post('out')
+  outRoom(@Body() enterRoomDto: EnterRoomDto) {
+    return this.lobbyService.outRoom(enterRoomDto);
   }
 }

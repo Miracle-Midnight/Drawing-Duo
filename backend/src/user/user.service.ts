@@ -10,7 +10,6 @@ import { Image } from 'src/room/entities/image.entity';
 
 import { Profile } from './entities/profile.entity';
 
-
 @Injectable()
 export class UserService {
   constructor(
@@ -26,9 +25,8 @@ export class UserService {
     //   password: userDto.password,
     // });
     // console.log(user);
-    res.redirect('/lobby');
+    // res.redirect('/lobby');
   }
-
 
   async signUp(@Body() userDto: UserDto) {
     const { userid, password } = userDto;
@@ -89,6 +87,5 @@ export class UserService {
 
     // Return the maximum value as the similarity score
     return minMax.maxVal;
-
   }
 }

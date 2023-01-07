@@ -36,7 +36,7 @@ export class UserController {
 
   @Get('logout')
   Logout(@Res() res: Response) {
-    res.redirect('/');
+    // res.redirect('/');
   }
   // form-data와 json 같이 받는 작업
   @UseInterceptors(FileInterceptor('image', multerOptions('profile')))

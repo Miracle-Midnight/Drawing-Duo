@@ -20,6 +20,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
 import { AuthModule } from './auth/auth.module';
+import { GamelobbyModule } from './gamelobby/gamelobby.module';
 
 @Module({
   imports: [
@@ -40,6 +41,8 @@ import { AuthModule } from './auth/auth.module';
     }),
 
     AuthModule,
+
+    GamelobbyModule,
   ],
   controllers: [AppController, ResultController],
   providers: [ResultService],
