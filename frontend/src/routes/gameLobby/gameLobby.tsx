@@ -4,7 +4,7 @@ import Canvas from "../../components/canvas/canvas";
 
 function Login() {
   const canvasSize = {
-    width: "400px",
+    width: "25rem",
     height: "90%",
   } as React.CSSProperties;
 

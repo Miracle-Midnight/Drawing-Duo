@@ -10,8 +10,8 @@ ul {
 }
 
 .chat-container {
-    height: 200px;
-    overflow: auto;
-    padding-left: 10px;
-    padding-right: 10px;
+  height: 12.5rem;
+  overflow: auto;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
 }

@@ -8,11 +8,11 @@
   display: flex;
 }
 .chat {
-  width: 400px;
+  width: 25rem;
 }
 .chat-container {
-  height: 500px;
+  height: 31.25rem;
   overflow: auto;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
 }

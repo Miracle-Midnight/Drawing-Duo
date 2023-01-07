@@ -5,7 +5,7 @@ import Canvas from "../../components/canvas/canvas";
 function Result() {
   return (
     <Container className="center">
-      <div className="flex items-center justify-center w-80 mr-20">
+      <div className="flex items-center justify-center  mr-20">
         <div className="w-full p-4">
           <div className="flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl card">
             <div className="prod-title">
@@ -24,7 +24,7 @@ function Result() {
       </div>
       <div className="w-full">
         <div className="flex flex-row">
-          <div className="shadow p-3 rounded-md mr-3">
+          <div className="shadow p-3 rounded-md mr-3 items-center justify-center">
             <div className="flex items-center justify-center w-80">
               <div className="w-full p-4">
                 <div className="flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl card">
