@@ -31,7 +31,7 @@ export class Room extends BaseEntity {
   @OneToMany(() => User, (user) => user.room)
   users: User[];
 
-  @OneToOne(() => Game, (game) => game.room)
+  @OneToOne(() => Game, (game) => game.room, { onDelete: 'CASCADE' })
   @JoinColumn()
   game: Game;
 

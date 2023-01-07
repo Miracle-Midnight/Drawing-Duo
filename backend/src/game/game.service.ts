@@ -55,7 +55,12 @@ export class GameService {
     const oldgame = await this.gameRepository.create();
     const oldroom = await this.roomRepository.findOne({ where: { id: id } });
     oldgame.room = oldroom;
-    await this.gameRepository.save(oldgame);
-    return oldgame;
+    const result = await this.gameRepository.save(oldgame);
+    return { gameid: result.id };
+  }
+
+  async deleteGame(id: number) {
+    const game = await this.gameRepository.findOne({ where: { id: id } });
+    return this.gameRepository.remove(game);
   }
 }
