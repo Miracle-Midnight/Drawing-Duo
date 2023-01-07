@@ -213,7 +213,7 @@ function Lobby() {
                   <span className="text-red-500 required-dot">*</span>
                 </div>
 
-                <div className="flex w-full my-1">
+                {/* <div className="flex w-full my-1">
                   <button
                     type="submit"
                     className="py-2 px-4 ml-2 border border-gray-300 bg-white hover:bg-purple-700 focus:ring-purple-700 focus:bg-purple-700 focus:ring-offset-purple-200 text-black w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
@@ -226,13 +226,78 @@ function Lobby() {
                   >
                     랜덤 모드
                   </button>
+                </div> */}
+                <div className="flex w-full my-1">
+                  <div className="flex items-center pl-4 border shadow-md border-gray-200 rounded w-full mr-2">
+                    <input
+                      id="bordered-radio-1"
+                      type="radio"
+                      value=""
+                      name="bordered-radio"
+                      className="w-4 h-4 text-purple-600 accent-purple-500 bg-gray-100 border-gray-300  focus:ring-2"
+                    />
+                    <label
+                      htmlFor="bordered-radio-1"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 "
+                    >
+                      랜덤 모드
+                    </label>
+                  </div>
+                  <div className="flex items-center pl-4 border shadow-md border-gray-200 rounded w-full ml-2">
+                    <input
+                      checked
+                      id="bordered-radio-2"
+                      type="radio"
+                      value=""
+                      name="bordered-radio"
+                      className="w-4 h-4 text-purple-600 accent-purple-500 bg-gray-100 border-gray-300  focus:ring-2"
+                    />
+                    <label
+                      htmlFor="bordered-radio-2"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 "
+                    >
+                      픽 모드
+                    </label>
+                  </div>
                 </div>
                 <div>
                   공개 여부
                   <span className="text-red-500 required-dot">*</span>
                 </div>
-
                 <div className="flex w-full my-1">
+                  <div className="flex items-center pl-4 border shadow-md border-gray-200 rounded w-full mr-2">
+                    <input
+                      id="bordered-radio-3"
+                      type="radio"
+                      value=""
+                      name="bordered-radio1"
+                      className="w-4 h-4 text-purple-600 accent-purple-500 bg-gray-100 border-gray-300  focus:ring-2"
+                    />
+                    <label
+                      htmlFor="bordered-radio-3"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 "
+                    >
+                      공개
+                    </label>
+                  </div>
+                  <div className="flex items-center pl-4 border shadow-md border-gray-200 rounded w-full ml-2">
+                    <input
+                      checked
+                      id="bordered-radio-4"
+                      type="radio"
+                      value=""
+                      name="bordered-radio1"
+                      className="w-4 h-4 text-purple-600 accent-purple-500 bg-gray-100 border-gray-300  focus:ring-2"
+                    />
+                    <label
+                      htmlFor="bordered-radio-4"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 "
+                    >
+                      비공개
+                    </label>
+                  </div>
+                </div>
+                {/* <div className="flex w-full my-1">
                   <button
                     type="submit"
                     className="py-2 px-4 ml-2 border border-gray-300 bg-white hover:bg-purple-700 focus:ring-purple-700 focus:bg-purple-700 focus:ring-offset-purple-200 text-black w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
@@ -245,7 +310,7 @@ function Lobby() {
                   >
                     비공개
                   </button>
-                </div>
+                </div> */}
                 <div className=" relative mb-3">
                   <label className="text-gray-700">
                     비밀번호
