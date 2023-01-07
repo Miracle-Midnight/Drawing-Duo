@@ -213,13 +213,15 @@ function GameLobby() {
             </div>
           </div>
           <div className="">
-            <button
-              className="px-4 w-full py-2 ml-10 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200 justify-center place-self-center"
-              type="button"
-              onClick={handleReady}
-            >
-              Ready
-            </button>
+            <a href="http://localhost:6060">
+              <button
+                className="px-4 w-full py-2 ml-10 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200 justify-center place-self-center"
+                type="button"
+                onClick={handleReady}
+              >
+                Ready
+              </button>
+            </a>
           </div>
         </div>
       </Container>

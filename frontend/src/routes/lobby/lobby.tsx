@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Button, Container, Row, Col, InputGroup, Form } from "react-bootstrap";
+import { Container, Modal, InputGroup, Button, Form } from "react-bootstrap";
 import "./lobby.css";
 import { useNavigate } from "react-router-dom";
 
@@ -12,18 +12,21 @@ function Lobby(props: any) {
 
   const [inputRoomName, setInputRoomName] = useState<string>("");
   const [isOpenRoom, setIsOpenRoom] = useState<boolean>(true);
-  const [isActive, setIsActive] = useState<boolean>(false);
-  const [modeSelect, setModeSelect] = useState<boolean>(false);
-  const [array, setArray] = useState([]);
+  const [modeSelect, setModeSelect] = useState<boolean>(true);
+  const [isActiveCreateRoomModal, setIsActiveCreateRoomModal] =
+    useState<boolean>(false);
+  const [isActiveSelectImageModal, setisActiveSelectImageModal] =
+    useState<boolean>(false);
   const [roomData, setRoomData] = useState([]);
 
-  const onClickModalOn = () => {
-    setIsActive(true);
+  const onClickCreateRoomModal = () => {
+    setIsActiveCreateRoomModal(!isActiveCreateRoomModal);
   };
 
-  const onClickModalOff = () => {
-    setIsActive(false);
+  const onClickSelectImageModal = () => {
+    setisActiveSelectImageModal(!isActiveSelectImageModal);
   };
+
   const onClickLogout = () => {
     sessionStorage.removeItem("userKey");
     sessionStorage.removeItem("userToken");
@@ -83,6 +86,14 @@ function Lobby(props: any) {
     setInputRoomName(e.target.value);
   };
 
+  const handleOpenRoom = (e: any) => {
+    setIsOpenRoom(true);
+  };
+
+  const handleCloseRoom = (e: any) => {
+    setIsOpenRoom(false);
+  };
+
   const handleRandomMode = (e: any) => {
     setModeSelect(true);
   };
@@ -117,117 +128,335 @@ function Lobby(props: any) {
     <Container className="lobby-container flex flex-row">
       <div>
         <div className="container flex flex-col items-center justify-center w-full mx-auto">
-          <div className="w-full px-4 py-5 mb-2 bg-white border rounded-md shadow sm:px-6 ">
-            <h3 className="text-lg font-medium leading-6 text-gray-900 grid grid-rows-3 grid-flow-col gap-4">
-              <div className="row-start row-span-2">방 번호</div>
-              <div className="row-start row-span-2">제목</div>
-              <div className="row-end-3 row-span-2">모드</div>
-              <div className="row-start-1 row-end-4">현재 인원</div>
+          <div className="w-full px-4 pt-3 pb-1 mb-2 bg-white border rounded-md shadow sm:px-6">
+            <h3 className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-4 gap-3">
+              <div className="text-center">방 번호</div>
+              <div className="text-center">제목</div>
+              <div className="text-center">모드</div>
+              <div className="text-center">현재 인원</div>
             </h3>
           </div>
           <div className="room-container w-full">
             <ul className=" flex flex-col ">
-              <li
-                className="flex flex-row mb-2 border-gray-400"
-                onClick={handleJoinRoom}
-              >
-                <div className="shadow border select-none cursor-pointer bg-white  rounded-md flex flex-1 items-center p-4">
-                  <div className="flex-1 pl-1 md:mr-16">
-                    <div className="font-medium ">CTO</div>
-                    <div className="text-sm text-gray-600 ">Boby PArk</div>
-                  </div>
-                  <div className="text-xs text-gray-600 ">6:00 AM</div>
-                  <svg
-                    width="12"
-                    fill="currentColor"
-                    height="12"
-                    className="text-gray-500 hover:text-gray-800  "
-                    viewBox="0 0 1792 1792"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z"></path>
-                  </svg>
-                </div>
-              </li>
-
               {roomData.map((room: any) => (
                 <li
-                  id={room.id}
-                  key={room.id}
-                  className="flex flex-row mb-2 border-gray-400"
+                  className="flex flex-row mb-2 border-gray-400 "
                   onClick={handleJoinRoom}
+                  key={room.id}
+                  id={room.id}
                 >
-                  <div className="shadow border select-none cursor-pointer bg-white  rounded-md flex flex-1 items-center p-4">
-                    <div className="flex-1 pl-1 md:mr-16">
-                      <div className="font-medium ">CTO</div>
-                      <div className="text-sm text-gray-600 ">Boby PArk</div>
-                    </div>
-                    <div className="text-xs text-gray-600 ">6:00 AM</div>
-                    <svg
-                      width="12"
-                      fill="currentColor"
-                      height="12"
-                      className="text-gray-500 hover:text-gray-800  "
-                      viewBox="0 0 1792 1792"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z"></path>
-                    </svg>
+                  <div className="w-full px-4 pt-3 pb-1 mb-2 bg-white border rounded-md shadow sm:px-6">
+                    <h3 className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-4 gap-3">
+                      <div className="text-center">1</div>
+                      <div className="text-center">너만 오면 고</div>
+                      <div className="text-center">픽 모드</div>
+                      <div className="text-center">
+                        <span>3</span>
+                        <span>/</span>
+                        <span>4</span>
+                      </div>
+                    </h3>
                   </div>
                 </li>
               ))}
+
+              <li
+                className="flex flex-row mb-2 border-gray-400 "
+                onClick={handleJoinRoom}
+              >
+                <div className="w-full px-4 pt-3 pb-1 mb-2 bg-white border rounded-md shadow sm:px-6">
+                  <h3 className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-4 gap-3">
+                    <div className="text-center">1</div>
+                    <div className="text-center">너만 오면 고</div>
+                    <div className="text-center">픽 모드</div>
+                    <div className="text-center">
+                      <span>3</span>
+                      <span>/</span>
+                      <span>4</span>
+                    </div>
+                  </h3>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
       </div>
-      <div>
-        <div className="bg-white shadow-lg rounded-2xl w-80 ">
-          <img
-            alt="profil"
-            src="https://cdn.pixabay.com/photo/2018/01/24/18/05/background-3104413__480.jpg"
-            className="w-full mb-4 rounded-t-lg h-28"
-          />
-          <div className="flex flex-col items-center justify-center p-4 -mt-16">
-            <a href="#" className="relative block">
-              <img
-                alt="profil"
-                src="https://blog.kakaocdn.net/dn/upM3J/btq7ys3tudB/axLzJnkfCbDRae9OzcmZsK/img.jpg"
-                className="mx-auto object-cover rounded-full h-16 w-16  border-2 border-white "
-              />
-            </a>
-            <p className="mt-2 text-xl font-medium text-gray-800 ">Charlie</p>
-            <p className="mb-4 text-xs text-gray-400">Nantes</p>
-            <button
-              className="p-2 px-4 text-xs text-white bg-pink-500 rounded-full"
-              onClick={onClickLogout}
-            >
-              로그아웃
-            </button>
-            <div className="w-full p-2 mt-4 rounded-lg">
-              <div className="flex items-center justify-between text-sm text-gray-600 ">
-                <p className="flex flex-col">
-                  Articles
-                  <span className="font-bold text-black ">34</span>
-                </p>
-                <p className="flex flex-col">
-                  Followers
-                  <span className="font-bold text-black ">455</span>
-                </p>
-                <p className="flex flex-col">
-                  Rating
-                  <span className="font-bold text-black ">9.3</span>
-                </p>
+      <div className="flex content-between">
+        <div className="flex flex-col">
+          <div className="bg-white shadow-lg rounded-2xl w-80 ">
+            <img
+              alt="profil"
+              src="https://cdn.pixabay.com/photo/2018/01/24/18/05/background-3104413__480.jpg"
+              className="w-full mb-4 rounded-t-lg h-28"
+            />
+            <div className="flex flex-col items-center justify-center p-4 -mt-16">
+              <a href="#" className="relative block">
+                <img
+                  alt="profil"
+                  src="https://blog.kakaocdn.net/dn/upM3J/btq7ys3tudB/axLzJnkfCbDRae9OzcmZsK/img.jpg"
+                  className="mx-auto object-cover rounded-full h-16 w-16  border-2 border-white "
+                />
+              </a>
+              <p className="mt-2 text-xl font-medium text-gray-800 ">Charlie</p>
+              <p className="mb-4 text-xs text-gray-400">나는야 그림왕</p>
+              <button
+                className="p-2 px-4 text-xs text-white bg-gray-500 rounded-full"
+                onClick={onClickLogout}
+              >
+                로그아웃
+              </button>
+              <div className="pt-3">
+                <button className="p-2 px-4 text-xs text-white bg-purple-500 rounded-full">
+                  프로필 수정
+                </button>
+              </div>
+              <div className="w-full p-2 mt-4 rounded-lg">
+                <div className="flex items-center justify-between text-sm text-gray-800 "></div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="pt-50">
-          <button
-            className="px-4 w-full py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200 justify-center place-self-center"
-            type="submit"
-          >
-            방만들기
-          </button>
+          <div className="mt-20">
+            <button
+              data-modal-target="default"
+              data-modal-toggle="defaultModal"
+              className="px-4 w-full py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200 justify-center place-self-center"
+              type="button"
+              onClick={onClickCreateRoomModal}
+            >
+              방만들기
+            </button>
+            <Modal
+              show={isActiveCreateRoomModal}
+              onHide={onClickCreateRoomModal}
+              animation={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>방 만들기</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className=" relative mb-3">
+                  <label className="text-gray-700">
+                    방 제목
+                    <span className="text-red-500 required-dot">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    name="room"
+                    placeholder="아무나 들어와~"
+                  />
+                </div>
+                <div>
+                  모드 선택
+                  <span className="text-red-500 required-dot">*</span>
+                </div>
+
+                <div className="flex w-full my-1">
+                  <button
+                    type="button"
+                    className={
+                      !modeSelect
+                        ? "py-2 px-4 ml-2 border border-gray-300 bg-white ring-purple-700 ring-offset-purple-200 text-black w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md outline-none ring-2 ring-offset-2  rounded-lg "
+                        : "py-2 px-4 ml-2 border border-gray-300 bg-white text-black w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md rounded-lg "
+                    }
+                    onClick={handlePickMode}
+                  >
+                    픽 모드
+                  </button>
+                  <button
+                    type="button"
+                    className={
+                      modeSelect
+                        ? "py-2 px-4 ml-2 border border-gray-300 bg-white ring-purple-700 ring-offset-purple-200 text-black w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md outline-none ring-2 ring-offset-2  rounded-lg "
+                        : "py-2 px-4 ml-2 border border-gray-300 bg-white text-black w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md rounded-lg "
+                    }
+                    onClick={handleRandomMode}
+                  >
+                    랜덤 모드
+                  </button>
+                </div>
+                <div>
+                  공개 여부
+                  <span className="text-red-500 required-dot">*</span>
+                </div>
+
+                <div className="flex w-full my-1">
+                  <button
+                    type="button"
+                    className={
+                      isOpenRoom
+                        ? "py-2 px-4 ml-2 border border-gray-300 bg-white ring-purple-700 ring-offset-purple-200 text-black w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md outline-none ring-2 ring-offset-2  rounded-lg "
+                        : "py-2 px-4 ml-2 border border-gray-300 bg-white text-black w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md rounded-lg "
+                    }
+                    onClick={handleOpenRoom}
+                  >
+                    공개
+                  </button>
+                  <button
+                    type="button"
+                    className={
+                      !isOpenRoom
+                        ? "py-2 px-4 ml-2 border border-gray-300 bg-white ring-purple-700 ring-offset-purple-200 text-black w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md outline-none ring-2 ring-offset-2  rounded-lg "
+                        : "py-2 px-4 ml-2 border border-gray-300 bg-white text-black w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md rounded-lg "
+                    }
+                    onClick={handleCloseRoom}
+                  >
+                    비공개
+                  </button>
+                </div>
+                <div className=" relative mb-3">
+                  <label className="text-gray-700">
+                    비밀번호
+                    <span className="text-red-500 required-dot">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    name="room"
+                    placeholder="비밀번호 입력"
+                  />
+                </div>
+                <div className="mt-3">사진</div>
+                <InputGroup>
+                  <Form.Control
+                    placeholder="이미지"
+                    // aria-label="이미지"
+                    className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                  />
+                  <Button
+                    variant="outline-secondary"
+                    id="button-addon2"
+                    onClick={onClickSelectImageModal}
+                  >
+                    이미지 선택
+                  </Button>
+                </InputGroup>
+              </Modal.Body>
+              <Modal.Footer className="flex">
+                <button
+                  type="button"
+                  className="py-2 px-4 text-white rounded-lg bg-gray-500 justify-center place-self-center"
+                  onClick={onClickSelectImageModal}
+                >
+                  취소
+                </button>
+
+                <button
+                  type="button"
+                  className="py-2 px-4 text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200 justify-center place-self-center"
+                  onClick={handleCreateRoom}
+                >
+                  방 만들기
+                </button>
+              </Modal.Footer>
+            </Modal>
+
+            <Modal
+              show={isActiveSelectImageModal}
+              onHide={onClickSelectImageModal}
+              animation={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>이미지 선택</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="mt-3">선택한 사진</div>
+
+                <a href="#" className="relative block">
+                  <img
+                    alt="profil"
+                    src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                    className="ml-3 object-cover rounded-lg h-16 w-16 "
+                  />
+                </a>
+
+                <div className="mt-3">추천 사진</div>
+                <div className="grid grid-cols-4 gap-4">
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className=" object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+                </div>
+              </Modal.Body>
+              <Modal.Footer className="flex">
+                <button
+                  type="button"
+                  className="py-2 px-4 text-white rounded-lg bg-gray-500 justify-center place-self-center"
+                  onClick={onClickSelectImageModal}
+                >
+                  이미지 업로드
+                </button>
+
+                <button
+                  type="button"
+                  className="py-2 px-4 text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200 justify-center place-self-center"
+                  onClick={onClickSelectImageModal}
+                >
+                  선택 완료
+                </button>
+              </Modal.Footer>
+            </Modal>
+          </div>
         </div>
       </div>
     </Container>
