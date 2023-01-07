@@ -1,7 +1,20 @@
-import { Button, Container, Row, Col, InputGroup, Form } from "react-bootstrap"; // 꼭 import를 해와야한다
+import React, { useState } from "react";
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+  InputGroup,
+  Form,
+  Modal,
+} from "react-bootstrap"; // 꼭 import를 해와야한다
 import "./lobby.css";
 
 function Lobby() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <Container className="lobby-container flex flex-row">
       <div>
@@ -165,11 +178,72 @@ function Lobby() {
           </div>
           <div className="mt-20">
             <button
+              data-modal-target="default"
+              data-modal-toggle="defaultModal"
               className="px-4 w-full py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200 justify-center place-self-center"
-              type="submit"
+              type="button"
+              onClick={handleShow}
             >
               방만들기
             </button>
+            <Modal show={show} onHide={handleClose} animation={false}>
+              <Modal.Header closeButton>
+                <Modal.Title>방 만들기</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className=" relative mb-3">
+                  <label className="text-gray-700">
+                    방 제목
+                    <span className="text-red-500 required-dot">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    name="room"
+                    placeholder="아무나 들어와~"
+                  />
+                </div>
+                <div>
+                  모드 선택
+                  <span className="text-red-500 required-dot">*</span>
+                </div>
+
+                <div className="flex items-center">
+                  <button
+                    type="button"
+                    className="w-full px-4 py-2 text-base font-medium text-black bg-white border border-b border-l rounded-l-md hover:bg-purple-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
+                  >
+                    랜덤 모드
+                  </button>
+
+                  <button
+                    type="button"
+                    className="w-full px-4 py-2 text-base font-medium text-black bg-white border-t border-b border-r rounded-r-md hover:bg-purple-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
+                  >
+                    픽 모드
+                  </button>
+                </div>
+                <div className="mt-3">사진</div>
+                <InputGroup>
+                  <Form.Control
+                    placeholder="이미지"
+                    // aria-label="이미지"
+                    className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                  />
+                  <Button variant="outline-secondary" id="button-addon2">
+                    이미지 업로드
+                  </Button>
+                </InputGroup>
+              </Modal.Body>
+              <Modal.Footer className="">
+                <Button variant="secondary" onClick={handleClose}>
+                  취소
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                  방 만들기
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       </div>
