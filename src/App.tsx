@@ -1,25 +1,26 @@
-import React, { useEffect } from "react";
 import "./App.css";
 
 import * as Y from "yjs";
-import { getStroke } from "perfect-freehand";
-import { getSvgPathFromStroke } from "./utils/drawing/drawing.utils";
-import { DrawLine } from "./components/drawing/drawing-component";
+import { DrawLine, updateLine } from "./components/drawing/drawing-component";
 
+/*crdt document 생성 */
 const ydoc = new Y.Doc();
 const ystrokes = ydoc.getArray("stroke");
+ystrokes.observe((event: any) => {
+  updateLine(ystrokes);
+});
 
 const coords = [
   [0, 0, 0],
-  [100, 100, 0.5],
-  [300, 300, 0.5],
-  [600, 600, 0.5],
+  [100, 340, 0.5],
+  [400, 300, 0.5],
+  [500, 600, 0.5],
 ];
 const newStorke = new Y.Array();
-
-newStorke.push(coords);
+newStorke.push(coords); // newStorke.toArray() == coords
 ystrokes.push([newStorke]);
 
+/* App 컴포넌트 */
 function App() {
   return (
     <div className="App">
