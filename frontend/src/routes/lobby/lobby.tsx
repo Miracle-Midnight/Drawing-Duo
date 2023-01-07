@@ -15,6 +15,11 @@ function Lobby() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [showImage, setShowImage] = useState(false);
+
+  const handleImageClose = () => setShowImage(false);
+  const handleImageShow = () => setShowImage(true);
   return (
     <Container className="lobby-container flex flex-row">
       <div>
@@ -260,8 +265,12 @@ function Lobby() {
                     // aria-label="이미지"
                     className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                   />
-                  <Button variant="outline-secondary" id="button-addon2">
-                    이미지 업로드
+                  <Button
+                    variant="outline-secondary"
+                    id="button-addon2"
+                    onClick={handleImageShow}
+                  >
+                    이미지 선택
                   </Button>
                 </InputGroup>
               </Modal.Body>
@@ -280,6 +289,108 @@ function Lobby() {
                   onClick={handleClose}
                 >
                   방 만들기
+                </button>
+              </Modal.Footer>
+            </Modal>
+
+            <Modal show={showImage} onHide={handleImageClose} animation={false}>
+              <Modal.Header closeButton>
+                <Modal.Title>이미지 선택</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="mt-3">선택한 사진</div>
+
+                <a href="#" className="relative block">
+                  <img
+                    alt="profil"
+                    src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                    className="ml-3 object-cover rounded-lg h-16 w-16 "
+                  />
+                </a>
+
+                <div className="mt-3">추천 사진</div>
+                <div className="grid grid-cols-4 gap-4">
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className=" object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+                  <div>
+                    <a href="#" className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </a>
+                  </div>
+                </div>
+              </Modal.Body>
+              <Modal.Footer className="flex">
+                <button
+                  type="button"
+                  className="py-2 px-4 text-white rounded-lg bg-gray-500 justify-center place-self-center"
+                  onClick={handleImageClose}
+                >
+                  이미지 업로드
+                </button>
+
+                <button
+                  type="button"
+                  className="py-2 px-4 text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200 justify-center place-self-center"
+                  onClick={handleImageClose}
+                >
+                  선택 완료
                 </button>
               </Modal.Footer>
             </Modal>
