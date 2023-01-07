@@ -4,3 +4,14 @@
   align-items: center;
   height: 100vh;
 }
+
+ul {
+  padding: 0;
+}
+
+.chat-container {
+    height: 200px;
+    overflow: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
