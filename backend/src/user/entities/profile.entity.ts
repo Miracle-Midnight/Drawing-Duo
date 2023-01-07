@@ -17,16 +17,16 @@ export class Profile extends BaseEntity {
   @Column()
   nickname: string;
 
-  @Column({ default: 999 })
+  @Column({ default: 0 })
   level: number;
 
-  @Column({ default: 10000 })
+  @Column({ nullable: true })
   rank: number;
 
   @Column({ default: '안녕하세요', type: 'text' })
   introduction: string;
 
-  @OneToOne(() => User, (user) => user.profile)
+  @OneToOne(() => User, (user) => user.profile, { onDelete: 'CASCADE' })
   user: User;
 
   @OneToOne(() => Image)

@@ -27,7 +27,7 @@ export class UserService {
     //   password: userDto.password,
     // });
     // console.log(user);
-    res.redirect('/lobby');
+    // res.redirect('/lobby');
   }
 
   async signUp(@Body() userDto: UserDto, file: Express.Multer.File) {
