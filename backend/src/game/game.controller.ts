@@ -15,4 +15,9 @@ export class GameController {
   createGame(@Param('id') id: string) {
     return this.gameService.createGame(+id);
   }
+
+  @Post(':id/delete')
+  deleteGame(@Param('id') id: string) {
+    return this.gameService.deleteGame(+id);
+  }
 }

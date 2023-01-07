@@ -38,7 +38,4 @@ export class User extends BaseEntity {
 
   @ManyToOne(() => Room, (room) => room.users, { onDelete: 'SET NULL' })
   room: Room;
-
-  @OneToOne(() => Image)
-  image: Image;
 }

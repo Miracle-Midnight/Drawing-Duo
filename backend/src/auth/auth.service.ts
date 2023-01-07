@@ -21,11 +21,13 @@ export class AuthService {
     //* 해당하는 email이 있는지
     const isUserExist = await this.userRepository.findOne({
       where: { userid: userid },
+      relations: ['profile', 'profile.image'],
     });
 
     if (isUserExist === undefined) {
       throw new Error('이메일과 비밀번호를 확인해주세요.');
     }
+    // audicspace.com
 
     //* password가 일치하는지
     const isPasswordValidated: boolean = await bcrypt.compare(
@@ -40,9 +42,14 @@ export class AuthService {
     const payload = { userid: isUserExist.userid, sub: isUserExist.id };
 
     return {
-      userid: isUserExist.id,
-
       token: this.JwtService.sign(payload),
+      userid: isUserExist.id,
+      username: isUserExist.userid,
+      nickname: isUserExist.profile.nickname,
+      level: isUserExist.profile.level,
+      rank: isUserExist.profile.rank,
+      introduction: isUserExist.profile.introduction,
+      image: isUserExist.profile.image.image,
     };
   }
 }
