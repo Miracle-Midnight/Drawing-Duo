@@ -25,14 +25,14 @@ function getPoint(x: number, y: number) {
 /* 화면에 보일 캔버스 그림 정보 */
 export function Canvas() {
   const { lines, startLine, addPointToLine, completeLine } = useLines();
-  console.log("[DEBUG]{Canvas=>Entry point}");
+
   /* 포인터가 눌러지면, 새로운 라인을 시작 */
   const handlePointerDown = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
-      console.log("[DEBUG]{handlePointerDown}");
       e.currentTarget.setPointerCapture(e.pointerId);
 
-      startLine(getPoint(e.clientX, e.clientY)); // yLines에 추가되면서, curRef상태 변환
+      // startLine(getPoint(e.clientX, e.clientY)); // yLines에 추가되면서, curRef상태 변환
+      startLine(getPoint(e.pageX, e.pageY)); // yLines에 추가되면서, curRef상태 변환
     },
     [startLine]
   );
@@ -40,8 +40,8 @@ export function Canvas() {
   /* 포인터가 눌러진 체, 움직이면 추가해준다 */
   const handlePointerMove = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
-      const point = getPoint(e.clientX, e.clientY);
-      console.log("[DEBUG]{handlePointerMove}");
+      // const point = getPoint(e.clientX, e.clientY);
+      const point = getPoint(e.pageX, e.pageY);
 
       if (e.currentTarget.hasPointerCapture(e.pointerId)) {
         addPointToLine(point);
@@ -53,22 +53,20 @@ export function Canvas() {
   /* 포인터가 해제되었을 때, 완료해준다 */
   const handlePointerUp = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
-      console.log("[DEBUG]{handlePointerUp}");
       e.currentTarget.releasePointerCapture(e.pointerId);
 
       completeLine();
     },
     [completeLine]
   );
-  console.log("[DEBUG]{Canvas=>End point}");
 
   return (
     /* div */
     <div
       style={{
         display: "inline-block",
-        width: "400px",
-        height: "400px",
+        width: "100%",
+        height: "100vh",
         border: "1px solid black",
       }}
     >
@@ -77,15 +75,13 @@ export function Canvas() {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         style={{
-          width: "400px",
-          height: "400px",
+          width: "100%",
+          height: "100vh",
         }}
       >
-        <g>
-          {lines.map((line, i) => (
-            <Line key={line.get("id")} line={line} />
-          ))}
-        </g>
+        {lines.map((line, i) => (
+          <Line key={line.get("id")} line={line} />
+        ))}
       </svg>
     </div>
   );
