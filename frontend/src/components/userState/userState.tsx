@@ -16,9 +16,16 @@ const UserState = ({name, state}: any) => {
         </div>
         <div className=" flex flex-col">
           <span className="text-lg font-medium text-gray-600 ">{name}</span>
-          <span className="text-s p-1 text-gray-100 text-center bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200">
-            {state}
-          </span>
+          {state === "Win!" ? (
+            <span className="text-s p-1 text-gray-100 text-center bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-green-200">
+                {state}
+            </span>
+            ) : (
+            <span className="text-s p-1 text-gray-100 text-center bg-gray-600 rounded-lg shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-red-200">
+                {state}
+            </span>
+            )}
+          
         </div>
       </div>
     </div>
