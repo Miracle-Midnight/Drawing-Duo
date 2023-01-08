@@ -18,6 +18,7 @@ memo를 활용하여서, 부모 component가 re-render되었을때, 자식 compo
 고로 object이 props로 온다면, useMemo를 사용해서, 해당 object을 메모리에 보존&전달
 */
 export const Line = memo(function Line({ line }: LineProps) {
+  console.log("[DEBUG]{LINE=>entry point}");
   const { points, isComplete } = useLine(line);
 
   const pathData = getSvgPathFromStroke(
@@ -29,9 +30,10 @@ export const Line = memo(function Line({ line }: LineProps) {
       last: isComplete,
     })
   );
+  console.log("[DEBUG]{LINE=>end point}");
   return (
-    <g>
-      <path className="canvas-line" d={pathData} />
+    <g fill="7B66DC">
+      <path d={pathData} fill="7B66DC" />
     </g>
   );
 });

@@ -6,11 +6,16 @@ import { yLines, doc } from "../y";
 
 /* Line을 그리기 위한 hooks 모음 => Canvas component에서 필요한 함수 */
 export function useLines() {
+  console.log("[DEBUG]{useLines => entry points}");
   const [lines, setLines] = useState<Y.Map<any>[]>([]); // 전체 lines에 대한 상태
   const rCurrentLine = useRef<Y.Map<any>>(); // useRef를 통해 line값을 component가 사라지기 전까지 보존
 
+  console.log("[DEBUG]{useLines => Lines state info}");
+  console.log(lines);
+  console.log(rCurrentLine);
   /* 공유 데이터를 담고 있는 Ylines에 변화가 생기면, lines 상태에 업데이트 */
   useEffect(() => {
+    console.log("[DEBUG]{useLines=>useEffect=>ylines observe handle change}");
     function handleChange() {
       const lines = yLines.toArray();
       setLines(lines);
@@ -27,6 +32,7 @@ export function useLines() {
     경우 성능이 느려져서, 하나의 function을 transact()안에 묶어서 업데이트한다)
   */
   const startLine = useCallback((point: number[]) => {
+    console.log("[DEBUG]{startLine=> add start line}");
     const id = Date.now().toString();
     const yPoints = new Y.Array<number>();
     yPoints.push([...point]);
@@ -46,6 +52,7 @@ export function useLines() {
 
   /* 인자로 들어온 point배열을 rCurrentLine에 저장한 points배열 안에 추가한다  */
   const addPointToLine = (point: number[]) => {
+    console.log("[DEBUG]{addPointToLine=> push point to points}");
     const currentLine = rCurrentLine.current; // ex) {{'id':'23/1/7'},{'points': [[132,132,0.5],[232,232,0.5],[332,332,0.5]]},{'isCompleted':false}}
 
     if (!currentLine) return; // currentline이 비어 있는지 확인
@@ -59,6 +66,7 @@ export function useLines() {
 
   /* 현재 라인 ref를 지움 */
   const completeLine = useCallback(() => {
+    console.log("[DEBUG]{completeLine=> end the line}");
     const currentLine = rCurrentLine.current;
     if (!currentLine) return;
 

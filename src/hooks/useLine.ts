@@ -11,6 +11,7 @@ export function useLine(line: Y.Map<any>) {
 
   /* line을 관찰하면서 변화가 생기면, 완료 상태 정보 수정 */
   useEffect(() => {
+    console.log("[DEBUG]{useLine=>useEffect=>line observe handle change}");
     function handleChange() {
       const current = line.toJSON(); // YMap을 json객체 형태로 전환
       setIsComplete(current.isComplete);
@@ -27,6 +28,7 @@ export function useLine(line: Y.Map<any>) {
 
   /* 인자로 주어진, line의 points 배열들을 상태 정보에 입력 */
   useEffect(() => {
+    console.log("[DEBUG]{useLine=>useEffect=>points observe handle change}");
     const points = line.get("points") as Y.Array<number>;
 
     function handleChange() {
@@ -41,6 +43,5 @@ export function useLine(line: Y.Map<any>) {
       points.unobserve(handleChange);
     };
   }, [line]);
-
   return { points: pts, isComplete };
 }
