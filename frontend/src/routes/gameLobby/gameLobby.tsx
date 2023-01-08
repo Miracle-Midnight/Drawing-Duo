@@ -2,7 +2,7 @@ import { Button, Container, Row, Col, InputGroup, Form } from "react-bootstrap";
 import "./gameLobby.css";
 import Canvas from "../../components/canvas/canvas";
 
-function Login() {
+function gameLobby() {
   const canvasSize = {
     width: "25rem",
     height: "90%",
@@ -235,4 +235,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default gameLobby;
