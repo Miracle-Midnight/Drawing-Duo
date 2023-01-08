@@ -1,6 +1,7 @@
 import { Button, Container, Row, Col, InputGroup, Form } from "react-bootstrap"; // 꼭 import를 해와야한다
 import "./inGame.css";
 import Canvas from "../../components/canvas/canvas";
+import UserState from "../../components/userState/userState";
 
 function InGame() {
   return (
@@ -24,27 +25,7 @@ function InGame() {
           </div>
         </div>
         <div className="self-center mt-12 mb-12">
-          <div className="border border-gray-500 shadow-md rounded-md bg-white p-4 mx-auto">
-            <div className="flex-row gap-4 flex justify-center items-center ">
-              <div className="justify-center items-center">
-                <a href="#" className="relative block">
-                  <img
-                    alt="profil"
-                    src="https://mblogthumb-phinf.pstatic.net/MjAxOTA0MjNfMTkz/MDAxNTU2MDE2ODQzNzY1.XIP77rvqSgGZPbY7vp_vhX_hGVWm1VBOlVaGe4ovrOYg.fav5jNf3PsvyBU2qVvZMBpJmevXZWRZAF3fa6LY1_tYg.JPEG.exia9133/g.jpg?type=w800"
-                    className="mx-auto object-cover rounded-full h-16 w-16 "
-                  />
-                </a>
-              </div>
-              <div className=" flex flex-col">
-                <span className="text-lg font-medium text-gray-600 ">
-                  Charlie
-                </span>
-                <span className="text-s p-1 text-gray-100 text-center bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200">
-                  Ready
-                </span>
-              </div>
-            </div>
-          </div>
+        <UserState name="이름" state="Ready"></UserState>
         </div>
         <div>
           <div className="pt-10">
