@@ -1,11 +1,12 @@
 import { Button, Container, Row, Col, InputGroup, Form } from "react-bootstrap"; // 꼭 import를 해와야한다
 import "./result.css";
 import Canvas from "../../components/canvas/canvas";
+import UserState from "../../components/userState/userState";
 
 function Result() {
   return (
     <Container className="center">
-      <div className="flex items-center justify-center  mr-20">
+      <div className="flex items-center justify-center ">
         <div className="w-full p-4">
           <div className="flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl card">
             <div className="prod-title">
@@ -23,9 +24,9 @@ function Result() {
         </div>
       </div>
       <div className="w-full">
-        <div className="flex flex-row">
-          <div className="shadow p-3 rounded-md mr-3 items-center justify-center">
-            <div className="flex items-center justify-center w-80">
+        <div className="flex flex-row justify-center items-center">
+          <div className="p-3 rounded-md mr-3 w-full flex flex-col justify-center  items-center">
+            <div className="w-80">
               <div className="w-full p-4">
                 <div className="flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl card">
                   <div className="prod-title">
@@ -40,52 +41,12 @@ function Result() {
                 </div>
               </div>
             </div>
-            <div className="flex w-full justify-between">
-              <div className="shadow rounded-2xl bg-white  p-4">
-                <div className="flex-row gap-4 flex justify-center items-center">
-                  <div className="flex-shrink-0">
-                    <a href="#" className="relative block">
-                      <img
-                        alt="profil"
-                        src="https://blog.kakaocdn.net/dn/upM3J/btq7ys3tudB/axLzJnkfCbDRae9OzcmZsK/img.jpg"
-                        className="mx-auto object-cover rounded-full h-16 w-16 "
-                      />
-                    </a>
-                  </div>
-                  <div className=" flex flex-col">
-                    <span className="text-lg font-medium text-gray-600 ">
-                      Charlie
-                    </span>
-                    <span className="text-s p-1 text-gray-100 text-center bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200">
-                      Ready
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="shadow rounded-2xl bg-white p-4">
-                <div className="flex-row gap-4 flex justify-center items-center">
-                  <div className="flex-shrink-0">
-                    <a href="#" className="relative block">
-                      <img
-                        alt="profil"
-                        src="https://blog.kakaocdn.net/dn/upM3J/btq7ys3tudB/axLzJnkfCbDRae9OzcmZsK/img.jpg"
-                        className="mx-auto object-cover rounded-full h-16 w-16 "
-                      />
-                    </a>
-                  </div>
-                  <div className=" flex flex-col">
-                    <span className="text-lg font-medium text-gray-600 ">
-                      Charlie
-                    </span>
-                    <span className="text-s p-1 text-gray-100 text-center bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200">
-                      Ready
-                    </span>
-                  </div>
-                </div>
-              </div>
+            <div className="flex w-full justify-evenly">
+              <UserState name="이름" state="Win!"></UserState>
+              <UserState name="이름" state="Win!"></UserState>
             </div>
           </div>
-          <div className="shadow p-3 rounded-md ml-3">
+          <div className="p-3 rounded-md ml-3 w-full  flex flex-col justify-center  items-center">
             <div className="flex items-center justify-center w-80">
               <div className="w-full p-4">
                 <div className="flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl card">
@@ -101,56 +62,16 @@ function Result() {
                 </div>
               </div>
             </div>
-            <div className="flex w-full justify-between">
-              <div className="shadow rounded-2xl bg-white  p-4">
-                <div className="flex-row gap-4 flex justify-center items-center">
-                  <div className="flex-shrink-0">
-                    <a href="#" className="relative block">
-                      <img
-                        alt="profil"
-                        src="https://blog.kakaocdn.net/dn/upM3J/btq7ys3tudB/axLzJnkfCbDRae9OzcmZsK/img.jpg"
-                        className="mx-auto object-cover rounded-full h-16 w-16 "
-                      />
-                    </a>
-                  </div>
-                  <div className=" flex flex-col">
-                    <span className="text-lg font-medium text-gray-600 ">
-                      Charlie
-                    </span>
-                    <span className="text-s p-1 text-gray-100 text-center bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200">
-                      Ready
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="shadow rounded-2xl bg-white  p-4">
-                <div className="flex-row gap-4 flex justify-center items-center">
-                  <div className="flex-shrink-0">
-                    <a href="#" className="relative block">
-                      <img
-                        alt="profil"
-                        src="https://blog.kakaocdn.net/dn/upM3J/btq7ys3tudB/axLzJnkfCbDRae9OzcmZsK/img.jpg"
-                        className="mx-auto object-cover rounded-full h-16 w-16 "
-                      />
-                    </a>
-                  </div>
-                  <div className=" flex flex-col">
-                    <span className="text-lg font-medium text-gray-600 ">
-                      Charlie
-                    </span>
-                    <span className="text-s p-1 text-gray-100 text-center bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200">
-                      Ready
-                    </span>
-                  </div>
-                </div>
-              </div>
+            <div className="flex w-full justify-evenly">
+              <UserState name="이름" state="Win!"></UserState>
+              <UserState name="이름" state="Win!"></UserState>
             </div>
           </div>
         </div>
         <div className="chat mt-3">
           <div className="chat-container">
-            <div className="container flex flex-col items-center justify-center w-full mx-auto">
-              <ul className="flex flex-col p-0 w-full">
+            <div className="container flex flex-col items-center justify-center mx-auto">
+              <ul className="flex flex-col w-full p-0">
                 <li className="flex flex-row mb-2 border-gray-400">
                   <div className="transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 items-center p-4">
                     <div className="flex-1 pl-1 md:mr-16">
