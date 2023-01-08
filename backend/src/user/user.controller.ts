@@ -26,6 +26,7 @@ export class UserController {
   @Post('signup')
   signUp(@UploadedFile() file: Express.Multer.File, @Body() userDto: UserDto) {
     console.log(userDto);
+    console.log(file);
     return this.userService.signUp(userDto, file);
   }
 
@@ -51,14 +52,14 @@ export class UserController {
   }
 
   //이미지 두개 이상 받아서 유사도 측정 api
-  @UseInterceptors(FilesInterceptor('image', 2, multerOptions('similarity')))
+  @UseInterceptors(FilesInterceptor('image', 2, multerOptions('profile')))
   @Post('uploads')
   Similarity(@UploadedFiles() files: Array<Express.Multer.File>) {
     console.log(files);
-    return {
-      image1: `http://localhost:3000/media/similarity/${files[0].filename}`,
-      image2: `http://localhost:3000/media/similarity/${files[1].filename}`,
-    };
-    // return this.userService.similarity(files);
+    // return {
+    //   image1: `http://localhost:3000/media/similarity/${files[0].filename}`,
+    //   image2: `http://localhost:3000/media/similarity/${files[1].filename}`,
+    // };
+    return this.userService.similarity(files);
   }
 }

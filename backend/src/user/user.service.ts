@@ -9,6 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { Image } from 'src/room/entities/image.entity';
 
 import { Profile } from './entities/profile.entity';
+import * as childProcess from 'child_process';
 
 @Injectable()
 export class UserService {
@@ -90,26 +91,38 @@ export class UserService {
   }
 
   async similarity(files: Array<Express.Multer.File>) {
-    const path1 = `http://localhost:3000/media/similarity/${files[0].filename}`;
-    const path2 = `http://localhost:3000/media/similarity/${files[1].filename}`;
+    const path1 = `http://localhost:3000/media/profile/${files[0].filename}`;
+    const path2 = `http://localhost:3000/media/profile/${files[1].filename}`;
+    console.log(path1);
 
-    const cv = require('opencv.js');
+    return new Promise((resolve, reject) => {
+      // 2. spawn을 통해 "python 파이썬파일.py" 명령어 실행
+      const pythonProcess = childProcess.spawn('python', [
+        'src/user/similarity.py',
+        path1,
+        path2,
+      ]);
 
-    // Load the images into OpenCV
-    const img1 = await cv.imreadAsync(path1);
-    const img2 = await cv.imreadAsync(path2);
+      let output = '';
 
-    // Convert the images to grayscale
-    const img1Gray = img1.cvtColor(cv.COLOR_RGBA2GRAY);
-    const img2Gray = img2.cvtColor(cv.COLOR_RGBA2GRAY);
+      // 3. stdout의 'data'이벤트리스너로 실행결과를 받는다.
+      pythonProcess.stdout.on('data', (data) => {
+        output += data.toString();
+        console.log(output);
+      });
 
-    // Use matchTemplate to measure the similarity between the two images
-    const result = img1Gray.matchTemplate(img2Gray, cv.TM_CCOEFF_NORMED);
+      // 4. 에러 발생 시, stderr의 'data'이벤트리스너로 실행결과를 받는다.
+      pythonProcess.stderr.on('data', (data) => {
+        console.log(data.toString());
+      });
 
-    // Calculate the minimum and maximum values in the result image
-    const minMax = result.minMaxLoc();
-
-    // Return the maximum value as the similarity score
-    return minMax.maxVal;
+      pythonProcess.on('close', (code) => {
+        if (code === 0) {
+          resolve(output);
+        } else {
+          reject(new Error(`Python script exited with code ${code}`));
+        }
+      });
+    });
   }
 }
