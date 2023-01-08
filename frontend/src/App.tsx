@@ -1,25 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Login from "./routes/login/login";
+import Register from "./routes/register/register";
+import GameLobby from "./routes/gameLobby/gameLobby";
+import Lobby from "./routes/lobby/lobby";
+import Result from "./routes/result/result";
+import InGame from "./routes/inGame/inGame";
+import "./index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <InGame />
+    </>
   );
 }
 
