@@ -33,7 +33,7 @@ function Lobby() {
             </h3>
           </div>
           <div className="room-container w-full">
-            <ul className=" flex flex-col ">
+            <ul className=" flex flex-col">
               <li className="flex flex-row mb-2 border-gray-400 ">
                 <div className="w-full px-4 pt-3 pb-1 mb-2 bg-white border rounded-md shadow sm:px-6">
                   <h3 className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-4 gap-3">

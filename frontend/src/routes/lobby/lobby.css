@@ -5,9 +5,11 @@
   height: 100vh;
   width: 100vw;
 }
-
-.room-container {
+.container {
   width: 43.75rem;
+}
+.room-container {
+  
   height: 31.25rem;
   overflow: auto;
 }

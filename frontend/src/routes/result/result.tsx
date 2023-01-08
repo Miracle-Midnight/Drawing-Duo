@@ -10,7 +10,7 @@ function Result() {
           <div className="flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl card">
             <div className="prod-title">
               <p className="text-2xl font-bold text-gray-900 uppercase text-center">
-                따라 그려요!
+                잘 따라 그리셨나요?
               </p>
             </div>
             <div className="prod-img">

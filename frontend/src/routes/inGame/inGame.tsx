@@ -5,10 +5,10 @@ import Canvas from "../../components/canvas/canvas";
 function InGame() {
   return (
     <Container className="center">
-      <div>
+      <div className="flex flex-col items-stretch">
         <div className="flex items-center justify-center">
-          <div className="w-full">
-            <div className="flex flex-col justify-center p-10 bg-white rounded-lg shadow-md card">
+          <div className="w-full  self-start">
+            <div className="flex flex-col justify-center p-10 bg-white rounded-lg shadow-md border border-gray-500">
               <div className="prod-title">
                 <p className="text-2xl font-bold text-gray-900 uppercase text-center">
                   따라 그려요!
@@ -23,10 +23,10 @@ function InGame() {
             </div>
           </div>
         </div>
-        <div className="">
-          <div className="border border-gray-500 shadow-md rounded-md bg-white  p-4 w-50 ml-24">
-            <div className="flex-row gap-4 flex justify-center items-center">
-              <div className="flex-shrink-0">
+        <div className="self-center mt-12 mb-12">
+          <div className="border border-gray-500 shadow-md rounded-md bg-white p-4 mx-auto">
+            <div className="flex-row gap-4 flex justify-center items-center ">
+              <div className="justify-center items-center">
                 <a href="#" className="relative block">
                   <img
                     alt="profil"
@@ -208,7 +208,7 @@ function InGame() {
             </div>
           </div>
         </div>
-        <div className="shadow-md border border-gray-500">
+        <div className="shadow-md border border-gray-500 rounded-md">
           <div className="p-3">
             <button
               type="button"
