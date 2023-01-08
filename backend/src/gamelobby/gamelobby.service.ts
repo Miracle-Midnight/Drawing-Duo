@@ -13,10 +13,12 @@ export class GamelobbyService {
     @InjectRepository(Room)
     private roomRepository: Repository<Room>,
   ) {}
+
   async userReady(userReadyDto: UserReadyDto) {
     const { userid, roomid } = userReadyDto;
     const user = await this.userRepository.findOneBy({ id: userid });
     console.log(user);
+
     if (user.ready == true) {
       user.ready = false;
     } else {
@@ -37,6 +39,6 @@ export class GamelobbyService {
       }
     });
 
-    return { cnt: cnt, success: true };
+    return { cnt: cnt };
   }
 }

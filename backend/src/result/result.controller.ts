@@ -1,12 +1,13 @@
-import { Controller, Get, Param, Render } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { PositiveIntPipe } from 'src/common/pipes/positiveInt.pipe';
 import { ResultService } from './result.service';
 
-@Controller('api/result')
+@Controller('result')
 export class ResultController {
   constructor(private readonly resultService: ResultService) {}
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.resultService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe, PositiveIntPipe) id: number) {
+    return this.resultService.findOne(id);
   }
 }

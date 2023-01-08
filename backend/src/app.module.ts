@@ -21,6 +21,8 @@ import { join } from 'path';
 
 import { AuthModule } from './auth/auth.module';
 import { GamelobbyModule } from './gamelobby/gamelobby.module';
+import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+import { MiddlewareConsumer, NestModule } from '@nestjs/common';
 
 @Module({
   imports: [
@@ -37,14 +39,16 @@ import { GamelobbyModule } from './gamelobby/gamelobby.module';
     DrawGatewayModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
-      exclude: ['api/*'],
+      exclude: ['/api*'],
     }),
-
     AuthModule,
-
     GamelobbyModule,
   ],
   controllers: [AppController, ResultController],
   providers: [ResultService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}

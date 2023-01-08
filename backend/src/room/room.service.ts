@@ -5,6 +5,7 @@ import { CreateRoomDto } from './dto/create-room.dto';
 import { Room } from './entities/room.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Image } from './entities/image.entity';
+import { NotFoundException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class RoomService {
@@ -29,10 +30,14 @@ export class RoomService {
       where: { id },
       relations: ['profile'],
     });
+    // if (!user) {
+    //   throw new NotFoundException('유저가 존재하지 않습니다.');
+    // }
 
     newRoom.users = [user];
     await this.roomRepository.save(newRoom);
     console.log(newRoom);
+
     return {
       roomid: newRoom.id,
       title: newRoom.title,
