@@ -17,6 +17,7 @@ export class AuthService {
 
   async jwtLogIn(data: LoginREquestDto) {
     const { userid, password } = data;
+    console.log(userid, password);
 
     //* 해당하는 email이 있는지
     const isUserExist = await this.userRepository.findOne({

@@ -36,12 +36,10 @@ import { GamelobbyModule } from './gamelobby/gamelobby.module';
     ChatsModule,
     DrawGatewayModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client'),
-      exclude: ['api/*'],
+      rootPath: join(__dirname, '..', 'build'),
+      exclude: ['/api*'],
     }),
-
     AuthModule,
-
     GamelobbyModule,
   ],
   controllers: [AppController, ResultController],

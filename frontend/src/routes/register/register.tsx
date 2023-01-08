@@ -44,7 +44,7 @@ function Register() {
       //   alert("입력하신 이메일이 유효하지 않습니다.");
     } else {
       axios
-        .post("/users/signup", {
+        .post("/api/users/signup", {
           userid: inputId,
           password: inputPw,
           // nickname: inputNickname,

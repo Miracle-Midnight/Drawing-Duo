@@ -3,9 +3,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, Container } from "react-bootstrap";
 import axios from "axios";
 import "./login.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
@@ -20,42 +22,46 @@ function Login() {
 
   // login 버튼 클릭 이벤트
   const onClickLogin = () => {
-    if (inputId !== "123") {
-      alert("입력하신 id가 일치하지 않습니다.");
-    } else if (inputPw !== "123") {
-      alert("입력하신 pw가 일치하지 않습니다.");
-    } else {
-      alert("로그인 성공");
-      sessionStorage.setItem("userKey", inputId);
-      document.location.href = "/";
-    }
+    // if (inputId !== "123") {
+    //   alert("입력하신 id가 일치하지 않습니다.");
+    // } else if (inputPw !== "123") {
+    //   alert("입력하신 pw가 일치하지 않습니다.");
+    // } else {
+    //   alert("로그인 성공");
+    //   sessionStorage.setItem("userKey", inputId);
+    //   document.location.href = "/";
+    // }
 
-    // axios
-    //   .post("/users/login", {
-    //     userid: inputId,
-    //     password: inputPw,
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data.userid);
-    //     console.log(res.data.token);
-    //     // if (res.data.userId === undefined) {
-    //     //   // id 일치하지 않는 경우 userId = undefined, msg = '입력하신 id 가 일치하지 않습니다.'
-    //     //   alert("입력하신 id가 일치하지 않습니다.");
-    //     // } else if (res.data.userId === null) {
-    //     //   // pw 일치하지 않는 경우 userId = null, msg = '입력하신 pw 가 일치하지 않습니다.'
-    //     //   alert("입력하신 pw가 일치하지 않습니다.");
-    //     // } else {
-    //     //   // id, pw 일치하는 경우 userId = id, msg = '로그인 성공'
-    //     alert("로그인 성공");
-    //     sessionStorage.setItem("userKey", res.data.userid);
-    //     sessionStorage.setItem("userToken", res.data.token);
-    //     document.location.href = "/";
-    //     // }
-    //   })
-    //   .catch((err) => {
-    //     alert("id, pw를 확인해주세요!");
-    //     console.log(err);
-    //   });
+    axios
+      .post("/api/users/login", {
+        userid: inputId,
+        password: inputPw,
+      })
+      .then((res) => {
+        console.log(res.data.userid);
+        console.log(res.data.token);
+        // if (res.data.userId === undefined) {
+        //   // id 일치하지 않는 경우 userId = undefined, msg = '입력하신 id 가 일치하지 않습니다.'
+        //   alert("입력하신 id가 일치하지 않습니다.");
+        // } else if (res.data.userId === null) {
+        //   // pw 일치하지 않는 경우 userId = null, msg = '입력하신 pw 가 일치하지 않습니다.'
+        //   alert("입력하신 pw가 일치하지 않습니다.");
+        // } else {
+        //   // id, pw 일치하는 경우 userId = id, msg = '로그인 성공'
+        alert("로그인 성공");
+        sessionStorage.setItem("userKey", res.data.userid);
+        sessionStorage.setItem("userToken", res.data.token);
+        document.location.href = "/";
+        // }
+      })
+      .catch((err) => {
+        alert("id, pw를 확인해주세요!");
+        console.log(err);
+      });
+  };
+
+  const onClickRegister = () => {
+    navigate("/Register");
   };
 
   // // 페이지 렌더링 후 가장 처음 호출되는 함수
@@ -97,7 +103,6 @@ function Login() {
                 </span>
                 <input
                   type="text"
-                  id="sign-in-email"
                   className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                   value={inputId}
                   onChange={handleInputId}
@@ -120,7 +125,6 @@ function Login() {
                 </span>
                 <input
                   type="password"
-                  id="sign-in-email"
                   className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                   value={inputPw}
                   onChange={handleInputPw}
@@ -138,12 +142,13 @@ function Login() {
               </button>
             </div>
             <div className="flex w-full">
-              <Link
-                to="Register"
+              <button
+                type="button"
                 className="py-2 px-4 mt-4  bg-purple-500 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                onClick={onClickRegister}
               >
-                <button type="submit">회원가입</button>
-              </Link>
+                회원가입
+              </button>
             </div>
           </form>
         </div>

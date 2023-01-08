@@ -34,8 +34,8 @@ function Lobby(props: any) {
     document.location.href = "/";
   };
 
-  const handleJoinRoom = (e: any) => {
-    console.log("/room/" + e.target.id);
+  const handleJoinRoom = (e: React.MouseEvent<HTMLLIElement>) => {
+    console.log("/room/" + e.currentTarget.id);
 
     let usersession: string | number | null = sessionStorage.getItem("userKey");
     if (typeof usersession === "string") {
@@ -45,21 +45,19 @@ function Lobby(props: any) {
       return;
     }
 
-    navigate("/room");
-
-    // axios
-    //   .post("/lobby/" + e.target.id, {
-    //     userid: usersession,
-    //     roomid: e.target.id,
-    //   })
-    //   .then((res) => {
-    //     navigate("/room/" + e.target.id);
-    //     sessionStorage.setItem("roomNumber", res.data.userid);
-    //   })
-    //   .catch((err) => {
-    //     alert("방에 참여할 수 없습니다.");
-    //     console.log(err);
-    //   });
+    axios
+      .post("/api/lobby/in", {
+        userid: usersession,
+        roomid: e.currentTarget.id,
+      })
+      .then((res) => {
+        navigate("/room/" + e.currentTarget.id);
+        sessionStorage.setItem("roomNumber", res.data.userid);
+      })
+      .catch((err) => {
+        alert("방에 참여할 수 없습니다.");
+        console.log(err);
+      });
   };
 
   const handleCreateRoom = () => {
@@ -106,7 +104,7 @@ function Lobby(props: any) {
   useEffect(
     () => {
       axios
-        .get("/lobby")
+        .get("/api/lobby")
         .then((res) => {
           setRoomData(res.data);
           console.log(res.data);
@@ -147,9 +145,11 @@ function Lobby(props: any) {
                 >
                   <div className="w-full px-4 pt-3 pb-1 mb-2 bg-white border rounded-md shadow sm:px-6">
                     <h3 className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-4 gap-3">
-                      <div className="text-center">1</div>
-                      <div className="text-center">너만 오면 고</div>
-                      <div className="text-center">픽 모드</div>
+                      <div className="text-center">{room.id}</div>
+                      <div className="text-center">{room.title}</div>
+                      <div className="text-center">
+                        {room.mode ? "픽 모드" : "랜덤 모드"}
+                      </div>
                       <div className="text-center">
                         <span>3</span>
                         <span>/</span>
@@ -167,7 +167,7 @@ function Lobby(props: any) {
                 <div className="w-full px-4 pt-3 pb-1 mb-2 bg-white border rounded-md shadow sm:px-6">
                   <h3 className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-4 gap-3">
                     <div className="text-center">1</div>
-                    <div className="text-center">너만 오면 고</div>
+                    <div className="text-center">ㅋㅋㅋㅋㅋㅋㅋㅋ</div>
                     <div className="text-center">픽 모드</div>
                     <div className="text-center">
                       <span>3</span>
