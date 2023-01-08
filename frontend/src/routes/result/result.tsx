@@ -25,10 +25,10 @@ function Result() {
       </div>
       <div className="w-full">
         <div className="flex flex-row justify-center items-center">
-          <div className="p-3 rounded-md mr-3 w-full flex flex-col justify-center  items-center">
+          <div className="p-3  border border-gray-300 rounded-md mr-3 w-full flex flex-col justify-center  items-center">
             <div className="w-80">
               <div className="w-full p-4">
-                <div className="flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl card">
+                <div className="flex flex-col justify-center p-10 bg-white rounded-lg">
                   <div className="prod-title">
                     <p className="text-2xl font-bold text-gray-900 uppercase text-center"></p>
                   </div>
@@ -46,10 +46,10 @@ function Result() {
               <UserState name="이름" state="Win!"></UserState>
             </div>
           </div>
-          <div className="p-3 rounded-md ml-3 w-full  flex flex-col justify-center  items-center">
+          <div className="p-3 border border-gray-300 rounded-md ml-3 w-full  flex flex-col justify-center  items-center">
             <div className="flex items-center justify-center w-80">
               <div className="w-full p-4">
-                <div className="flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl card">
+                <div className="flex flex-col justify-center p-10 bg-white rounded-lg">
                   <div className="prod-title">
                     <p className="text-2xl font-bold text-gray-900 uppercase text-center"></p>
                   </div>
@@ -63,8 +63,8 @@ function Result() {
               </div>
             </div>
             <div className="flex w-full justify-evenly">
-              <UserState name="이름" state="Win!"></UserState>
-              <UserState name="이름" state="Win!"></UserState>
+              <UserState name="이름" state="lose"></UserState>
+              <UserState name="이름" state="lose"></UserState>
             </div>
           </div>
         </div>
@@ -129,22 +129,24 @@ function Result() {
           </div>
 
           <div className="text-center font-light items-center justify-center">
-            <form className="flex flex-col justify-center w-full max-w-sm space-y-3 md:flex-row md:w-full md:space-x-3 md:space-y-0">
-              <div className="relative">
-                <input
-                  type="text"
-                  id="form-subscribe-Subscribe"
-                  className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-12 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent "
-                  placeholder="채팅"
-                />
-              </div>
-              <button
-                className="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
-                type="submit"
-              >
-                보내기
-              </button>
-            </form>
+            <div className="flex justify-center">
+              <form className="flex flex-col justify-center w-full max-w-sm space-y-3 md:flex-row md:w-full md:space-x-3 md:space-y-0">
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="form-subscribe-Subscribe"
+                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 lg:w-[800px] md:w-[600px] py-2 px-12 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent "
+                    placeholder="채팅"
+                  />
+                </div>
+                <button
+                  className="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
+                  type="submit"
+                >
+                  보내기
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
