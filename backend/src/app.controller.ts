@@ -1,13 +1,9 @@
-import { Get, Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 
-@Controller('api')
+@Controller()
 export class AppController {
   @Get()
-  root() {
-    return {
-      data: {
-        title: 'Chattings',
-      },
-    };
+  getHello() {
+    return 'Hello, world!';
   }
 }

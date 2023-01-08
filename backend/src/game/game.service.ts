@@ -4,6 +4,7 @@ import { Room } from 'src/room/entities/room.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { Game } from './entities/game.entity';
+import { GameUserReadyDto } from './dto/game-user-ready.dto';
 
 @Injectable()
 export class GameService {
@@ -16,51 +17,75 @@ export class GameService {
     private userRepository: Repository<User>,
   ) {}
 
-  async userReady(id: number, userId: string) {
-    const oldgame = await this.gameRepository.findOne({
-      where: { id: id },
+  async userReady(gameUserReadyDto: GameUserReadyDto) {
+    const { userid, gameid } = gameUserReadyDto;
+
+    const user = await this.userRepository.findOneBy({ id: userid });
+    if (user.ready == true) {
+      user.ready = false;
+    } else {
+      user.ready = true;
+    }
+    await this.userRepository.save(user);
+
+    const game = await this.gameRepository.findOne({
+      where: { id: gameid },
       relations: ['room'],
     });
 
-    const oldroom = await this.roomRepository.findOne({
-      where: { id: oldgame.room.id },
+    const room = await this.roomRepository.findOne({
+      where: { id: game.room.id },
       relations: ['users'],
     });
-    console.log(oldroom);
-    let endGame = 0;
+    console.log(room);
 
-    for (let i = 0; i < oldroom.users.length; i++) {
-      if (oldroom.users[i].ready === true) {
-        endGame++;
+    let cnt = 0;
+    room.users.forEach((user) => {
+      if (user.ready) {
+        cnt++;
       }
-      if (oldroom.users[i].userid === userId) {
-        if (oldroom.users[i].ready === true) {
-          oldroom.users[i].ready = false;
-          await this.userRepository.save(oldroom.users[i]);
-          return oldroom;
-        }
-        // 만약 기존의 ready 한 유저가 3명이고 현재 유저가 ready를 true로 바꾸면 게임끝.
-        if (endGame == 3) {
-          throw new Error('게임이 끝났습니다.');
-        }
-        oldroom.users[i].ready = true;
-        await this.userRepository.save(oldroom.users[i]);
-      }
-    }
-    return oldroom;
+    });
+
+    return { cnt: cnt };
   }
 
   // 게임 생성과 동시에 room과 game이 연결됨
   async createGame(id: number) {
     const oldgame = await this.gameRepository.create();
-    const oldroom = await this.roomRepository.findOne({ where: { id: id } });
+    const oldroom = await this.roomRepository.findOne({
+      where: { id: id },
+      relations: ['users'],
+    });
+    console.log(oldroom);
+
     oldgame.room = oldroom;
-    const result = await this.gameRepository.save(oldgame);
-    return { gameid: result.id };
+    await this.gameRepository.save(oldgame);
+    console.log(oldgame);
+
+    for (let i = 0; i < oldroom.users.length; i++) {
+      oldroom.users[i].ready = false;
+      await this.userRepository.save(oldroom.users[i]);
+    }
+
+    return { gameid: oldgame.id };
   }
 
   async deleteGame(id: number) {
-    const game = await this.gameRepository.findOne({ where: { id: id } });
+    const game = await this.gameRepository.findOne({
+      where: { id: id },
+      relations: ['room'],
+    });
+
+    const room = await this.roomRepository.findOne({
+      where: { id: game.room.id },
+      relations: ['users'],
+    });
+
+    for (let i = 0; i < room.users.length; i++) {
+      room.users[i].ready = false;
+      await this.userRepository.save(room.users[i]);
+    }
+
     return this.gameRepository.remove(game);
   }
 }
