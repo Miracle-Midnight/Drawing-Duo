@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button, Form, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import axios from "axios";
 import "./login.css";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
@@ -51,6 +51,7 @@ function Login() {
         alert("로그인 성공");
         sessionStorage.setItem("userKey", res.data.data.userid);
         sessionStorage.setItem("userToken", res.data.data.token);
+        sessionStorage.setItem("userNickname", res.data.data.nickname);
         document.location.href = "/";
         // }
       })
@@ -81,7 +82,7 @@ function Login() {
       <div className="flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
         <div>
           <img
-            src="https://github.com/Miracle-Midnight/Drawing-Duo/blob/refactor/ksd/makeLayout/frontend/src/assets/drawing-duo-logo.png?raw=true"
+            src="https://raw.githubusercontent.com/Miracle-Midnight/Drawing-Duo/frontend/frontend/src/assets/drawing-duo-logo.png"
             alt="logo"
           />
         </div>

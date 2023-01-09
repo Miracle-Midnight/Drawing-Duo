@@ -1,4 +1,4 @@
-import { Button, Container, Row, Col, InputGroup, Form } from "react-bootstrap";
+import { Container, InputGroup } from "react-bootstrap";
 import "./register.css";
 import React, { useState } from "react";
 import axios from "axios";
@@ -70,7 +70,7 @@ function Register() {
       <div className="flex flex-col max-w-md px-4 py-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
         <div>
           <img
-            src="https://github.com/Miracle-Midnight/Drawing-Duo/blob/refactor/ksd/makeLayout/frontend/src/assets/drawing-duo-logo.png?raw=true"
+            src="https://raw.githubusercontent.com/Miracle-Midnight/Drawing-Duo/frontend/frontend/src/assets/drawing-duo-logo.png"
             alt="logo"
           />
         </div>

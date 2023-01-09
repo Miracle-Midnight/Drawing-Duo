@@ -28,6 +28,9 @@ export class Room extends BaseEntity {
   @Column()
   status: boolean;
 
+  @Column({ nullable: true })
+  password: string;
+
   @OneToMany(() => User, (user) => user.room)
   users: User[];
 

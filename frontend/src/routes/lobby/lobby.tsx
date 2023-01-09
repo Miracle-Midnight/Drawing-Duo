@@ -52,6 +52,7 @@ function Lobby(props: any) {
     selectedImage,
     selectedImageId,
     joinRoomId,
+    inputCheckPassword,
   ]);
 
   const handleJoinModal = (e: React.MouseEvent<HTMLLIElement>) => {
@@ -79,6 +80,10 @@ function Lobby(props: any) {
   };
 
   const handleCheckingPassword = (e: React.MouseEvent<HTMLLIElement>) => {
+    if (inputCheckPassword === "") {
+      alert("비밀번호를 입력해주세요.");
+      return;
+    }
     if (inputCheckPassword === inputRoomPassword) {
       if (modeSelect === false) {
         setIsActiveJoinRoomSelectImageModal(!isActiveJoinRoomSelectImageModal);
@@ -98,8 +103,6 @@ function Lobby(props: any) {
   };
 
   const handleJoinRoom = () => {
-    console.log("/room/" + joinRoomId);
-
     let usersession: string | number | null = sessionStorage.getItem("userKey");
     if (typeof usersession === "string") {
       usersession = parseInt(usersession);
@@ -107,17 +110,18 @@ function Lobby(props: any) {
       alert("로그인을 해주세요.");
       return;
     }
-    console.log("룸 아이디 : " + joinRoomId);
 
     axios
       .post("/api/lobby/in", {
         userid: usersession,
         roomid: joinRoomId,
         imageid: selectedImageId,
+        password: inputCheckPassword,
       })
       .then((res) => {
         navigate("/room/" + joinRoomId);
-        sessionStorage.setItem("roomNumber", res.data.userid);
+        sessionStorage.setItem("roomid", joinRoomId);
+        sessionStorage.setItem("imageid", selectedImageId);
       })
       .catch((err) => {
         // navigate("/room/" + joinRoomId);
@@ -131,39 +135,74 @@ function Lobby(props: any) {
       alert("방 이름을 입력해주세요.");
       return;
     }
-    if (isOpenRoom === false && inputRoomPassword === "") {
-      alert("비밀번호를 입력해주세요.");
-      return;
-    }
     if (isOpenRoom) {
-      axios
-        .post("/room/" + userid!.toString(), {
-          title: inputRoomName,
-          mode: modeSelect,
-          status: isOpenRoom,
-        })
-        .then((res) => {
-          sessionStorage.setItem("roomNumber", res.data.id);
-          document.location.href = "/room/" + res.data.id;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (modeSelect) {
+        axios
+          .post("/api/room/" + userid!, {
+            title: inputRoomName,
+            mode: modeSelect,
+            status: isOpenRoom,
+          })
+          .then((res) => {
+            sessionStorage.setItem("roomid", res.data.data.roomid);
+            navigate("/room/" + res.data.data.roomid);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else if (!modeSelect) {
+        axios
+          .post("/api/room/" + userid!, {
+            title: inputRoomName,
+            mode: modeSelect,
+            status: isOpenRoom,
+            images: { id: selectedImageId, type: false, image: selectedImage },
+          })
+          .then((res) => {
+            sessionStorage.setItem("roomid", res.data.data.roomid);
+            navigate("/room/" + res.data.data.roomid);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     } else if (!isOpenRoom) {
-      axios
-        .post("/room/" + userid!.toString(), {
-          title: inputRoomName,
-          mode: modeSelect,
-          status: isOpenRoom,
-          password: inputRoomPassword,
-        })
-        .then((res) => {
-          sessionStorage.setItem("roomNumber", res.data.id);
-          document.location.href = "/room/" + res.data.id;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (inputRoomPassword === "") {
+        alert("비밀번호를 입력해주세요.");
+        return;
+      }
+      if (modeSelect) {
+        axios
+          .post("/api/room/" + userid!, {
+            title: inputRoomName,
+            mode: modeSelect,
+            status: isOpenRoom,
+            password: inputCheckPassword,
+          })
+          .then((res) => {
+            sessionStorage.setItem("roomid", res.data.data.roomid);
+            navigate("/room/" + res.data.data.roomid);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else if (!modeSelect) {
+        axios
+          .post("/api/room/" + userid!, {
+            title: inputRoomName,
+            mode: modeSelect,
+            status: isOpenRoom,
+            password: inputCheckPassword,
+            images: { id: selectedImageId, type: false, image: selectedImage },
+          })
+          .then((res) => {
+            sessionStorage.setItem("roomid", res.data.data.roomid);
+            navigate("/room/" + res.data.data.roomid);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     }
   };
 
@@ -308,7 +347,9 @@ function Lobby(props: any) {
                   className="mx-auto object-cover rounded-full h-16 w-16  border-2 border-white "
                 />
               </a>
-              <p className="mt-2 text-xl font-medium text-gray-800 ">Charlie</p>
+              <p className="mt-2 text-xl font-medium text-gray-800 ">
+                {sessionStorage.getItem("userNickname")}
+              </p>
               <p className="mb-4 text-xs text-gray-400">나는야 그림왕</p>
               <button
                 className="p-2 px-4 text-xs text-white bg-gray-500 rounded-full"
@@ -438,7 +479,9 @@ function Lobby(props: any) {
                     <div className="mt-3">사진</div>
                     <InputGroup>
                       <Form.Control
+                        type="image"
                         placeholder="이미지"
+                        src={selectedImage?.toString()}
                         // aria-label="이미지"
                         className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                       />
@@ -492,78 +535,24 @@ function Lobby(props: any) {
 
                 <div className="mt-3">추천 사진</div>
                 <div className="grid grid-cols-4 gap-4">
-                  <div>
-                    <button className="relative">
-                      <img
-                        alt="profil"
-                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
-                        className="object-cover rounded-lg h-16 w-16 "
-                      />
-                    </button>
-                  </div>{" "}
-                  <div>
-                    <button className="relative">
-                      <img
-                        alt="profil"
-                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
-                        className="object-cover rounded-lg h-16 w-16 "
-                      />
-                    </button>
-                  </div>{" "}
-                  <div>
-                    <button className="relative">
-                      <img
-                        alt="profil"
-                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
-                        className="object-cover rounded-lg h-16 w-16 "
-                      />
-                    </button>
-                  </div>{" "}
-                  <div>
-                    <button className="relative">
-                      <img
-                        alt="profil"
-                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
-                        className="object-cover rounded-lg h-16 w-16 "
-                      />
-                    </button>
-                  </div>{" "}
-                  <div>
-                    <button className="relative">
-                      <img
-                        alt="profil"
-                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
-                        className="object-cover rounded-lg h-16 w-16 "
-                      />
-                    </button>
-                  </div>{" "}
-                  <div>
-                    <button className="relative">
-                      <img
-                        alt="profil"
-                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
-                        className="object-cover rounded-lg h-16 w-16 "
-                      />
-                    </button>
-                  </div>{" "}
-                  <div>
-                    <button className="relative">
-                      <img
-                        alt="profil"
-                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
-                        className="object-cover rounded-lg h-16 w-16 "
-                      />
-                    </button>
-                  </div>{" "}
-                  <div>
-                    <button className="relative">
-                      <img
-                        alt="profil"
-                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
-                        className="object-cover rounded-lg h-16 w-16 "
-                      />
-                    </button>
-                  </div>
+                  {joinRoomData.map((image: any) =>
+                    image.type === false ? (
+                      <div key={image.id}>
+                        <button className="relative">
+                          <img
+                            alt="profil"
+                            src={image.image}
+                            id={image.id}
+                            onClick={() => {
+                              setSelectedImage(image.image);
+                              setSelectedImageId(image.id);
+                            }}
+                            className="object-cover rounded-lg h-16 w-16 "
+                          />
+                        </button>
+                      </div>
+                    ) : null
+                  )}
                 </div>
               </Modal.Body>
               <Modal.Footer className="flex">
@@ -657,7 +646,7 @@ function Lobby(props: any) {
                   onClick={handleCheckingPassword}
                   className="py-2 px-4 text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200 justify-center place-self-center"
                 >
-                  선택 완료
+                  입력 완료
                 </li>
               </Modal.Footer>
             </Modal>

@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
@@ -8,6 +7,8 @@ import Login from "./routes/login/login";
 import Lobby from "./routes/lobby/lobby";
 import Register from "./routes/register/register";
 import GameLobby from "./routes/gameLobby/gameLobby";
+import InGame from "./routes/inGame/inGame";
+import Result from "./routes/result/result";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -22,6 +23,8 @@ root.render(
       <Route path="/room" element={<GameLobby />} />
       <Route path="/room/:id" element={<GameLobby />} />
       <Route path="/Register" element={<Register />} />
+      <Route path="/InGame" element={<InGame />} />
+      <Route path="/Result" element={<Result />} />
     </Routes>
   </BrowserRouter>
   // </React.StrictMode>

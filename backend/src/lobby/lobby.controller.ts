@@ -12,7 +12,6 @@ export class LobbyController {
 
   @Post('in')
   inRoom(@Body() enterRoomDto: EnterRoomDto) {
-    console.log(enterRoomDto);
     return this.lobbyService.inRoom(enterRoomDto);
   }
 
