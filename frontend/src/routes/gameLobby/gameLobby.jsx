@@ -18,7 +18,7 @@ function GameLobby() {
   useEffect(() => {
     // todo : 받을대는 new_message
     // todo : 인수는 name, chat
-    socket.on("message", ({ name, message }) => {
+    socket.on("new_message", ({ name, message }) => {
       setChat([...chat, { name, message }]);
     });
   });
@@ -32,8 +32,8 @@ function GameLobby() {
     const { name, message } = state;
     // todo : 세션 스토리지에서 user id 가져오기
     // todo : 보낼때는 submit_message로 보내기
-    
-    socket.emit("message", { name, message });
+
+    socket.emit("submit_message", { name, message });
     setState({ message: "", name });
   };
   const renderChat = () => {
