@@ -2,10 +2,18 @@
 import * as Y from "yjs";
 import { useState, useRef, useEffect, useCallback } from "react";
 /* module from local */
-import { yLines, doc } from "../y";
+import { yLines, provider, undoManager, doc, awareness } from "../y";
+
+interface User {
+  id: number;
+  point: number[];
+  color: string;
+  isActive: boolean;
+}
 
 /* Line을 그리기 위한 hooks 모음 => Canvas component에서 필요한 함수 */
 export function useLines() {
+  const [isSynced, setIsSynced] = useState(false);
   const [lines, setLines] = useState<Y.Map<any>[]>([]); // 전체 lines에 대한 상태
   const rCurrentLine = useRef<Y.Map<any>>(); // useRef를 통해 line값을 component가 사라지기 전까지 보존
 
@@ -38,9 +46,14 @@ export function useLines() {
 
     const yLine = new Y.Map();
 
+    undoManager.stopCapturing();
+
+    const user = awareness.getLocalState() as User;
+
     doc.transact(() => {
       yLine.set("id", id); // render시에 개별 라인마다 key를 주기 위해 사용
       yLine.set("points", yPoints);
+      yLine.set("userColor", user.color);
       yLine.set("isComplete", false);
     });
 
@@ -76,12 +89,46 @@ export function useLines() {
     yLines.delete(0, yLines.length);
   }, []);
 
+  const undoLine = useCallback(() => {
+    undoManager.undo();
+  }, []);
+
+  const redoLine = useCallback(() => {
+    undoManager.redo();
+  }, []);
+
+  useEffect(() => {
+    function handleConnect() {
+      setIsSynced(true);
+      setLines(yLines.toArray());
+    }
+
+    function handleDisconnect() {
+      provider.off("sync", handleConnect);
+      provider.disconnect();
+    }
+
+    window.addEventListener("beforeunload", handleDisconnect);
+
+    provider.on("sync", handleConnect);
+
+    provider.connect();
+
+    return () => {
+      handleDisconnect();
+      window.removeEventListener("beforeunload", handleDisconnect);
+    };
+  }, []);
+
   /* 여기서 정의한 함수를 component안에 도입 */
   return {
+    isSynced,
     lines,
     startLine,
     addPointToLine,
     completeLine,
     clearAllLines,
+    undoLine,
+    redoLine,
   };
 }

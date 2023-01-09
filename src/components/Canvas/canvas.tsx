@@ -1,9 +1,12 @@
 /* library */
-import { useCallback } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 /* module from local */
 import { Line } from "../Line/line";
 import { useLines } from "../../hooks/useLines";
 import { UserCursor } from "../UserCursor/usercursor";
+import { useUsers } from "y-presence";
+import { awareness } from "../../y";
+import { useKeyboardEvents } from "../../hooks/useKeyboradEvents";
 
 const date = new Date();
 
@@ -15,8 +18,20 @@ function getPoint(x: number, y: number) {
 
 /* 화면에 보일 캔버스 그림 정보 */
 export function Canvas() {
+  const users = useUsers(awareness, (state) => state);
   /* lines은 최종 화면에서 선 별로 저장 한 Ymap이다 */
-  const { lines, startLine, addPointToLine, completeLine } = useLines();
+  const {
+    lines,
+    isSynced,
+    startLine,
+    addPointToLine,
+    completeLine,
+    clearAllLines,
+    undoLine,
+    redoLine,
+  } = useLines();
+
+  useKeyboardEvents();
 
   /* 포인터가 눌러지면, 새로운 라인을 시작 */
   const handlePointerDown = useCallback(
@@ -35,6 +50,8 @@ export function Canvas() {
       const point = getPoint(e.clientX, e.clientY);
       // const point = getPoint(e.pageX, e.pageY);
 
+      awareness.setLocalStateField("point", point);
+
       if (e.currentTarget.hasPointerCapture(e.pointerId)) {
         addPointToLine(point);
       }
@@ -52,6 +69,13 @@ export function Canvas() {
     [completeLine]
   );
 
+  const [_, forceUpdate] = useReducer((s) => !s, false);
+
+  useEffect(() => {
+    const timeout = setInterval(forceUpdate, 30);
+    return () => clearInterval(timeout);
+  }, []);
+
   return (
     <div
       style={{
@@ -65,6 +89,9 @@ export function Canvas() {
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
+        onPointerEnter={() => awareness.setLocalStateField("isActive", true)}
+        onPointerLeave={() => awareness.setLocalStateField("isActive", false)}
+        opacity={isSynced ? 1 : 0.2}
         style={{
           width: "100%",
           height: "100vh",
@@ -73,6 +100,50 @@ export function Canvas() {
         {lines.map((line, i) => (
           <Line key={line.get("id")} line={line} />
         ))}
+        {Array.from(users.entries()).map(([key, value]) => {
+          if (key === awareness.clientID) return null;
+          if (!value.point || !value.color || value.isActive === undefined) {
+            return null;
+          }
+          return (
+            <UserCursor
+              key={key}
+              point={
+                value.point as React.ComponentProps<typeof UserCursor>["point"]
+              }
+              isActive={
+                value.isActive as React.ComponentProps<
+                  typeof UserCursor
+                >["isActive"]
+              }
+              color={
+                value.color as React.ComponentProps<typeof UserCursor>["color"]
+              }
+            />
+          );
+        })}
+        {Array.from(users.entries()).map(([key, value]) => {
+          if (key === awareness.clientID) return null;
+          if (!value.point || !value.color || value.isActive === undefined) {
+            return null;
+          }
+          return (
+            <UserCursor
+              key={key}
+              point={
+                value.point as React.ComponentProps<typeof UserCursor>["point"]
+              }
+              isActive={
+                value.isActive as React.ComponentProps<
+                  typeof UserCursor
+                >["isActive"]
+              }
+              color={
+                value.color as React.ComponentProps<typeof UserCursor>["color"]
+              }
+            />
+          );
+        })}
       </svg>
     </div>
   );

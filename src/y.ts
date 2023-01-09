@@ -7,7 +7,7 @@ import { IndexeddbPersistence } from "y-indexeddb";
 export const doc = new Y.Doc();
 
 /* webrtc로 동일한 room에 있는 유저간 doc 동기화 */
-const provider = new WebrtcProvider("test", doc); // webrtc를 활용하여서 사용자와의 연동
+export const provider = new WebrtcProvider("test", doc); // webrtc를 활용하여서 사용자와의 연동
 
 /* 세션을 통해 document정보 유지 */
 const indexeddbProvider = new IndexeddbPersistence("test", doc);
