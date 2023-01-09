@@ -2,6 +2,7 @@ import { Button, Container, Row, Col, InputGroup, Form } from "react-bootstrap";
 import "./inGame.css";
 import Canvas from "../../components/canvas/canvas";
 import UserState from "../../components/userState/userState";
+import InGameCanvas from "../../components/inGameCanvas/inGameCanvas";
 
 function InGame() {
   return (
@@ -25,7 +26,7 @@ function InGame() {
           </div>
         </div>
         <div className="self-center mt-12 mb-12">
-        <UserState name="이름" state="Ready"></UserState>
+          <UserState name="이름" state="Ready"></UserState>
         </div>
         <div>
           <div className="pt-10">
@@ -40,7 +41,9 @@ function InGame() {
           </div>
         </div>
       </div>
-      <canvas className="border border-gray-500 canvas-size "></canvas>
+
+      <InGameCanvas></InGameCanvas>
+
       <div className="flex flex-col">
         <div className="border border-gray-500 shadow-md rounded-lg mb-32">
           <div className=" relative bg-white rounded-lg">
