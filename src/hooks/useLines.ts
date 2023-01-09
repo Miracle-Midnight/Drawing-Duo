@@ -18,7 +18,8 @@ export function useLines() {
       */
       setLines(lines);
     }
-    yLines.observe(handleChange);
+    yLines.observe(handleChange); // 1단계 자식 node만 관찰
+    // yLines.observeDeep(handleChange); // 존재하지 않는 이벤트 핸들러 삭제 시도 에러
 
     return () => yLines.unobserve(handleChange); // component가 사라지면 observe 중지
   }, []);

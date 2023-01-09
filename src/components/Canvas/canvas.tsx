@@ -52,7 +52,6 @@ export function Canvas() {
   );
 
   return (
-    /* div */
     <div
       style={{
         display: "inline-block",

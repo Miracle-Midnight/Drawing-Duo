@@ -18,7 +18,8 @@ export function useLine(line: Y.Map<any>) {
 
     handleChange();
 
-    line.observe(handleChange);
+    line.observe(handleChange); // 유저간 동기적 처리를 위해 observe적용
+    // line.observeDeep(handleChange); // 존재하지 않는 이벤트 핸들러 삭제 시도 에러
 
     return () => {
       line.unobserve(handleChange);
@@ -35,7 +36,8 @@ export function useLine(line: Y.Map<any>) {
 
     handleChange();
 
-    points.observe(handleChange);
+    points.observe(handleChange); // 유저간 동기적 처리를 위해 observe적용
+    // points.observeDeep(handleChange); // 존재하지 않는 이벤트 핸들러 삭제 시도 에러
 
     return () => {
       points.unobserve(handleChange);
