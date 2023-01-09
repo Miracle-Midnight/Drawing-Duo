@@ -8,22 +8,13 @@ const date = new Date();
 
 date.setUTCHours(0, 0, 0, 0);
 
-// /* 게임 시작 부터 현재 시간을 구함 */
-// function getYOffset() {
-//   return (Date.now() - START_TIME) / 100;
-// }
-
-// /* 인자 x와 y을 묶고 y에 게임 시간을 더함 */
-// function getPoint(x: number, y: number) {
-//   return [x, y + getYOffset()];
-// }
-
 function getPoint(x: number, y: number) {
   return [x, y];
 }
 
 /* 화면에 보일 캔버스 그림 정보 */
 export function Canvas() {
+  /* lines은 최종 화면에서 선 별로 저장 한 Ymap이다 */
   const { lines, startLine, addPointToLine, completeLine } = useLines();
 
   /* 포인터가 눌러지면, 새로운 라인을 시작 */
@@ -31,8 +22,8 @@ export function Canvas() {
     (e: React.PointerEvent<SVGSVGElement>) => {
       e.currentTarget.setPointerCapture(e.pointerId);
 
-      // startLine(getPoint(e.clientX, e.clientY)); // yLines에 추가되면서, curRef상태 변환
-      startLine(getPoint(e.pageX, e.pageY)); // yLines에 추가되면서, curRef상태 변환
+      startLine(getPoint(e.clientX, e.clientY)); // 현재 viewport 기준
+      // startLine(getPoint(e.pageX, e.pageY)); // 전체 page 기준(scroll 포함)
     },
     [startLine]
   );
@@ -40,8 +31,8 @@ export function Canvas() {
   /* 포인터가 눌러진 체, 움직이면 추가해준다 */
   const handlePointerMove = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
-      // const point = getPoint(e.clientX, e.clientY);
-      const point = getPoint(e.pageX, e.pageY);
+      const point = getPoint(e.clientX, e.clientY);
+      // const point = getPoint(e.pageX, e.pageY);
 
       if (e.currentTarget.hasPointerCapture(e.pointerId)) {
         addPointToLine(point);

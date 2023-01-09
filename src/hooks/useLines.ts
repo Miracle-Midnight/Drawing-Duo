@@ -13,6 +13,9 @@ export function useLines() {
   useEffect(() => {
     function handleChange() {
       const lines = yLines.toArray();
+      /* ylines에 전제 lines에 대한 정보가 있기에, re-render되어도 
+      lines state에는 전체 lines 값들이 들어간다
+      */
       setLines(lines);
     }
     yLines.observe(handleChange);
@@ -24,7 +27,8 @@ export function useLines() {
   1. 새로운 Y배열을 생성 후, 인자로 주어진 배열을 push한다.
   2. 새로운 Y맵을 생성 후, 시간, Y배열, 완성 여부를 담은 후, doc transaction한다
   (observe로 통해 자동 업데이트가 되지만, 작은 이벤트 하나에 transaction이 발생 할 
-    경우 성능이 느려져서, 하나의 function을 transact()안에 묶어서 업데이트한다)
+    경우 성능이 느려져서, transact()안에 묶어서 업데이트한다)
+   - 인자로 마우스 포인터로 눌른 x좌표,y좌표 값이 배열로 들어온다
   */
   const startLine = useCallback((point: number[]) => {
     const id = Date.now().toString();
@@ -34,7 +38,7 @@ export function useLines() {
     const yLine = new Y.Map();
 
     doc.transact(() => {
-      yLine.set("id", id);
+      yLine.set("id", id); // render시에 개별 라인마다 key를 주기 위해 사용
       yLine.set("points", yPoints);
       yLine.set("isComplete", false);
     });
@@ -44,7 +48,7 @@ export function useLines() {
     yLines.push([yLine]); // 전역 변수로 되어 있는 yLines에 추가하면서, observe안에 함수 발동
   }, []);
 
-  /* 인자로 들어온 point배열을 rCurrentLine에 저장한 points배열 안에 추가한다  */
+  /* 인자로 들어온 point배열을 rCurrentLine안에 있는 points배열 안에 추가하여 선을 그린다  */
   const addPointToLine = (point: number[]) => {
     const currentLine = rCurrentLine.current; // ex) {{'id':'23/1/7'},{'points': [[132,132,0.5],[232,232,0.5],[332,332,0.5]]},{'isCompleted':false}}
 
@@ -62,6 +66,7 @@ export function useLines() {
     const currentLine = rCurrentLine.current;
     if (!currentLine) return;
 
+    rCurrentLine.current?.set("isComplete", true);
     rCurrentLine.current = undefined;
   }, []);
 

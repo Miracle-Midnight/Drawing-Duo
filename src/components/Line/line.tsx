@@ -16,10 +16,12 @@ memo를 활용하여서, 부모 component가 re-render되었을때, 자식 compo
 
 만약 props가 object라면, re-render시에 주소값이 변경되면서 자식 component도 실행됨
 고로 object이 props로 온다면, useMemo를 사용해서, 해당 object을 메모리에 보존&전달
+
+- 인자로 point와 complete의 Ymap이 들어온다
 */
 export const Line = memo(function Line({ line }: LineProps) {
   const { points, isComplete } = useLine(line);
-
   const pathData = getSvgPathFromStroke(getStroke(points));
+
   return <path d={pathData} />;
 });

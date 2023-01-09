@@ -1,46 +1,20 @@
-# Getting Started with Create React App
+## 게임 로직 실행 과정
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 초기
 
-## Available Scripts
+- react가 실행되면서, ydoc이 생성되고 cavas component가 render
+- 전역 변수로 선언된 ylines은 cavas component안에서 observe를 실행시켜서 변화 callback함수 실행
 
-In the project directory, you can run:
+### 그리기
 
-### `npm start`
+- svg 위에 포인터 down
+  - startline 시작, ylines안에 yline 삽입(id, ypoints, iscomplete)
+- svg 위에 포인터 move
+  - addpointline 시작, ref에 저장된 line객체가 있는지 확인 후, ref안에 있는 ypoints안에 [x,y]값 삽입
+- svg 위에 포인터 up
+  - completeline 시작, ref에 저장된 iscomplete을 true로 변환 후, undefined
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 화면 렌더링
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- ylines 값은 lines state에 업데이트
+- canvas component의 반환 값으로 line component안에 lines 정보를 주고, 루프를 돌면서 path생성
