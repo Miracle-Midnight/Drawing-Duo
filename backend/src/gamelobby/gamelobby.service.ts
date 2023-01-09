@@ -28,7 +28,7 @@ export class GamelobbyService {
 
     const room = await this.roomRepository.findOne({
       where: { id: roomid },
-      relations: ['users'],
+      relations: ['users', 'images'],
     });
     console.log(room);
 

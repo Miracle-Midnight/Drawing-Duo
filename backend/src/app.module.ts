@@ -13,9 +13,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 // import { ConfigModule } from '@nestjs/config';
 // import { typeOrmConfig } from './config/typeorm.config';
 import { dataSourceOptions } from 'db/data-source';
-import { ChatsModule } from './chats/chats.module';
+import { ChatsAndDrawModule } from './gateway/gateway.module';
 
-import { DrawGatewayModule } from './gateway/draw.gateway/draw.gateway.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
@@ -35,8 +34,7 @@ import { MiddlewareConsumer, NestModule } from '@nestjs/common';
     //   isGlobal: true,
     // }),
     TypeOrmModule.forRoot(dataSourceOptions),
-    ChatsModule,
-    DrawGatewayModule,
+    ChatsAndDrawModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
       exclude: ['/api*'],

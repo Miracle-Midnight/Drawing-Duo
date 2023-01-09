@@ -30,9 +30,9 @@ export class RoomService {
       where: { id },
       relations: ['profile'],
     });
-    // if (!user) {
-    //   throw new NotFoundException('유저가 존재하지 않습니다.');
-    // }
+    if (!user) {
+      throw new NotFoundException('유저가 존재하지 않습니다.');
+    }
 
     newRoom.users = [user];
     await this.roomRepository.save(newRoom);
@@ -49,6 +49,10 @@ export class RoomService {
 
   async deleteRoom(id: number) {
     const room = await this.roomRepository.findOneBy({ id });
+    if (!room) {
+      throw new NotFoundException('방이 존재하지 않습니다.');
+    }
+
     return this.roomRepository.remove(room);
   }
 }
