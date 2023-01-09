@@ -1,14 +1,15 @@
 .lobby-container {
   display: flex;
   justify-content: center;
-  padding-top: 100px;
+  padding-top: 6.25rem;
   height: 100vh;
   width: 100vw;
 }
-
+.container {
+  width: 43.75rem;
+}
 .room-container {
-  width: 700px;
-  height: 500px;
+  height: 31.25rem;
   overflow: auto;
 }
 

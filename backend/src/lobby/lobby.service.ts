@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Room } from 'src/room/entities/room.entity';
 import { User } from 'src/user/entities/user.entity';
@@ -30,7 +30,7 @@ export class LobbyService {
       relations: ['users'],
     });
     if (checkUser.users.length >= 4) {
-      return { success: false, message: '방이 꽉 찼습니다.' };
+      throw new ForbiddenException('방이 꽉 찼습니다.');
     }
 
     // room에 image 추가
@@ -41,11 +41,11 @@ export class LobbyService {
 
     const image = await this.imageRepository.findOneBy({ id: imageid });
     // image 중복 체크
-    for (let i = 0; i < targetRoom.images.length; i++) {
-      if (targetRoom.images[i].id == image.id) {
-        return { success: false, message: '이미 선택한 이미지입니다.' };
-      }
-    }
+    // for (let i = 0; i < targetRoom.images.length; i++) {
+    //   if (targetRoom.images[i].id == image.id) {
+    //     throw new ForbiddenException('이미 선택된 이미지입니다.');
+    //   }
+    // }
 
     targetRoom.images = [...targetRoom.images, image];
     await this.roomRepository.save(targetRoom);
@@ -67,6 +67,7 @@ export class LobbyService {
       where: { id: userid },
       relations: ['room', 'profile'],
     });
+
     userinfo.ready = false;
     userinfo.room = null;
     await this.userRepository.save(userinfo);
@@ -80,6 +81,7 @@ export class LobbyService {
     targetRoom.images = targetRoom.images.filter((img) => img.id !== image.id);
     await this.roomRepository.save(targetRoom);
     console.log(targetRoom);
+
     return { userNickName: userinfo.profile.nickname, selectImage: image };
   }
 }

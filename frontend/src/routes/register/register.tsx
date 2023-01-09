@@ -9,7 +9,7 @@ function Register() {
   const [inputPw, setInputPw] = useState("");
   const [inputPwCheck, setInputPwCheck] = useState("");
   const [inputNickname, setInputNickname] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
+  const formData = new FormData();
 
   const handleInputId = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputId(e.target.value);
@@ -27,8 +27,8 @@ function Register() {
     setInputNickname(e.target.value);
   };
 
-  const handleInputEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputEmail(e.target.value);
+  const handleUploadImage = (e: any) => {
+    formData.append("image", e.target.files[0]);
   };
 
   const onClickRegister = () => {
@@ -38,23 +38,27 @@ function Register() {
       alert("입력하신 pw가 유효하지 않습니다.");
     } else if (inputPwCheck !== inputPw) {
       alert("입력하신 pw가 일치하지 않습니다.");
-      // } else if (inputNickname === "") {
-      //   alert("입력하신 닉네임이 유효하지 않습니다.");
+    } else if (inputNickname === "") {
+      alert("입력하신 닉네임이 유효하지 않습니다.");
       // } else if (inputEmail === "") {
       //   alert("입력하신 이메일이 유효하지 않습니다.");
     } else {
+      formData.append("userid", inputId);
+      formData.append("password", inputPw);
+      formData.append("nickname", inputNickname);
+
       axios
-        .post("/api/users/signup", {
-          userid: inputId,
-          password: inputPw,
-          // nickname: inputNickname,
-          // email: inputEmail,
+        .post("/api/users/signup", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         })
         .then((res) => {
           alert("회원가입 성공");
           document.location.href = "/";
         })
         .catch((err) => {
+          alert("회원가입 실패");
           console.log(err);
         });
     }
@@ -130,32 +134,39 @@ function Register() {
                 />
               </div>
             </div>
-            <InputGroup className="mb-3">
-              <Form.Control
+            <form encType="multipart/form-data" onChange={handleUploadImage}>
+              <InputGroup className="mb-3">
+                {/* <Form.Control
                 placeholder="이미지"
                 // aria-label="이미지"
                 className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
               />
               <Button variant="outline-secondary" id="button-addon2">
                 이미지 업로드
-              </Button>
-            </InputGroup>
+              </Button> */}
+                <input
+                  className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                  type="file"
+                  accept="image/jpg, image/jpeg, image/png"
+                />
+              </InputGroup>
 
-            <div className="flex w-full my-4">
-              <Link
-                to="/"
-                className="py-2 px-4 mr-2  bg-gray-700 hover:bg-gray-500 focus:ring-gray-300 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-              >
-                <button type="submit">취소</button>
-              </Link>
-              <button
-                type="button"
-                className="py-2 px-4 ml-2 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                onClick={onClickRegister}
-              >
-                회원 가입
-              </button>
-            </div>
+              <div className="flex w-full my-4">
+                <Link
+                  to="/"
+                  className="py-2 px-4 mr-2  bg-gray-700 hover:bg-gray-500 focus:ring-gray-300 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                >
+                  <button type="submit">취소</button>
+                </Link>
+                <button
+                  type="button"
+                  className="py-2 px-4 ml-2 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                  onClick={onClickRegister}
+                >
+                  회원 가입
+                </button>
+              </div>
+            </form>
           </form>
         </div>
       </div>

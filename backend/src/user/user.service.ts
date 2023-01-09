@@ -9,6 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { Image } from 'src/room/entities/image.entity';
 
 import { Profile } from './entities/profile.entity';
+import { ForbiddenException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class UserService {
@@ -36,8 +37,8 @@ export class UserService {
       where: { userid: userDto.userid },
     });
 
-    if (isUserExist != undefined) {
-      throw new Error('이미 존재하는 아이디입니다.');
+    if (isUserExist) {
+      throw new ForbiddenException('이미 존재하는 아이디입니다.');
     }
 
     // 유저 정보 생성 및 저장.

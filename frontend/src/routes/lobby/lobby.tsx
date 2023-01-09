@@ -10,14 +10,31 @@ function Lobby(props: any) {
   const isLogin: boolean = props.isLogin;
   const userid: string | null = sessionStorage.getItem("userKey");
 
-  const [inputRoomName, setInputRoomName] = useState<string>("");
-  const [isOpenRoom, setIsOpenRoom] = useState<boolean>(true);
-  const [modeSelect, setModeSelect] = useState<boolean>(true);
-  const [isActiveCreateRoomModal, setIsActiveCreateRoomModal] =
+  const [inputCheckPassword, setInputCheckPassword] = useState<string>(""); // 방 비밀번호 확인
+  const [inputRoomName, setInputRoomName] = useState<string>(""); // 방 이름
+  const [inputRoomPassword, setInputRoomPassword] = useState<string>(""); // 방 비밀번호
+  const [isOpenRoom, setIsOpenRoom] = useState<boolean>(); // 방 공개여부
+  const [modeSelect, setModeSelect] = useState<boolean>(); // 방 모드 선택
+  const [isActiveCreateRoomModal, setIsActiveCreateRoomModal] = // 방 만들기 모달창
     useState<boolean>(false);
-  const [isActiveSelectImageModal, setisActiveSelectImageModal] =
+  const [isActiveSelectImageModal, setisActiveSelectImageModal] = // 방 만들기 시 이미지 선택 모달창
     useState<boolean>(false);
-  const [roomData, setRoomData] = useState([]);
+  const [roomData, setRoomData] = useState([]); // 페이지 로딩 시 받아온 방 정보 저장
+  const [joinRoomData, setJoinRoomData] = useState([]); // 방에 입장 시 받아온 방 정보 저장
+  const [joinRoomId, setJoinRoomId] = useState<string>(""); // 입장 할 방 id 저장
+  const [selectedImage, setSelectedImage] = useState<
+    string | ArrayBuffer | null
+  >(
+    "https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+  );
+  const [selectedImageId, setSelectedImageId] = useState<string>("");
+
+  const [isActiveInputRoomPasswordModal, setIsActiveInputRoomPasswordModal] = // 방 비밀번호 입력 모달창
+    useState<boolean>(false);
+  const [
+    isActiveJoinRoomSelectImageModal,
+    setIsActiveJoinRoomSelectImageModal,
+  ] = useState<boolean>(false); // 대기방 진입 시 이미지 선택 모달창
 
   const onClickCreateRoomModal = () => {
     setIsActiveCreateRoomModal(!isActiveCreateRoomModal);
@@ -27,6 +44,52 @@ function Lobby(props: any) {
     setisActiveSelectImageModal(!isActiveSelectImageModal);
   };
 
+  useEffect(() => {}, [
+    inputRoomName,
+    modeSelect,
+    isOpenRoom,
+    inputRoomPassword,
+    selectedImage,
+    selectedImageId,
+    joinRoomId,
+  ]);
+
+  const handleJoinModal = (e: React.MouseEvent<HTMLLIElement>) => {
+    roomData.map((room: any) => {
+      if (room.id == e.currentTarget.id) {
+        setJoinRoomId(room.id);
+        setInputRoomName(room.title);
+        setModeSelect(room.mode);
+        setIsOpenRoom(room.status);
+        if (room.status === false) {
+          setInputRoomPassword(room.password);
+        }
+
+        if (room.status === false) {
+          setIsActiveInputRoomPasswordModal(!isActiveInputRoomPasswordModal);
+        } else if (room.status === true && room.mode === false) {
+          setIsActiveJoinRoomSelectImageModal(
+            !isActiveJoinRoomSelectImageModal
+          );
+        } else if (room.status === true && room.mode === true) {
+          handleJoinRoom();
+        }
+      }
+    });
+  };
+
+  const handleCheckingPassword = (e: React.MouseEvent<HTMLLIElement>) => {
+    if (inputCheckPassword === inputRoomPassword) {
+      if (modeSelect === false) {
+        setIsActiveJoinRoomSelectImageModal(!isActiveJoinRoomSelectImageModal);
+      } else if (modeSelect === true) {
+        handleJoinRoom();
+      }
+    } else {
+      alert("비밀번호가 일치하지 않습니다.");
+    }
+  };
+
   const onClickLogout = () => {
     sessionStorage.removeItem("userKey");
     sessionStorage.removeItem("userToken");
@@ -34,8 +97,8 @@ function Lobby(props: any) {
     document.location.href = "/";
   };
 
-  const handleJoinRoom = (e: React.MouseEvent<HTMLLIElement>) => {
-    console.log("/room/" + e.currentTarget.id);
+  const handleJoinRoom = () => {
+    console.log("/room/" + joinRoomId);
 
     let usersession: string | number | null = sessionStorage.getItem("userKey");
     if (typeof usersession === "string") {
@@ -44,17 +107,20 @@ function Lobby(props: any) {
       alert("로그인을 해주세요.");
       return;
     }
+    console.log("룸 아이디 : " + joinRoomId);
 
     axios
       .post("/api/lobby/in", {
         userid: usersession,
-        roomid: e.currentTarget.id,
+        roomid: joinRoomId,
+        imageid: selectedImageId,
       })
       .then((res) => {
-        navigate("/room/" + e.currentTarget.id);
+        navigate("/room/" + joinRoomId);
         sessionStorage.setItem("roomNumber", res.data.userid);
       })
       .catch((err) => {
+        // navigate("/room/" + joinRoomId);
         alert("방에 참여할 수 없습니다.");
         console.log(err);
       });
@@ -65,39 +131,78 @@ function Lobby(props: any) {
       alert("방 이름을 입력해주세요.");
       return;
     }
-    axios
-      .post("/room/" + userid!.toString(), {
-        title: inputRoomName,
-        mode: modeSelect,
-        status: isOpenRoom,
-      })
-      .then((res) => {
-        sessionStorage.setItem("roomNumber", res.data.id);
-        document.location.href = "/room/" + res.data.id;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (isOpenRoom === false && inputRoomPassword === "") {
+      alert("비밀번호를 입력해주세요.");
+      return;
+    }
+    if (isOpenRoom) {
+      axios
+        .post("/room/" + userid!.toString(), {
+          title: inputRoomName,
+          mode: modeSelect,
+          status: isOpenRoom,
+        })
+        .then((res) => {
+          sessionStorage.setItem("roomNumber", res.data.id);
+          document.location.href = "/room/" + res.data.id;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (!isOpenRoom) {
+      axios
+        .post("/room/" + userid!.toString(), {
+          title: inputRoomName,
+          mode: modeSelect,
+          status: isOpenRoom,
+          password: inputRoomPassword,
+        })
+        .then((res) => {
+          sessionStorage.setItem("roomNumber", res.data.id);
+          document.location.href = "/room/" + res.data.id;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const handleInputRoomName = (e: any) => {
     setInputRoomName(e.target.value);
   };
 
-  const handleOpenRoom = (e: any) => {
+  const handleOpenRoom = () => {
     setIsOpenRoom(true);
   };
 
-  const handleCloseRoom = (e: any) => {
+  const handleCloseRoom = () => {
     setIsOpenRoom(false);
   };
 
-  const handleRandomMode = (e: any) => {
+  const handleRandomMode = () => {
     setModeSelect(true);
   };
 
-  const handlePickMode = (e: any) => {
+  const handlePickMode = () => {
     setModeSelect(false);
+  };
+
+  const handleInputRoomPassword = (e: any) => {
+    setInputRoomPassword(e.target.value);
+  };
+
+  const handleInputCheckRoomPassword = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setInputCheckPassword(e.target.value);
+  };
+
+  const handleCheckPasswordModal = () => {
+    setIsActiveInputRoomPasswordModal(!isActiveInputRoomPasswordModal);
+  };
+
+  const handleJoinRoomSelectImageModal = () => {
+    setIsActiveJoinRoomSelectImageModal(!isActiveJoinRoomSelectImageModal);
   };
 
   // 페이지 렌더링 후 가장 처음 호출되는 함수
@@ -106,19 +211,24 @@ function Lobby(props: any) {
       axios
         .get("/api/lobby")
         .then((res) => {
-          setRoomData(res.data);
-          console.log(res.data);
+          setRoomData(res.data.data);
+          console.log(res.data.data);
         })
         .catch();
+
+      axios
+        .get("/api/room")
+        .then((res) => {
+          console.log(res.data.data);
+          setJoinRoomData(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     // 페이지 호출 후 처음 한번만 호출될 수 있도록 [] 추가
     []
   );
-
-  const isOpens = [
-    { name: "공개", value: "1" },
-    { name: "비공개", value: "2" },
-  ];
 
   const navigate = useNavigate();
 
@@ -134,12 +244,13 @@ function Lobby(props: any) {
               <div className="text-center">현재 인원</div>
             </h3>
           </div>
+
           <div className="room-container w-full">
             <ul className=" flex flex-col ">
               {roomData.map((room: any) => (
                 <li
                   className="flex flex-row mb-2 border-gray-400 "
-                  onClick={handleJoinRoom}
+                  onClick={handleJoinModal}
                   key={room.id}
                   id={room.id}
                 >
@@ -148,7 +259,7 @@ function Lobby(props: any) {
                       <div className="text-center">{room.id}</div>
                       <div className="text-center">{room.title}</div>
                       <div className="text-center">
-                        {room.mode ? "픽 모드" : "랜덤 모드"}
+                        {room.mode ? "랜덤 모드" : "픽 모드"}
                       </div>
                       <div className="text-center">
                         <span>3</span>
@@ -159,10 +270,9 @@ function Lobby(props: any) {
                   </div>
                 </li>
               ))}
-
               <li
                 className="flex flex-row mb-2 border-gray-400 "
-                onClick={handleJoinRoom}
+                onClick={handleJoinModal}
               >
                 <div className="w-full px-4 pt-3 pb-1 mb-2 bg-white border rounded-md shadow sm:px-6">
                   <h3 className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-4 gap-3">
@@ -181,6 +291,7 @@ function Lobby(props: any) {
           </div>
         </div>
       </div>
+
       <div className="flex content-between">
         <div className="flex flex-col">
           <div className="bg-white shadow-lg rounded-2xl w-80 ">
@@ -205,6 +316,7 @@ function Lobby(props: any) {
               >
                 로그아웃
               </button>
+
               <div className="pt-3">
                 <button className="p-2 px-4 text-xs text-white bg-purple-500 rounded-full">
                   프로필 수정
@@ -244,6 +356,7 @@ function Lobby(props: any) {
                     className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                     name="room"
                     placeholder="아무나 들어와~"
+                    onChange={handleInputRoomName}
                   />
                 </div>
                 <div>
@@ -304,39 +417,47 @@ function Lobby(props: any) {
                     비공개
                   </button>
                 </div>
-                <div className=" relative mb-3">
-                  <label className="text-gray-700">
-                    비밀번호
-                    <span className="text-red-500 required-dot">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                    name="room"
-                    placeholder="비밀번호 입력"
-                  />
-                </div>
-                <div className="mt-3">사진</div>
-                <InputGroup>
-                  <Form.Control
-                    placeholder="이미지"
-                    // aria-label="이미지"
-                    className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                  />
-                  <Button
-                    variant="outline-secondary"
-                    id="button-addon2"
-                    onClick={onClickSelectImageModal}
-                  >
-                    이미지 선택
-                  </Button>
-                </InputGroup>
+
+                {!isOpenRoom && (
+                  <div className=" relative mb-3">
+                    <label className="text-gray-700">
+                      비밀번호
+                      <span className="text-red-500 required-dot">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                      name="room"
+                      placeholder="비밀번호 입력"
+                      onChange={handleInputRoomPassword}
+                    />
+                  </div>
+                )}
+                {!modeSelect && (
+                  <div>
+                    <div className="mt-3">사진</div>
+                    <InputGroup>
+                      <Form.Control
+                        placeholder="이미지"
+                        // aria-label="이미지"
+                        className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                      />
+                      <Button
+                        variant="outline-secondary"
+                        id="button-addon2"
+                        onClick={onClickSelectImageModal}
+                      >
+                        이미지 선택
+                      </Button>
+                    </InputGroup>
+                  </div>
+                )}
               </Modal.Body>
               <Modal.Footer className="flex">
                 <button
                   type="button"
                   className="py-2 px-4 text-white rounded-lg bg-gray-500 justify-center place-self-center"
-                  onClick={onClickSelectImageModal}
+                  onClick={onClickCreateRoomModal}
                 >
                   취소
                 </button>
@@ -350,7 +471,6 @@ function Lobby(props: any) {
                 </button>
               </Modal.Footer>
             </Modal>
-
             <Modal
               show={isActiveSelectImageModal}
               onHide={onClickSelectImageModal}
@@ -362,91 +482,91 @@ function Lobby(props: any) {
               <Modal.Body>
                 <div className="mt-3">선택한 사진</div>
 
-                <a href="#" className="relative block">
+                <div className="relative block">
                   <img
                     alt="profil"
-                    src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                    src={selectedImage?.toString()}
                     className="ml-3 object-cover rounded-lg h-16 w-16 "
                   />
-                </a>
+                </div>
 
                 <div className="mt-3">추천 사진</div>
                 <div className="grid grid-cols-4 gap-4">
                   <div>
-                    <a href="#" className="relative">
-                      <img
-                        alt="profil"
-                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
-                        className=" object-cover rounded-lg h-16 w-16 "
-                      />
-                    </a>
-                  </div>
-
-                  <div>
-                    <a href="#" className="relative">
+                    <button className="relative">
                       <img
                         alt="profil"
                         src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
                         className="object-cover rounded-lg h-16 w-16 "
                       />
-                    </a>
-                  </div>
+                    </button>
+                  </div>{" "}
                   <div>
-                    <a href="#" className="relative">
+                    <button className="relative">
                       <img
                         alt="profil"
                         src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
                         className="object-cover rounded-lg h-16 w-16 "
                       />
-                    </a>
-                  </div>
+                    </button>
+                  </div>{" "}
                   <div>
-                    <a href="#" className="relative">
+                    <button className="relative">
                       <img
                         alt="profil"
                         src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
                         className="object-cover rounded-lg h-16 w-16 "
                       />
-                    </a>
-                  </div>
+                    </button>
+                  </div>{" "}
                   <div>
-                    <a href="#" className="relative">
+                    <button className="relative">
                       <img
                         alt="profil"
                         src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
                         className="object-cover rounded-lg h-16 w-16 "
                       />
-                    </a>
-                  </div>
+                    </button>
+                  </div>{" "}
                   <div>
-                    <a href="#" className="relative">
+                    <button className="relative">
                       <img
                         alt="profil"
                         src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
                         className="object-cover rounded-lg h-16 w-16 "
                       />
-                    </a>
-                  </div>
+                    </button>
+                  </div>{" "}
                   <div>
-                    <a href="#" className="relative">
+                    <button className="relative">
                       <img
                         alt="profil"
                         src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
                         className="object-cover rounded-lg h-16 w-16 "
                       />
-                    </a>
+                    </button>
+                  </div>{" "}
+                  <div>
+                    <button className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </button>
+                  </div>{" "}
+                  <div>
+                    <button className="relative">
+                      <img
+                        alt="profil"
+                        src="https://news.nateimg.co.kr/orgImg/st/2020/07/09/1594284934_20191217153319-299.jpg"
+                        className="object-cover rounded-lg h-16 w-16 "
+                      />
+                    </button>
                   </div>
                 </div>
               </Modal.Body>
               <Modal.Footer className="flex">
-                <button
-                  type="button"
-                  className="py-2 px-4 text-white rounded-lg bg-gray-500 justify-center place-self-center"
-                  onClick={onClickSelectImageModal}
-                >
-                  이미지 업로드
-                </button>
-
                 <button
                   type="button"
                   className="py-2 px-4 text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200 justify-center place-self-center"
@@ -456,193 +576,95 @@ function Lobby(props: any) {
                 </button>
               </Modal.Footer>
             </Modal>
+            {/* 대기방 진입 시 이미지선택--------------------------------------------------------------------------------- */}
+            <Modal
+              show={isActiveJoinRoomSelectImageModal}
+              onHide={handleJoinRoomSelectImageModal}
+              animation={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>이미지 선택</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="mt-3">선택한 사진</div>
+
+                <div className="relative block">
+                  <img
+                    alt="profil"
+                    src={selectedImage?.toString()}
+                    className="ml-3 object-cover rounded-lg h-16 w-16 "
+                  />
+                </div>
+
+                <div className="mt-3">추천 사진</div>
+                <div className="grid grid-cols-4 gap-4">
+                  {joinRoomData.map((image: any) =>
+                    image.type === false ? (
+                      <div key={image.id}>
+                        <button className="relative">
+                          <img
+                            alt="profil"
+                            src={image.image}
+                            id={image.id}
+                            onClick={() => {
+                              setSelectedImage(image.image);
+                              setSelectedImageId(image.id);
+                            }}
+                            className="object-cover rounded-lg h-16 w-16 "
+                          />
+                        </button>
+                      </div>
+                    ) : null
+                  )}
+                </div>
+              </Modal.Body>
+              <Modal.Footer className="flex">
+                <li
+                  onClick={handleJoinRoom}
+                  className="py-2 px-4 text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200 justify-center place-self-center"
+                >
+                  선택 완료
+                </li>
+              </Modal.Footer>
+            </Modal>
+
+            {/* 대기방 진입 시 비밀번호 입력 모달----------------------------------------------- */}
+            <Modal
+              show={isActiveInputRoomPasswordModal}
+              onHide={handleCheckPasswordModal}
+              animation={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>비밀번호 입력</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className=" relative mb-3">
+                  <label className="text-gray-700">
+                    방 제목
+                    <span className="text-red-500 required-dot">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    name="room"
+                    placeholder="비밀번호를 입력해주세요."
+                    onChange={handleInputCheckRoomPassword}
+                  />
+                </div>
+              </Modal.Body>
+              <Modal.Footer className="flex">
+                <li
+                  onClick={handleCheckingPassword}
+                  className="py-2 px-4 text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200 justify-center place-self-center"
+                >
+                  선택 완료
+                </li>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       </div>
     </Container>
-
-    // // 전체 화면을 채우는 div 태그
-    // <div>
-    //   <div className="logoutLine">
-    //     <Container fluid>
-    //       <Row>
-    //         <Col>
-    //           <h2>Lobby 페이지!!!</h2>
-    //         </Col>
-    //         <Col className="text-lg-end">
-    //           <Button className="logoutButton" onClick={onClickLogout}>
-    //             로그아웃
-    //           </Button>
-    //         </Col>
-    //       </Row>
-    //     </Container>
-    //   </div>
-    //   <div className="roomListLine">
-    //     <Row>
-    //       <Col>
-    //         <Container fluid className="roomList">
-    //           <Row className="roomMenuLine">
-    //             <Col sm={1}>No.</Col>
-    //             <Col sm={7}>방 제목</Col>
-    //             <Col sm={2}>모드</Col>
-    //             <Col sm={2}>공개 여부</Col>
-    //           </Row>
-    //           <div className="roomListScroll">
-    //             {roomData.map((room: any) => (
-    //               <div key={room.id} className="roomListCss">
-    //                 <Row>
-    //                   <Col sm={1}>{room.id}</Col>
-    //                   <Col sm={7}>{room.title}</Col>
-    //                   <Col sm={1}>{room.mode}</Col>
-    //                   <Col sm={1}>{room.status}</Col>
-    //                   <Col sm={1}>
-    //                     {/* <Link
-    //                       key={room.id}
-    //                       onClick={handleJoinRoom}
-    //                       // to={"/room"}
-    //                       to={"/room/" + room.id}
-    //                     > */}
-    //                     <Button
-    //                       key={room.id}
-    //                       id={room.id}
-    //                       onClick={handleJoinRoom}
-    //                       type="button"
-    //                     >
-    //                       입장
-    //                     </Button>
-    //                     {/* </Link> */}
-    //                   </Col>
-    //                 </Row>
-    //               </div>
-    //             ))}
-
-    //             <div className="roomListCss">
-    //               <Row>
-    //                 <Col sm={1}>1</Col>
-    //                 <Col sm={7}>방 제목</Col>
-    //                 <Col sm={1}>뭐요</Col>
-    //                 <Col sm={1}>ㄱㄱ</Col>
-    //                 <Col sm={1}>
-    //                   <Button onClick={handleJoinRoom} type="button">
-    //                     입장
-    //                   </Button>
-    //                 </Col>
-    //               </Row>
-    //             </div>
-    //           </div>
-    //         </Container>
-    //       </Col>
-    //       <Col className="profileLine">
-    //         <Container className="profile"></Container>
-    //         <Container className="createRoom">
-    //           <Button
-    //             type="button"
-    //             className="createRoomButton"
-    //             onClick={onClickModalOn}
-    //           >
-    //             방 만들기
-    //           </Button>
-
-    //           <Modal show={isActive} onHide={onClickModalOff}>
-    //             <Modal.Header closeButton>
-    //               <Modal.Title>Modal heading</Modal.Title>
-    //             </Modal.Header>
-    //             <Modal.Body>
-    //               <div>
-    //                 방 제목
-    //                 <br />
-    //                 <input
-    //                   onChange={handleInputRoomName}
-    //                   type="text"
-    //                   className="w-100"
-    //                 />
-    //               </div>
-    //               <br />
-    //               공개 여부
-    //               <br />
-    //               <div>
-    //                 <ButtonGroup className="w-100">
-    //                   {isOpens.map((radio, idx) => (
-    //                     <ToggleButton
-    //                       key={idx}
-    //                       id={`radio-${idx}`}
-    //                       type="radio"
-    //                       variant={
-    //                         idx % 2 ? "outline-danger" : "outline-success"
-    //                       }
-    //                       name="radio"
-    //                       value={radio.value}
-    //                       checked={
-    //                         +isOpenRoom === (radio.value as unknown as number)
-    //                       }
-    //                       onChange={(e) =>
-    //                         setIsOpenRoom(
-    //                           e.currentTarget.value as unknown as boolean
-    //                         )
-    //                       }
-    //                     >
-    //                       {radio.name}
-    //                     </ToggleButton>
-    //                   ))}
-    //                 </ButtonGroup>
-    //               </div>
-    //               <br />
-    //               <div>
-    //                 모드 선택
-    //                 <br />
-    //                 <ToggleButtonGroup
-    //                   type="radio"
-    //                   name="options"
-    //                   defaultValue={1}
-    //                   className="w-100"
-    //                 >
-    //                   <ToggleButton
-    //                     variant="outline-primary"
-    //                     id="tbg-radio-1"
-    //                     value={1}
-    //                     onClick={handleRandomMode}
-    //                   >
-    //                     랜덤 모드
-    //                   </ToggleButton>
-    //                   <ToggleButton
-    //                     variant="outline-primary"
-    //                     id="tbg-radio-2"
-    //                     value={2}
-    //                     onClick={handlePickMode}
-    //                   >
-    //                     픽 모드
-    //                   </ToggleButton>
-    //                 </ToggleButtonGroup>
-    //               </div>
-    //               <br />
-    //               <div>
-    //                 사진 선택
-    //                 <br />
-    //                 <Button className="w-100" variant="primary">
-    //                   사진
-    //                 </Button>
-    //               </div>
-    //             </Modal.Body>
-    //             <Modal.Footer>
-    //               <Button
-    //                 variant="primary"
-    //                 onClick={() => {
-    //                   handleCreateRoom();
-    //                   onClickModalOff();
-    //                 }}
-    //               >
-    //                 방 만들기
-    //               </Button>
-    //               <Button variant="secondary" onClick={onClickModalOff}>
-    //                 닫기
-    //               </Button>
-    //             </Modal.Footer>
-    //           </Modal>
-    //         </Container>
-    //       </Col>
-    //     </Row>
-    //   </div>
-    // </div>
   );
 }
 

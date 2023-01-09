@@ -44,7 +44,7 @@ export class ChatsGateway
     // constuctor() is called before afterInit()
     this.logger.log('init');
   }
-
+  // userid를 받는다고 가정
   @SubscribeMessage('new-user')
   async handleNewUser(
     @MessageBody() username: string,

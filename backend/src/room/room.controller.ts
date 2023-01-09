@@ -2,6 +2,8 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { Body, Delete, Post } from '@nestjs/common/decorators';
 import { RoomService } from './room.service';
 import { CreateRoomDto } from './dto/create-room.dto';
+import { ParseIntPipe } from '@nestjs/common/pipes';
+import { PositiveIntPipe } from 'src/common/pipes/positiveInt.pipe';
 
 @Controller('room')
 export class RoomController {
@@ -13,12 +15,15 @@ export class RoomController {
   }
 
   @Post(':id') // user id
-  createRoom(@Param('id') id: string, @Body() createRoomDto: CreateRoomDto) {
-    return this.roomService.createRoom(+id, createRoomDto);
+  createRoom(
+    @Param('id', ParseIntPipe, PositiveIntPipe) id: number,
+    @Body() createRoomDto: CreateRoomDto,
+  ) {
+    return this.roomService.createRoom(id, createRoomDto);
   }
 
   @Delete(':id') // room id
-  deleteRoom(@Param('id') id: string) {
-    return this.roomService.deleteRoom(+id);
+  deleteRoom(@Param('id', ParseIntPipe, PositiveIntPipe) id: number) {
+    return this.roomService.deleteRoom(id);
   }
 }

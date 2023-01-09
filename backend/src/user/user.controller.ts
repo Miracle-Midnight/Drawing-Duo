@@ -25,7 +25,6 @@ export class UserController {
   @UseInterceptors(FileInterceptor('image', multerOptions('profile')))
   @Post('signup')
   signUp(@UploadedFile() file: Express.Multer.File, @Body() userDto: UserDto) {
-    console.log(userDto);
     return this.userService.signUp(userDto, file);
   }
 
@@ -33,6 +32,7 @@ export class UserController {
   GetUserId(@Body() userDto: UserDto) {
     // return 'GetUserId';
     // return this.userService.GetUserId(userDto, res);
+    console.log(userDto);
     return this.authService.jwtLogIn(userDto);
   }
 

@@ -38,8 +38,8 @@ function Login() {
         password: inputPw,
       })
       .then((res) => {
-        console.log(res.data.userid);
-        console.log(res.data.token);
+        console.log(res.data.data.userid);
+        console.log(res.data.data.token);
         // if (res.data.userId === undefined) {
         //   // id 일치하지 않는 경우 userId = undefined, msg = '입력하신 id 가 일치하지 않습니다.'
         //   alert("입력하신 id가 일치하지 않습니다.");
@@ -49,8 +49,8 @@ function Login() {
         // } else {
         //   // id, pw 일치하는 경우 userId = id, msg = '로그인 성공'
         alert("로그인 성공");
-        sessionStorage.setItem("userKey", res.data.userid);
-        sessionStorage.setItem("userToken", res.data.token);
+        sessionStorage.setItem("userKey", res.data.data.userid);
+        sessionStorage.setItem("userToken", res.data.data.token);
         document.location.href = "/";
         // }
       })
