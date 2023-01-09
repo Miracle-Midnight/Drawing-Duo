@@ -52,18 +52,18 @@ function GameLobby() {
     ));
   };
 
-  let chatForm = document.querySelector(".chat-form");
+  // let chatForm = document.querySelector(".chat-form");
 
-  function prepareScroll() {
-    window.setTimeout(scrollUl, 50);
-  }
+  // function prepareScroll() {
+  //   window.setTimeout(scrollUl, 50);
+  // }
 
-  function scrollUl() {
-    let chatUl = document.querySelector(".chat-ul");
-    chatUl.scrollTop = chatUl.scrollHeight;
-  }
+  // function scrollUl() {
+  //   let chatUl = document.querySelector(".chat-ul");
+  //   chatUl.scrollTop = chatUl.scrollHeight;
+  // }
 
-  chatForm.addEventListener("submit", prepareScroll);
+  // chatForm.addEventListener("submit", prepareScroll);
 
   return (
     <div className="center">
@@ -172,7 +172,7 @@ function GameLobby() {
             </button>
           </div>
           <div className="chat mx-auto rounded-md w-full">
-            <div className="container flex flex-col items-center justify-center w-full mx-auto">
+            <div className="container chatContent flex flex-col items-center justify-center w-full mx-auto">
               <ul className="chat-ul  overflow-y-auto flex flex-col overflow-auto chat-container w-full">
                 {renderChat()}
               </ul>

@@ -9,8 +9,8 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket) => {
-  socket.on("message", ({ name, message }) => {
-    io.emit("message", { name, message });
+  socket.on("submit_message", ({ name, message }) => {
+    io.emit("new_message", { name, message });
   });
 });
 
