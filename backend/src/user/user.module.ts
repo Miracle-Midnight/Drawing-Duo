@@ -7,6 +7,7 @@ import { Profile } from './entities/profile.entity';
 import { MulterModule } from '@nestjs/platform-express';
 import { AuthModule } from 'src/auth/auth.module';
 import { Image } from 'src/room/entities/image.entity';
+import { AwsService } from 'src/aws.service';
 
 @Module({
   imports: [

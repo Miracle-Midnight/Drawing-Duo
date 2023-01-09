@@ -22,12 +22,12 @@ export class UserController {
     private readonly authService: AuthService,
   ) {}
 
-  @UseInterceptors(FileInterceptor('image', multerOptions('profile')))
   @Post('signup')
-  signUp(@UploadedFile() file: Express.Multer.File, @Body() userDto: UserDto) {
-    console.log(userDto);
-    console.log(file);
-    return this.userService.signUp(userDto, file);
+  @UseInterceptors(FileInterceptor('image'))
+  async signUp(@UploadedFile() file: Express.Multer.File) {
+    console.log(file.buffer);
+    // return this.userService.signUp(userDto, 'profile', file);
+    return true;
   }
 
   @Post('login')
@@ -47,8 +47,8 @@ export class UserController {
   uploadFile(@UploadedFile() file: Express.Multer.File, @Body() userDto) {
     console.log(file);
     console.log(userDto);
-    // return { image: `http://localhost:3000/media/profile/${file.filename}` };
-    return this.userService.uploadImg(userDto, file);
+    return { image: `http://localhost:3000/media/profile/${file.filename}` };
+    // return this.userService.uploadImg(userDto, file);
   }
 
   //이미지 두개 이상 받아서 유사도 측정 api

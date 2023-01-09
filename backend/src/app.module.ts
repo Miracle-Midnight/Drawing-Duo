@@ -21,18 +21,19 @@ import { join } from 'path';
 
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { AwsService } from './aws.service';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    // ConfigModule.forRoot(),
     UserModule,
     RoomModule,
     LobbyModule,
     GameModule,
     ResultModule,
-    // ConfigModule.forRoot({
-    //   isGlobal: true,
-    // }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot(dataSourceOptions),
     ChatsModule,
     DrawGatewayModule,
@@ -44,6 +45,6 @@ import { ConfigModule } from '@nestjs/config';
     AuthModule,
   ],
   controllers: [AppController, ResultController],
-  providers: [ResultService],
+  providers: [ResultService, AwsService],
 })
 export class AppModule {}

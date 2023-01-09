@@ -10,9 +10,16 @@ import { Image } from 'src/room/entities/image.entity';
 
 import { Profile } from './entities/profile.entity';
 import * as childProcess from 'child_process';
+import { ConfigService } from '@nestjs/config';
+import * as AWS from 'aws-sdk';
+import { BadRequestException } from '@nestjs/common';
+import * as path from 'path';
 
 @Injectable()
 export class UserService {
+  private readonly awsS3: AWS.S3;
+  public readonly S3_BUCKET_NAME: string;
+
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
@@ -20,7 +27,15 @@ export class UserService {
     private imageRepository: Repository<Image>,
     @InjectRepository(Profile)
     private profileRepository: Repository<Profile>,
-  ) {}
+    private readonly configService: ConfigService,
+  ) {
+    this.awsS3 = new AWS.S3({
+      accessKeyId: this.configService.get('AWS_S3_ACCESS_KEY'), // process.env.AWS_S3_ACCESS_KEY
+      secretAccessKey: this.configService.get('AWS_S3_SECRET_KEY'),
+      region: this.configService.get('AWS_S3_REGION'),
+    });
+    this.S3_BUCKET_NAME = this.configService.get('AWS_S3_BUCKET_NAME'); // nest-s3
+  }
 
   async GetUserId(@Body() userDto: UserDto, @Res() res: Response) {
     // const user = this.userRepository.findOneBy({
@@ -31,7 +46,11 @@ export class UserService {
     res.redirect('/lobby');
   }
 
-  async signUp(@Body() userDto: UserDto, file: Express.Multer.File) {
+  async signUp(
+    @Body() userDto: UserDto,
+    folder: string,
+    file: Express.Multer.File,
+  ) {
     const { userid, password, nickname } = userDto;
     const isUserExist = await this.userRepository.findOne({
       where: { userid: userDto.userid },
@@ -41,35 +60,74 @@ export class UserService {
       throw new Error('이미 존재하는 아이디입니다.');
     }
 
-    // 유저 정보 생성 및 저장.
-    const newuser = await this.userRepository.create();
-    const hashedPassword = await bcrypt.hash(password, 10);
-    newuser.userid = userid;
-    newuser.password = hashedPassword;
-    const user = await this.userRepository.save(newuser);
+    try {
+      const key = `${folder}/${Date.now()}_${path.basename(
+        file.originalname,
+      )}`.replace(/ /g, '');
+      console.log('buffur =' + file.buffer);
+      const s3Object = await this.awsS3
+        .putObject({
+          Bucket: this.S3_BUCKET_NAME,
+          Key: key,
+          Body: file.buffer,
+          ACL: 'public-read',
+          ContentType: file.mimetype,
+        })
+        .promise();
 
-    // 프로필 정보 생성 및 저장.
-    const newProfile = await this.profileRepository.create();
-    newProfile.nickname = nickname;
-    newProfile.user = user;
-    const path = `http://localhost:3000/media/profile/${file.filename}`;
-    const newimage = await this.imageRepository.create();
-    newimage.image = path;
-    newimage.type = false;
-    await this.imageRepository.save(newimage);
+      // 유저 정보 생성 및 저장.
+      const newuser = await this.userRepository.create();
+      const hashedPassword = await bcrypt.hash(password, 10);
+      newuser.userid = userid;
+      newuser.password = hashedPassword;
+      const user = await this.userRepository.save(newuser);
 
-    newProfile.image = newimage;
-    const profile = await this.profileRepository.save(newProfile);
+      // 프로필 정보 생성 및 저장.
+      const newProfile = await this.profileRepository.create();
+      newProfile.nickname = nickname;
+      newProfile.user = user;
 
-    const result = {
-      nickname: profile.nickname,
-      userid: user.id,
-      image: newimage.image,
-      level: profile.level,
-      rank: profile.rank,
-      introduction: profile.introduction,
-    };
-    return result;
+      const newimage = await this.imageRepository.create();
+      newimage.image = key;
+      newimage.type = false;
+      await this.imageRepository.save(newimage);
+
+      newProfile.image = newimage;
+      const profile = await this.profileRepository.save(newProfile);
+      return { key, s3Object, contentType: file.mimetype };
+    } catch (error) {
+      throw new BadRequestException(`File upload failed : ${error}`);
+    }
+
+    // // 유저 정보 생성 및 저장.
+    // const newuser = await this.userRepository.create();
+    // const hashedPassword = await bcrypt.hash(password, 10);
+    // newuser.userid = userid;
+    // newuser.password = hashedPassword;
+    // const user = await this.userRepository.save(newuser);
+
+    // // 프로필 정보 생성 및 저장.
+    // const newProfile = await this.profileRepository.create();
+    // newProfile.nickname = nickname;
+    // newProfile.user = user;
+    // // const path = `http://localhost:3000/media/profile/${file.filename}`;
+    // const newimage = await this.imageRepository.create();
+    // // newimage.image = path;
+    // newimage.type = false;
+    // await this.imageRepository.save(newimage);
+
+    // newProfile.image = newimage;
+    // const profile = await this.profileRepository.save(newProfile);
+
+    // const result = {
+    //   nickname: profile.nickname,
+    //   userid: user.id,
+    //   image: newimage.image,
+    //   level: profile.level,
+    //   rank: profile.rank,
+    //   introduction: profile.introduction,
+    // };
+    // return result;
   }
 
   async uploadImg(@Body() UserDto, file: Express.Multer.File) {
