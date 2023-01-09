@@ -64,7 +64,7 @@ export class UserService {
       const key = `${folder}/${Date.now()}_${path.basename(
         file.originalname,
       )}`.replace(/ /g, '');
-      console.log('buffur =' + file.buffer);
+
       const s3Object = await this.awsS3
         .putObject({
           Bucket: this.S3_BUCKET_NAME,
@@ -87,14 +87,23 @@ export class UserService {
       newProfile.nickname = nickname;
       newProfile.user = user;
 
+      const imagePath = `https://${this.S3_BUCKET_NAME}.s3.amazonaws.com/${key}`;
       const newimage = await this.imageRepository.create();
-      newimage.image = key;
+      newimage.image = imagePath;
       newimage.type = false;
       await this.imageRepository.save(newimage);
 
       newProfile.image = newimage;
       const profile = await this.profileRepository.save(newProfile);
-      return { key, s3Object, contentType: file.mimetype };
+
+      return {
+        nickname: profile.nickname,
+        userid: user.id,
+        image: newimage.image,
+        level: profile.level,
+        rank: profile.rank,
+        introduction: profile.introduction,
+      };
     } catch (error) {
       throw new BadRequestException(`File upload failed : ${error}`);
     }
