@@ -4,7 +4,7 @@ import Canvas from "../../components/canvas/canvas";
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 
-const socket = io.connect("http://localhost:4000");
+const socket = io("http://localhost:4000");
 
 function GameLobby() {
   const canvasSize = {
@@ -12,29 +12,32 @@ function GameLobby() {
     height: "90%",
   };
 
-  const [state, setState] = useState({ message: "", name: "test1" });
-  const [chat, setChat] = useState([]);
+  const [state, setState] = useState({ name: String, message: String });
+  const [chat, setChat] = useState([{ name: String, message: String }]);
 
   useEffect(() => {
-    // todo : 받을대는 new_message
+    // // todo : 받을대는 new_message
     // todo : 인수는 name, chat
     socket.on("new_message", ({ name, message }) => {
       setChat([...chat, { name, message }]);
     });
   });
 
-  const onTextChange = (e) => {
+  const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  const onMessageSubmit = (e) => {
+  const onMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const { name, message } = state;
     // todo : 세션 스토리지에서 user id 가져오기
-    // todo : 보낼때는 submit_message로 보내기
+    // // todo : 보낼때는 submit_message로 보내기
 
-    socket.emit("submit_message", { name, message });
-    setState({ message: "", name });
+    const userKey = sessionStorage.getItem("userKey");
+    const userNickname: String | null = sessionStorage.getItem("userNickname");
+    socket.emit("submit_message", { userKey, message });
+    setState({ userNickname, message });
   };
   const renderChat = () => {
     return chat.map(({ name, message }, index) => (
@@ -51,19 +54,6 @@ function GameLobby() {
       </li>
     ));
   };
-
-  // let chatForm = document.querySelector(".chat-form");
-
-  // function prepareScroll() {
-  //   window.setTimeout(scrollUl, 50);
-  // }
-
-  // function scrollUl() {
-  //   let chatUl = document.querySelector(".chat-ul");
-  //   chatUl.scrollTop = chatUl.scrollHeight;
-  // }
-
-  // chatForm.addEventListener("submit", prepareScroll);
 
   return (
     <div className="center">
