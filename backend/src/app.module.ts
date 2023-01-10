@@ -22,6 +22,7 @@ import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { AwsService } from './aws.service';
+import { FriendModule } from './friend/friend.module';
 
 @Module({
   imports: [
@@ -43,6 +44,8 @@ import { AwsService } from './aws.service';
     }),
 
     AuthModule,
+
+    FriendModule,
   ],
   controllers: [AppController, ResultController],
   providers: [ResultService, AwsService],
