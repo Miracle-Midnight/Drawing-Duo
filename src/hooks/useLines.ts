@@ -13,7 +13,7 @@ interface User {
 
 /* Line을 그리기 위한 hooks 모음 => Canvas component에서 필요한 함수 */
 export function useLines() {
-  const [isSynced, setIsSynced] = useState(false);
+  const [isSynced, setIsSynced] = useState<boolean>(false);
   const [lines, setLines] = useState<Y.Map<any>[]>([]); // 전체 lines에 대한 상태
   const rCurrentLine = useRef<Y.Map<any>>(); // useRef를 통해 line값을 component가 사라지기 전까지 보존
 

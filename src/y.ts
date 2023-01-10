@@ -10,11 +10,11 @@ export const doc = new Y.Doc();
 export const provider = new WebrtcProvider("test", doc); // webrtc를 활용하여서 사용자와의 연동
 
 /* 세션을 통해 document정보 유지 */
-const indexeddbProvider = new IndexeddbPersistence("test", doc);
+new IndexeddbPersistence("test", doc);
 
 /* 
 유저 상태 정보를 관리하는데 사용
-만약 유저의 상태 정보가 null이면, offline으로 마크가 되며, 30초간 유저 상태 정보가 전달이
+만약 유저의 상태 정보가 null이면, offline으로 마크가 되며, 10초간 유저 상태 정보가 전달이
 안될 시에는 offline으로 마크
 */
 export const awareness = provider.awareness;

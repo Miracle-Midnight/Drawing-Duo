@@ -24,7 +24,6 @@
     "valtio-yjs": "^0.4.0",
     "web-vitals": "^2.1.4",
     "y-indexeddb": "^9.0.9",
-    "y-presence": "^0.2.2",
     "y-protocols": "^1.0.5",
     "y-quill": "^0.1.5",
     "y-webrtc": "^10.2.3",
@@ -54,5 +53,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/use-sync-external-store": "^0.0.3"
   }
 }
