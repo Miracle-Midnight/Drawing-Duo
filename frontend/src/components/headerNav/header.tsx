@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap"; // 꼭 import를 해와야한다
 
-function HeaderNav() {
+function HeaderNav({isMakeRoom}: any) {
   const [isOpen, setIsOpen] = useState(false);
+  
   return (
     <div>
       <nav className="bg-white shadow">
@@ -28,13 +29,24 @@ function HeaderNav() {
                     </a>
                   </li>
                   <li className="mr-2">
-                    <a
+                    {isMakeRoom === true ? (
+                      <a
+                      href="#"
+                      className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 border-b-2 border-purple-600 rounded-t-lg "
+                      aria-current="page"
+                    >
+                      방 만들기
+                    </a>
+                    ) : (
+                      <a
                       href="#"
                       className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 rounded-t-lg "
                       aria-current="page"
                     >
                       방 만들기
                     </a>
+                    )}
+
                   </li>
                 </ul>
               </div>
