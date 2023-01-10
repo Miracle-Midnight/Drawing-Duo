@@ -5,13 +5,14 @@ import GameLobby from "./routes/gameLobby/gameLobby";
 import Lobby from "./routes/lobby/lobby";
 import Result from "./routes/result/result";
 import InGame from "./routes/inGame/inGame";
-import "./index.css";
+import Intro from "./routes/intro/intro";
+import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <>
-      <InGame />
+      <Intro />
     </>
   );
 }
