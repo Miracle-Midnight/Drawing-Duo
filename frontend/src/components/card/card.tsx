@@ -1,5 +1,6 @@
 import { Button, Container, Row, Col } from "react-bootstrap"; // 꼭 import를 해와야한다
 import "./card.css";
+import Player from "../player/player";
 
 function Card({ title, imageSrc, needTitle }: any) {
   return (
@@ -15,13 +16,11 @@ function Card({ title, imageSrc, needTitle }: any) {
                 {title}
               </div>
             ) : null}
-            <div className="flex flex-row justify-evenly">
-              <div className="text-lg text-gray-700 text-center uppercase mt-0">
-                박지성
-              </div>
-              <div className="text-lg text-gray-700 text-center uppercase mt-0 mb-3">
-                김영우
-              </div>
+            <div className="flex flex-row justify-evenly mb-3">
+              <Player name="박선도"></Player>
+              <Player name="윤영운"></Player>
+              <Player name="김채욱"></Player>
+              <Player name="김영우"></Player>
             </div>
           </div>
         </div>
