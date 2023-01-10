@@ -14,7 +14,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/common/utils/multer.options';
 import { AuthService } from 'src/auth/auth.service';
 
-@Controller('api/users')
+@Controller('users')
 export class UserController {
   constructor(
     private readonly userService: UserService,

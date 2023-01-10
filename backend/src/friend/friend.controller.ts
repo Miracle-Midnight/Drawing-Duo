@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { FriendService } from './friend.service';
 import { Get, Post, Body, Param } from '@nestjs/common';
 
-@Controller('api/friend')
+@Controller('friend')
 export class FriendController {
   constructor(private readonly friendService: FriendService) {}
 

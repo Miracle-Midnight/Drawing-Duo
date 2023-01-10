@@ -32,7 +32,7 @@ export class User extends BaseEntity {
   @Column({ default: false })
   ready: boolean;
 
-  @OneToOne(() => Profile, (profile) => profile.user)
+  @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
   @JoinColumn()
   profile: Profile;
 

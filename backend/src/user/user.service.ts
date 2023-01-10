@@ -20,6 +20,7 @@ import { ConfigService } from '@nestjs/config';
 import * as AWS from 'aws-sdk';
 import { BadRequestException } from '@nestjs/common';
 import * as path from 'path';
+import { ForbiddenException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class UserService {
@@ -49,7 +50,7 @@ export class UserService {
     //   password: userDto.password,
     // });
     // console.log(user);
-    res.redirect('/lobby');
+    // res.redirect('/lobby');
   }
 
   async signUp(
@@ -62,8 +63,8 @@ export class UserService {
       where: { userid: userDto.userid },
     });
 
-    if (isUserExist != undefined) {
-      throw new Error('이미 존재하는 아이디입니다.');
+    if (isUserExist) {
+      throw new ForbiddenException('이미 존재하는 아이디입니다.');
     }
 
     try {

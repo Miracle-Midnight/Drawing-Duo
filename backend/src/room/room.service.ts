@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { Room } from './entities/room.entity';
 import { User } from 'src/user/entities/user.entity';
+import { Image } from './entities/image.entity';
+import { NotFoundException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class RoomService {
@@ -12,20 +14,37 @@ export class RoomService {
     private roomRepository: Repository<Room>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(Image)
+    private imageRepository: Repository<Image>,
   ) {}
 
-  async createRoom(id: number, createRoomDto: CreateRoomDto): Promise<Room> {
+  async getAllImage() {
+    return await this.imageRepository.find();
+  }
+
+  async createRoom(id: number, createRoomDto: CreateRoomDto) {
     const newRoom = this.roomRepository.create(createRoomDto);
     // image 추가 - image path 저장
     // room에 방장 추가 - client side에서 user를 받아서 room에 추가
-    const user = await this.userRepository.findOneBy({ id });
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['profile'],
+    });
+    // if (!user) {
+    //   throw new NotFoundException('유저가 존재하지 않습니다.');
+    // }
+
     newRoom.users = [user];
     await this.roomRepository.save(newRoom);
+    console.log(newRoom);
 
-    return await this.roomRepository.findOne({
-      where: { id: newRoom.id },
-      relations: ['users'],
-    });
+    return {
+      roomid: newRoom.id,
+      title: newRoom.title,
+      mode: newRoom.mode,
+      status: newRoom.status,
+      userNickName: user.profile.nickname,
+    };
   }
 
   async deleteRoom(id: number) {

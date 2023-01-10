@@ -1,15 +1,11 @@
 import { Get, Controller, Render } from '@nestjs/common';
 import { AwsService } from './aws.service';
 
-@Controller('api')
+@Controller()
 export class AppController {
   constructor(private readonly awsService: AwsService) {}
   @Get()
-  root() {
-    return {
-      data: {
-        title: 'Chattings',
-      },
-    };
+  getHello() {
+    return 'Hello, world!';
   }
 }

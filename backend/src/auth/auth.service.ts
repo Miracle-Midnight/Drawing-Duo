@@ -1,8 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { LoginREquestDto } from './dto/login.request.dto';
-import { UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -24,8 +23,8 @@ export class AuthService {
       relations: ['profile', 'profile.image'],
     });
 
-    if (isUserExist === undefined) {
-      throw new Error('이메일과 비밀번호를 확인해주세요.');
+    if (!isUserExist) {
+      throw new NotFoundException('이메일과 비밀번호를 확인해주세요.');
     }
     // audicspace.com
 
@@ -36,7 +35,7 @@ export class AuthService {
     );
 
     if (!isPasswordValidated) {
-      throw new Error('이메일과 비밀번호를 확인해주세요.');
+      throw new NotFoundException('이메일과 비밀번호를 확인해주세요.');
     }
 
     const payload = { userid: isUserExist.userid, sub: isUserExist.id };
