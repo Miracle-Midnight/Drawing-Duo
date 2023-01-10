@@ -3,7 +3,7 @@ import "./userState.css";
 
 const UserState = ({ name, state }: any) => {
   return (
-    <div className="shadow rounded-2xl bg-white p-4">
+    <div className="shadow rounded-2xl bg-white p-4 mt-3">
       <div className="flex-row gap-4 flex justify-center items-center">
         <div className="flex-shrink-0">
           <a href="#" className="relative block">
