@@ -2,11 +2,16 @@ import { Button, Container, Row, Col } from "react-bootstrap"; // 꼭 import를 
 import "./intro.css";
 import IntroCard from "../../components/introCard/introCard";
 
+// todo : 이미지 수정(타이틀에 맞게)
 function Intro() {
   return (
     <Container className="center flex flex-col">
       <div>
-        <img src="https://github.com/Miracle-Midnight/Drawing-Duo/blob/frontend/frontend/src/assets/drawing-duo-logo.png?raw=true" width="500px" className="mb-10"></img>
+        <img
+          src="https://github.com/Miracle-Midnight/Drawing-Duo/blob/feat/ksd/makeNewLayout/frontend/src/assets/drawing-duo-logo-removebg.png?raw=true"
+          width="500px"
+          className="mb-10"
+        ></img>
       </div>
       <div className="flex flex-row">
         <IntroCard
