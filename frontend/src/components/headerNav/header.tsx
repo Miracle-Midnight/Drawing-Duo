@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap"; // 꼭 import를 해와야한다
+import CenteredModal from "../../components/modal/modal";
 
-function HeaderNav({isMakeRoom}: any) {
+function HeaderNav({ isMakeRoom }: any) {
   const [isOpen, setIsOpen] = useState(false);
-  
+  const [modalShow, setModalShow] = useState(false);
+
   return (
     <div>
       <nav className="bg-white shadow">
@@ -31,22 +33,22 @@ function HeaderNav({isMakeRoom}: any) {
                   <li className="mr-2">
                     {isMakeRoom === true ? (
                       <a
-                      href="#"
-                      className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 border-b-2 border-purple-600 rounded-t-lg "
-                      aria-current="page"
-                    >
-                      방 만들기
-                    </a>
+                        href="#"
+                        className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 border-b-2 border-purple-600 rounded-t-lg "
+                        aria-current="page"
+                      >
+                        방 만들기
+                      </a>
                     ) : (
                       <a
-                      href="#"
-                      className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 rounded-t-lg "
-                      aria-current="page"
-                    >
-                      방 만들기
-                    </a>
+                        href="#"
+                        className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 rounded-t-lg "
+                        aria-current="page"
+                        onClick={() => setModalShow(true)}
+                      >
+                        방 만들기
+                      </a>
                     )}
-
                   </li>
                 </ul>
               </div>
@@ -132,6 +134,8 @@ function HeaderNav({isMakeRoom}: any) {
             </div>
           </div>
         </div>
+
+        <CenteredModal show={modalShow} onHide={() => setModalShow(false)} />
       </nav>
     </div>
   );
