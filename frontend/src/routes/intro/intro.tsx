@@ -17,18 +17,63 @@ function Intro() {
         </div>
       </div>
       <div className="flex flex-row whitespace-nowrap h-[500px] overflow-auto">
-        <Card imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg" needTitle={true} title="김영우 빨리와"></Card>
-        <Card imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg" needTitle={true} title="김영우 빨리와"></Card>
-        <Card imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg" needTitle={true} title="김영우 빨리와"></Card>
-        <Card imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg" needTitle={true} title="김영우 빨리와"></Card>
-        <Card imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg" needTitle={true} title="김영우 빨리와"></Card>
-        <Card imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg" needTitle={true} title="김영우 빨리와"></Card>
-        <Card imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg" needTitle={true} title="김영우 빨리와"></Card>
-        <Card imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg" needTitle={true} title="김영우 빨리와"></Card>
-        <Card imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg" needTitle={true} title="김영우 빨리와"></Card>
-        <Card imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg" needTitle={true} title="김영우 빨리와"></Card>
-        <Card imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg" needTitle={true} title="김영우 빨리와"></Card>
+        <Card
+          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
+          needTitle={true}
+          title="김영우 빨리와"
+        ></Card>
+        <Card
+          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
+          needTitle={true}
+          title="김영우 빨리와"
+        ></Card>
+        <Card
+          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
+          needTitle={true}
+          title="김영우 빨리와"
+        ></Card>
+        <Card
+          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
+          needTitle={true}
+          title="김영우 빨리와"
+        ></Card>
+        <Card
+          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
+          needTitle={true}
+          title="김영우 빨리와"
+        ></Card>
+        <Card
+          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
+          needTitle={true}
+          title="김영우 빨리와"
+        ></Card>
+        <Card
+          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
+          needTitle={true}
+          title="김영우 빨리와"
+        ></Card>
+        <Card
+          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
+          needTitle={true}
+          title="김영우 빨리와"
+        ></Card>
+        <Card
+          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
+          needTitle={true}
+          title="김영우 빨리와"
+        ></Card>
+        <Card
+          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
+          needTitle={true}
+          title="김영우 빨리와"
+        ></Card>
+        <Card
+          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
+          needTitle={true}
+          title="김영우 빨리와"
+        ></Card>
       </div>
+
     </Container>
   );
 }
