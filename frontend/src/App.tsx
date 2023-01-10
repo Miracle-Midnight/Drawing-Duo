@@ -8,12 +8,16 @@ import InGame from "./routes/inGame/inGame";
 import Intro from "./routes/intro/intro";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <Intro />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Intro />}></Route>
+        <Route path="/gameLobby" element={<GameLobby />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
