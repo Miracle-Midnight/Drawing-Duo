@@ -15,8 +15,8 @@ async function bootstrap() {
   app.useStaticAssets(path.join(__dirname, './common', 'uploads'), {
     prefix: '/media',
   });
-
-  await app.listen(3000);
+  const PORT = process.env.PORT;
+  await app.listen(PORT);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
