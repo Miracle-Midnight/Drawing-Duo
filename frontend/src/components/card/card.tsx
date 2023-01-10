@@ -5,19 +5,24 @@ function Card({ title, imageSrc, needTitle }: any) {
   return (
     <Container>
       <div className="flex items-center justify-center">
-        <div className="w-full p-1">
+        <div className="w-80 p-1">
           <div className="flex flex-col justify-center bg-white rounded-lg shadow-2xl card">
             <div className="prod-img">
-              <img
-                src={imageSrc}
-                className="object-cover object-center w-full"
-              />
+              <img src={imageSrc} className="object-cover object-center w-80" />
             </div>
             {needTitle === true ? (
-              <p className="text-2xl font-bold text-gray-900 text-center uppercase">
+              <div className="text-2xl font-bold text-gray-900 text-center uppercase">
                 {title}
-              </p>
+              </div>
             ) : null}
+            <div className="flex flex-row justify-evenly">
+              <div className="text-lg text-gray-700 text-center uppercase mt-0">
+                박지성
+              </div>
+              <div className="text-lg text-gray-700 text-center uppercase mt-0 mb-3">
+                김영우
+              </div>
+            </div>
           </div>
         </div>
       </div>
