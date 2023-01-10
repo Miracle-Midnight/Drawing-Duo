@@ -5,6 +5,8 @@ import { memo } from "react";
 /* module from local */
 import { useLine } from "../../hooks/useLine";
 import { getSvgPathFromStroke } from "../../utils";
+import { useUsers } from "../../useUsers";
+import { awareness } from "../../y";
 
 export interface LineProps {
   line: Y.Map<any>;
@@ -20,8 +22,10 @@ memo를 활용하여서, 부모 component가 re-render되었을때, 자식 compo
 - 인자로 point와 complete의 Ymap이 들어온다
 */
 export const Line = memo(function Line({ line }: LineProps) {
-  const { points, isComplete } = useLine(line);
+  const { points, color, isComplete } = useLine(line);
   const pathData = getSvgPathFromStroke(getStroke(points));
 
-  return <path d={pathData} />;
+  const user = useUsers(awareness, (state) => state.get(awareness.clientID));
+
+  return <path d={pathData} fill={isComplete ? color : "black"} />;
 });

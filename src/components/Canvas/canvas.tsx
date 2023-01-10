@@ -1,5 +1,5 @@
 /* library */
-import { useCallback, useEffect, useReducer } from "react";
+import { useCallback } from "react";
 /* module from local */
 import { Line } from "../Line/line";
 import { useLines } from "../../hooks/useLines";
@@ -65,12 +65,12 @@ export function Canvas() {
     [completeLine]
   );
 
-  const [_, forceUpdate] = useReducer((s) => !s, false);
+  // const [_, forceUpdate] = useReducer((s) => !s, false);
 
-  useEffect(() => {
-    const timeout = setInterval(forceUpdate, 10);
-    return () => clearInterval(timeout);
-  }, []);
+  // useEffect(() => {
+  //   const timeout = setInterval(forceUpdate, 10);
+  //   return () => clearInterval(timeout);
+  // }, []);
 
   return (
     <div

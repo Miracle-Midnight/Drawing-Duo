@@ -7,7 +7,7 @@ import { awareness } from "./y";
 const random = (arr: any[]) => arr[Math.floor(Math.random() * arr.length)];
 
 awareness.setLocalState({
-  point: [100, 100],
+  point: [20, 20],
   color: random(USER_COLORS),
   isActive: false,
 });

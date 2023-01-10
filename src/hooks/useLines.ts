@@ -108,14 +108,37 @@ export function useLines() {
       provider.disconnect();
     }
 
-    window.addEventListener("beforeunload", handleDisconnect);
+    // window.addEventListener("beforeunload", handleDisconnect);
 
     provider.on("sync", handleConnect);
 
     provider.connect();
 
     return () => {
-      handleDisconnect();
+      // handleDisconnect();
+      window.removeEventListener("beforeunload", handleDisconnect);
+    };
+  }, []);
+
+  useEffect(() => {
+    function handleConnect() {
+      setIsSynced(true);
+      setLines(yLines.toArray());
+    }
+
+    function handleDisconnect() {
+      provider.off("sync", handleConnect);
+      provider.disconnect();
+    }
+
+    // window.addEventListener("beforeunload", handleDisconnect);
+
+    provider.on("sync", handleConnect);
+
+    provider.connect();
+
+    return () => {
+      // handleDisconnect();
       window.removeEventListener("beforeunload", handleDisconnect);
     };
   }, []);

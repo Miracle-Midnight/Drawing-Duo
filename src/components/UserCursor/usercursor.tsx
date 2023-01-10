@@ -10,9 +10,9 @@ export const UserCursor = React.memo(
   ({ point, color, isActive }: UserCursorProps) => {
     return (
       <circle
-        cx={point[0]}
+        cx={point[0] + 100}
         cy={point[1]}
-        r={4}
+        r={20}
         fill={isActive ? color : "grey"}
       />
     );

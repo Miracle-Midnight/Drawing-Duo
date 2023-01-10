@@ -10,7 +10,7 @@ export const doc = new Y.Doc();
 export const provider = new WebrtcProvider("test", doc); // webrtc를 활용하여서 사용자와의 연동
 
 /* 세션을 통해 document정보 유지 */
-new IndexeddbPersistence("test", doc);
+// new IndexeddbPersistence("test", doc);
 
 /* 
 유저 상태 정보를 관리하는데 사용
