@@ -24,15 +24,13 @@ export class RoomService {
 
   async createRoom(id: number, createRoomDto: CreateRoomDto) {
     const newRoom = this.roomRepository.create(createRoomDto);
-    // image 추가 - image path 저장
-    // room에 방장 추가 - client side에서 user를 받아서 room에 추가
     const user = await this.userRepository.findOne({
       where: { id },
       relations: ['profile'],
     });
-    // if (!user) {
-    //   throw new NotFoundException('유저가 존재하지 않습니다.');
-    // }
+    if (!user) {
+      throw new NotFoundException('유저가 존재하지 않습니다.');
+    }
 
     newRoom.users = [user];
     await this.roomRepository.save(newRoom);
@@ -41,14 +39,16 @@ export class RoomService {
     return {
       roomid: newRoom.id,
       title: newRoom.title,
-      mode: newRoom.mode,
-      status: newRoom.status,
       userNickName: user.profile.nickname,
     };
   }
 
   async deleteRoom(id: number) {
     const room = await this.roomRepository.findOneBy({ id });
+    if (!room) {
+      throw new NotFoundException('방이 존재하지 않습니다.');
+    }
+
     return this.roomRepository.remove(room);
   }
 }

@@ -1,12 +1,9 @@
-import { Image } from '../entities/image.entity';
-import { User } from '../../user/entities/user.entity';
-import { Game } from '../../game/entities/game.entity';
+// import { Image } from '../entities/image.entity';
+import { PickType } from '@nestjs/swagger';
+import { Room } from '../entities/room.entity';
+// import { User } from '../../user/entities/user.entity';
 
-export class CreateRoomDto {
-  title: string;
-  mode: boolean;
-  status: boolean;
-  users: User[];
-  game: Game;
-  images: Image[];
+export class CreateRoomDto extends PickType(Room, ['title'] as const) {
+  // users: User[];
+  // images: Image[];
 }
