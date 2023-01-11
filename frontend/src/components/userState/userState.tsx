@@ -6,7 +6,7 @@ const UserState = ({ name, state }: any) => {
     <div className="shadow rounded-2xl bg-white p-4 py-3 my-2">
       <div className="flex-row gap-4 flex justify-center items-center">
         <div className="flex-shrink-0">
-          <a href="#" className="relative block">
+          <a href="#" className="relative block xl:contents lg:hidden">
             <img
               alt="profil"
               src="https://blog.kakaocdn.net/dn/upM3J/btq7ys3tudB/axLzJnkfCbDRae9OzcmZsK/img.jpg"
