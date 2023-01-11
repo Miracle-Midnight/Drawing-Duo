@@ -1,15 +1,13 @@
 import { Button, Container, Row, Col } from "react-bootstrap"; // 꼭 import를 해와야한다
 import "./login.css";
+import logo from "../../assets/drawing-duo-logo-removebg.png";
 
 function Login() {
   return (
     <Container className="center">
       <div className="flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
         <div>
-          <img
-            src="https://github.com/Miracle-Midnight/Drawing-Duo/blob/refactor/ksd/makeLayout/frontend/src/assets/drawing-duo-logo.png?raw=true"
-            alt="logo"
-          />
+          <img src={logo} alt="logo" />
         </div>
 
         <div className="mt-8">

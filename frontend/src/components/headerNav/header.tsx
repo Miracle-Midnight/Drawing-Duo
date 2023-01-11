@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap"; // 꼭 import를 해와야한다
 import CenteredModal from "../../components/modal/modal";
+import logo from "../../assets/drawing-duo-logo-removebg.png";
 
 function HeaderNav({ isMakeRoom }: any) {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,11 +14,7 @@ function HeaderNav({ isMakeRoom }: any) {
           <div className="flex items-center justify-between h-16">
             <div className=" flex items-center">
               <a className="flex-shrink-0" href="/">
-                <img
-                  className="w-32"
-                  src="https://github.com/Miracle-Midnight/Drawing-Duo/blob/feat/ksd/makeNewLayout/frontend/src/assets/drawing-duo-logo-removebg.png?raw=true"
-                  alt="Workflow"
-                />
+                <img className="w-32" src={logo} alt="Workflow" />
               </a>
 
               <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 ">
