@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Login from "./routes/login/login";
-import Lobby from "./routes/lobby/lobby";
+import Intro from "./routes/intro/intro";
 
 const App: React.FC = () => {
   // 로그인 상태 관리
@@ -23,7 +23,7 @@ const App: React.FC = () => {
     <div className="App">
       {isLogin ? (
         // Lobby 컴포넌트 호출 시 isLogin 이라는 props 값을 전달
-        <Lobby isLogin={isLogin} />
+        <Intro />
       ) : (
         <Login />
       )}

@@ -43,9 +43,13 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/,
+        test: /\.p?css$/,
         exclude: [],
         use: ["style-loader", "css-loader", "postcss-loader"],
+      },
+      {
+        test: /\.(png|jpg)$/,
+        use: ["file-loader"],
       },
       {
         test: /\.(ts)x?$/,

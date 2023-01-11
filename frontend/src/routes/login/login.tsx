@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container } from "react-bootstrap";
 import axios from "axios";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,32 +21,14 @@ function Login() {
 
   // login 버튼 클릭 이벤트
   const onClickLogin = () => {
-    // if (inputId !== "123") {
-    //   alert("입력하신 id가 일치하지 않습니다.");
-    // } else if (inputPw !== "123") {
-    //   alert("입력하신 pw가 일치하지 않습니다.");
-    // } else {
-    //   alert("로그인 성공");
-    //   sessionStorage.setItem("userKey", inputId);
-    //   document.location.href = "/";
-    // }
-
     axios
-      .post("/api/users/login", {
+      .post("http://54.180.100.213:3000/api/users/login", {
         userid: inputId,
         password: inputPw,
       })
       .then((res) => {
         console.log(res.data.data.userid);
         console.log(res.data.data.token);
-        // if (res.data.userId === undefined) {
-        //   // id 일치하지 않는 경우 userId = undefined, msg = '입력하신 id 가 일치하지 않습니다.'
-        //   alert("입력하신 id가 일치하지 않습니다.");
-        // } else if (res.data.userId === null) {
-        //   // pw 일치하지 않는 경우 userId = null, msg = '입력하신 pw 가 일치하지 않습니다.'
-        //   alert("입력하신 pw가 일치하지 않습니다.");
-        // } else {
-        //   // id, pw 일치하는 경우 userId = id, msg = '로그인 성공'
         alert("로그인 성공");
         sessionStorage.setItem("userKey", res.data.data.userid);
         sessionStorage.setItem("userToken", res.data.data.token);
@@ -65,20 +46,8 @@ function Login() {
     navigate("/Register");
   };
 
-  // // 페이지 렌더링 후 가장 처음 호출되는 함수
-  // useEffect(
-  //   () => {
-  //     axios
-  //       .get("/")
-  //       .then((res) => console.log(res))
-  //       .catch();
-  //   },
-  //   // 페이지 호출 후 처음 한번만 호출될 수 있도록 [] 추가
-  //   []
-  // );
-
   return (
-    <Container className="center">
+    <div className="center">
       <div className="flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
         <div>
           <img
@@ -162,57 +131,7 @@ function Login() {
           </Link>
         </div>
       </div>
-    </Container>
-    // <div>
-    //   <h1 className="title">Drawing Duo</h1>
-    //   <div className="Login">
-    //     <Container>
-    //       <Form>
-    //         <Form.Group className="mb-3" controlId="">
-    //           <Form.Label htmlFor="input_id">ID</Form.Label>
-    //           <Form.Control
-    //             value={inputId}
-    //             onChange={handleInputId}
-    //             type="text"
-    //             placeholder="아이디를 입력해주세요!"
-    //           />
-    //         </Form.Group>
-
-    //         <Form.Group className="mb-3" controlId="formBasicPassword">
-    //           <Form.Label htmlFor="input_pw">Password</Form.Label>
-    //           <Form.Control
-    //             value={inputPw}
-    //             onChange={handleInputPw}
-    //             type="password"
-    //             placeholder="비밀번호를 입력해주세요!"
-    //           />
-    //         </Form.Group>
-    //         <div className="d-grid gap-1">
-    //           <Button
-    //             className="loginButton"
-    //             variant="secondary"
-    //             type="button"
-    //             onClick={onClickLogin}
-    //           >
-    //             로그인
-    //           </Button>
-    //         </div>
-    //         <br />
-    //         <div className="d-grid gap-1">
-    //           <Link to="Register" className="d-grid gap-1">
-    //             <Button
-    //               className="loginButton"
-    //               variant="secondary"
-    //               type="submit"
-    //             >
-    //               회원 가입
-    //             </Button>
-    //           </Link>
-    //         </div>
-    //       </Form>
-    //     </Container>
-    //   </div>
-    // </div>
+    </div>
   );
 }
 

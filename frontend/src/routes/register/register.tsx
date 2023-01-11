@@ -40,15 +40,13 @@ function Register() {
       alert("입력하신 pw가 일치하지 않습니다.");
     } else if (inputNickname === "") {
       alert("입력하신 닉네임이 유효하지 않습니다.");
-      // } else if (inputEmail === "") {
-      //   alert("입력하신 이메일이 유효하지 않습니다.");
     } else {
       formData.append("userid", inputId);
       formData.append("password", inputPw);
       formData.append("nickname", inputNickname);
 
       axios
-        .post("/api/users/signup", formData, {
+        .post("http://54.180.100.213:3000/api/users/signup", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -136,14 +134,6 @@ function Register() {
             </div>
             <form encType="multipart/form-data" onChange={handleUploadImage}>
               <InputGroup className="mb-3">
-                {/* <Form.Control
-                placeholder="이미지"
-                // aria-label="이미지"
-                className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-              />
-              <Button variant="outline-secondary" id="button-addon2">
-                이미지 업로드
-              </Button> */}
                 <input
                   className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                   type="file"

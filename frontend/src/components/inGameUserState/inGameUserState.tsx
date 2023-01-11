@@ -2,11 +2,12 @@ import React, { useEffect, useRef } from "react";
 import "./userState.css";
 
 const UserState = ({ name, state }: any) => {
+    
   return (
-    <div className="shadow rounded-2xl bg-white p-4 py-3 my-2">
+    <div className="shadow rounded-2xl bg-white p-4">
       <div className="flex-row gap-4 flex justify-center items-center">
         <div className="flex-shrink-0">
-          <a href="#" className="relative block xl:contents lg:hidden">
+          <a href="#" className="relative block">
             <img
               alt="profil"
               src="https://blog.kakaocdn.net/dn/upM3J/btq7ys3tudB/axLzJnkfCbDRae9OzcmZsK/img.jpg"

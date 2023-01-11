@@ -4,11 +4,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./routes/login/login";
-import Lobby from "./routes/lobby/lobby";
 import Register from "./routes/register/register";
 import GameLobby from "./routes/gameLobby/gameLobby";
 import InGame from "./routes/inGame/inGame";
-import Result from "./routes/result/result";
+import Intro from "./routes/intro/intro";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -19,12 +18,11 @@ root.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/Login" element={<Login />} />
-      <Route path="/Lobby" element={<Lobby />} />
       <Route path="/room" element={<GameLobby />} />
       <Route path="/room/:id" element={<GameLobby />} />
       <Route path="/Register" element={<Register />} />
       <Route path="/InGame" element={<InGame />} />
-      <Route path="/Result" element={<Result />} />
+      <Route path="/Intro" element={<Intro />} />
     </Routes>
   </BrowserRouter>
   // </React.StrictMode>
