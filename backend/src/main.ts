@@ -6,6 +6,7 @@ import { HttpExceptionFilter } from './common/exceptions/http-exception.filter';
 import { SuccessInterceptor } from './common/interceptors/success.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import * as expressBasicAuth from 'express-basic-auth';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -13,6 +14,13 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new SuccessInterceptor());
   app.setGlobalPrefix('api');
+  app.use(
+    ['/docs', '/docs-json'],
+    expressBasicAuth({
+      challenge: true,
+      users: { [process.env.SWAGGER_USERNAME]: process.env.SWAGGER_PASSWORD },
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('Drawing Duo API')
