@@ -12,10 +12,9 @@ import { ResultModule } from './result/result.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 // import { ConfigModule } from '@nestjs/config';
 // import { typeOrmConfig } from './config/typeorm.config';
-import { dataSourceOptions } from 'db/data-source';
-import { ChatsModule } from './chats/chats.module';
+// import { dataSourceOptions } from 'db/data-source';
+import { ChatsAndDrawModule } from './gateway/gateway.module';
 
-import { DrawGatewayModule } from './gateway/draw.gateway/draw.gateway.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
@@ -29,7 +28,6 @@ import { MiddlewareConsumer, NestModule } from '@nestjs/common';
 
 @Module({
   imports: [
-    // ConfigModule.forRoot(),
     UserModule,
     RoomModule,
     LobbyModule,
@@ -38,15 +36,24 @@ import { MiddlewareConsumer, NestModule } from '@nestjs/common';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot(dataSourceOptions),
-    ChatsModule,
-    DrawGatewayModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      entities: ['dist/src/*/entities/*.entity.{js,ts}'],
+      migrations: ['dist/db/migrations/*.{js.ts}'],
+      synchronize: true,
+      logging: true,
+    }),
+    ChatsAndDrawModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
       exclude: ['/api*'],
     }),
     AuthModule,
-
     FriendModule,
     GamelobbyModule,
   ],

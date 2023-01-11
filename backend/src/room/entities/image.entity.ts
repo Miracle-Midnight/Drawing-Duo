@@ -1,11 +1,4 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  // ManyToMany,
-} from 'typeorm';
-// import { Room } from './room.entity';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Image extends BaseEntity {
@@ -13,9 +6,8 @@ export class Image extends BaseEntity {
   id: number;
 
   @Column()
-  type: boolean;
+  type: boolean; // game: true, profile: false
 
-  // @ManyToMany(() => Room)
   @Column()
   image: string;
 }

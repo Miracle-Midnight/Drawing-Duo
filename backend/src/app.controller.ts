@@ -1,4 +1,4 @@
-import { Get, Controller, Render } from '@nestjs/common';
+import { Get, Controller } from '@nestjs/common';
 import { AwsService } from './aws.service';
 
 @Controller()
