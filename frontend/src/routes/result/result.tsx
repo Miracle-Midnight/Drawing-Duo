@@ -11,7 +11,7 @@ function Result() {
           <div className="flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl card">
             <div className="prod-title">
               <p className="text-2xl font-bold text-gray-900 uppercase text-center">
-                잘 따라 그리셨나요?
+                🎨 잘 색칠했나요?
               </p>
             </div>
             <div className="prod-img">
@@ -27,8 +27,8 @@ function Result() {
         <div className="flex flex-row justify-center items-center">
           <div className="p-3  border border-gray-300 rounded-md mr-3 w-full flex flex-col justify-center  items-center">
             <div className="w-80">
-              <div className="w-full p-4">
-                <div className="flex flex-col justify-center p-10 bg-white rounded-lg">
+              <div className="w-full p-2">
+                <div className="flex flex-col justify-center bg-white rounded-lg">
                   <div className="prod-title">
                     <p className="text-2xl font-bold text-gray-900 uppercase text-center"></p>
                   </div>
@@ -44,29 +44,11 @@ function Result() {
             <div className="flex w-full justify-evenly">
               <UserState name="이름" state="Win!"></UserState>
               <UserState name="이름" state="Win!"></UserState>
+              <UserState name="이름" state="Win!"></UserState>
+              <UserState name="이름" state="Win!"></UserState>
             </div>
           </div>
-          <div className="p-3 border border-gray-300 rounded-md ml-3 w-full  flex flex-col justify-center  items-center">
-            <div className="flex items-center justify-center w-80">
-              <div className="w-full p-4">
-                <div className="flex flex-col justify-center p-10 bg-white rounded-lg">
-                  <div className="prod-title">
-                    <p className="text-2xl font-bold text-gray-900 uppercase text-center"></p>
-                  </div>
-                  <div className="prod-img">
-                    <img
-                      src="https://pbs.twimg.com/profile_images/1463023431684079616/ghuPttFw_400x400.jpg"
-                      className="object-cover object-center w-full"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex w-full justify-evenly">
-              <UserState name="이름" state="lose"></UserState>
-              <UserState name="이름" state="lose"></UserState>
-            </div>
-          </div>
+          
         </div>
         <div className="chat mt-3">
           <div className="chat-container">
