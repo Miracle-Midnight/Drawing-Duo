@@ -1,6 +1,7 @@
 import "./sideNav.css";
 import logoSmall from "../../assets/logo-small.png";
 import { useState } from "react";
+import InGamePlayer from "../inGamePlayer/inGamePlayer";
 
 function SideNav() {
   //   const [micState, setMicState] = useState(false);
@@ -23,8 +24,13 @@ function SideNav() {
         <div className="flex justify-center pt-3">
           <img src={logoSmall} alt="logo" width="45px"></img>
         </div>
-        <div>
-          <ul className="flex flex-col justify-center"></ul>
+        <div className="side-nav">
+          <ul className="flex flex-col justify-center ">
+            <InGamePlayer name="영우" />
+            <InGamePlayer name="영운" />
+            <InGamePlayer name="채욱" />
+            <InGamePlayer name="선도" />
+          </ul>
         </div>
         <div className="mt-10 mb-10">
           <div className="side-nav mt-10">
