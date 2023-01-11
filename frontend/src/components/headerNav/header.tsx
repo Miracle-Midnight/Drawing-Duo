@@ -25,7 +25,7 @@ function HeaderNav({ isMakeRoom }: any) {
                   <li className="mr-2">
                     <a
                       href="#"
-                      className="inline-block p-4 text-md border-b-2 text-gray-500 border-transparent rounded-t-lg no-underline  hover:border-purple-600 "
+                      className="inline-block p-4 text-md border-b-2 text-gray-500 border-transparent rounded-t-lg no-underline  hover:border-purple-600 hover:text-purple-600 "
                     >
                       Home
                     </a>
@@ -34,7 +34,7 @@ function HeaderNav({ isMakeRoom }: any) {
                     {isMakeRoom === true ? (
                       <a
                         href="#"
-                        className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 border-b-2 border-purple-600 rounded-t-lg "
+                        className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 border-b-2 border-purple-600 rounded-t-lg  hover:text-purple-600"
                         aria-current="page"
                       >
                         방 만들기
@@ -42,7 +42,7 @@ function HeaderNav({ isMakeRoom }: any) {
                     ) : (
                       <a
                         href="#"
-                        className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 rounded-t-lg "
+                        className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 rounded-t-lg  hover:text-purple-600"
                         aria-current="page"
                         onClick={() => setModalShow(true)}
                       >
