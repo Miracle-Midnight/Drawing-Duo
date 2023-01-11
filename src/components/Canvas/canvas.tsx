@@ -119,10 +119,11 @@ export function Canvas() {
           );
         })}
       </svg>
-      <div className="canvas-controls">
+      <div>
         <button onClick={undoLine}>Undo</button>
         <button onClick={redoLine}>Redo</button>
         <button onClick={clearAllLines}>Clear</button>
+        {/* <button onClick={}></button> */}
       </div>
     </div>
   );

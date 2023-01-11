@@ -5,8 +5,6 @@ import { memo } from "react";
 /* module from local */
 import { useLine } from "../../hooks/useLine";
 import { getSvgPathFromStroke } from "../../utils";
-import { useUsers } from "../../useUsers";
-import { awareness } from "../../y";
 
 export interface LineProps {
   line: Y.Map<any>;
@@ -24,8 +22,6 @@ memo를 활용하여서, 부모 component가 re-render되었을때, 자식 compo
 export const Line = memo(function Line({ line }: LineProps) {
   const { points, color, isComplete } = useLine(line);
   const pathData = getSvgPathFromStroke(getStroke(points));
-
-  const user = useUsers(awareness, (state) => state.get(awareness.clientID));
 
   return <path d={pathData} fill={isComplete ? color : "black"} />;
 });
