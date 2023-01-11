@@ -7,7 +7,7 @@ function ImageCard({ imageSrc }: any) {
       <div className="flex items-center justify-center">
         <div className="w-full p-1">
           <div className="flex flex-col justify-center bg-white rounded-lg shadow-2xl card">
-            <div className="prod-img">
+            <div className="prod-img flex justify-center">
               <img
                 src={imageSrc}
                 className="object-cover object-center w-80"
