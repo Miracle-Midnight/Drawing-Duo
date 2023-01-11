@@ -25,11 +25,11 @@ function SideNav() {
           <img src={logoSmall} alt="logo" width="45px"></img>
         </div>
         <div className="side-nav">
-          <ul className="flex flex-col justify-center ">
-            <InGamePlayer name="영우" />
-            <InGamePlayer name="영운" />
-            <InGamePlayer name="채욱" />
-            <InGamePlayer name="선도" />
+          <ul className="flex flex-col justify-center pt-10">
+            <InGamePlayer name="김영우" />
+            <InGamePlayer name="윤영운" />
+            <InGamePlayer name="김채욱" />
+            <InGamePlayer name="박선도" />
           </ul>
         </div>
         <div className="mt-10 mb-10">
