@@ -1,0 +1,6 @@
+
+.image-container {
+  height: 500px;
+  width: 1050px;
+  overflow: auto;
+}
