@@ -14,7 +14,7 @@ import { JwtAuthGuard } from './jwt/jwt.guard';
     TypeOrmModule.forFeature([User]),
     PassportModule.register({ defaultStrategy: 'jwt', session: false }),
     JwtModule.register({
-      secret: 'secret',
+      secret: 'secret', // process.env.JWT_SECRET,
       signOptions: { expiresIn: '1y' },
     }),
     // forwardRef(() => UserModule),

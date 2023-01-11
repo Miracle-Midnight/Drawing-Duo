@@ -37,7 +37,6 @@ export class LobbyService {
       throw new ForbiddenException('방이 꽉 찼습니다.');
     }
 
-    // room에 image 추가
     const targetRoom = await this.roomRepository.findOne({
       where: { id: roomid },
       relations: ['images', 'users'],
@@ -45,21 +44,19 @@ export class LobbyService {
     if (!targetRoom) throw new NotFoundException('방이 존재하지 않습니다.');
 
     // 비밀번호 체크
-    if (password) {
-      if (targetRoom.password !== password) {
-        throw new ForbiddenException('비밀번호가 틀렸습니다.');
-      }
-    }
+    // if (password) {
+    //   if (targetRoom.password !== password) {
+    //     throw new ForbiddenException('비밀번호가 틀렸습니다.');
+    //   }
+    // }
 
-    // 픽모드
     if (imageid) {
       const image = await this.imageRepository.findOneBy({ id: imageid });
       if (!image) throw new NotFoundException('이미지가 존재하지 않습니다.');
-
       // 이미지 중복 - 2개 이상 안들어감 (해결 필요)
       targetRoom.images = [...targetRoom.images, image];
+      console.log(targetRoom.images);
       await this.roomRepository.save(targetRoom);
-      // console.log(targetRoom);
     }
 
     const userinfo = await this.userRepository.findOne({
@@ -68,15 +65,6 @@ export class LobbyService {
     });
     if (!userinfo) throw new NotFoundException('유저가 존재하지 않습니다.');
 
-    // // image 중복 체크
-    // for (let i = 0; i < targetRoom.images.length; i++) {
-    //   if (targetRoom.images[i].id == image.id) {
-    //     throw new ForbiddenException('이미 선택된 이미지입니다.');
-    //   }
-    // }
-
-    // user에 room 추가(user에 roomid 추가하면 자동으로 romm의 users에 user 추가됨)
-    // targetRoom.users = [...targetRoom.users, userinfo];
     userinfo.room = targetRoom;
     await this.userRepository.save(userinfo);
 
@@ -89,9 +77,12 @@ export class LobbyService {
       where: { id: userid },
       relations: ['room', 'profile'],
     });
+    if (!userinfo.room) {
+      throw new ForbiddenException('방에 입장하지 않았습니다.');
+    }
 
-    userinfo.ready = false;
     userinfo.room = null;
+    userinfo.ready = false;
     await this.userRepository.save(userinfo);
 
     const targetRoom = await this.roomRepository.findOne({
@@ -106,7 +97,7 @@ export class LobbyService {
       );
       await this.roomRepository.save(targetRoom);
     }
-    // console.log(targetRoom);
+    console.log(targetRoom);
 
     return { userNickName: userinfo.profile.nickname };
   }

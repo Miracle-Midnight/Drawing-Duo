@@ -14,7 +14,7 @@ export class GameController {
   }
 
   // 게임 생성과 동시에 room과 game이 연결됨
-  @Post('create/:id')
+  @Post('create/:id') // roomid
   createGame(@Param('id', ParseIntPipe, PositiveIntPipe) id: number) {
     return this.gameService.createGame(id);
   }

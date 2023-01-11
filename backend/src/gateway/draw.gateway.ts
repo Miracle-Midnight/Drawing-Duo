@@ -4,13 +4,11 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-
 import { Server } from 'socket.io';
 import { OnModuleInit } from '@nestjs/common';
+import { DrawLine } from './dto/gateway.dto';
 
-import { Point, DrawLine } from './dto/draw-gateway.dto';
-
-@WebSocketGateway(80)
+@WebSocketGateway(3001)
 export class MyGateway implements OnModuleInit {
   @WebSocketServer()
   server: Server;
@@ -39,26 +37,23 @@ export class MyGateway implements OnModuleInit {
   }
 
   @SubscribeMessage('client-ready')
-  onClientReady(@MessageBody() body): any {
-    console.log(body);
+  onClientReady() {
     this.server.emit('get-canvas-state');
   }
 
   @SubscribeMessage('canvas-state')
-  onCanvasState(@MessageBody() body): any {
-    console.log(body);
-    this.server.emit('canvas-state-from-server', body);
+  onCanvasState(@MessageBody() state: any) {
+    console.log('received canvas state');
+    this.server.emit('canvas-state-from-server', state);
   }
 
   @SubscribeMessage('draw-line')
-  onDrawLine(@MessageBody() body): any {
-    console.log(body);
-    this.server.emit('draw-line', body);
+  onDrawLine(@MessageBody() { prevPoint, currentPoint, color }: DrawLine) {
+    this.server.emit('draw-line', { prevPoint, currentPoint, color });
   }
 
   @SubscribeMessage('clear')
-  onClear(@MessageBody() body): any {
-    console.log(body);
+  onClear() {
     this.server.emit('clear');
   }
 }
