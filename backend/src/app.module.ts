@@ -19,20 +19,24 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import { AwsService } from './aws.service';
+import { FriendModule } from './friend/friend.module';
 import { GamelobbyModule } from './gamelobby/gamelobby.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { MiddlewareConsumer, NestModule } from '@nestjs/common';
 
 @Module({
   imports: [
+    // ConfigModule.forRoot(),
     UserModule,
     RoomModule,
     LobbyModule,
     GameModule,
     ResultModule,
-    // ConfigModule.forRoot({
-    //   isGlobal: true,
-    // }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot(dataSourceOptions),
     ChatsAndDrawModule,
     ServeStaticModule.forRoot({
@@ -40,10 +44,12 @@ import { MiddlewareConsumer, NestModule } from '@nestjs/common';
       exclude: ['/api*'],
     }),
     AuthModule,
+
+    FriendModule,
     GamelobbyModule,
   ],
   controllers: [AppController, ResultController],
-  providers: [ResultService],
+  providers: [ResultService, AwsService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -6,11 +6,11 @@ import {
   OneToOne,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import { Profile } from './profile.entity';
 import { Room } from '../../room/entities/room.entity';
-import { Image } from '../../room/entities/image.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -38,4 +38,12 @@ export class User extends BaseEntity {
 
   @ManyToOne(() => Room, (room) => room.users, { onDelete: 'SET NULL' })
   room: Room;
+
+  @ManyToOne((type) => User, (user) => user.childUser)
+  parentUser: User;
+
+  @OneToMany((type) => User, (user) => user.parentUser)
+  childUser: User[];
+  // @ManyToOne(() => Friend, (friend) => friend.users, { cascade: true })
+  // friend: Friend;
 }
