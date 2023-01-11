@@ -5,5 +5,7 @@
   height: 100vh;
   width: 100vw;
 }
-
-
+.container {
+  padding-left: 0;
+  margin-right: 0;
+}
