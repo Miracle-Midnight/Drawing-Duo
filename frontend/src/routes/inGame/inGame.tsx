@@ -7,9 +7,6 @@ import SideNav from "../../components/sideNav/sideNav";
 import Image from "../../assets/image_numbering_label.png";
 import palette from "../../assets/palette-9-svgrepo-com.svg";
 
-{/* <div className="flex flex-col justify-center border border-black h-full">
-<img src={rightImage} alt="image"></img>
-</div> */}
 function InGame() {
   return (
     <div className="ml-20">
@@ -17,7 +14,9 @@ function InGame() {
       <div className="">
         <div className="grid">
           <div className="flex justify-center border border-black relative">
-            <img src={Image} alt="image" className="h-screen"></img>
+            <svg className="h-screen w-full">
+              <image href={Image} width="100%" height="100%"></image>
+            </svg>
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
               <div className="w-30 h-10 shadow px-5">
                 {/* todo : 펜, 지우개, 두께, 전체 지우기, 색상 */}
