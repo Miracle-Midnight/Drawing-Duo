@@ -7,6 +7,6 @@ export class Game extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => Room, (room) => room.game, { cascade: true })
+  // @OneToOne(() => Room, (room) => room.game, { cascade: true })
   room: Room;
 }

@@ -1,4 +1,4 @@
-import { Game } from 'src/game/entities/game.entity';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { User } from 'src/user/entities/user.entity';
 import {
   BaseEntity,
@@ -8,35 +8,28 @@ import {
   OneToMany,
   ManyToMany,
   JoinTable,
-  JoinColumn,
-  OneToOne,
 } from 'typeorm';
-
 import { Image } from './image.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Room extends BaseEntity {
+  @ApiProperty({
+    example: '1',
+  })
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @ApiProperty({
+    example: '방 제목',
+  })
+  @IsString()
+  @IsNotEmpty()
+  @Column({ nullable: false, unique: true })
   title: string;
-
-  @Column()
-  mode: boolean;
-
-  @Column()
-  status: boolean;
-
-  @Column({ nullable: true })
-  password: string;
 
   @OneToMany(() => User, (user) => user.room)
   users: User[];
-
-  @OneToOne(() => Game, (game) => game.room, { onDelete: 'CASCADE' })
-  @JoinColumn()
-  game: Game;
 
   @ManyToMany(() => Image)
   @JoinTable()

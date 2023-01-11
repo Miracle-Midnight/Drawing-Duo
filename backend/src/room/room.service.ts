@@ -24,8 +24,6 @@ export class RoomService {
 
   async createRoom(id: number, createRoomDto: CreateRoomDto) {
     const newRoom = this.roomRepository.create(createRoomDto);
-    // image 추가 - image path 저장
-    // room에 방장 추가 - client side에서 user를 받아서 room에 추가
     const user = await this.userRepository.findOne({
       where: { id },
       relations: ['profile'],
@@ -41,8 +39,6 @@ export class RoomService {
     return {
       roomid: newRoom.id,
       title: newRoom.title,
-      mode: newRoom.mode,
-      status: newRoom.status,
       userNickName: user.profile.nickname,
     };
   }

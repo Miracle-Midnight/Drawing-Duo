@@ -26,7 +26,6 @@ export class AuthService {
     if (!isUserExist) {
       throw new NotFoundException('이메일과 비밀번호를 확인해주세요.');
     }
-    // audicspace.com
 
     //* password가 일치하는지
     const isPasswordValidated: boolean = await bcrypt.compare(

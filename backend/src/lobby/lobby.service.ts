@@ -44,11 +44,11 @@ export class LobbyService {
     if (!targetRoom) throw new NotFoundException('방이 존재하지 않습니다.');
 
     // 비밀번호 체크
-    if (password) {
-      if (targetRoom.password !== password) {
-        throw new ForbiddenException('비밀번호가 틀렸습니다.');
-      }
-    }
+    // if (password) {
+    //   if (targetRoom.password !== password) {
+    //     throw new ForbiddenException('비밀번호가 틀렸습니다.');
+    //   }
+    // }
 
     if (imageid) {
       const image = await this.imageRepository.findOneBy({ id: imageid });

@@ -4,12 +4,9 @@ import { Response } from 'express';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
 import * as bcrypt from 'bcrypt';
 import { Image } from 'src/room/entities/image.entity';
-
 import { Profile } from './entities/profile.entity';
-import { ForbiddenException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class UserService {
@@ -38,7 +35,7 @@ export class UserService {
     });
 
     if (isUserExist) {
-      throw new ForbiddenException('이미 존재하는 아이디입니다.');
+      throw new UnauthorizedException('이미 존재하는 아이디입니다.');
     }
 
     // 유저 정보 생성 및 저장.
