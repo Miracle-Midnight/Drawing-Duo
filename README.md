@@ -30,6 +30,7 @@
   아니고, 1개의 object안에 여러 ele가 들어간다
 - doc.transac을 통해 event-update를 1개의 transaction안으로 묶어서, update횟수를 줄임
 
-### 기능 미구현 중 아이디어
+### 기능 미구현
 
-- line.observe(cb) => 안에 event.keysChanges.has('color') => path에 fill!
+- Canvas내부에 div태그에 의해 마우스 포인터 위치가 변경됨
+- 삭제를 마우스를 누르고 해야하는데, mouseover로 구현

@@ -5,8 +5,9 @@ import { Line } from "../Line/line";
 import { useLines } from "../../hooks/useLines";
 import { UserCursor } from "../UserCursor/usercursor";
 import { useUsers } from "../../useUsers";
-import { awareness } from "../../y";
+import { awareness, yLines } from "../../y";
 import { useKeyboardEvents } from "../../hooks/useKeyboradEvents";
+import { useEraseButton } from "../../hooks/useEraseButton";
 
 function getPoint(x: number, y: number) {
   return [x, y];
@@ -22,10 +23,23 @@ export function Canvas() {
     startLine,
     addPointToLine,
     completeLine,
-    clearAllLines,
     undoLine,
     redoLine,
   } = useLines();
+
+  const { isErase, eraseButton } = useEraseButton();
+
+  const handleMouseOver = useCallback(
+    (e: React.MouseEvent<SVGSVGElement>) => {
+      const starget = e.target as HTMLElement;
+      const eidx = starget.dataset.id;
+
+      if (isErase && eidx !== undefined) {
+        yLines.delete(+eidx, 1);
+      }
+    },
+    [isErase]
+  );
 
   useKeyboardEvents();
 
@@ -33,26 +47,29 @@ export function Canvas() {
   const handlePointerDown = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
       e.currentTarget.setPointerCapture(e.pointerId);
-
-      startLine(getPoint(e.clientX, e.clientY)); // 현재 viewport 기준
-      // startLine(getPoint(e.pageX, e.pageY)); // 전체 page 기준(scroll 포함)
+      if (!isErase) {
+        startLine(getPoint(e.clientX, e.clientY)); // 현재 viewport 기준
+        // startLine(getPoint(e.pageX, e.pageY)); // 전체 page 기준(scroll 포함)
+      }
     },
-    [startLine]
+    [startLine, isErase]
   );
 
   /* 포인터가 눌러진 체, 움직이면 추가해준다 */
   const handlePointerMove = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
-      const point = getPoint(e.clientX, e.clientY);
-      // const point = getPoint(e.pageX, e.pageY);
+      if (!isErase) {
+        const point = getPoint(e.clientX, e.clientY);
+        // const point = getPoint(e.pageX, e.pageY);
 
-      awareness.setLocalStateField("point", point);
+        awareness.setLocalStateField("point", point);
 
-      if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-        addPointToLine(point);
+        if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+          addPointToLine(point);
+        }
       }
     },
-    [addPointToLine]
+    [addPointToLine, isErase]
   );
 
   /* 포인터가 해제되었을 때, 완료해준다 */
@@ -87,6 +104,7 @@ export function Canvas() {
         onPointerUp={handlePointerUp}
         onPointerEnter={() => awareness.setLocalStateField("isActive", true)}
         onPointerLeave={() => awareness.setLocalStateField("isActive", false)}
+        onMouseOver={handleMouseOver}
         opacity={isSynced ? 1 : 0.2}
         style={{
           width: "100%",
@@ -94,7 +112,7 @@ export function Canvas() {
         }}
       >
         {lines.map((line, i) => (
-          <Line key={line.get("id")} line={line} />
+          <Line key={line.get("id")} line={line} idx={i} />
         ))}
         {Array.from(users.entries()).map(([key, value]: any) => {
           if (key === awareness.clientID) return null;
@@ -122,8 +140,7 @@ export function Canvas() {
       <div>
         <button onClick={undoLine}>Undo</button>
         <button onClick={redoLine}>Redo</button>
-        <button onClick={clearAllLines}>Clear</button>
-        {/* <button onClick={}></button> */}
+        <button onClick={eraseButton}>{isErase ? "Draw" : "Erase"}</button>
       </div>
     </div>
   );

@@ -85,9 +85,9 @@ export function useLines() {
   }, []);
 
   /* 0번째 부터 legnth까지 ylines 배열 내의 ele 삭제 */
-  const clearAllLines = useCallback(() => {
-    yLines.delete(0, yLines.length);
-  }, []);
+  // const clearAllLines = useCallback(() => {
+  //   yLines.delete(0, yLines.length);
+  // }, []);
 
   const undoLine = useCallback(() => {
     undoManager.undo();
@@ -150,7 +150,6 @@ export function useLines() {
     startLine,
     addPointToLine,
     completeLine,
-    clearAllLines,
     undoLine,
     redoLine,
   };

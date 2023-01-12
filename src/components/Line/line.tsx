@@ -8,6 +8,7 @@ import { getSvgPathFromStroke } from "../../utils";
 
 export interface LineProps {
   line: Y.Map<any>;
+  idx: number;
 }
 
 /* 
@@ -19,9 +20,11 @@ memo를 활용하여서, 부모 component가 re-render되었을때, 자식 compo
 
 - 인자로 point와 complete의 Ymap이 들어온다
 */
-export const Line = memo(function Line({ line }: LineProps) {
+export const Line = memo(function Line({ line, idx }: LineProps) {
   const { points, color, isComplete } = useLine(line);
   const pathData = getSvgPathFromStroke(getStroke(points));
 
-  return <path d={pathData} fill={isComplete ? color : "black"} />;
+  return (
+    <path d={pathData} data-id={`${idx}`} fill={isComplete ? color : "black"} />
+  );
 });
