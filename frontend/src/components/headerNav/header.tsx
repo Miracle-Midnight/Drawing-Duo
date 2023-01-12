@@ -77,16 +77,7 @@ function HeaderNav() {
                             role="menuitem"
                           >
                             <span className="flex flex-col">
-                              <span>Settings</span>
-                            </span>
-                          </a>
-                          <a
-                            href="#"
-                            className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
-                            role="menuitem"
-                          >
-                            <span className="flex flex-col">
-                              <span>Account</span>
+                              <span>친구 목록</span>
                             </span>
                           </a>
                           <a
