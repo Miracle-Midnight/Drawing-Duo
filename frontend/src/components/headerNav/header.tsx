@@ -51,6 +51,7 @@ function HeaderNav() {
                     <div>
                       <button
                         type="button"
+                        // todo : 포커스가 사라지면 오버레이도 닫히게 만들기
                         onClick={() => setIsOpen(!isOpen)}
                         className="  flex items-center justify-center w-full rounded-md  px-4 py-2 text-sm font-medium text-gray-700  hover:bg-gray-50  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500"
                         id="options-menu"
