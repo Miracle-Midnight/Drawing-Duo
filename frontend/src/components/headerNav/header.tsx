@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap"; // 꼭 import를 해와야한다
 import CenteredModal from "../../components/modal/modal";
 import logo from "../../assets/drawing-duo-logo-removebg.png";
+import FriendsCardList from "../friendsCardList/friendsCardList";
 
 function HeaderNav() {
   const [isOpen, setIsOpen] = useState(false);
   const [modalShow, setModalShow] = useState(false);
-
+  const [isClicked, setIsClicked] = useState(false);
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+  };
   return (
     <div>
       <nav className="bg-white shadow">
@@ -72,7 +76,7 @@ function HeaderNav() {
                           aria-labelledby="options-menu"
                         >
                           <a
-                            href="#"
+                            onClick={handleClick}
                             className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
                             role="menuitem"
                           >
@@ -115,6 +119,7 @@ function HeaderNav() {
 
         <CenteredModal show={modalShow} onHide={() => setModalShow(false)} />
       </nav>
+      {isClicked === true ? <FriendsCardList></FriendsCardList> : null}
     </div>
   );
 }
