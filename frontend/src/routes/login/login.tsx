@@ -19,8 +19,23 @@ function Login() {
     setInputPw(e.target.value);
   };
 
+  const onEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onClickLogin();
+    }
+  };
+
   // login 버튼 클릭 이벤트
   const onClickLogin = () => {
+    // if (inputId === "123" && inputPw === "123") {
+    //   alert("로그인 성공");
+    //   sessionStorage.setItem("userKey", inputId);
+    //   sessionStorage.setItem("userNickname", "홍길동");
+    //   document.location.href = "/";
+    // } else {
+    //   alert("id, pw를 확인해주세요!");
+    // }
+
     axios
       .post("http://54.180.100.213:3000/api/users/login", {
         userid: inputId,
@@ -98,6 +113,7 @@ function Login() {
                   className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                   value={inputPw}
                   onChange={handleInputPw}
+                  onKeyDown={onEnterPress}
                   placeholder="Password"
                 />
               </div>

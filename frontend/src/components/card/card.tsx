@@ -1,10 +1,17 @@
 import { Button, Container, Row, Col } from "react-bootstrap"; // 꼭 import를 해와야한다
 import "./card.css";
 import Player from "../player/player";
+import { useNavigate } from "react-router-dom";
 
 function Card({ title, imageSrc, needTitle }: any) {
+  const navigate = useNavigate();
+
+  const joinRoom = () => {
+    navigate("/room");
+  };
+
   return (
-    <Container>
+    <Container onClick={joinRoom}>
       <div className="flex items-center justify-center">
         <div className="w-80 p-1">
           <div className="flex flex-col justify-center bg-white rounded-lg shadow-2xl card">
