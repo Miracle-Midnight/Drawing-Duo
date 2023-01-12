@@ -10,4 +10,7 @@ export class Image extends BaseEntity {
 
   @Column()
   image: string;
+
+  @Column({ nullable: true })
+  converted: string;
 }

@@ -21,25 +21,25 @@ export class LobbyService {
     private imageRepository: Repository<Image>,
   ) {}
 
-  async getLobby(): Promise<Room[]> {
-    return this.roomRepository.find();
-  }
+  // async getLobby(): Promise<Room[]> {
+  //   return this.roomRepository.find();
+  // }
 
   async inRoom(enterRoomDto: EnterRoomDto) {
-    const { userid, roomid, password, imageid } = enterRoomDto;
+    const { userid, roomid } = enterRoomDto;
 
-    // 룸에 몇명의 user가 있는지 확인하고 4명이 넘으면 에러
+    // 룸에 몇명의 user가 있는지 확인하고 2명이 넘으면 에러
     const checkUser = await this.roomRepository.findOne({
       where: { id: roomid },
       relations: ['users'],
     });
-    if (checkUser.users.length >= 4) {
+    if (checkUser.users.length >= 2) {
       throw new ForbiddenException('방이 꽉 찼습니다.');
     }
 
     const targetRoom = await this.roomRepository.findOne({
       where: { id: roomid },
-      relations: ['images', 'users'],
+      relations: ['users'],
     });
     if (!targetRoom) throw new NotFoundException('방이 존재하지 않습니다.');
 
@@ -50,14 +50,14 @@ export class LobbyService {
     //   }
     // }
 
-    if (imageid) {
-      const image = await this.imageRepository.findOneBy({ id: imageid });
-      if (!image) throw new NotFoundException('이미지가 존재하지 않습니다.');
-      // 이미지 중복 - 2개 이상 안들어감 (해결 필요)
-      targetRoom.images = [...targetRoom.images, image];
-      console.log(targetRoom.images);
-      await this.roomRepository.save(targetRoom);
-    }
+    // if (imageid) {
+    //   const image = await this.imageRepository.findOneBy({ id: imageid });
+    //   if (!image) throw new NotFoundException('이미지가 존재하지 않습니다.');
+    //   // 이미지 중복 - 2개 이상 안들어감 (해결 필요)
+    //   targetRoom.images = [...targetRoom.images, image];
+    //   console.log(targetRoom.images);
+    //   await this.roomRepository.save(targetRoom);
+    // }
 
     const userinfo = await this.userRepository.findOne({
       where: { id: userid },
@@ -72,7 +72,7 @@ export class LobbyService {
   }
 
   async outRoom(enterRoomDto: EnterRoomDto) {
-    const { userid, roomid, imageid } = enterRoomDto;
+    const { userid, roomid } = enterRoomDto;
     const userinfo = await this.userRepository.findOne({
       where: { id: userid },
       relations: ['room', 'profile'],
@@ -82,22 +82,22 @@ export class LobbyService {
     }
 
     userinfo.room = null;
-    userinfo.ready = false;
+    // userinfo.ready = false;
     await this.userRepository.save(userinfo);
 
-    const targetRoom = await this.roomRepository.findOne({
-      where: { id: roomid },
-      relations: ['images', 'users'],
-    });
+    // const targetRoom = await this.roomRepository.findOne({
+    //   where: { id: roomid },
+    //   relations: ['images', 'users'],
+    // });
 
-    if (imageid) {
-      const image = await this.imageRepository.findOneBy({ id: imageid });
-      targetRoom.images = targetRoom.images.filter(
-        (img) => img.id !== image.id,
-      );
-      await this.roomRepository.save(targetRoom);
-    }
-    console.log(targetRoom);
+    // if (imageid) {
+    //   const image = await this.imageRepository.findOneBy({ id: imageid });
+    //   targetRoom.images = targetRoom.images.filter(
+    //     (img) => img.id !== image.id,
+    //   );
+    //   await this.roomRepository.save(targetRoom);
+    // }
+    // console.log(targetRoom);
 
     return { userNickName: userinfo.profile.nickname };
   }
