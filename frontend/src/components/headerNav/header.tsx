@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap"; // 꼭 import를 해와야한다
 import CenteredModal from "../../components/modal/modal";
+import logo from "../../assets/drawing-duo-logo-removebg.png";
 
-function HeaderNav({ isMakeRoom }: any) {
+function HeaderNav() {
   const [isOpen, setIsOpen] = useState(false);
   const [modalShow, setModalShow] = useState(false);
 
@@ -13,11 +14,7 @@ function HeaderNav({ isMakeRoom }: any) {
           <div className="flex items-center justify-between h-16">
             <div className=" flex items-center">
               <a className="flex-shrink-0" href="/">
-                <img
-                  className="w-32"
-                  src="https://github.com/Miracle-Midnight/Drawing-Duo/blob/feat/ksd/makeNewLayout/frontend/src/assets/drawing-duo-logo-removebg.png?raw=true"
-                  alt="Workflow"
-                />
+                <img className="w-32" src={logo} alt="Workflow" />
               </a>
 
               <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 ">
@@ -31,24 +28,14 @@ function HeaderNav({ isMakeRoom }: any) {
                     </a>
                   </li>
                   <li className="mr-2">
-                    {isMakeRoom === true ? (
-                      <a
-                        href="#"
-                        className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 border-b-2 border-purple-600 rounded-t-lg  hover:text-purple-600"
-                        aria-current="page"
-                      >
-                        방 만들기
-                      </a>
-                    ) : (
-                      <a
-                        href="#"
-                        className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 rounded-t-lg  hover:text-purple-600"
-                        aria-current="page"
-                        onClick={() => setModalShow(true)}
-                      >
-                        방 만들기
-                      </a>
-                    )}
+                    <a
+                      href="#"
+                      className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 rounded-t-lg  hover:text-purple-600"
+                      aria-current="page"
+                      onClick={() => setModalShow(true)}
+                    >
+                      방 만들기
+                    </a>
                   </li>
                 </ul>
               </div>
