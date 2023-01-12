@@ -257,23 +257,7 @@ function SideNav() {
       </nav>
       {isChatOn === true ? <Chat></Chat> : null}
 
-      {/* todo : 채팅 컴포넌트로 분리하기 */}
-
-      {/* todo : hintImage 컴포넌트로 분리하기 */}
-      {isHintImageOn === true ? (
-        <div className="absolute bottom-48 left-20 z-50 border-2 border-gray-300 bg-opacity-50">
-          <div className="w-[250px] p-3">
-            <img src={catImage} alt="cat" />
-          </div>
-        </div>
-      ) : (
-        <div className="absolute bottom-48 left-20 z-50 border-2 border-gray-300 bg-opacity-50 hidden">
-          <div className="w-[250px] p-3">
-            <img src={catImage} alt="cat" />
-          </div>
-        </div>
-      )}
-      {/* <HintImage isHintImageOn={isHintImageOn}></HintImage> */}
+      {isHintImageOn === true ? <HintImage></HintImage> : null}
     </div>
   );
 }
