@@ -6,7 +6,7 @@ import Lobby from "./routes/lobby/lobby";
 import Result from "./routes/result/result";
 import InGame from "./routes/inGame/inGame";
 import Intro from "./routes/intro/intro";
-import MakeRoom from "./routes/makeRoom/makeRoom";
+
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
@@ -20,7 +20,7 @@ function App() {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/gameLobby" element={<GameLobby />}></Route>
         <Route path="/inGame" element={<InGame />}></Route>
-        <Route path="/makeRoom" element={<MakeRoom />}></Route>
+        
       </Routes>
     </BrowserRouter>
   );
