@@ -21,8 +21,8 @@ memo를 활용하여서, 부모 component가 re-render되었을때, 자식 compo
 - 인자로 point와 complete의 Ymap이 들어온다
 */
 export const Line = memo(function Line({ line, idx }: LineProps) {
-  const { points, color, isComplete } = useLine(line);
-  const pathData = getSvgPathFromStroke(getStroke(points));
+  const { points, color, isComplete } = useLine(line); // size 받기
+  const pathData = getSvgPathFromStroke(getStroke(points)); // size option 주기
 
   return (
     <path d={pathData} data-id={`${idx}`} fill={isComplete ? color : "black"} />

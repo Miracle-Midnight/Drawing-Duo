@@ -8,6 +8,8 @@ import { useUsers } from "../../useUsers";
 import { awareness, yLines } from "../../y";
 import { useKeyboardEvents } from "../../hooks/useKeyboradEvents";
 import { useEraseButton } from "../../hooks/useEraseButton";
+import { useColorChange } from "../../hooks/useLineColor";
+import { SizeButton } from "../SizeButton/sizebutton";
 
 function getPoint(x: number, y: number) {
   return [x, y];
@@ -29,6 +31,8 @@ export function Canvas() {
 
   const { isErase, eraseButton } = useEraseButton();
 
+  const { handleColorChange } = useColorChange();
+
   const handleMouseOver = useCallback(
     (e: React.MouseEvent<SVGSVGElement>) => {
       const starget = e.target as HTMLElement;
@@ -48,8 +52,9 @@ export function Canvas() {
     (e: React.PointerEvent<SVGSVGElement>) => {
       e.currentTarget.setPointerCapture(e.pointerId);
       if (!isErase) {
-        startLine(getPoint(e.clientX, e.clientY)); // 현재 viewport 기준
-        // startLine(getPoint(e.pageX, e.pageY)); // 전체 page 기준(scroll 포함)
+        // startLine(getPoint(e.clientX, e.clientY)); // 현재 viewport 기준
+        startLine(getPoint(e.pageX, e.pageY)); // 전체 page 기준(scroll 포함)
+        // 1. 추가로 size인자를 주어서 yline에 추가
       }
     },
     [startLine, isErase]
@@ -59,8 +64,8 @@ export function Canvas() {
   const handlePointerMove = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
       if (!isErase) {
-        const point = getPoint(e.clientX, e.clientY);
-        // const point = getPoint(e.pageX, e.pageY);
+        // const point = getPoint(e.clientX, e.clientY);
+        const point = getPoint(e.pageX, e.pageY);
 
         awareness.setLocalStateField("point", point);
 
@@ -141,6 +146,11 @@ export function Canvas() {
         <button onClick={undoLine}>Undo</button>
         <button onClick={redoLine}>Redo</button>
         <button onClick={eraseButton}>{isErase ? "Draw" : "Erase"}</button>
+        <button onClick={() => handleColorChange("red")}>Red</button>
+        <SizeButton />
+        <br></br>
+        <br></br>
+        <br></br>
       </div>
     </div>
   );

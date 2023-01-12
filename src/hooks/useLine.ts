@@ -9,6 +9,7 @@ export function useLine(line: Y.Map<any>) {
   const [isComplete, setIsComplete] = useState<boolean>();
   const [color, setColor] = useState<string>();
   const [pts, setPts] = useState<number[][]>([]);
+  // const [size, setSize] = useState<number>();
 
   /* line을 관찰하면서 변화가 생기면, 완료 상태 정보 수정 */
   useEffect(() => {
@@ -16,6 +17,7 @@ export function useLine(line: Y.Map<any>) {
       const current = line.toJSON(); // YMap을 json객체 형태로 전환
       setIsComplete(current.isComplete);
       setColor(current.userColor);
+      //setSize(current.size);
     }
 
     handleChange();
@@ -45,5 +47,5 @@ export function useLine(line: Y.Map<any>) {
       points.unobserve(handleChange);
     };
   }, [line]);
-  return { points: pts, color, isComplete };
+  return { points: pts, color, isComplete }; // size추가
 }
