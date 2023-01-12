@@ -1,6 +1,5 @@
-import catImage from "../../assets/cat-image.png";
+import ChatList from "../chatList/chatList";
 
-// todo : 힌트 이미지 컴포넌트 isHintImageOn props로 받아서 true일때만 보이게 하기
 function Chat() {
   return (
     <>
@@ -8,87 +7,25 @@ function Chat() {
         <div className="relative">
           <div className="w-[350px] h-[400px] overflow-auto border ">
             <ul className="p-0 pt-3">
-              <li className="pl-3 pb-2">
-                <span>김영우</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>박선도</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
-              <li className="pl-3 pb-2">
-                <span>김채욱</span>
-                <span className="px-1">:</span>
-                <span>sdfs</span>
-              </li>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              <ChatList name="윤영운" message="거기 그 색 아니야" ></ChatList>
+              
             </ul>
           </div>
           <div className="absolute -bottom-10 left-0 w-full flex h-10 bg-purple-300 border border-b-2 border-gray-200">
