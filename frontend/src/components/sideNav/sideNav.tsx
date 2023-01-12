@@ -1,9 +1,15 @@
 import "./sideNav.css";
 import logoSmall from "../../assets/logo-small.png";
-import { useState } from "react";
+import { useState, SetStateAction, Dispatch } from "react";
 import InGamePlayer from "../inGamePlayer/inGamePlayer";
 import catImage from "../../assets/cat-image.png";
 import HintImage from "../hintImage/hintImage";
+import Chat from "../chat/chat";
+
+// interface Props {
+//   isHintImageOn: boolean;
+//   setisHintImageOn: Dispatch<SetStateAction<boolean>>;
+// }
 
 function SideNav() {
   //   const [micState, setMicState] = useState(false);
@@ -11,6 +17,7 @@ function SideNav() {
   const [isMicOn, setisMicOn] = useState(false);
   const [isSoundOn, setisSoundOn] = useState(false);
   const [isHintImageOn, setisHintImageOn] = useState(false);
+  const [isChatOn, setisChatOn] = useState(false);
 
   const toggleMicHandler = () => {
     // isMicOn의 상태를 변경하는 메소드를 구현
@@ -21,6 +28,9 @@ function SideNav() {
   };
   const toggleHintImageHandler = () => {
     setisHintImageOn(!isHintImageOn);
+  };
+  const toggleChatHandler = () => {
+    setisChatOn(!isChatOn);
   };
 
   return (
@@ -165,29 +175,54 @@ function SideNav() {
                 </a>
               </li>
 
-              <li className="my-12 text-center">
+              <li className="my-12 text-center" onClick={toggleChatHandler}>
                 <a href="#">
                   <span className="h-6 w-6 text-gray-500  mx-auto hover:text-gray-800  transition-colors duration-200">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlSpace="preserve"
-                      width="20"
-                      height="20"
-                      version="1.1"
-                      fill="currentColor"
-                      className="m-auto"
-                      viewBox="0 0 493 511.77"
-                      xmlnsXlink="http://www.w3.org/1999/xlink"
-                    >
-                      <g id="Layer_x0020_1">
-                        <metadata id="CorelCorpID_0Corel-Layer" />
-                        <path
-                          fill="currentColor"
-                          fill-rule="nonzero"
-                          d="M129.11 458.2l82.5 -79.1c3.09,-3 7.08,-4.47 11.08,-4.45l228.6 -0.08c2.67,0 5.09,-1.08 6.78,-2.77 1.74,-1.81 2.84,-4.24 2.84,-6.87l0 -323.2c0,-2.59 -1.12,-5 -2.86,-6.74 -1.78,-1.78 -4.2,-2.9 -6.76,-2.9l-409.56 0c-2.54,0 -4.94,1.14 -6.72,2.92 -1.78,1.78 -2.92,4.18 -2.92,6.72l0 323.2c0,2.57 1.12,5.02 2.88,6.78l0.53 0.55c1.68,1.42 3.88,2.31 6.23,2.31l71.34 0c8.85,0 16.04,7.2 16.04,16.04l0 67.59zm-5.4 -229.77c10.9,0 19.74,8.85 19.74,19.74 0,10.89 -8.84,19.73 -19.74,19.73 -10.89,0 -19.73,-8.84 -19.73,-19.73 0,-10.89 8.84,-19.74 19.73,-19.74zm0 -101.14c10.9,0 19.74,8.85 19.74,19.74 0,10.89 -8.84,19.74 -19.74,19.74 -10.89,0 -19.73,-8.85 -19.73,-19.74 0,-10.89 8.84,-19.74 19.73,-19.74zm61.72 138.89c-9.95,0 -18.02,-8.07 -18.02,-18.01 0,-9.95 8.07,-18.02 18.02,-18.02l185.56 0c9.95,0 18.01,8.07 18.01,18.02 0,9.94 -8.06,18.01 -18.01,18.01l-185.56 0zm0 -101.13c-9.95,0 -18.02,-8.07 -18.02,-18.02 0,-9.94 8.07,-18.01 18.02,-18.01l185.56 0c9.95,0 18.01,8.07 18.01,18.01 0,9.95 -8.06,18.02 -18.01,18.02l-185.56 0zm43.62 241.61l-103.97 99.69c-2.96,3.32 -7.24,5.42 -12.01,5.42 -8.85,0 -16.05,-7.2 -16.05,-16.04l0 -89.07 -55.29 0c-10.83,0 -20.76,-4.28 -28.19,-11.12l-1.26 -1.14c-7.56,-7.56 -12.28,-18.05 -12.28,-29.47l0 -323.2c0,-11.4 4.77,-21.88 12.31,-29.42 7.54,-7.54 18.02,-12.31 29.42,-12.31l409.56 0c11.4,0 21.9,4.74 29.45,12.29 7.5,7.51 12.26,17.96 12.26,29.44l0 323.2c0,11.48 -4.7,21.95 -12.24,29.49 -7.61,7.54 -18.05,12.24 -29.47,12.24l-222.24 0z"
-                        />
-                      </g>
-                    </svg>
+                    {isChatOn === false ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlSpace="preserve"
+                        width="20"
+                        height="20"
+                        version="1.1"
+                        fill="currentColor"
+                        className="m-auto"
+                        viewBox="0 0 493 511.77"
+                        xmlnsXlink="http://www.w3.org/1999/xlink"
+                      >
+                        <g id="Layer_x0020_1">
+                          <metadata id="CorelCorpID_0Corel-Layer" />
+                          <title>chat</title>
+                          <path
+                            fill="currentColor"
+                            fill-rule="nonzero"
+                            d="M129.11 458.2l82.5 -79.1c3.09,-3 7.08,-4.47 11.08,-4.45l228.6 -0.08c2.67,0 5.09,-1.08 6.78,-2.77 1.74,-1.81 2.84,-4.24 2.84,-6.87l0 -323.2c0,-2.59 -1.12,-5 -2.86,-6.74 -1.78,-1.78 -4.2,-2.9 -6.76,-2.9l-409.56 0c-2.54,0 -4.94,1.14 -6.72,2.92 -1.78,1.78 -2.92,4.18 -2.92,6.72l0 323.2c0,2.57 1.12,5.02 2.88,6.78l0.53 0.55c1.68,1.42 3.88,2.31 6.23,2.31l71.34 0c8.85,0 16.04,7.2 16.04,16.04l0 67.59zm-5.4 -229.77c10.9,0 19.74,8.85 19.74,19.74 0,10.89 -8.84,19.73 -19.74,19.73 -10.89,0 -19.73,-8.84 -19.73,-19.73 0,-10.89 8.84,-19.74 19.73,-19.74zm0 -101.14c10.9,0 19.74,8.85 19.74,19.74 0,10.89 -8.84,19.74 -19.74,19.74 -10.89,0 -19.73,-8.85 -19.73,-19.74 0,-10.89 8.84,-19.74 19.73,-19.74zm61.72 138.89c-9.95,0 -18.02,-8.07 -18.02,-18.01 0,-9.95 8.07,-18.02 18.02,-18.02l185.56 0c9.95,0 18.01,8.07 18.01,18.02 0,9.94 -8.06,18.01 -18.01,18.01l-185.56 0zm0 -101.13c-9.95,0 -18.02,-8.07 -18.02,-18.02 0,-9.94 8.07,-18.01 18.02,-18.01l185.56 0c9.95,0 18.01,8.07 18.01,18.01 0,9.95 -8.06,18.02 -18.01,18.02l-185.56 0zm43.62 241.61l-103.97 99.69c-2.96,3.32 -7.24,5.42 -12.01,5.42 -8.85,0 -16.05,-7.2 -16.05,-16.04l0 -89.07 -55.29 0c-10.83,0 -20.76,-4.28 -28.19,-11.12l-1.26 -1.14c-7.56,-7.56 -12.28,-18.05 -12.28,-29.47l0 -323.2c0,-11.4 4.77,-21.88 12.31,-29.42 7.54,-7.54 18.02,-12.31 29.42,-12.31l409.56 0c11.4,0 21.9,4.74 29.45,12.29 7.5,7.51 12.26,17.96 12.26,29.44l0 323.2c0,11.48 -4.7,21.95 -12.24,29.49 -7.61,7.54 -18.05,12.24 -29.47,12.24l-222.24 0z"
+                          />
+                        </g>
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlSpace="preserve"
+                        width="20"
+                        height="20"
+                        version="1.1"
+                        fill="currentColor"
+                        className="m-auto"
+                        viewBox="0 0 493 511.77"
+                        xmlnsXlink="http://www.w3.org/1999/xlink"
+                      >
+                        <g id="Layer_x0020_1">
+                          <metadata id="CorelCorpID_0Corel-Layer" />
+                          <title>chat</title>
+                          <path
+                            fill="rgb(219,0,255)"
+                            fill-rule="nonzero"
+                            d="M129.11 458.2l82.5 -79.1c3.09,-3 7.08,-4.47 11.08,-4.45l228.6 -0.08c2.67,0 5.09,-1.08 6.78,-2.77 1.74,-1.81 2.84,-4.24 2.84,-6.87l0 -323.2c0,-2.59 -1.12,-5 -2.86,-6.74 -1.78,-1.78 -4.2,-2.9 -6.76,-2.9l-409.56 0c-2.54,0 -4.94,1.14 -6.72,2.92 -1.78,1.78 -2.92,4.18 -2.92,6.72l0 323.2c0,2.57 1.12,5.02 2.88,6.78l0.53 0.55c1.68,1.42 3.88,2.31 6.23,2.31l71.34 0c8.85,0 16.04,7.2 16.04,16.04l0 67.59zm-5.4 -229.77c10.9,0 19.74,8.85 19.74,19.74 0,10.89 -8.84,19.73 -19.74,19.73 -10.89,0 -19.73,-8.84 -19.73,-19.73 0,-10.89 8.84,-19.74 19.73,-19.74zm0 -101.14c10.9,0 19.74,8.85 19.74,19.74 0,10.89 -8.84,19.74 -19.74,19.74 -10.89,0 -19.73,-8.85 -19.73,-19.74 0,-10.89 8.84,-19.74 19.73,-19.74zm61.72 138.89c-9.95,0 -18.02,-8.07 -18.02,-18.01 0,-9.95 8.07,-18.02 18.02,-18.02l185.56 0c9.95,0 18.01,8.07 18.01,18.02 0,9.94 -8.06,18.01 -18.01,18.01l-185.56 0zm0 -101.13c-9.95,0 -18.02,-8.07 -18.02,-18.02 0,-9.94 8.07,-18.01 18.02,-18.01l185.56 0c9.95,0 18.01,8.07 18.01,18.01 0,9.95 -8.06,18.02 -18.01,18.02l-185.56 0zm43.62 241.61l-103.97 99.69c-2.96,3.32 -7.24,5.42 -12.01,5.42 -8.85,0 -16.05,-7.2 -16.05,-16.04l0 -89.07 -55.29 0c-10.83,0 -20.76,-4.28 -28.19,-11.12l-1.26 -1.14c-7.56,-7.56 -12.28,-18.05 -12.28,-29.47l0 -323.2c0,-11.4 4.77,-21.88 12.31,-29.42 7.54,-7.54 18.02,-12.31 29.42,-12.31l409.56 0c11.4,0 21.9,4.74 29.45,12.29 7.5,7.51 12.26,17.96 12.26,29.44l0 323.2c0,11.48 -4.7,21.95 -12.24,29.49 -7.61,7.54 -18.05,12.24 -29.47,12.24l-222.24 0z"
+                          />
+                        </g>
+                      </svg>
+                    )}
                   </span>
                 </a>
               </li>
@@ -220,28 +255,124 @@ function SideNav() {
           </div>
         </div>
       </nav>
-      <div className="absolute bottom-10 left-20 z-50 bg-gray-500 bg-opacity-50 hidden">
+      
+
+      {/* todo : 채팅 컴포넌트로 분리하기 */}
+      <div className="absolute bottom-12 left-20 z-50 bg-gray-00 bg-opacity-50 ">
         <div className="relative">
-          <div className="w-[350px] h-[400px] border-2 border-black">
+          <div className="w-[350px] h-[400px] overflow-auto border ">
             <ul className="p-0 pt-3">
               <li className="pl-3 pb-2">
                 <span>김영우</span>
                 <span className="px-1">:</span>
                 <span>sdfs</span>
               </li>
+              <li className="pl-3 pb-2">
+                <span>박선도</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
+              <li className="pl-3 pb-2">
+                <span>김채욱</span>
+                <span className="px-1">:</span>
+                <span>sdfs</span>
+              </li>
             </ul>
-            <div className="absolute bottom-0 w-full h-20px border-2 border-purple-500 ">
-              <form>
-                <label>
-                  <input type="text" name="name" />
-                </label>
-                <input type="submit" value="Submit" className="w-2/6" />
-              </form>
-            </div>
+          </div>
+          <div className="absolute -bottom-10 left-0 w-full flex h-10 bg-purple-300 border border-b-2 border-gray-200">
+            <input className="w-full h-full p-2" type="text"></input>
+            <input type="submit" value="" id="send-button" className=""></input>
+            <label
+              htmlFor="send-button"
+              className="m-auto text-purple-500  hover:text-purple-800"
+            >
+              <svg
+                width="20"
+                height="20"
+                className="w-10 m-auto"
+                viewBox="0 0 16 16"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+              >
+                <path
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                  className=""
+                  d="M15.08 2.526c.368-1.001-.605-1.974-1.606-1.605L1.878 5.193a1.25 1.25 0 00-.295 2.19l4.07 2.907a.25.25 0 01.057.058l2.907 4.069a1.25 1.25 0 002.19-.295l4.272-11.596zM2.84 6.437l10.645-3.922L9.563 13.16l-2.39-3.344 3.072-3.071a.7.7 0 10-.99-.99L6.184 8.826 2.84 6.437z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </label>
           </div>
         </div>
       </div>
-      
+      {/* todo : hintImage 컴포넌트로 분리하기 */}
       {isHintImageOn === true ? (
         <div className="absolute bottom-48 left-20 z-50 border-2 border-gray-300 bg-opacity-50">
           <div className="w-[250px] p-3">
@@ -255,7 +386,6 @@ function SideNav() {
           </div>
         </div>
       )}
-
       {/* <HintImage isHintImageOn={isHintImageOn}></HintImage> */}
     </div>
   );
