@@ -4,7 +4,7 @@ import { useState, SetStateAction, Dispatch } from "react";
 import InGamePlayer from "../inGamePlayer/inGamePlayer";
 import catImage from "../../assets/cat-image.png";
 import HintImage from "../hintImage/hintImage";
-import Chat from "../chat/chat";
+import ChatList from "../chatList/chatList";
 
 // interface Props {
 //   isHintImageOn: boolean;
@@ -255,7 +255,7 @@ function SideNav() {
           </div>
         </div>
       </nav>
-      {isChatOn === true ? <Chat></Chat> : null}
+      {isChatOn === true ? <ChatList></ChatList> : null}
 
       {isHintImageOn === true ? <HintImage></HintImage> : null}
     </div>
