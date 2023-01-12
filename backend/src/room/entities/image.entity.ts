@@ -8,6 +8,9 @@ export class Image extends BaseEntity {
   @Column()
   type: boolean; // game: true, profile: false
 
-  @Column()
+  @Column({ nullable: true })
   image: string;
+
+  @Column({ nullable: true })
+  frameImage: string;
 }

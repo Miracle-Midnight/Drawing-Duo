@@ -37,12 +37,15 @@ export class UserController {
     return this.authService.jwtLogIn(userDto);
   }
 
-  @UseInterceptors(FileInterceptor('image', multerOptions('profile')))
-  @Post('upload')
-  uploadFile(@UploadedFile() file: Express.Multer.File, @Body() userDto) {
-    console.log(file);
-    console.log(userDto);
+  @UseInterceptors(FilesInterceptor('image', 2))
+  @Post('uploads')
+  uploadFile(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @Body() userDto,
+  ) {
+    // console.log(files[0]);
+    // console.log(userDto);
     // return { image: `http://localhost:3000/media/profile/${file.filename}` };
-    return this.userService.uploadImg(userDto, file);
+    return this.userService.uploadImg(userDto, 'game', files);
   }
 }
