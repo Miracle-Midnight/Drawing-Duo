@@ -27,7 +27,7 @@ function ChatList() {
     e.preventDefault();
     const { name, message } = state;
     socket.emit("message", { name, message });
-    setState({ message, name });
+    setState({ message:"", name });
   };
 
   const renderChat = () => {
@@ -62,7 +62,7 @@ function ChatList() {
                 type="submit"
                 value=""
                 id="send-button"
-                className=""
+                
               ></input>
               <label
                 htmlFor="send-button"
