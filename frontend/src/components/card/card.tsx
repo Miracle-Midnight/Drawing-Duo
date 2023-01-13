@@ -2,12 +2,24 @@ import { Button, Container, Row, Col } from "react-bootstrap"; // 꼭 import를 
 import "./card.css";
 import Player from "../player/player";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Card({ title, imageSrc, needTitle }: any) {
   const navigate = useNavigate();
 
   const joinRoom = () => {
     navigate("/room");
+    // axios
+    //   .post("/api/lobby/in", {
+    //     title: title,
+    //   })
+    //   .then((res) => {
+    //     navigate("/room");
+    //     sessionStorage.setItem("roomTitle", title);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   return (

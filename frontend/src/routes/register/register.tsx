@@ -3,6 +3,7 @@ import "./register.css";
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import logo from "../../assets/drawing-duo-logo-removebg.png";
 
 function Register() {
   const [inputId, setInputId] = useState("");
@@ -67,10 +68,7 @@ function Register() {
     <Container className="center">
       <div className="flex flex-col max-w-md px-4 py-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
         <div>
-          <img
-            src="https://raw.githubusercontent.com/Miracle-Midnight/Drawing-Duo/frontend/frontend/src/assets/drawing-duo-logo.png"
-            alt="logo"
-          />
+          <img src={logo} alt="logo" />
         </div>
         <div className="self-center mb-2 text-xl font-light text-gray-800 sm:text-2xl">
           회원가입

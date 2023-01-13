@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import CenteredModal from "../../components/modal/modal";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/drawing-duo-logo-removebg.png";
 
 function HeaderNav() {
   const navigate = useNavigate();
-
   const [isOpen, setIsOpen] = useState(false);
   const [modalShow, setModalShow] = useState(false);
 
@@ -28,7 +28,7 @@ function HeaderNav() {
               <button className="flex-shrink-0" onClick={handleGoHome}>
                 <img
                   className="w-32"
-                  src="https://github.com/Miracle-Midnight/Drawing-Duo/blob/feat/ksd/makeNewLayout/frontend/src/assets/drawing-duo-logo-removebg.png?raw=true"
+                  src={logo}
                   alt="Workflow"
                 />
               </button>

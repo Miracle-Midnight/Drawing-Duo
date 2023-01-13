@@ -8,76 +8,80 @@ import UserState from "../../components/userState/userState";
 import { io } from "socket.io-client";
 import Peer from "simple-peer";
 
-const socket = io(
-  "http://54.180.125.6:3000/" + sessionStorage.getItem("roomid")
-);
+const socket = io("http://localhost:3000");
 
 function GameLobby() {
-  const [stream, setStream] = useState<any>();
-  const [oppoID, setOppoID] = useState<string>("");
-  const [recevingCall, setReceivingCall] = React.useState(false);
-  const [caller, setCaller] = useState("");
-  const [callAccepted, setCallAccepted] = useState(false);
-  const [callerSignal, setCallerSignal] = useState<any>();
-  const connection = useRef<any>();
+  const videoGrid = document.getElementById("video-grid");
+  const myPeer = new Peer();
+
+  const myVideo = document.createElement("video");
+  myVideo.muted = true;
+  const peers = {};
 
   useEffect(() => {
-    // axios
-    //   .get("http://54.180.125.6:3000/api/room")
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setImageList(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
     navigator.mediaDevices
-      .getUserMedia({ video: false, audio: true })
+      .getUserMedia({
+        video: true,
+        audio: true,
+      })
       .then((stream) => {
-        setStream(stream);
-      });
+        addVideoStream(myVideo, stream);
 
-    socket.on("caller", (data) => {
-      setReceivingCall(true);
-      setCaller(data.from);
-      setCallerSignal(data.signal);
+        myPeer.on("call", (call) => {
+          call.answer(stream);
+          const video = document.createElement("video");
+          call.on("stream", (userVideoStream: any) => {
+            addVideoStream(video, userVideoStream);
+          });
+        });
+
+        socket.on("user-connected", (userId) => {
+          connectToNewUser(userId, stream);
+        });
+      });
+    socket.on("user-disconnected", (userId) => {
+      if (peers[userId]) peers[userId].close();
     });
+
+    myPeer.on("open", (id) => {
+      socket.emit("join-room", sessionStorage.getItem("roomTitle"));
+    });
+
+    socket.on("user-connected", (userId) => {});
   }, []);
 
-  const calling = () => {
-    const peer = new Peer({
-      initiator: true,
-      trickle: false,
-      stream: stream,
+  function connectToNewUser(userId: any, stream: any) {
+    const call = myPeer.call(userId, stream);
+    const video = document.createElement("video");
+    call.on("stream", (userVideoStream: any) => {
+      addVideoStream(video, userVideoStream);
     });
-    peer.on("signal", (data) => {
-      socket.emit("caller", {
-        ToCall: oppoID,
-        signalData: data,
-        from: sessionStorage.getItem("userKey"),
-      });
+    call.on("close", () => {
+      video.remove();
     });
-    socket.on("acceptcall", (signal) => {
-      setCallAccepted(true);
-      peer.signal(signal);
-    });
-    connection.current = peer;
-  };
 
-  const answerCall = () => {
-    setCallAccepted(true);
-    const peer = new Peer({
-      initiator: false,
-      trickle: false,
-      stream: stream,
+    peers[userId] = call;
+  }
+
+  function addVideoStream(video: any, stream: any) {
+    video.srcObject = stream;
+    video.addEventListener("loadedmetadata", () => {
+      video.play();
     });
-    peer.on("signal", (data) => {
-      socket.emit("answerCall", { signal: data, to: caller });
-    });
-    peer.signal(callerSignal);
-    connection.current = peer;
-  };
+    videoGrid.append(video);
+  }
+
+  // useEffect(() => {
+  // axios
+  //   .get("/api/room")
+  //   .then((res) => {
+  //     console.log(res.data);
+  //     setImageList(res.data);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+  // },[]);
 
   const navigate = useNavigate();
 

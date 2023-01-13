@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/drawing-duo-logo-removebg.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -27,34 +28,34 @@ function Login() {
 
   // login 버튼 클릭 이벤트
   const onClickLogin = () => {
-    // if (inputId === "123" && inputPw === "123") {
-    //   alert("로그인 성공");
-    //   sessionStorage.setItem("userKey", inputId);
-    //   sessionStorage.setItem("userNickname", "홍길동");
-    //   document.location.href = "/";
-    // } else {
-    //   alert("id, pw를 확인해주세요!");
-    // }
+    if (inputId === "123" && inputPw === "123") {
+      alert("로그인 성공");
+      sessionStorage.setItem("userKey", inputId);
+      sessionStorage.setItem("userNickname", "홍길동");
+      document.location.href = "/";
+    } else {
+      alert("id, pw를 확인해주세요!");
+    }
 
-    axios
-      .post("http://54.180.100.213:3000/api/users/login", {
-        userid: inputId,
-        password: inputPw,
-      })
-      .then((res) => {
-        console.log(res.data.data.userid);
-        console.log(res.data.data.token);
-        alert("로그인 성공");
-        sessionStorage.setItem("userKey", res.data.data.userid);
-        sessionStorage.setItem("userToken", res.data.data.token);
-        sessionStorage.setItem("userNickname", res.data.data.nickname);
-        document.location.href = "/";
-        // }
-      })
-      .catch((err) => {
-        alert("id, pw를 확인해주세요!");
-        console.log(err);
-      });
+    // axios
+    //   .post("http://54.180.100.213:3000/api/users/login", {
+    //     userid: inputId,
+    //     password: inputPw,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data.data.userid);
+    //     console.log(res.data.data.token);
+    //     alert("로그인 성공");
+    //     sessionStorage.setItem("userKey", res.data.data.userid);
+    //     sessionStorage.setItem("userToken", res.data.data.token);
+    //     sessionStorage.setItem("userNickname", res.data.data.nickname);
+    //     document.location.href = "/";
+    //     // }
+    //   })
+    //   .catch((err) => {
+    //     alert("id, pw를 확인해주세요!");
+    //     console.log(err);
+    //   });
   };
 
   const onClickRegister = () => {
@@ -65,10 +66,7 @@ function Login() {
     <div className="center">
       <div className="flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
         <div>
-          <img
-            src="https://raw.githubusercontent.com/Miracle-Midnight/Drawing-Duo/frontend/frontend/src/assets/drawing-duo-logo.png"
-            alt="logo"
-          />
+          <img src={logo} alt="logo" />
         </div>
 
         <div className="mt-8">
