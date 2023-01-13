@@ -4,7 +4,7 @@ function Chat({ name = "기본값", message, isYou }: any) {
       <div className="flex flex-col ">
         <div>{name}</div>
 
-        <div className="border-2 border-gray-100 p-2 px-4 rounded-tl-xl rounded-tr-xl rounded-br-xl bg-purple-300 text-gray-700">
+        <div className="border-2 border-gray-100 p-2 px-4 rounded-tl-xl rounded-tr-xl rounded-br-xl bg-violet-300 text-gray-700">
           {message}
         </div>
       </div>
