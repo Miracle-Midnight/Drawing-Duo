@@ -39,9 +39,7 @@ export function useLines() {
     경우 성능이 느려져서, transact()안에 묶어서 업데이트한다)
    - 인자로 마우스 포인터로 눌른 x좌표,y좌표 값이 배열로 들어온다
   */
-  const startLine = useCallback((point: number[]) => {
-    // 2. 인자로 size를 받는다
-    // console.log(size)로 테스트
+  const startLine = useCallback((point: number[], size1: number) => {
     const id = Date.now().toString();
     const yPoints = new Y.Array<number>();
     yPoints.push([...point]);
@@ -57,7 +55,7 @@ export function useLines() {
       yLine.set("points", yPoints);
       yLine.set("userColor", user.color);
       yLine.set("isComplete", false);
-      // yLine.set("size",size); // line 안에 size추가
+      yLine.set("size", size1);
     });
 
     rCurrentLine.current = yLine; // ref에 현재 선 정보를 저장

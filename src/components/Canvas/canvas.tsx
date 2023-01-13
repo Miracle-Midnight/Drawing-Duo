@@ -19,9 +19,7 @@ function getPoint(x: number, y: number) {
 
 /* 화면에 보일 캔버스 그림 정보 */
 export function Canvas() {
-  const size = useSelector((state: RootState) => state.size.value); // size reducer의 state중 value
-  console.log(size);
-
+  const size1 = useSelector((state: RootState) => state.size.value); // size reducer의 state중 value
   const users = useUsers(awareness, (state: any) => state);
   /* lines은 최종 화면에서 선 별로 저장 한 Ymap이다 */
   const {
@@ -58,11 +56,10 @@ export function Canvas() {
       e.currentTarget.setPointerCapture(e.pointerId);
       if (!isErase) {
         // startLine(getPoint(e.clientX, e.clientY)); // 현재 viewport 기준
-        startLine(getPoint(e.pageX, e.pageY)); // 전체 page 기준(scroll 포함)
-        // 1. 추가로 size인자를 주어서 yline에 추가
+        startLine(getPoint(e.pageX, e.pageY), size1); // 전체 page 기준(scroll 포함)
       }
     },
-    [startLine, isErase]
+    [startLine, isErase, size1]
   );
 
   /* 포인터가 눌러진 체, 움직이면 추가해준다 */

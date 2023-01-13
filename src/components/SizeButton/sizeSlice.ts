@@ -6,7 +6,7 @@ export interface sizeState {
 }
 
 let initialState: sizeState = {
-  value: 1,
+  value: 20,
 };
 
 export const sizeSlice = createSlice({

@@ -12,7 +12,6 @@ export function SizeButton() {
     <div>
       <input
         type="range"
-        value={size}
         onChange={(e) => dispatch(changeSize(+e.target.value))}
         min="1"
         max="100"
