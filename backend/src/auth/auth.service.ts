@@ -20,7 +20,7 @@ export class AuthService {
     //* 해당하는 email이 있는지
     const isUserExist = await this.userRepository.findOne({
       where: { userid: userid },
-      relations: ['profile', 'profile.image', 'room'],
+      relations: ['profile', 'profile.image'],
     });
 
     if (!isUserExist) {
@@ -44,7 +44,6 @@ export class AuthService {
       userid: isUserExist.id,
       nickname: isUserExist.profile.nickname,
       image: isUserExist.profile.image.image,
-      room: isUserExist.room,
     };
   }
 }

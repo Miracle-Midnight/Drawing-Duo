@@ -25,6 +25,7 @@ import { FriendModule } from './friend/friend.module';
 import { GamelobbyModule } from './gamelobby/gamelobby.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { MiddlewareConsumer, NestModule } from '@nestjs/common';
+import { dataSourceOptions } from 'db/data-source';
 
 @Module({
   imports: [
@@ -36,18 +37,7 @@ import { MiddlewareConsumer, NestModule } from '@nestjs/common';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      entities: ['dist/src/*/entities/*.entity.{js,ts}'],
-      migrations: ['dist/db/migrations/*.{js.ts}'],
-      synchronize: true,
-      logging: true,
-    }),
+    TypeOrmModule.forRoot(dataSourceOptions),
     ChatsAndDrawModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),

@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Room } from './room.entity';
 
 @Entity()
 export class Image extends BaseEntity {
@@ -13,4 +20,7 @@ export class Image extends BaseEntity {
 
   @Column({ nullable: true })
   frameImage: string;
+
+  @OneToMany(() => Room, (room) => room.image)
+  room: Room[];
 }

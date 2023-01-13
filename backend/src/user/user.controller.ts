@@ -37,6 +37,7 @@ export class UserController {
     return this.authService.jwtLogIn(userDto);
   }
 
+  // 그림이미지 원본과, 프레임 이미지 저장.
   @UseInterceptors(FilesInterceptor('image', 2))
   @Post('uploads')
   uploadFile(

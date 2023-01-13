@@ -1,7 +1,7 @@
 import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 
 @Injectable()
 export class FriendService {
@@ -11,10 +11,11 @@ export class FriendService {
   ) {}
 
   async serchUser(friendname: string) {
-    const user = await this.userRepository.findOne({
-      where: { userid: friendname },
+    const user = await this.userRepository.find({
+      where: { userid: Like(`%${friendname}%`) },
     });
-    return { friendId: user.id, friendName: user.userid };
+    console.log(user);
+    return user.map(this.childuserFilter);
   }
 
   async addFriend(@Body() userDto) {

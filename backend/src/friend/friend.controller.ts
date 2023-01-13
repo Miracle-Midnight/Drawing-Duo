@@ -16,7 +16,8 @@ export class FriendController {
 
   // @UseGuards(JwtAuthGuard)
   @Get('serch/:id')
-  serchUser(@Req() req, @Param('id') friendname: string) {
+  serchUser(@Param('id') friendname: string) {
+    console.log(friendname);
     return this.friendService.serchUser(friendname);
   }
 

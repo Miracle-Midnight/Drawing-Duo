@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 import { EnterRoomDto } from './dto/enter-room.dto';
 import { LobbyService } from './lobby.service';
@@ -6,10 +6,12 @@ import { LobbyService } from './lobby.service';
 @Controller('lobby')
 export class LobbyController {
   constructor(private readonly lobbyService: LobbyService) {}
-  // @Get()
-  // getLobby() {
-  //   return this.lobbyService.getLobby();
-  // }
+
+  @ApiOperation({ summary: '내 방 조회' })
+  @Get(':id') // user id
+  getmyroom(@Param('id') userid: number) {
+    return this.lobbyService.myroom(userid);
+  }
 
   @ApiOperation({ summary: '방 입장' })
   @Post('in')

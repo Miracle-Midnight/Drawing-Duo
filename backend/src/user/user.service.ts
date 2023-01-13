@@ -114,6 +114,7 @@ export class UserService {
     }
   }
 
+  // 게임 그림 스토리지와 DB에 저장.
   async uploadImg(
     @Body() UserDto,
     folder: string,
