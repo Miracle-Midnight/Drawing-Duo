@@ -27,7 +27,7 @@ function ChatList() {
     e.preventDefault();
     const { name, message } = state;
     socket.emit("message", { name, message });
-    setState({ message:"", name });
+    setState({ message: "", name });
   };
 
   const renderChat = () => {
@@ -49,8 +49,8 @@ function ChatList() {
               {renderChat()}
             </ul>
           </div>
-          <div className="absolute -bottom-10 left-0 w-full flex h-10 bg-purple-300 border border-b-2 border-gray-200">
-            <form onSubmit={onMessageSubmit}>
+          <div className="absolute -bottom-10 left-0 w-full h-10  border border-b-2 border-gray-200">
+            <form onSubmit={onMessageSubmit} className="flex">
               <input
                 className="w-full h-full p-2"
                 type="text"
