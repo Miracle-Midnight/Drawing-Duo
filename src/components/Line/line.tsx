@@ -24,7 +24,5 @@ export const Line = memo(function Line({ line, idx }: LineProps) {
   const { points, color, isComplete } = useLine(line); // size 받기
   const pathData = getSvgPathFromStroke(getStroke(points)); // size option 주기
 
-  return (
-    <path d={pathData} data-id={`${idx}`} fill={isComplete ? color : "black"} />
-  );
+  return <path d={pathData} data-id={`${idx}`} fill={color} />;
 });

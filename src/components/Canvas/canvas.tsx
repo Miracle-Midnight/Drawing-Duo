@@ -1,5 +1,6 @@
 /* library */
 import { useCallback } from "react";
+import { useSelector } from "react-redux";
 /* module from local */
 import { Line } from "../Line/line";
 import { useLines } from "../../hooks/useLines";
@@ -10,6 +11,7 @@ import { useKeyboardEvents } from "../../hooks/useKeyboradEvents";
 import { useEraseButton } from "../../hooks/useEraseButton";
 import { useColorChange } from "../../hooks/useLineColor";
 import { SizeButton } from "../SizeButton/sizebutton";
+import { RootState } from "../../store";
 
 function getPoint(x: number, y: number) {
   return [x, y];
@@ -17,6 +19,9 @@ function getPoint(x: number, y: number) {
 
 /* 화면에 보일 캔버스 그림 정보 */
 export function Canvas() {
+  const size = useSelector((state: RootState) => state.size.value); // size reducer의 state중 value
+  console.log(size);
+
   const users = useUsers(awareness, (state: any) => state);
   /* lines은 최종 화면에서 선 별로 저장 한 Ymap이다 */
   const {
@@ -110,12 +115,21 @@ export function Canvas() {
         onPointerEnter={() => awareness.setLocalStateField("isActive", true)}
         onPointerLeave={() => awareness.setLocalStateField("isActive", false)}
         onMouseOver={handleMouseOver}
-        opacity={isSynced ? 1 : 0.2}
         style={{
           width: "100%",
           height: "100vh",
         }}
       >
+        <image
+          href="https://drawing-duo.s3.amazonaws.com/game/1673593103532_image.png"
+          width="30%"
+          height="100%"
+        ></image>
+        <image
+          href="https://drawing-duo.s3.amazonaws.com/game/1673593103532_image_numbering_label.png"
+          width="100%"
+          height="100%"
+        ></image>
         {lines.map((line, i) => (
           <Line key={line.get("id")} line={line} idx={i} />
         ))}
@@ -147,6 +161,10 @@ export function Canvas() {
         <button onClick={redoLine}>Redo</button>
         <button onClick={eraseButton}>{isErase ? "Draw" : "Erase"}</button>
         <button onClick={() => handleColorChange("red")}>Red</button>
+        <button onClick={() => handleColorChange("blue")}>Blue</button>
+        <button onClick={() => handleColorChange("black")}>Black</button>
+        <button onClick={() => handleColorChange("purple")}>Purple</button>
+        <button onClick={() => handleColorChange("green")}>Green</button>
         <SizeButton />
         <br></br>
         <br></br>

@@ -1,22 +1,19 @@
 /* library */
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+/* module from local */
+import { changeSize } from "./sizeSlice";
+import { RootState } from "../../store";
 
 export function SizeButton() {
-  const [size, setSize] = useState<number>(1);
-
-  const handleRangeChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLInputElement;
-    console.log("[DEBUG]{range value}");
-    console.log(target.value);
-    setSize(+target.value);
-  };
+  const size = useSelector((state: RootState) => state.size.value); // size reducer의 state중 value
+  const dispatch = useDispatch(); // global state을 변경하기 위해 존재
 
   return (
     <div>
       <input
         type="range"
         value={size}
-        onChange={handleRangeChange}
+        onChange={(e) => dispatch(changeSize(+e.target.value))}
         min="1"
         max="100"
       />
