@@ -6,14 +6,13 @@ import HeaderNav from "../../components/headerNav/header";
 import ImageCard from "../../components/imageCard/imageCard";
 import UserState from "../../components/userState/userState";
 import { io } from "socket.io-client";
-import Peer from "simple-peer";
+import Peer from "peerjs";
 
 const socket = io("http://localhost:3000");
+const videoGrid: any = document.getElementById("video-grid");
+const myPeer: any = new Peer();
 
 function GameLobby() {
-  const videoGrid = document.getElementById("video-grid");
-  const myPeer = new Peer();
-
   const myVideo = document.createElement("video");
   myVideo.muted = true;
   const peers = {};
@@ -27,7 +26,7 @@ function GameLobby() {
       .then((stream) => {
         addVideoStream(myVideo, stream);
 
-        myPeer.on("call", (call) => {
+        myPeer.on("call", (call: any) => {
           call.answer(stream);
           const video = document.createElement("video");
           call.on("stream", (userVideoStream: any) => {
@@ -35,19 +34,17 @@ function GameLobby() {
           });
         });
 
-        socket.on("user-connected", (userId) => {
-          connectToNewUser(userId, stream);
-        });
+        // socket.on("user-connected", (userId) => {
+        //   connectToNewUser(userId, stream);
+        // });
       });
-    socket.on("user-disconnected", (userId) => {
-      if (peers[userId]) peers[userId].close();
-    });
+    // socket.on("user-disconnected", (userId) => {
+    //   if (peers[userId]) peers[userId].close();
+    // });
 
-    myPeer.on("open", (id) => {
-      socket.emit("join-room", sessionStorage.getItem("roomTitle"));
+    myPeer.on("open", (id: any) => {
+      socket.emit("join-room", { roomId: sessionStorage.getItem("roomTitle") });
     });
-
-    socket.on("user-connected", (userId) => {});
   }, []);
 
   function connectToNewUser(userId: any, stream: any) {
@@ -60,7 +57,7 @@ function GameLobby() {
       video.remove();
     });
 
-    peers[userId] = call;
+    // peers[userId] = call;
   }
 
   function addVideoStream(video: any, stream: any) {

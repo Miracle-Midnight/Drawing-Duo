@@ -9,8 +9,8 @@ import {
 import { Logger } from '@nestjs/common';
 import { MessageBody, SubscribeMessage } from '@nestjs/websockets';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Room } from 'src/room/entities/room.entity';
 import { Repository } from 'typeorm';
+import { User } from 'src/user/entities/user.entity';
 
 let rooms: string[] = [];
 
@@ -21,7 +21,7 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
   private logger = new Logger('RoomGateway');
 
   constructor(
-    // @InjectRepository(Room) private roomRepository: Repository<Room>,
+    @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
   afterInit() {
@@ -32,26 +32,39 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
     this.logger.log(`Client connected: ${socket.id} ${socket.nsp.name}`);
   }
 
-  @SubscribeMessage('join')
-  handleJoin(@MessageBody() data, @ConnectedSocket() socket: Socket) {
+  @SubscribeMessage('join-room')
+  async handleJoin(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     this.logger.log(`Client joined: ${socket.id} ${socket.nsp.name}`);
-    if (rooms[data.room]) {
-      if (rooms[data.room].length < 2) {
-        socket.join(data.room);
-        socket.to(data.room).emit('join', data.room);
+    if (rooms[data.roomId]) {
+      if (rooms[data.roomId].length < 2) {
+        socket.join(data.roomId);
+
+        const user = await this.userRepository.findOne({
+          where: { id: data.userId },
+          relations: ['profile'],
+        });
+
+        socket.to(data.roomId).emit('user-connected', user.profile.nickname);
       } else {
         socket.to(socket.id).emit('room full');
       }
     }
-    socket.join(data.room);
-    rooms.push(data.room);
-    socket.to(data.room).emit('join', data.room);
+
+    socket.join(data.roomId);
+    rooms.push(data.roomId);
+    socket.to(data.roomId).emit('user-connected', data.userId);
+  }
+
+  @SubscribeMessage('select-image')
+  handleSelectImage(@MessageBody() data, @ConnectedSocket() socket: Socket) {
+    this.logger.log(`Client selected image: ${socket.id} ${data.image}`);
+    socket.to(data.roomId).emit('image selected', data.image);
   }
 
   @SubscribeMessage('leave')
   handleLeave(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     this.logger.log(`Client left: ${socket.id} ${socket.nsp.name}`);
-    socket.leave(data.room);
-    socket.to(data.room).emit('leave', data.room);
+    socket.leave(data.roomId);
+    socket.to(data.roomId).emit('user-disconnected', data.userId);
   }
 }
