@@ -1,7 +1,8 @@
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
 import Image from "../../assets/image_numbering_label.png";
-import palette from "../../assets/palette-9-svgrepo-com.svg";
+import { Canvas } from "../../components/canvas/canvas";
+import {useColorChange} from "../../hooks/useLineColor"
 
 function InGame() {
   return (
@@ -10,9 +11,7 @@ function InGame() {
       <div className="">
         <div className="grid">
           <div className="flex justify-center border border-black relative">
-            <svg className="h-screen w-full">
-              <image href={Image} width="100%" height="100%"></image>
-            </svg>
+            <Canvas />
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
               <div className="w-30 h-10 shadow px-5">
                 {/* todo : 펜, 지우개, 두께, 전체 지우기, 색상 */}

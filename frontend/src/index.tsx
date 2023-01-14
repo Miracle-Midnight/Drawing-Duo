@@ -8,24 +8,29 @@ import Register from "./routes/register/register";
 import GameLobby from "./routes/gameLobby/gameLobby";
 import InGame from "./routes/inGame/inGame";
 import Intro from "./routes/intro/intro";
+import React from "react";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  // <React.StrictMode>
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/Login" element={<Login />} />
-      <Route path="/room" element={<GameLobby />} />
-      <Route path="/room/:id" element={<GameLobby />} />
-      <Route path="/Register" element={<Register />} />
-      <Route path="/InGame" element={<InGame />} />
-      <Route path="/Intro" element={<Intro />} />
-    </Routes>
-  </BrowserRouter>
-  // </React.StrictMode>
+  <Provider store={store}>
+    <React.StrictMode>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/room" element={<GameLobby />} />
+          <Route path="/room/:id" element={<GameLobby />} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/InGame" element={<InGame />} />
+          <Route path="/Intro" element={<Intro />} />
+        </Routes>
+      </BrowserRouter>
+    </React.StrictMode>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
