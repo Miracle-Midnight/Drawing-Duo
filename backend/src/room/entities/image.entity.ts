@@ -11,6 +11,9 @@ export class Image extends BaseEntity {
   @Column()
   image: string;
 
+  @Column('jsonb', { nullable: true })
+  rgb: { r: number; g: number; b: number }[];
+
   @Column({ nullable: true })
   converted: string;
 }

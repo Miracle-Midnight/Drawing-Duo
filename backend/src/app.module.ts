@@ -13,7 +13,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 // import { ConfigModule } from '@nestjs/config';
 // import { typeOrmConfig } from './config/typeorm.config';
 // import { dataSourceOptions } from 'db/data-source';
-import { ChatsAndDrawModule } from './gateway/gateway.module';
 
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
@@ -25,6 +24,7 @@ import { FriendModule } from './friend/friend.module';
 import { GamelobbyModule } from './gamelobby/gamelobby.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { MiddlewareConsumer, NestModule } from '@nestjs/common';
+import { RoomGatewayModule } from './gateway/gateway.module';
 
 @Module({
   imports: [
@@ -48,7 +48,7 @@ import { MiddlewareConsumer, NestModule } from '@nestjs/common';
       synchronize: true,
       logging: true,
     }),
-    ChatsAndDrawModule,
+    RoomGatewayModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
       exclude: ['/api*'],
