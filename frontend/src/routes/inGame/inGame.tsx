@@ -6,11 +6,11 @@ import InGameCanvas from "../../components/inGameCanvas/inGameCanvas";
 import SideNav from "../../components/sideNav/sideNav";
 import Image from "../../assets/image_numbering_label.png";
 import palette from "../../assets/palette-9-svgrepo-com.svg";
-import Pen from "../../assets/pen";
-import Eraser from "../../assets/eraser";
-import Palette from "../../assets/palette";
-import Undo from "../../assets/undo";
-import Redo from "../../assets/redo";
+import Pen from "../../components/drawTools/pen";
+import Eraser from "../../components/drawTools/eraser";
+import Palette from "../../components/drawTools/palette";
+import Undo from "../../components/drawTools/undo";
+import Redo from "../../components/drawTools/redo";
 import InputRange from "../../components/inputRange/inputRange";
 function InGame() {
   return (
