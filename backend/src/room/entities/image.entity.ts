@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Room } from './room.entity';
 
 @Entity()
 export class Image extends BaseEntity {
@@ -8,12 +15,15 @@ export class Image extends BaseEntity {
   @Column()
   type: boolean; // game: true, profile: false
 
-  @Column()
+  @Column({ nullable: true })
   image: string;
 
   @Column('jsonb', { nullable: true })
   rgb: { r: number; g: number; b: number }[];
 
   @Column({ nullable: true })
-  converted: string;
+  frameImage: string;
+
+  @OneToMany(() => Room, (room) => room.image)
+  room: Room[];
 }

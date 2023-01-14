@@ -28,7 +28,7 @@ export class RoomService {
 
     const room = await this.roomRepository.findOne({
       where: { id: roomid },
-      relations: ['images'],
+      relations: ['image'],
     });
     if (!room) {
       throw new NotFoundException('방이 존재하지 않습니다.');
@@ -39,7 +39,7 @@ export class RoomService {
       throw new NotFoundException('이미지가 존재하지 않습니다.');
     }
 
-    room.images = [image];
+    room.image = image;
     return this.roomRepository.save(room);
   }
 
@@ -53,9 +53,8 @@ export class RoomService {
       throw new NotFoundException('유저가 존재하지 않습니다.');
     }
 
-    newRoom.users = [user];
+    newRoom.user = [user];
     await this.roomRepository.save(newRoom);
-    console.log(newRoom);
 
     return {
       roomid: newRoom.id,

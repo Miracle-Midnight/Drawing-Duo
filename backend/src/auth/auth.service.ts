@@ -42,11 +42,7 @@ export class AuthService {
     return {
       token: this.JwtService.sign(payload),
       userid: isUserExist.id,
-      username: isUserExist.userid,
       nickname: isUserExist.profile.nickname,
-      level: isUserExist.profile.level,
-      rank: isUserExist.profile.rank,
-      introduction: isUserExist.profile.introduction,
       image: isUserExist.profile.image.image,
     };
   }

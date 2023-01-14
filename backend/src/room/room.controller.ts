@@ -34,6 +34,7 @@ export class RoomController {
     @Param('id', ParseIntPipe, PositiveIntPipe) id: number,
     @Body() createRoomDto: CreateRoomDto,
   ) {
+    console.log(id);
     return this.roomService.createRoom(id, createRoomDto);
   }
 
