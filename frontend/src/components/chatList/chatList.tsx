@@ -49,7 +49,7 @@ function ChatList() {
               {renderChat()}
             </ul>
           </div>
-          <div className="absolute -bottom-10 left-0 w-full h-10  border border-b-2 border-gray-200">
+          <div className="absolute -bottom-10 left-0 w-full h-10 bg-purple-100  border border-b-2 border-gray-200">
             <form onSubmit={onMessageSubmit} className="flex">
               <input
                 className="w-full h-full p-2"
@@ -66,7 +66,7 @@ function ChatList() {
               ></input>
               <label
                 htmlFor="send-button"
-                className="m-auto text-purple-500  hover:text-purple-800"
+                className="m-auto text-purple-500  hover:text-purple-700"
               >
                 <svg
                   width="20"
