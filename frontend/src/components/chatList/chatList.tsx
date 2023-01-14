@@ -31,9 +31,13 @@ function ChatList() {
   };
 
   const renderChat = () => {
-    return chat.map(({ name, message }, index) => (
-      <Chat key={index} name={name} message={message}></Chat>
-    ));
+    return chat.map(({ name, message }, index) =>
+      name === state.name ? (
+        <Chat key={index} name={name} message={message} isYou={true}></Chat>
+      ) : (
+        <Chat key={index} name={name} message={message} isYou={false}></Chat>
+      )
+    );
   };
   return (
     <>
@@ -58,12 +62,7 @@ function ChatList() {
                 onChange={(e) => onTextChange(e)}
                 value={state.message}
               ></input>
-              <input
-                type="submit"
-                value=""
-                id="send-button"
-                
-              ></input>
+              <input type="submit" value="" id="send-button"></input>
               <label
                 htmlFor="send-button"
                 className="m-auto text-purple-500  hover:text-purple-700"
