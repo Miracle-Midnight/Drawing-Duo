@@ -255,7 +255,7 @@ function SideNav() {
           </div>
         </div>
       </nav>
-      {isChatOn === true ? <ChatList></ChatList> : null}
+      {isChatOn === true ? <div><ChatList></ChatList></div> : <div className="hidden"><ChatList></ChatList></div>}
 
       {isHintImageOn === true ? <HintImage></HintImage> : null}
     </div>

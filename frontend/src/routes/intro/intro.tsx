@@ -46,6 +46,15 @@ function Intro() {
           needTitle={true}
           title="김영우 빨리와"
         ></Card>
+        {lobbyList.map((lobby: any) => {
+          return (
+            <Card
+              imageSrc={lobby.image}
+              needTitle={true}
+              title={lobby.title}
+            ></Card>
+          );
+        })}
       </div>
     </div>
   );

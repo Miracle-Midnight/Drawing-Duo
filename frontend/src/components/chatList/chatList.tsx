@@ -31,9 +31,13 @@ function ChatList() {
   };
 
   const renderChat = () => {
-    return chat.map(({ name, message }, index) => (
-      <Chat key={index} name={name} message={message}></Chat>
-    ));
+    return chat.map(({ name, message }, index) =>
+      name === state.name ? (
+        <Chat key={index} name={name} message={message} isYou={true}></Chat>
+      ) : (
+        <Chat key={index} name={name} message={message} isYou={false}></Chat>
+      )
+    );
   };
   return (
     <>
@@ -49,7 +53,7 @@ function ChatList() {
               {renderChat()}
             </ul>
           </div>
-          <div className="absolute -bottom-10 left-0 w-full h-10  border border-b-2 border-gray-200">
+          <div className="absolute -bottom-10 left-0 w-full h-10 bg-purple-100  border border-b-2 border-gray-200">
             <form onSubmit={onMessageSubmit} className="flex">
               <input
                 className="w-full h-full p-2"
@@ -58,15 +62,10 @@ function ChatList() {
                 onChange={(e) => onTextChange(e)}
                 value={state.message}
               ></input>
-              <input
-                type="submit"
-                value=""
-                id="send-button"
-                
-              ></input>
+              <input type="submit" value="" id="send-button"></input>
               <label
                 htmlFor="send-button"
-                className="m-auto text-purple-500  hover:text-purple-800"
+                className="m-auto text-purple-500  hover:text-purple-700"
               >
                 <svg
                   width="20"
