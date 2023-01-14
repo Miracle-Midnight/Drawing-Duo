@@ -41,6 +41,7 @@ function Login() {
         sessionStorage.setItem("userKey", res.data.data.userid);
         sessionStorage.setItem("userToken", res.data.data.token);
         sessionStorage.setItem("userNickname", res.data.data.nickname);
+        sessionStorage.setItem("userProfileImage", res.data.data.image);
         document.location.href = "/";
         // }
       })

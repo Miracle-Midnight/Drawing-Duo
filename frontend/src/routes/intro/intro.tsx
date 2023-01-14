@@ -1,10 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import HeaderNav from "../../components/headerNav/header";
 import Card from "../../components/card/card";
 import "./intro.css";
+import axios from "axios";
 
 function Intro() {
+  const [lobbyList, setLobbyList] = useState([]);
+
+  useEffect(() => {
+    console.log(sessionStorage.getItem("userKey"));
+    axios
+      .get("/api/lobby/" + sessionStorage.getItem("userKey"))
+      .then((res) => {
+        console.log(res.data.data);
+        setLobbyList(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
       <HeaderNav />

@@ -3,12 +3,15 @@ import * as Y from "yjs";
 import { WebrtcProvider } from "y-webrtc";
 import { IndexeddbPersistence } from "y-indexeddb";
 import { USER_COLORS } from "./constants";
+import GameLobby from "./routes/gameLobby/gameLobby";
+
+const roomId: string = sessionStorage.getItem("roomId")!;
 
 /*crdt 공유 문서 생성*/
 export const doc = new Y.Doc();
 
 /* webrtc로 동일한 room에 있는 유저간 doc 동기화 */
-export const provider = new WebrtcProvider("test", doc); // webrtc를 활용하여서 사용자와의 연동
+export const provider = new WebrtcProvider(roomId, doc); // webrtc를 활용하여서 사용자와의 연동
 
 /* 세션을 통해 document정보 유지 */
 // new IndexeddbPersistence("test", doc);
