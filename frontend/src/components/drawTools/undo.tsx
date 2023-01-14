@@ -1,13 +1,19 @@
-function Undo() {
+import React from "react";
+
+type VoidFunction = () => void;
+
+interface props {
+  undo: VoidFunction;
+}
+
+function Undo(props: props) {
   return (
-    <button className="w-10 h-10 ">
+    <button className="w-10 h-10 " onClick={props.undo}>
       <svg
         width="20"
         height="20"
         className="m-auto"
-        viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
-        mirror-in-rtl="true"
       >
         <path
           fill="#494c4e"

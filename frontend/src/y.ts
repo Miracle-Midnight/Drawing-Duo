@@ -3,7 +3,6 @@ import * as Y from "yjs";
 import { WebrtcProvider } from "y-webrtc";
 import { IndexeddbPersistence } from "y-indexeddb";
 import { USER_COLORS } from "./constants";
-import GameLobby from "./routes/gameLobby/gameLobby";
 
 const roomId: string = sessionStorage.getItem("roomId")!;
 

@@ -1,10 +1,12 @@
 /* library */
 import { configureStore } from "@reduxjs/toolkit";
-import { sizeReducer } from "./components/sizeButton/sizeSlice";
+import { sizeReducer } from "./states/sizeSlice";
+import { eraseReducer } from "./states/eraseSlice";
 
 export const store = configureStore({
   reducer: {
     size: sizeReducer,
+    erase: eraseReducer,
   },
 });
 

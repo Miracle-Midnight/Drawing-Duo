@@ -1,3 +1,4 @@
+/* library */
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -5,7 +6,7 @@ export interface sizeState {
   value: number;
 }
 
-let initialState: sizeState = {
+const initialState: sizeState = {
   value: 20,
 };
 

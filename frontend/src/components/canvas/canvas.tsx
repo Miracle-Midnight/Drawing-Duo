@@ -1,6 +1,6 @@
 /* library */
-import { useCallback } from "react";
-import { useSelector } from "react-redux";
+import React, { useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 /* module from local */
 import { Line } from "../line/line";
 import { useLines } from "../../hooks/useLines";
@@ -10,7 +10,6 @@ import { awareness, yLines } from "../../y";
 import { useKeyboardEvents } from "../../hooks/useKeyboradEvents";
 import { useEraseButton } from "../../hooks/useEraseButton";
 import { useColorChange } from "../../hooks/useLineColor";
-import { SizeButton } from "../sizeButton/sizebutton";
 import { RootState } from "../../store";
 
 function getPoint(x: number, y: number) {
@@ -32,9 +31,9 @@ export function Canvas() {
     redoLine,
   } = useLines();
 
-  const { isErase, eraseButton } = useEraseButton();
+  const isErase = useSelector((state: RootState) => state.erase.isErase);
 
-  const { handleColorChange } = useColorChange();
+  // const { handleColorChange } = useColorChange();
 
   const handleMouseOver = useCallback(
     (e: React.MouseEvent<SVGSVGElement>) => {
@@ -143,20 +142,6 @@ export function Canvas() {
           );
         })}
       </svg>
-      <div>
-        <button onClick={undoLine}>Undo</button>
-        <button onClick={redoLine}>Redo</button>
-        <button onClick={eraseButton}>{isErase ? "Draw" : "Erase"}</button>
-        <button onClick={() => handleColorChange("red")}>Red</button>
-        <button onClick={() => handleColorChange("blue")}>Blue</button>
-        <button onClick={() => handleColorChange("black")}>Black</button>
-        <button onClick={() => handleColorChange("purple")}>Purple</button>
-        <button onClick={() => handleColorChange("green")}>Green</button>
-        <SizeButton />
-        <br></br>
-        <br></br>
-        <br></br>
-      </div>
     </div>
   );
 }

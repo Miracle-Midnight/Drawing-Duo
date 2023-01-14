@@ -1,7 +1,7 @@
 /* library */
 import { useSelector, useDispatch } from "react-redux";
 /* module from local */
-import { changeSize } from "./sizeSlice";
+import { changeSize } from "../../states/sizeSlice";
 import { RootState } from "../../store";
 
 export function SizeButton() {

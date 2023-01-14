@@ -1,14 +1,11 @@
+/* library */
+import React from "react";
+/* module from local */
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
 import { Canvas } from "../../components/canvas/canvas";
-import Image from "../../assets/image_numbering_label.png";
-import palette from "../../assets/palette-9-svgrepo-com.svg";
-import Pen from "../../components/drawTools/pen";
-import Eraser from "../../components/drawTools/eraser";
-import Palette from "../../components/drawTools/palette";
-import Undo from "../../components/drawTools/undo";
-import Redo from "../../components/drawTools/redo";
-import InputRange from "../../components/inputRange/inputRange";
+import { DrawTools } from "../../components/drawTools/drawContainer";
+
 function InGame() {
   return (
     <div className="ml-20">
@@ -17,19 +14,7 @@ function InGame() {
         <div className="grid">
           <div className="flex justify-center border border-black relative">
             <Canvas />
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
-              <div className="w-30 h-10 shadow px-5">
-                {/* todo : 펜, 지우개, 두께, 전체 지우기, 색상 */}
-                <div>
-                  <Pen></Pen>
-                  <Eraser></Eraser>
-                  <InputRange min={10} max={1000}></InputRange>
-                  <Palette></Palette>
-                  <Undo></Undo>
-                  <Redo></Redo>
-                </div>
-              </div>
-            </div>
+            <DrawTools />
           </div>
         </div>
       </div>
