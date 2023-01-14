@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import "./userState.css";
 
-const UserState = ({ name, state }: any) => {
+const UserState = ({ name, image, state }: any) => {
   return (
     <div className="shadow rounded-2xl bg-white p-4 py-3 my-2">
       <div className="flex-row gap-4 flex justify-center items-center">
@@ -9,7 +9,7 @@ const UserState = ({ name, state }: any) => {
           <a href="#" className="relative block xl:contents lg:hidden">
             <img
               alt="profil"
-              src="https://blog.kakaocdn.net/dn/upM3J/btq7ys3tudB/axLzJnkfCbDRae9OzcmZsK/img.jpg"
+              src={image}
               className="mx-auto object-cover rounded-full h-16 w-16 "
             />
           </a>

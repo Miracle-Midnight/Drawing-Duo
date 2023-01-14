@@ -1,4 +1,4 @@
-import { Button, Container, Row, Col } from "react-bootstrap"; // 꼭 import를 해와야한다
+import { Container } from "react-bootstrap";
 import "./card.css";
 import Player from "../player/player";
 import { useNavigate } from "react-router-dom";
@@ -8,25 +8,29 @@ function Card({ title, imageSrc, needTitle }: any) {
   const navigate = useNavigate();
 
   const joinRoom = () => {
-    navigate("/room");
-    // axios
-    //   .post("/api/lobby/in", {
-    //     title: title,
-    //   })
-    //   .then((res) => {
-    //     navigate("/room");
-    //     sessionStorage.setItem("roomTitle", title);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    // sessionStorage.setItem("roomTitle", title);
+    // navigate("/room");
+    axios
+      .post("/api/lobby/in", {
+        title: title,
+      })
+      .then((res) => {
+        sessionStorage.setItem("roomTitle", title);
+        navigate("/room");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
-    <Container onClick={joinRoom}>
+    <Container>
       <div className="flex items-center justify-center">
         <div className="w-80 p-1">
-          <div className="flex flex-col justify-center bg-white rounded-lg shadow-2xl card">
+          <div
+            onClick={joinRoom}
+            className="flex flex-col justify-center bg-white rounded-lg shadow-2xl card"
+          >
             <div className="prod-img">
               <img src={imageSrc} className="object-cover object-center w-80" />
             </div>

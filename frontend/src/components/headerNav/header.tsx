@@ -31,11 +31,7 @@ function HeaderNav() {
           <div className="flex items-center justify-between h-16">
             <div className=" flex items-center">
               <button className="flex-shrink-0" onClick={handleGoHome}>
-                <img
-                  className="w-32"
-                  src={logo}
-                  alt="Workflow"
-                />
+                <img className="w-32" src={logo} alt="Workflow" />
               </button>
 
               <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 ">
@@ -93,7 +89,7 @@ function HeaderNav() {
                           aria-orientation="vertical"
                           aria-labelledby="options-menu"
                         >
-                          <a
+                          <button
                             onClick={handleClick}
                             className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
                             role="menuitem"
@@ -101,7 +97,7 @@ function HeaderNav() {
                             <span className="flex flex-col">
                               <span>친구 목록</span>
                             </span>
-                          </a>
+                          </button>
                           <button
                             type="submit"
                             className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
