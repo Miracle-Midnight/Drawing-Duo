@@ -44,9 +44,11 @@ export class UserController {
     @UploadedFiles() files: Array<Express.Multer.File>,
     @Body() userDto,
   ) {
-    // console.log(files[0]);
-    // console.log(userDto);
-    // return { image: `http://localhost:3000/media/profile/${file.filename}` };
     return this.userService.uploadImg(userDto, 'game', files);
+  }
+
+  @Post('rgb/:id') // image id
+  saveRGB(@Param('id') id: number, @Body() rgbDto) {
+    return this.userService.saveRGB(id, rgbDto);
   }
 }

@@ -166,4 +166,13 @@ export class UserService {
 
     return newimage;
   }
+
+  async saveRGB(id, rgbDto) {
+    const image = await this.imageRepository.findOne({
+      where: { id: id },
+    });
+    image.rgb = rgbDto;
+    await this.imageRepository.save(image);
+    return image.rgb;
+  }
 }
