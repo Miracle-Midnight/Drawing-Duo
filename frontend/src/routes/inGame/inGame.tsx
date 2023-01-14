@@ -24,7 +24,6 @@ function InGame() {
             </svg>
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
               <div className="w-30 h-10 shadow px-5">
-                {/* todo : 펜, 지우개, 두께, 전체 지우기, 색상 */}
                 <div>
                   <Pen></Pen>
                   <Eraser></Eraser>
