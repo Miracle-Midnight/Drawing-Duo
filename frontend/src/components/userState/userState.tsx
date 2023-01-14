@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./userState.css";
 
-const UserState = ({ name, state }: any) => {
-  const [microphoneState, setMicrophoneState] = useState(false);
+const UserState = ({ name }: any) => {
+  const [isMicOn, setisMicOn] = useState(false);
 
-  const toggleMicrophone = () => {
-    setMicrophoneState(!microphoneState);
+  const toggleMicHandler = () => {
+    // isMicOn의 상태를 변경하는 메소드를 구현
+    setisMicOn(!isMicOn);
   };
 
   return (
@@ -15,13 +16,15 @@ const UserState = ({ name, state }: any) => {
           <span className="text-lg font-medium text-gray-600 text-center">
             {name}
           </span>
-          <div className="flex flex-row gap-2">
-            <span className="text-s p-1 text-gray-100 px-3 text-center bg-gray-600 rounded-lg shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-red-200">
-              on
-            </span>
-            <span className="text-s p-1 text-gray-100 px-3 text-center bg-gray-600 rounded-lg shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-red-200">
-              off
-            </span>
+          <div className="flex flex-row">
+            <button
+              onClick={toggleMicHandler}
+              className={`text-s p-1 text-gray-100 px-5 text-center  rounded-lg shadow-md focus:outline-none focus:ring-2  ${
+                isMicOn ? "active bg-purple-600" : "bg-gray-600"
+              }`}
+            >
+              {isMicOn ? "mic on" : "mic off"}
+            </button>
           </div>
         </div>
       </div>
