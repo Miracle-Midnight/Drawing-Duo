@@ -11,6 +11,7 @@ import Eraser from "../../assets/eraser";
 import Palette from "../../assets/palette";
 import Undo from "../../assets/undo";
 import Redo from "../../assets/redo";
+import InputRange from "../../components/inputRange/inputRange";
 function InGame() {
   return (
     <div className="ml-20">
@@ -27,6 +28,7 @@ function InGame() {
                 <div>
                   <Pen></Pen>
                   <Eraser></Eraser>
+                  <InputRange min={10} max={1000}></InputRange>
                   <Palette></Palette>
                   <Undo></Undo>
                   <Redo></Redo>
