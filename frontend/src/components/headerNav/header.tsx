@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import CenteredModal from "../../components/modal/modal";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/drawing-duo-logo-removebg.png";
+import FriendsCardList from "../friendsCardList/friendsCardList";
 
 function HeaderNav() {
   const navigate = useNavigate();
-
   const [isOpen, setIsOpen] = useState(false);
   const [modalShow, setModalShow] = useState(false);
 
@@ -19,6 +20,10 @@ function HeaderNav() {
     document.location.href = "/";
   };
 
+  const [isClicked, setIsClicked] = useState(false);
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+  };
   return (
     <div>
       <nav className="bg-white shadow">
@@ -26,11 +31,7 @@ function HeaderNav() {
           <div className="flex items-center justify-between h-16">
             <div className=" flex items-center">
               <button className="flex-shrink-0" onClick={handleGoHome}>
-                <img
-                  className="w-32"
-                  src="https://github.com/Miracle-Midnight/Drawing-Duo/blob/feat/ksd/makeNewLayout/frontend/src/assets/drawing-duo-logo-removebg.png?raw=true"
-                  alt="Workflow"
-                />
+                <img className="w-32" src={logo} alt="Workflow" />
               </button>
 
               <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 ">
@@ -63,6 +64,7 @@ function HeaderNav() {
                     <div>
                       <button
                         type="button"
+                        // todo : 포커스가 사라지면 오버레이도 닫히게 만들기
                         onClick={() => setIsOpen(!isOpen)}
                         className="  flex items-center justify-center w-full rounded-md  px-4 py-2 text-sm font-medium text-gray-700  hover:bg-gray-50  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500"
                         id="options-menu"
@@ -87,24 +89,15 @@ function HeaderNav() {
                           aria-orientation="vertical"
                           aria-labelledby="options-menu"
                         >
-                          <a
-                            href="#"
+                          <button
+                            onClick={handleClick}
                             className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
                             role="menuitem"
                           >
                             <span className="flex flex-col">
-                              <span>Settings</span>
+                              <span>친구 목록</span>
                             </span>
-                          </a>
-                          <a
-                            href="#"
-                            className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
-                            role="menuitem"
-                          >
-                            <span className="flex flex-col">
-                              <span>Account</span>
-                            </span>
-                          </a>
+                          </button>
                           <button
                             type="submit"
                             className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
@@ -141,6 +134,7 @@ function HeaderNav() {
 
         <CenteredModal show={modalShow} onHide={() => setModalShow(false)} />
       </nav>
+      {isClicked === true ? <FriendsCardList></FriendsCardList> : null}
     </div>
   );
 }

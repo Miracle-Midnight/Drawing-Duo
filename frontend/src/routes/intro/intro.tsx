@@ -30,51 +30,6 @@ function Intro() {
           needTitle={true}
           title="김영우 빨리와"
         ></Card>
-        <Card
-          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
-          needTitle={true}
-          title="김영우 빨리와"
-        ></Card>
-        <Card
-          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
-          needTitle={true}
-          title="김영우 빨리와"
-        ></Card>
-        <Card
-          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
-          needTitle={true}
-          title="김영우 빨리와"
-        ></Card>
-        <Card
-          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
-          needTitle={true}
-          title="김영우 빨리와"
-        ></Card>
-        <Card
-          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
-          needTitle={true}
-          title="김영우 빨리와"
-        ></Card>
-        <Card
-          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
-          needTitle={true}
-          title="김영우 빨리와"
-        ></Card>
-        <Card
-          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
-          needTitle={true}
-          title="김영우 빨리와"
-        ></Card>
-        <Card
-          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
-          needTitle={true}
-          title="김영우 빨리와"
-        ></Card>
-        <Card
-          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
-          needTitle={true}
-          title="김영우 빨리와"
-        ></Card>
       </div>
     </div>
   );

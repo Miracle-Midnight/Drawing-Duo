@@ -8,26 +8,35 @@ function CenteredModal(props: any) {
 
   const [roomName, setRoomName] = useState("");
 
+  const onEnterPress = (e: any) => {
+    if (e.key === "Enter") {
+      handleCreateRoom();
+    }
+  };
+
   const handleInputRoomName = (e: any) => {
     setRoomName(e.target.value);
   };
 
   const handleCreateRoom = () => {
-    axios
-      .post(
-        "http://54.180.100.213:3000/api/room/" +
-          sessionStorage.getItem("userKey"),
-        {
-          title: roomName,
-        }
-      )
-      .then((res) => {
-        console.log(res.data);
-        navigate("http://54.180.100.213:3000/" + res.data.roomid);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    navigate("/room");
+
+    // axios
+    //   .post(
+    //     "http://54.180.125.6:3000/api/room/" +
+    //       sessionStorage.getItem("userKey"),
+    //     {
+    //       title: roomName,
+    //     }
+    //   )
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     sessionStorage.setItem("roomId", res.data.roomid);
+    //     navigate("http://54.180.125.6:3000/room/" + res.data.roomid);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   return (
@@ -48,6 +57,7 @@ function CenteredModal(props: any) {
               type="text"
               placeholder="OO아 빨리와"
               onChange={handleInputRoomName}
+              onKeyDown={onEnterPress}
             />
           </Form.Group>
           <Button

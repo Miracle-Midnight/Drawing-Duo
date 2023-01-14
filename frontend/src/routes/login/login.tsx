@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/drawing-duo-logo-removebg.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -19,10 +20,17 @@ function Login() {
     setInputPw(e.target.value);
   };
 
+  const onEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onClickLogin();
+    }
+  };
+
   // login 버튼 클릭 이벤트
   const onClickLogin = () => {
     axios
-      .post("http://54.180.100.213:3000/api/users/login", {
+      // .post("http://54.180.100.213:3000/api/users/login", {
+      .post("/api/users/login", {
         userid: inputId,
         password: inputPw,
       })
@@ -50,10 +58,7 @@ function Login() {
     <div className="center">
       <div className="flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
         <div>
-          <img
-            src="https://raw.githubusercontent.com/Miracle-Midnight/Drawing-Duo/frontend/frontend/src/assets/drawing-duo-logo.png"
-            alt="logo"
-          />
+          <img src={logo} alt="logo" />
         </div>
 
         <div className="mt-8">
@@ -98,6 +103,7 @@ function Login() {
                   className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                   value={inputPw}
                   onChange={handleInputPw}
+                  onKeyDown={onEnterPress}
                   placeholder="Password"
                 />
               </div>

@@ -1,20 +1,20 @@
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
-import rightImage from "../../assets/cat-image.png";
-import leftImage from "../../assets/image_numbering_label.png";
+import Image from "../../assets/image_numbering_label.png";
+import palette from "../../assets/palette-9-svgrepo-com.svg";
+
 function InGame() {
   return (
     <div className="ml-20">
       <SideNav />
-      <div className=" h-screen">
-        <div className="grid grid-cols-2 w-full h-full">
-          <div className="flex flex-col justify-center border border-black h-full">
-            <img src={rightImage} alt="image"></img>
-          </div>
-          <div className="flex flex-col justify-center border border-black h-full relative">
-            <img src={leftImage} alt="image"></img>
+      <div className="">
+        <div className="grid">
+          <div className="flex justify-center border border-black relative">
+            <svg className="h-screen w-full">
+              <image href={Image} width="100%" height="100%"></image>
+            </svg>
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
-              <div className="w-30 h-10 shadow">
+              <div className="w-30 h-10 shadow px-5">
                 {/* todo : 펜, 지우개, 두께, 전체 지우기, 색상 */}
                 <div>
                   <button className="w-10 h-10 ">
