@@ -1,7 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./userState.css";
 
 const UserState = ({ name, state }: any) => {
+  const [microphoneState, setMicrophoneState] = useState(false);
+
+  const toggleMicrophone = () => {
+    setMicrophoneState(!microphoneState);
+  };
+
   return (
     <div className="shadow rounded-2xl bg-white p-4 py-3 my-2">
       <div className="flex-row gap-4 flex justify-center items-center">
@@ -25,6 +31,12 @@ const UserState = ({ name, state }: any) => {
               {state}
             </span>
           )}
+          <button
+            onClick={toggleMicrophone}
+            className={`mic-button ${microphoneState ? "active" : ""}`}
+          >
+            <i className="fa fa-microphone" />
+          </button>
         </div>
       </div>
     </div>
