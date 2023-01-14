@@ -26,21 +26,24 @@ export class LobbyService {
   // }
 
   async inRoom(enterRoomDto: EnterRoomDto) {
-    const { userid, roomid } = enterRoomDto;
+    const { userid, title } = enterRoomDto;
 
     // 룸에 몇명의 user가 있는지 확인하고 2명이 넘으면 에러
-    const checkUser = await this.roomRepository.findOne({
-      where: { id: roomid },
-      relations: ['users'],
-    });
-    if (checkUser.users.length >= 2) {
-      throw new ForbiddenException('방이 꽉 찼습니다.');
-    }
+    // const checkUser = await this.roomRepository.findOne({
+    //   where: { id: roomid },
+    //   relations: ['users'],
+    // });
+    // if (checkUser.users.length >= 2) {
+    //   throw new ForbiddenException('방이 꽉 찼습니다.');
+    // }
 
     const targetRoom = await this.roomRepository.findOne({
-      where: { id: roomid },
+      where: { title },
       relations: ['users'],
     });
+    if (targetRoom.users.length >= 4) {
+      throw new ForbiddenException('방이 꽉 찼습니다.');
+    }
     if (!targetRoom) throw new NotFoundException('방이 존재하지 않습니다.');
 
     // 비밀번호 체크
@@ -72,7 +75,7 @@ export class LobbyService {
   }
 
   async outRoom(enterRoomDto: EnterRoomDto) {
-    const { userid, roomid } = enterRoomDto;
+    const { userid, title } = enterRoomDto;
     const userinfo = await this.userRepository.findOne({
       where: { id: userid },
       relations: ['room', 'profile'],
