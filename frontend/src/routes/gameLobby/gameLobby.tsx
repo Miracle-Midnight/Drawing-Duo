@@ -25,8 +25,8 @@ function GameLobby() {
         </div>
         <div className="flex flex-col justify-between">
           <div className="flex flex-col justify-between">
-            <UserState name="박선도" state="On"></UserState>
-            <UserState name="김영우" state="On"></UserState>
+            <UserState name="박선도"></UserState>
+            <UserState name="김영우"></UserState>
           </div>
           <button
             type="button"
