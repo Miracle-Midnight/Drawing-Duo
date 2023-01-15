@@ -1,5 +1,5 @@
 /* library */
-import React from "react";
+import React, { useEffect } from "react";
 /* module from local */
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";

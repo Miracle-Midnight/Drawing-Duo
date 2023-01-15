@@ -5,7 +5,6 @@ import {
   WebSocketGateway,
   WebSocketServer,
   ConnectedSocket,
-  OnGatewayDisconnect,
 } from '@nestjs/websockets';
 import { Logger } from '@nestjs/common';
 import { MessageBody, SubscribeMessage } from '@nestjs/websockets';
@@ -75,6 +74,12 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
   handleSelectImage(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     this.logger.log(`Client selected image: ${socket.id} ${data.image}`);
     socket.to(data.roomId).emit('image selected', data.image);
+  }
+
+  @SubscribeMessage('message')
+  handleMessage(@MessageBody() data, @ConnectedSocket() socket: Socket) {
+    this.logger.log(`Client sent message: ${socket.id} ${data.message}`);
+    socket.to(data.roomId).emit('message', data.name, data.message);
   }
 
   @SubscribeMessage('disconnect')

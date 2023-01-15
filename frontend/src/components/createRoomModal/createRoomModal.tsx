@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Form, Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function CenteredModal(props: any) {
+function CreateRoomModal(props: any) {
   const navigate = useNavigate();
 
   const [roomName, setRoomName] = useState("");
@@ -19,10 +19,8 @@ function CenteredModal(props: any) {
   };
 
   const handleCreateRoom = () => {
-    // navigate("/room");
-
     axios
-      .post("/api/room/" + sessionStorage.getItem("userKey"), {
+      .post("/api/room/" + sessionStorage.getItem("userid"), {
         title: roomName,
       })
       .then((res) => {
@@ -71,4 +69,4 @@ function CenteredModal(props: any) {
   );
 }
 
-export default CenteredModal;
+export default CreateRoomModal;

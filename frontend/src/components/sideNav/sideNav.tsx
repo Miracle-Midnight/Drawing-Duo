@@ -1,8 +1,7 @@
 import "./sideNav.css";
 import logoSmall from "../../assets/logo-small.png";
-import { useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import InGamePlayer from "../inGamePlayer/inGamePlayer";
-import catImage from "../../assets/cat-image.png";
 import HintImage from "../hintImage/hintImage";
 import ChatList from "../chatList/chatList";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 
 function SideNav() {
   const navigate = useNavigate();
+
+  const users = JSON.parse(sessionStorage.getItem("users") || "[]");
 
   const [isMicOn, setisMicOn] = useState(false);
   const [isSoundOn, setisSoundOn] = useState(false);
@@ -46,10 +47,10 @@ function SideNav() {
         </div>
         <div className="side-nav">
           <ul className="flex flex-col justify-center pt-10">
-            <InGamePlayer name="김영우" />
-            <InGamePlayer name="윤영운" />
-            <InGamePlayer name="김채욱" />
-            <InGamePlayer name="박선도" />
+            <InGamePlayer name="나" />
+            {users.map((user: any) => {
+              <InGamePlayer name={user.userid} />;
+            })}
           </ul>
         </div>
         <div className="mt-10 mb-10">

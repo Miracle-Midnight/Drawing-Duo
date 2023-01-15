@@ -4,25 +4,25 @@ import Player from "../player/player";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Card({
-  title,
-  imageSrc,
-  frameImageSrc,
-  needTitle,
-  roomId,
-  users,
-}: any) {
+function Card({ title, frameImageSrc, needTitle, roomId, users }: any) {
   const navigate = useNavigate();
+
+  // const userData = [];
 
   const joinRoom = () => {
     axios
       .post("/api/lobby/in", {
+        userid: sessionStorage.getItem("userid"),
         title: title,
       })
       .then((res) => {
         sessionStorage.setItem("roomTitle", title);
         sessionStorage.setItem("roomId", roomId);
-        navigate("/room/" + roomId);
+        // users.map((user: any) => {
+        //   userData.push(user.userid);
+        // });
+        // sessionStorage.setItem("users", JSON.stringify(userData));
+        navigate("/InGame/" + roomId);
       })
       .catch((err) => {
         console.log(err);
@@ -49,11 +49,9 @@ function Card({
               </div>
             ) : null}
             <div className="flex flex-row justify-evenly mb-3">
-              <Player name="김영우"></Player>
-              <Player name="김채욱"></Player>
-              {/* {users.map((user: any) => {
-                <Player name={user.userid}></Player>;
-              })} */}
+              {users.map((user: any) => {
+                return <Player key={user.id} name={user.userid}></Player>;
+              })}
             </div>
           </div>
         </div>

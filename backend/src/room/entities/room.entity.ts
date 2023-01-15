@@ -8,6 +8,8 @@ import {
   OneToMany,
   ManyToMany,
   JoinTable,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Image } from './image.entity';
 import { ApiProperty } from '@nestjs/swagger';
@@ -28,10 +30,10 @@ export class Room extends BaseEntity {
   @Column({ nullable: false, unique: true })
   title: string;
 
-  @OneToMany(() => User, (user) => user.room)
-  users: User[];
+  @ManyToMany(() => User, (user) => user.room)
+  user: User[];
 
-  @ManyToMany(() => Image)
-  @JoinTable()
-  images: Image[];
+  @ManyToOne(() => Image, (image) => image.room)
+  @JoinColumn()
+  image: Image;
 }

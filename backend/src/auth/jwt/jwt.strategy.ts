@@ -5,6 +5,7 @@ import { Payload } from './jwt.payload';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
+import { UnauthorizedException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -19,15 +20,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  // async validate(payload: Payload) {
-  //   const cat = await this.userRepository.findCatByIdWithoutPassword(
-  //     payload.sub,
-  //   );
+  async validate(payload: Payload) {
+    const cat = await this.userRepository.findOne({
+      where: { id: Number(payload.sub) },
+      select: ['id', 'userid'],
+    });
 
-  //   if (cat) {
-  //     return cat; // request.user
-  //   } else {
-  //     throw new UnauthorizedException('접근 오류');
-  //   }
-  // }
+    if (cat) {
+      return cat; // request.user
+    } else {
+      throw new UnauthorizedException('접근 오류');
+    }
+  }
 }

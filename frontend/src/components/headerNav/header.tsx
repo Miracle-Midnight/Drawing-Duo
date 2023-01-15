@@ -1,30 +1,20 @@
-import React, { useEffect, useState } from "react";
-import CenteredModal from "../../components/modal/modal";
+import React, { useCallback, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/drawing-duo-logo-removebg.png";
-import FriendsCardList from "../friendsCardList/friendsCardList";
+import { Profile } from "../profile/profile";
+import { OpenRoomMenu } from "../openRoomMenu/openRoomMenu";
 
 function HeaderNav() {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
+  const [isMenuToggle, setIsMenuToggle] = useState(false);
 
   const handleGoHome = () => {
     navigate("/");
   };
 
-  const handleLogout = () => {
-    sessionStorage.removeItem("userKey");
-    sessionStorage.removeItem("userToken");
-    sessionStorage.removeItem("userNickname");
-    sessionStorage.removeItem("userProfileImage");
-    document.location.href = "/";
-  };
-
-  const [isClicked, setIsClicked] = useState(false);
-  const handleClick = () => {
-    setIsClicked(!isClicked);
-  };
+  const handleMenuToggle = useCallback(() => {
+    isMenuToggle ? setIsMenuToggle(false) : setIsMenuToggle(true);
+  }, [isMenuToggle]);
 
   const location = useLocation();
 
@@ -40,26 +30,7 @@ function HeaderNav() {
 
               <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 ">
                 <ul className="flex flex-wrap -mb-px">
-                  <li className="mr-2">
-                    <button
-                      onClick={handleGoHome}
-                      className="inline-block p-4 text-md border-b-2 text-gray-500 border-transparent rounded-t-lg no-underline  hover:border-purple-600 hover:text-purple-600 "
-                    >
-                      Home
-                    </button>
-                  </li>
-                  {location.pathname === "/" ? (
-                    <li className="mr-2">
-                      {" "}
-                      <button
-                        className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 rounded-t-lg  hover:text-purple-600"
-                        aria-current="page"
-                        onClick={() => setModalShow(true)}
-                      >
-                        방 만들기
-                      </button>
-                    </li>
-                  ) : null}
+                  {location.pathname === "/" ? <OpenRoomMenu /> : null}
                 </ul>
               </div>
             </div>
@@ -71,7 +42,7 @@ function HeaderNav() {
                       <button
                         type="button"
                         // todo : 포커스가 사라지면 오버레이도 닫히게 만들기
-                        onClick={() => setIsOpen(!isOpen)}
+                        onClick={handleMenuToggle}
                         className="  flex items-center justify-center w-full rounded-md  px-4 py-2 text-sm font-medium text-gray-700  hover:bg-gray-50  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500"
                         id="options-menu"
                       >
@@ -87,36 +58,7 @@ function HeaderNav() {
                         </svg>
                       </button>
                     </div>
-                    {isOpen && (
-                      <div className="absolute right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg  ring-1 ring-black ring-opacity-5">
-                        <div
-                          className="py-1 "
-                          role="menu"
-                          aria-orientation="vertical"
-                          aria-labelledby="options-menu"
-                        >
-                          <button
-                            onClick={handleClick}
-                            className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
-                            role="menuitem"
-                          >
-                            <span className="flex flex-col">
-                              <span>친구 목록</span>
-                            </span>
-                          </button>
-                          <button
-                            type="submit"
-                            className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
-                            role="menuitem"
-                            onClick={handleLogout}
-                          >
-                            <span className="flex flex-col">
-                              <span>Logout</span>
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                    )}
+                    {isMenuToggle ? <Profile /> : null}
                   </div>
                 </div>
               </div>
@@ -137,10 +79,7 @@ function HeaderNav() {
             </div>
           </div>
         </div>
-
-        <CenteredModal show={modalShow} onHide={() => setModalShow(false)} />
       </nav>
-      {isClicked === true ? <FriendsCardList></FriendsCardList> : null}
     </div>
   );
 }

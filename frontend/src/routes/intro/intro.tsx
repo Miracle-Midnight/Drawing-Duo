@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
 import HeaderNav from "../../components/headerNav/header";
 import Card from "../../components/card/card";
 import "./intro.css";
@@ -11,12 +10,12 @@ function Intro() {
   useEffect(() => {
     sessionStorage.removeItem("roomId");
     sessionStorage.removeItem("roomTitle");
+    sessionStorage.removeItem("users");
 
     axios
       .get("/api/lobby/" + sessionStorage.getItem("userid"))
       .then((res) => {
-        console.log("야발!!!!!!" + res.data);
-        // setLobbyList(res.data.data);
+        setLobbyList(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -38,23 +37,20 @@ function Intro() {
         </div>
       </div>
       <div className="flex flex-row whitespace-nowrap h-[500px] overflow-auto">
-        <Card
-          frameImageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
-          needTitle={true}
-          title="김영우 빨리와"
-          roomId="1"
-        ></Card>
-        <Card
-          frameImageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
-          needTitle={true}
-          title="김영우 빨리와"
-          roomId="2"
-        ></Card>
         {lobbyList.map((lobby: any) => {
           return (
             <Card
-              imageSrc={lobby.image.image}
-              frameImageSrc={lobby.image.frameImage}
+              key={lobby.roomid}
+              imageSrc={
+                lobby.image == null
+                  ? "https://newsimg.sedaily.com/2019/01/23/1VE5F3W5WP_18.png"
+                  : lobby.image.image
+              }
+              frameImageSrc={
+                lobby.image == null
+                  ? "https://newsimg.sedaily.com/2019/01/23/1VE5F3W5WP_18.png"
+                  : lobby.image.frameImage
+              }
               needTitle={true}
               title={lobby.title}
               roomId={lobby.roomid}

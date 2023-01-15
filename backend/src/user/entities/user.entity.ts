@@ -7,6 +7,8 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 import { Profile } from './profile.entity';
@@ -36,8 +38,9 @@ export class User extends BaseEntity {
   @JoinColumn()
   profile: Profile;
 
-  @ManyToOne(() => Room, (room) => room.users, { onDelete: 'SET NULL' })
-  room: Room;
+  @ManyToMany(() => Room, (room) => room.user)
+  @JoinTable()
+  room: Room[];
 
   @ManyToOne((type) => User, (user) => user.childUser)
   parentUser: User;

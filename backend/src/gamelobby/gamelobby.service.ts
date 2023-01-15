@@ -33,7 +33,7 @@ export class GamelobbyService {
     console.log(room);
 
     let cnt = 0;
-    room.users.forEach((user) => {
+    room.user.forEach((user) => {
       if (user.ready) {
         cnt++;
       }
