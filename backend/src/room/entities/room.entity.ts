@@ -5,10 +5,9 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  OneToMany,
   ManyToMany,
-  JoinTable,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Image } from './image.entity';
 import { ApiProperty } from '@nestjs/swagger';
@@ -33,6 +32,6 @@ export class Room extends BaseEntity {
   user: User[];
 
   @ManyToOne(() => Image, (image) => image.room)
-  @JoinTable()
+  @JoinColumn()
   image: Image;
 }

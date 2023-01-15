@@ -40,7 +40,7 @@ import { RoomGatewayModule } from './gateway/gateway.module';
         database: configService.get('DB_DATABASE'),
         entities: ['dist/src/*/entities/*.entity.{js,ts}'],
         migrations: ['dist/db/migrations/*.{js.ts}'],
-        synchronize: true,
+        autoLoadEntities: true,
         logging: true,
       }),
       inject: [ConfigService],
