@@ -5,6 +5,7 @@ import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { Game } from './entities/game.entity';
 import { GameUserReadyDto } from './dto/game-user-ready.dto';
+import { EnterGameDto } from './dto/enter-game.dto';
 
 @Injectable()
 export class GameService {
@@ -47,6 +48,23 @@ export class GameService {
     });
 
     return { cnt: cnt };
+  }
+
+  async inGame(id: number) {
+    const room = await this.roomRepository.findOne({
+      where: { id },
+      relations: ['user', 'user.profile', 'image'],
+    });
+
+    const usersName = room.user.map((user) => ({
+      nickname: user.profile.nickname,
+    }));
+
+    return {
+      usersName: usersName,
+      frameImage: room.image.frameImage,
+      rgb: room.image.rgb,
+    };
   }
 
   // 게임 생성과 동시에 room과 game이 연결됨
