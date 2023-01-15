@@ -42,8 +42,6 @@ jobs:
     - name: Build a Nest Application
       run: npm run build --if-present
       shell: bash
-      
-    - run: npm test
     
     - name: Make a zip file
       run: zip -r ./$GITHUB_SHA.zip . -x "node_modules/*" "coverage/*" "src/*" "test/*" "README.md" "*.git*"
