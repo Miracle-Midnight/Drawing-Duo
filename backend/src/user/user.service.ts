@@ -159,9 +159,10 @@ export class UserService {
     }
 
     const newimage = await this.imageRepository.create();
+    newimage.type = true;
+    newimage.modified = false;
     newimage.image = imagePath1;
     newimage.frameImage = imagePath2;
-    newimage.type = true;
     await this.imageRepository.save(newimage);
 
     return newimage;

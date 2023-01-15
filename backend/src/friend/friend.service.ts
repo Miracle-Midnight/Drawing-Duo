@@ -40,8 +40,7 @@ export class FriendService {
     return user.childUser.map(this.childuserFilter);
   }
 
-  async getFriendList(userDto) {
-    const { userid } = userDto;
+  async getFriendList(userid) {
     const user = await this.userRepository.findOne({
       where: { id: userid },
       relations: ['childUser'],

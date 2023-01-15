@@ -9,6 +9,7 @@ import {
   ManyToMany,
   JoinTable,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Image } from './image.entity';
 import { ApiProperty } from '@nestjs/swagger';
@@ -32,7 +33,7 @@ export class Room extends BaseEntity {
   @ManyToMany(() => User, (user) => user.room)
   user: User[];
 
-  @ManyToOne(() => Image, (image) => image.room)
-  @JoinTable()
+  @ManyToOne(() => Image, (image) => image.room, { onDelete: 'SET NULL' })
+  @JoinColumn()
   image: Image;
 }

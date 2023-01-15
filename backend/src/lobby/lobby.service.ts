@@ -31,15 +31,15 @@ export class LobbyService {
     // 룸에 몇명의 user가 있는지 확인하고 2명이 넘으면 에러
     // const checkUser = await this.roomRepository.findOne({
     //   where: { id: roomid },
-    //   relations: ['users'],
+    //   relations: ['user'],
     // });
-    // if (checkUser.users.length >= 2) {
+    // if (checkUser.user.length >= 2) {
     //   throw new ForbiddenException('방이 꽉 찼습니다.');
     // }
 
     const targetRoom = await this.roomRepository.findOne({
       where: { title },
-      relations: ['users'],
+      relations: ['user'],
     });
     if (targetRoom.user.length >= 4) {
       throw new ForbiddenException('방이 꽉 찼습니다.');
@@ -90,7 +90,7 @@ export class LobbyService {
 
     // const targetRoom = await this.roomRepository.findOne({
     //   where: { id: roomid },
-    //   relations: ['images', 'users'],
+    //   relations: ['images', 'user'],
     // });
 
     // if (imageid) {
@@ -110,9 +110,10 @@ export class LobbyService {
       where: { id: userid },
       relations: ['room', 'room.image', 'room.user'],
     });
-    if (!user.room) throw new ForbiddenException('방이 존재하지 않습니다.');
-    // for (let i = 0; i < user.room.length; i++) {}
-    // user[0].room[0].user = user[0].room[0].user.filter(
+    if (!user) throw new NotFoundException('유저가 존재하지 않습니다.');
+    if (user.room.length == 0)
+      throw new ForbiddenException('방이 존재하지 않습니다.');
+    console.log(user.room);
     const result = [];
     user.room.map((room) => {
       result.push({

@@ -9,15 +9,14 @@ export class FriendController {
   constructor(private readonly friendService: FriendService) {}
 
   // @UseGuards(JwtAuthGuard)
-  @Get(':id')
-  getFriend(@Req() req, @Param('id') userDto) {
-    return this.friendService.getFriendList(userDto);
+  @Get(':id') // user id
+  getFriend(@Req() req, @Param('id') userid) {
+    return this.friendService.getFriendList(userid);
   }
 
   // @UseGuards(JwtAuthGuard)
-  @Get('serch/:id')
+  @Get('serch/:id') // username
   serchUser(@Param('id') friendname: string) {
-    console.log(friendname);
     return this.friendService.serchUser(friendname);
   }
 

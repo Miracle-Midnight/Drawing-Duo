@@ -9,7 +9,7 @@ export class LobbyController {
 
   @ApiOperation({ summary: '내 방 조회' })
   @Get(':id') // user id
-  getmyroom(@Param('id') userid: number) {
+  getmyroom(@Param('id') userid: string) {
     return this.lobbyService.myroom(userid);
   }
 
