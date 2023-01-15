@@ -4,19 +4,25 @@ import Player from "../player/player";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Card({ title, imageSrc, needTitle }: any) {
+function Card({
+  title,
+  imageSrc,
+  frameImageSrc,
+  needTitle,
+  roomId,
+  users,
+}: any) {
   const navigate = useNavigate();
 
   const joinRoom = () => {
-    // sessionStorage.setItem("roomTitle", title);
-    // navigate("/room");
     axios
       .post("/api/lobby/in", {
         title: title,
       })
       .then((res) => {
         sessionStorage.setItem("roomTitle", title);
-        navigate("/room");
+        sessionStorage.setItem("roomId", roomId);
+        navigate("/room/" + roomId);
       })
       .catch((err) => {
         console.log(err);
@@ -32,7 +38,10 @@ function Card({ title, imageSrc, needTitle }: any) {
             className="flex flex-col justify-center bg-white rounded-lg shadow-2xl card"
           >
             <div className="prod-img">
-              <img src={imageSrc} className="object-cover object-center w-80" />
+              <img
+                src={frameImageSrc}
+                className="object-cover object-center w-80"
+              />
             </div>
             {needTitle === true ? (
               <div className="text-2xl font-bold text-gray-900 text-center uppercase">
@@ -40,10 +49,11 @@ function Card({ title, imageSrc, needTitle }: any) {
               </div>
             ) : null}
             <div className="flex flex-row justify-evenly mb-3">
-              <Player name="박선도"></Player>
-              <Player name="윤영운"></Player>
-              <Player name="김채욱"></Player>
               <Player name="김영우"></Player>
+              <Player name="김채욱"></Player>
+              {/* {users.map((user: any) => {
+                <Player name={user.userid}></Player>;
+              })} */}
             </div>
           </div>
         </div>

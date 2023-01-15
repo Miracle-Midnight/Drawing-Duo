@@ -8,7 +8,7 @@ const App: React.FC = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem("userKey") === null) {
+    if (sessionStorage.getItem("userid") === null) {
       // sessionStorage 에 user_id 라는 key 값으로 저장된 값이 없다면
       console.log("isLogin ?? :: ", isLogin);
     } else {

@@ -185,23 +185,6 @@ function GameLobby() {
     navigate("/InGame");
   };
 
-  const handleExitRoom = () => {
-    axios
-      .post("/api/lobby/out", {
-        userid: sessionStorage.getItem("userKey"),
-        roomid: sessionStorage.getItem("roomid"),
-        imageid: sessionStorage.getItem("imageid"),
-      })
-      .then((res) => {
-        sessionStorage.removeItem("roomid");
-        sessionStorage.removeItem("imageid");
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const [isClicked, setIsClicked] = useState<string>("");
 
   const imageList = [

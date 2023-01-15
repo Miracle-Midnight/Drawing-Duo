@@ -19,24 +19,21 @@ function CenteredModal(props: any) {
   };
 
   const handleCreateRoom = () => {
-    navigate("/room");
+    // navigate("/room");
 
-    // axios
-    //   .post(
-    //     "http://54.180.125.6:3000/api/room/" +
-    //       sessionStorage.getItem("userKey"),
-    //     {
-    //       title: roomName,
-    //     }
-    //   )
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     sessionStorage.setItem("roomId", res.data.roomid);
-    //     navigate("http://54.180.125.6:3000/room/" + res.data.roomid);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .post("/api/room/" + sessionStorage.getItem("userKey"), {
+        title: roomName,
+      })
+      .then((res) => {
+        console.log(res.data);
+        sessionStorage.setItem("roomTitle", res.data.title);
+        sessionStorage.setItem("roomId", res.data.roomid);
+        navigate("/room/" + res.data.roomid);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

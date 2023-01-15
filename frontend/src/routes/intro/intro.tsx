@@ -9,12 +9,14 @@ function Intro() {
   const [lobbyList, setLobbyList] = useState([]);
 
   useEffect(() => {
-    console.log(sessionStorage.getItem("userKey"));
+    sessionStorage.removeItem("roomId");
+    sessionStorage.removeItem("roomTitle");
+
     axios
-      .get("/api/lobby/" + sessionStorage.getItem("userKey"))
+      .get("/api/lobby/" + sessionStorage.getItem("userid"))
       .then((res) => {
-        console.log(res.data.data);
-        setLobbyList(res.data.data);
+        console.log("야발!!!!!!" + res.data);
+        // setLobbyList(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -37,21 +39,26 @@ function Intro() {
       </div>
       <div className="flex flex-row whitespace-nowrap h-[500px] overflow-auto">
         <Card
-          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
+          frameImageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
           needTitle={true}
           title="김영우 빨리와"
+          roomId="1"
         ></Card>
         <Card
-          imageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
+          frameImageSrc="https://pbs.twimg.com/media/EW0fjrRUEAENAXT.jpg"
           needTitle={true}
           title="김영우 빨리와"
+          roomId="2"
         ></Card>
         {lobbyList.map((lobby: any) => {
           return (
             <Card
-              imageSrc={lobby.image}
+              imageSrc={lobby.image.image}
+              frameImageSrc={lobby.image.frameImage}
               needTitle={true}
               title={lobby.title}
+              roomId={lobby.roomid}
+              users={lobby.user}
             ></Card>
           );
         })}

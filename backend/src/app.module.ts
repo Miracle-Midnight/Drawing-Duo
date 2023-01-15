@@ -45,7 +45,7 @@ import { MiddlewareConsumer, NestModule } from '@nestjs/common';
       database: process.env.DB_DATABASE,
       entities: ['dist/src/*/entities/*.entity.{js,ts}'],
       migrations: ['dist/db/migrations/*.{js.ts}'],
-      synchronize: true,
+      synchronize: false,
       logging: true,
     }),
     ChatsAndDrawModule,

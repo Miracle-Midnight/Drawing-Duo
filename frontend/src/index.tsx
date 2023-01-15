@@ -26,6 +26,7 @@ root.render(
           <Route path="/room/:id" element={<GameLobby />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/InGame" element={<InGame />} />
+          <Route path="/InGame/:id" element={<InGame />} />
           <Route path="/Intro" element={<Intro />} />
         </Routes>
       </BrowserRouter>

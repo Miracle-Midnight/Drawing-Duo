@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CenteredModal from "../../components/modal/modal";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/drawing-duo-logo-removebg.png";
 import FriendsCardList from "../friendsCardList/friendsCardList";
 
@@ -17,6 +17,7 @@ function HeaderNav() {
     sessionStorage.removeItem("userKey");
     sessionStorage.removeItem("userToken");
     sessionStorage.removeItem("userNickname");
+    sessionStorage.removeItem("userProfileImage");
     document.location.href = "/";
   };
 
@@ -24,6 +25,9 @@ function HeaderNav() {
   const handleClick = () => {
     setIsClicked(!isClicked);
   };
+
+  const location = useLocation();
+
   return (
     <div>
       <nav className="bg-white shadow">
@@ -44,16 +48,18 @@ function HeaderNav() {
                       Home
                     </button>
                   </li>
-                  <li className="mr-2">
-                    {" "}
-                    <button
-                      className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 rounded-t-lg  hover:text-purple-600"
-                      aria-current="page"
-                      onClick={() => setModalShow(true)}
-                    >
-                      방 만들기
-                    </button>
-                  </li>
+                  {location.pathname === "/" ? (
+                    <li className="mr-2">
+                      {" "}
+                      <button
+                        className="inline-block p-4 text-md text-gray-500 border-b-2 no-underline hover:border-purple-600 rounded-t-lg  hover:text-purple-600"
+                        aria-current="page"
+                        onClick={() => setModalShow(true)}
+                      >
+                        방 만들기
+                      </button>
+                    </li>
+                  ) : null}
                 </ul>
               </div>
             </div>
