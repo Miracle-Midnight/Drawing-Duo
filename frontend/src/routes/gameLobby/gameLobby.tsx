@@ -6,6 +6,7 @@ import HeaderNav from "../../components/headerNav/header";
 import UserState from "../../components/userState/userState";
 import { io, Socket } from "socket.io-client";
 import { Container } from "react-bootstrap";
+import { ImageList } from "../../components/imageList/imageList";
 
 function GameLobby() {
   const socketRef = useRef<Socket>();
@@ -149,36 +150,9 @@ function GameLobby() {
 
   //-----------------------------------------------------------------------------
 
-  const [imageList, setImageList] = React.useState([]);
 
-  useEffect(() => {
-    axios
-      .get("/api/room")
-      .then((res) => {
-        console.log(res);
-        // setImageList(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   const navigate = useNavigate();
-
-  // const [imageList, setImageList] = React.useState([
-  //   {
-  //     imageid: 0,
-  //     imageurl: "",
-  //     imagename: "",
-  //   },
-  // ]);
-
-  // const handleImageClick = (e: any) => {
-  //   alert("이미지를 선택하셨습니다.");
-  //   setIsClicked((prev) => {
-  //     return parseInt(e.target.id);
-  //   });
-  // };
 
   const [isReady, setIsReady] = React.useState(false);
 
@@ -186,8 +160,6 @@ function GameLobby() {
     setIsReady(!isReady);
     navigate("/InGame/" + sessionStorage.getItem("roomId"));
   };
-
-  const [isClicked, setIsClicked] = useState<string>("");
 
   // const imageList = [
   //   "https://blog.kakaocdn.net/dn/upM3J/btq7ys3tudB/axLzJnkfCbDRae9OzcmZsK/img.jpg",
@@ -197,16 +169,6 @@ function GameLobby() {
   //   "https://item.kakaocdn.net/do/43319a30d6de449e135d3d14898a3d0e960f4ab09fe6e38bae8c63030c9b37f9",
   // ];
 
-  const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsClicked(e.currentTarget.id);
-    socketRef.current?.emit("image", {
-      id: e.currentTarget.id,
-      src: imageList[parseInt(e.currentTarget.id)],
-    });
-  };
-
-  useEffect(() => {}, [isClicked]);
-
   return (
     <div>
       <HeaderNav />
@@ -214,35 +176,7 @@ function GameLobby() {
         이미지를 골라주세요
       </div>
       <div className="flex justify-evenly ">
-        <div>
-          <div className="image-container rounded-md border border-gray-400 grid grid-cols-2 overflow-auto mr-10">
-            {imageList.map((image, idx) => (
-              <div key={idx}>
-                <Container>
-                  <div className="flex items-center justify-center">
-                    <div className="w-full p-1">
-                      <div
-                        id={idx.toString()}
-                        onClick={handleImageClick}
-                        className="flex flex-col justify-center bg-white rounded-lg shadow-2xl card"
-                      >
-                        {isClicked != idx.toString() ? (
-                          <div className="prod-img flex justify-center">
-                            <img src={image} className=" object-center w-80" />
-                          </div>
-                        ) : (
-                          <div className="prod-img flex justify-center border border-primary border-5">
-                            <img src={image} className=" object-center w-80" />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </Container>
-              </div>
-            ))}
-          </div>
-        </div>
+        <ImageList />
         <div className="flex flex-col justify-between">
           <div className="flex flex-col justify-between">
             <UserState

@@ -1,6 +1,6 @@
 /* library */
 import React, { useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 /* module from local */
 import { Line } from "../line/line";
 import { useLines } from "../../hooks/useLines";
