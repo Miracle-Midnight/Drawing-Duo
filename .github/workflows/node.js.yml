@@ -33,12 +33,17 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         
-    - run: npm install
-    - run: npm run build --if-present
+    - name: Install Dependencies
+      run: npm install
+      
+    - name: Build a Nest Application
+      run: npm run build --if-present
+      
     - run: npm test
     
     - name: Make a zip file
       run: zip -r ./$GITHUB_SHA.zip . -x "node_modules/*" "coverage/*" "src/*" "test/*" "README.md" "*.git*"
+      shell: bash
       
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
