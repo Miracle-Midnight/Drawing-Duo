@@ -39,7 +39,7 @@ export class LobbyService {
 
     const targetRoom = await this.roomRepository.findOne({
       where: { title },
-      relations: ['users'],
+      relations: ['user'],
     });
     if (targetRoom.user.length >= 4) {
       throw new ForbiddenException('방이 꽉 찼습니다.');
