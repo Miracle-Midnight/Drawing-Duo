@@ -18,6 +18,7 @@ import { GamelobbyModule } from './gamelobby/gamelobby.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { RoomGatewayModule } from './gateway/gateway.module';
+import { dataSourceOptions } from 'db/data-source';
 
 @Module({
   imports: [
@@ -40,7 +41,7 @@ import { RoomGatewayModule } from './gateway/gateway.module';
         database: configService.get('DB_DATABASE'),
         entities: ['dist/src/*/entities/*.entity.{js,ts}'],
         migrations: ['dist/db/migrations/*.{js.ts}'],
-        autoLoadEntities: true,
+        synchronize: false,
         logging: true,
       }),
       inject: [ConfigService],
