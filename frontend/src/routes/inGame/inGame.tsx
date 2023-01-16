@@ -15,6 +15,34 @@ import InputRange from "../../components/inputRange/inputRange";
 import ColorSection from "../../components/colorSection/colorSection";
 import PaletteComponent from "../../components/palette/palette";
 
+const colors = [
+  {
+    red: 255,
+    green: 0,
+    blue: 0,
+  },
+  {
+    red: 255,
+    green: 120,
+    blue: 120,
+  },
+  {
+    red: 0,
+    green: 120,
+    blue: 120,
+  },
+  {
+    red: 0,
+    green: 120,
+    blue: 120,
+  },
+  {
+    red: 0,
+    green: 120,
+    blue: 120,
+  },
+];
+
 function InGame() {
   return (
     <div className="ml-20">
@@ -37,20 +65,7 @@ function InGame() {
                 </div>
               </div>
             </div>
-            <PaletteComponent
-              colors={[
-                {
-                  red: 255,
-                  green: 0,
-                  blue: 0,
-                },
-                {
-                  red: 255,
-                  green: 120,
-                  blue: 120,
-                },
-              ]}
-            ></PaletteComponent>
+            <PaletteComponent colors={colors}></PaletteComponent>
           </div>
         </div>
       </div>
