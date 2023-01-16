@@ -47,7 +47,7 @@ function Register() {
       formData.append("nickname", inputNickname);
 
       axios
-        .post("http://54.180.100.213:3000/api/users/signup", formData, {
+        .post("/api/users/signup", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

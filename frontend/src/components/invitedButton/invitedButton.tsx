@@ -2,15 +2,15 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 import InvitedCardList from "../invitedCardList/invitedCardList";
 
-export interface inviteMap {
-  [key: string]: any;
+export interface inviteList {
+  invitedList: Array<any>;
 }
 
 export function InvitedButton() {
   const [isClickInviteToggle, setIsClickInviteToggle] =
     useState<boolean>(false);
 
-  const [invitedMap, setInvitedMap] = useState<inviteMap>([]);
+  const [invitedList, setInvitedList] = useState<Array<any>>([]);
   const handleInviteToggle = useCallback(() => {
     isClickInviteToggle
       ? setIsClickInviteToggle(false)
@@ -20,7 +20,7 @@ export function InvitedButton() {
       .get("/api/friend/invite/" + sessionStorage.getItem("userid"))
       .then((res) => {
         console.log(res.data);
-        setInvitedMap(res.data);
+        setInvitedList(res.data.data);
       })
       .catch((err) => {
         console.log("에러 데스");
@@ -40,7 +40,9 @@ export function InvitedButton() {
           <span>초대 목록</span>
         </span>
       </button>
-      {isClickInviteToggle ? <InvitedCardList invitedMap={invitedMap} /> : null}
+      {isClickInviteToggle ? (
+        <InvitedCardList invitedList={invitedList} />
+      ) : null}
     </div>
   );
 }

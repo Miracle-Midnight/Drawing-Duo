@@ -19,6 +19,8 @@ function Intro() {
     axios
       .get("/api/lobby/" + sessionStorage.getItem("userid"))
       .then((res) => {
+        console.log(res);
+        if (res.data == null) return;
         setLobbyList(res.data.data);
       })
       .catch((err) => {
@@ -28,7 +30,7 @@ function Intro() {
     axios
       .get("/api/friend/" + sessionStorage.getItem("userid"))
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         dispatch(add(res.data.data));
       })
       .catch((err) => {

@@ -25,20 +25,14 @@ export class User extends BaseEntity {
   @Column()
   userid: string;
 
-  @Column({ nullable: true })
-  socketid: string;
-
   @Column()
   password: string;
 
   @Column({ default: false })
   ready: boolean;
 
-  @Column('varchar', { array: true, default: [] })
-  inviteuser: string[];
-
-  @Column('int', { array: true, default: [] })
-  inviteroom: number[];
+  @Column('jsonb', { nullable: true })
+  invitedinfo: { inviteUser: string; inviteRoom: number }[];
 
   @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
   @JoinColumn()

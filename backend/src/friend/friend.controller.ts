@@ -9,18 +9,21 @@ import { ApiOperation } from '@nestjs/swagger';
 export class FriendController {
   constructor(private readonly friendService: FriendService) {}
 
+  @ApiOperation({ summary: '친구 목록 보기' })
   // @UseGuards(JwtAuthGuard)
   @Get(':id') // user id
   getFriend(@Req() req, @Param('id') userid) {
     return this.friendService.getFriendList(userid);
   }
 
+  @ApiOperation({ summary: '유저 검색' })
   // @UseGuards(JwtAuthGuard)
   @Get('serch/:id') // username
   serchUser(@Param('id') friendname: string) {
     return this.friendService.serchUser(friendname);
   }
 
+  @ApiOperation({ summary: '친구 추가' })
   @Post()
   addFriend(@Body() userDto) {
     return this.friendService.addFriend(userDto);
@@ -33,7 +36,7 @@ export class FriendController {
   }
 
   @ApiOperation({ summary: '초대받은 목록 보기' })
-  @Get('invite/:id')
+  @Get('invite/:id') //user primary key
   getInvite(@Param('id') userid: number) {
     return this.friendService.getInvite(userid);
   }
