@@ -4,19 +4,12 @@ import { RootState } from "../../store";
 import { useState, useEffect } from "react";
 import _ from "lodash";
 import "./friendsCardList.css";
-import CenteredModal from "../../components/modal/modal";
-function FriendsCardList({ title, friends }: anyv) {
+function FriendsCardList({ title, friends }: any) {
   const friendsList = useSelector((state: RootState) => state.friends.friends);
-
-  const [isCloseClicked, setIsCloseClicked] = useState(false);
 
   const [searchValue, setSearchValue] = useState("");
   const [filteredFriends, setFilteredFriends] = useState(friends);
   const [modalShow, setModalShow] = useState(false);
-
-  const closeFriendsCardList = () => {
-    setIsCloseClicked(!isCloseClicked);
-  };
 
   useEffect(() => {
     filterFriends();
@@ -43,46 +36,19 @@ function FriendsCardList({ title, friends }: anyv) {
         </div>
         <ul className="pl-0 flex flex-col w-full overflow-auto">
           {friendsList.map((friend: any) => {
-            (
+            return (
               <FriendsCard
-                name="김승덕"
+                friendKey={friend.id}
+                name={friend.userid}
                 isConnected={true}
-                isInvited={true}
+                isInvited={false}
+                isInviteTab={false}
               ></FriendsCard>
-              <FriendsCard
-                name="김승덕"h
-                isConnected={true}
-                isInvited={true}
-              ></FriendsCard>
-              <FriendsCard
-                name="김승덕"
-                isConnected={true}
-                isInvited={true}
-              ></FriendsCard>
-              <FriendsCard
-                name="김승덕"
-                isConnected={false}
-                isInvited={true}
-              ></FriendsCard>
-              <FriendsCard
-                name="김승덕"
-                isConnected={true}
-                isInvited={true}
-              ></FriendsCard>
-              <FriendsCard name="김승덕" isConnected={true}></FriendsCard>
-              <FriendsCard
-                name="김승덕"
-                isConnected={true}
-                isInvited={true}
-              ></FriendsCard>
-              <FriendsCard name="김승덕" isConnected={true}></FriendsCard>
-              <FriendsCard name="김승덕" isConnected={true}></FriendsCard>
-              <FriendsCard name="김승덕" isConnected={true}></FriendsCard>
-            </ul>
-          </div>
-        </div>
-      )}
-    </>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
   );
 }
 

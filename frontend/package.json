@@ -89,6 +89,6 @@
     "@typescript-eslint/parser": "^5.48.0",
     "@types/lodash": "^4.14.191",
     "eslint": "^8.31.0",
-    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react": "^7.31.11"
   }
 }

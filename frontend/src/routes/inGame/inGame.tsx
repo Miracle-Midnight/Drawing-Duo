@@ -5,11 +5,7 @@ import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
 import Image from "../../assets/image_numbering_label.png";
 
-import Pen from "../../components/drawTools/pen";
-import Eraser from "../../components/drawTools/eraser";
-import Palette from "../../components/drawTools/palette";
-import Undo from "../../components/drawTools/undo";
-import Redo from "../../components/drawTools/redo";
+import { DrawTools } from "../../components/drawTools/drawContainer";
 import InputRange from "../../components/inputRange/inputRange";
 import ColorSection from "../../components/colorSection/colorSection";
 import PaletteComponent from "../../components/palette/palette";
@@ -56,12 +52,7 @@ function InGame() {
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
                 <div className="w-30 h-10 shadow px-5">
                   <div>
-                    <Pen></Pen>
-                    <Eraser></Eraser>
-                    <InputRange min={10} max={1000}></InputRange>
-                    <Palette></Palette>
-                    <Undo></Undo>
-                    <Redo></Redo>
+                    <DrawTools />
                   </div>
                 </div>
               </div>
