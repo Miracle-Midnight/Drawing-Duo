@@ -49,12 +49,15 @@ export class FriendService {
   }
 
   async inviteFriend(inviteDto) {
-    const { userId, friendId, roomid } = inviteDto; //userId= username
+    const { userId, friendId, roomId } = inviteDto; //userId= username
     const invitedUser = await this.userRepository.findOne({
       where: { id: friendId },
     });
-    invitedUser.inviteuser = [...invitedUser.inviteuser, userId];
-    invitedUser.inviteroom = [...invitedUser.inviteroom, roomid];
+    console.log(userId, roomId);
+    invitedUser.invitedinfo = [
+      ...invitedUser.invitedinfo,
+      { inviteUser: userId, inviteRoom: roomId },
+    ];
     await this.userRepository.save(invitedUser);
     return invitedUser;
   }
@@ -63,7 +66,7 @@ export class FriendService {
     const user = await this.userRepository.findOne({
       where: { id: userid },
     });
-    return { inviteuser: user.inviteuser, inviteroom: user.inviteroom };
+    return user.invitedinfo;
   }
 
   readonly childuserFilter = (user: User) => ({
