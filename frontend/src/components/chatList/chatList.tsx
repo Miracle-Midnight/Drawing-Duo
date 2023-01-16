@@ -53,7 +53,7 @@ function ChatList() {
               {renderChat()}
             </ul>
           </div>
-          <div className="absolute -bottom-10 left-0 w-full h-10 bg-purple-100  border border-b-2 border-gray-200">
+          <div className="absolute -bottom-10 left-0 w-full h-10   border-gray-200">
             <form onSubmit={onMessageSubmit} className="flex">
               <input
                 className="w-full h-full p-2"
