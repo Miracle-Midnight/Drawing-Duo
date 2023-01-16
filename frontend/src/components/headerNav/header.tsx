@@ -120,7 +120,27 @@ function HeaderNav() {
 
         <CenteredModal show={modalShow} onHide={() => setModalShow(false)} />
       </nav>
-      {isClicked === true ? <FriendsCardList title={"친구 목록"}></FriendsCardList> : null}
+      {isClicked === true ? (
+        <FriendsCardList
+          title={"친구 목록"}
+          friends={[
+            {
+              name: "kimseungd",
+              isConnected: true,
+              isInvited: true,
+            },
+            { name: "parkseondo", isConnected: false, isInvited: true },
+            { name: "박선도", isConnected: false },
+            { name: "kimyoungwoo", isConnected: false },
+            { name: "박선도", isConnected: false },
+            { name: "박선도", isConnected: false },
+            { name: "박선도", isConnected: false },
+            { name: "박선도", isConnected: false },
+            { name: "박선도", isConnected: false },
+            { name: "박선도", isConnected: false },
+          ]}
+        ></FriendsCardList>
+      ) : null}
     </div>
   );
 }

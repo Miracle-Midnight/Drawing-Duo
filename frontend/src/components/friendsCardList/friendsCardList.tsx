@@ -1,25 +1,31 @@
 import FriendsCard from "../friendsCard/friendsCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import _ from "lodash";
 
-const friends = [
-  { name: "김승덕", isConnected: true, isInvited: false, isInviting: true },
-  { name: "박선도", isConnected: false, isInvited: true },
-  { name: "박선도", isConnected: false },
-  { name: "박선도", isConnected: false },
-  { name: "박선도", isConnected: false },
-  { name: "박선도", isConnected: false },
-  { name: "박선도", isConnected: false },
-  { name: "박선도", isConnected: false },
-  { name: "박선도", isConnected: false },
-  { name: "박선도", isConnected: false },
-];
-
-function FriendsCardList({ title }: any) {
+function FriendsCardList({ title, friends }: any) {
   const [isCloseClicked, setIsCloseClicked] = useState(false);
+
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredFriends, setFilteredFriends] = useState(friends);
 
   const closeFriendsCardList = () => {
     setIsCloseClicked(!isCloseClicked);
   };
+
+  useEffect(() => {
+    filterFriends();
+  }, [searchValue]);
+
+  const handleSearch = (event: any) => {
+    setSearchValue(event.target.value);
+  };
+
+  const filterFriends = _.debounce(() => {
+    const filtered = friends.filter((friend: any) => {
+      return friend.name.toLowerCase().includes(searchValue.toLowerCase());
+    });
+    setFilteredFriends(filtered);
+  }, 500);
 
   return (
     <>
@@ -43,8 +49,16 @@ function FriendsCardList({ title }: any) {
               {title}
             </h3>
           </div>
+          <div>
+            <input
+              type="text"
+              value={searchValue}
+              onChange={handleSearch}
+              placeholder="Search for friends"
+            />
+          </div>
           <ul className="pl-0 flex flex-col w-full overflow-auto">
-            {friends.map((friend) => (
+            {filteredFriends.map((friend: any) => (
               <FriendsCard
                 name={friend.name}
                 isConnected={friend.isConnected}

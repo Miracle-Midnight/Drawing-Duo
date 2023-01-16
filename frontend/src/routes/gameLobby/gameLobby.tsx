@@ -53,7 +53,27 @@ function GameLobby() {
           </div>
         </div>
 
-        {isClicked === true ? <FriendsCardList title={"친구 초대"}></FriendsCardList> : null}
+        {isClicked === true ? (
+          <FriendsCardList
+            title={"친구 초대"}
+            friends={[
+              {
+                name: "김승덕",
+                isConnected: true,
+                isInvited: true,
+              },
+              { name: "김영우", isConnected: false, isInvited: true },
+              { name: "김채욱", isConnected: false },
+              { name: "윤영운", isConnected: false },
+              { name: "박선도", isConnected: false },
+              { name: "아이유", isConnected: false },
+              { name: "유재석", isConnected: false },
+              { name: "석가모니", isConnected: false },
+              { name: "니모", isConnected: false },
+              { name: "모자", isConnected: false },
+            ]}
+          ></FriendsCardList>
+        ) : null}
       </div>
     </Container>
   );
