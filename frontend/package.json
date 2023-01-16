@@ -32,6 +32,7 @@
     "html-webpack-plugin": "^5.5.0",
     "peerjs": "^1.4.7",
     "perfect-freehand": "^1.2.0",
+    "lodash": "^4.17.21",
     "postcss": "^8.4.20",
     "postcss-loader": "^7.0.2",
     "react": "^18.2.0",
@@ -61,7 +62,9 @@
     "start": "webpack-dev-server",
     "build": "webpack -w",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync ./build s3://drawingduo.site --profile=drawing-duo",
+    "invalidate": "aws cloudfront create-invalidation --profile=drawing-duo --distribution-id E6EDEWPMQJ1HE --paths / /index.html /error.html /service-worker.js /manifest.json /favicon.ico "
   },
   "eslintConfig": {
     "extends": [
@@ -84,7 +87,8 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.48.0",
     "@typescript-eslint/parser": "^5.48.0",
+    "@types/lodash": "^4.14.191",
     "eslint": "^8.31.0",
-    "eslint-plugin-react": "^7.31.11"
+    "eslint-plugin-react": "^7.31.11",
   }
 }

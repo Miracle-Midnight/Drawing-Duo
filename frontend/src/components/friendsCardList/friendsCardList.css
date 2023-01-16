@@ -1,0 +1,33 @@
+.search-container {
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 4px;
+  padding: 1em;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.search-container input[type="text"] {
+  width: 100%;
+  padding: 0.5em;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-container::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 1em;
+  transform: translateY(-50%);
+  width: 1.5em;
+  height: 1.5em;
+
+}
+
+
