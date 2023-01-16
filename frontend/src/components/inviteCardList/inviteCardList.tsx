@@ -18,7 +18,7 @@ function InviteCardList() {
           {friendsList.map((friend: any) => {
             return (
               <FriendsCard
-                key={friend.id}
+                friendKey={friend.id}
                 name={friend.userid}
                 isConnected={true}
                 isInvited={false}

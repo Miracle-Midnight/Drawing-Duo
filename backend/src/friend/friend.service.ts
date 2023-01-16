@@ -54,12 +54,14 @@ export class FriendService {
     const invitedUser = await this.userRepository.findOne({
       where: { id: friendId },
     });
+    console.log(invitedUser);
 
     if (invitedUser.invitedinfo == null) {
       invitedUser.invitedinfo = [
         { inviteUser: userId, inviteNickname: nickname, inviteRoom: roomId },
       ];
       await this.userRepository.save(invitedUser);
+      console.log(invitedUser.invitedinfo);
       return invitedUser;
     }
 
@@ -74,6 +76,7 @@ export class FriendService {
       { inviteUser: userId, inviteNickname: nickname, inviteRoom: roomId },
     ];
     await this.userRepository.save(invitedUser);
+    console.log(invitedUser.invitedinfo);
     return invitedUser;
   }
 

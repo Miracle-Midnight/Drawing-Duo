@@ -19,6 +19,7 @@ function InvitedCardList({ invitedList }: inviteList) {
                 <InvitedCard
                   userKey={parseInt(e.inviteUser)}
                   inviteRoom={e.inviteRoom}
+                  inviteNickname={e.inviteNickname}
                   isConnected={true}
                   isInvited={true}
                 ></InvitedCard>

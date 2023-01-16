@@ -1,16 +1,31 @@
+import axios from "axios";
 import { useState, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import FriendsCardList from "../friendsCardList/friendsCardList";
 import { InvitedButton } from "../invitedButton/invitedButton";
 import { Logout } from "../logout/logout";
+import { add } from "../../states/friendsSlice";
 
 export function Profile() {
   const [isOpenFriendModal, setIsOpenFriendModal] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
 
   const handleOpenFriendModal = useCallback(() => {
     console.log(isOpenFriendModal);
     isOpenFriendModal
       ? setIsOpenFriendModal(false)
       : setIsOpenFriendModal(true);
+
+    axios
+      .get("/api/friend/" + sessionStorage.getItem("userid"))
+      .then((res) => {
+        // console.log(res.data);
+        dispatch(add(res.data.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [isOpenFriendModal]);
 
   return (

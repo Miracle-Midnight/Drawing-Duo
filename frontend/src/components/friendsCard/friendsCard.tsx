@@ -1,19 +1,26 @@
 import axios from "axios";
 
 interface friendProps {
-  key: number;
+  friendKey: number;
   name: string;
   isConnected: boolean;
   isInvited: boolean;
   isInviteTab: boolean;
 }
 
-function FriendsCard({ key, name, isConnected, isInviteTab }: friendProps) {
+function FriendsCard({
+  friendKey,
+  name,
+  isConnected,
+  isInviteTab,
+}: friendProps) {
   return (
     <li className="flex flex-row mb-2 border-gray-400">
       <div className="transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white  rounded-md flex flex-1 items-center p-4">
         <IsOnline isConnected={isConnected} name={name} />
-        {isInviteTab ? <InviteFriend key={key} name={name} /> : null}
+        {isInviteTab ? (
+          <InviteFriend friendKey={friendKey} name={name} />
+        ) : null}
       </div>
     </li>
   );
@@ -36,7 +43,13 @@ function IsOnline({
   );
 }
 
-function InviteFriend({ key, name }: { key: number; name: string }) {
+function InviteFriend({
+  friendKey,
+  name,
+}: {
+  friendKey: number;
+  name: string;
+}) {
   const inviteFriend = () => {
     console.log(sessionStorage.getItem("userid"));
     console.log(name);
@@ -45,8 +58,9 @@ function InviteFriend({ key, name }: { key: number; name: string }) {
     axios
       .post("/api/friend/invite", {
         userId: sessionStorage.getItem("userid"),
-        friendId: key,
+        friendId: friendKey,
         roomId: sessionStorage.getItem("roomId"),
+        nickname: sessionStorage.getItem("userNickname"),
       })
       .then((res) => {
         console.log(res);

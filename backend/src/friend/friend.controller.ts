@@ -32,6 +32,7 @@ export class FriendController {
   @ApiOperation({ summary: '친구 초대 보내기' })
   @Post('invite')
   inviteFriend(@Body() inviteDto) {
+    console.log(inviteDto);
     return this.friendService.inviteFriend(inviteDto);
   }
 
