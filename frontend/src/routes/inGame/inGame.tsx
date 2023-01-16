@@ -12,6 +12,7 @@ import Palette from "../../components/drawTools/palette";
 import Undo from "../../components/drawTools/undo";
 import Redo from "../../components/drawTools/redo";
 import InputRange from "../../components/inputRange/inputRange";
+import ColorSection from "../../components/colorSection/colorSection";
 function InGame() {
   return (
     <div className="ml-20">
@@ -36,78 +37,18 @@ function InGame() {
             </div>
             <div className="absolute right-24 top-20 p-10 h-4/5 overflow-auto shadow-md rounded-sm">
               <div className="flex flex-col">
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>{" "}
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
-                <div className="grid grid-cols-2 my-2">
-                  <div className="mr-2">1</div>
-                  <div className="w-10 h-6 bg-black"></div>
-                </div>
+                <ColorSection
+                  number={1}
+                  red={255}
+                  green={150}
+                  blue={0}
+                ></ColorSection>
+                <ColorSection
+                  number={2}
+                  red={255}
+                  green={150}
+                  blue={0}
+                ></ColorSection>
               </div>
             </div>
           </div>
