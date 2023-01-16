@@ -45,27 +45,29 @@ const colors = [
 
 function InGame() {
   return (
-    <div className="ml-20">
+    <div className="flex flex-row h-screen">
       <SideNav />
-      <div className="">
-        <div className="grid">
-          <div className="flex justify-center border border-black relative">
-            <svg className="h-screen w-full">
-              <image href={Image} width="100%" height="100%"></image>
-            </svg>
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
-              <div className="w-30 h-10 shadow px-5">
-                <div>
-                  <Pen></Pen>
-                  <Eraser></Eraser>
-                  <InputRange min={10} max={1000}></InputRange>
-                  <Palette></Palette>
-                  <Undo></Undo>
-                  <Redo></Redo>
+      <div>
+        <div className="">
+          <div className="grid">
+            <div className="flex justify-center border border-black relative">
+              <svg className="h-screen w-screen">
+                <image href={Image} width="100%" height="100%"></image>
+              </svg>
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
+                <div className="w-30 h-10 shadow px-5">
+                  <div>
+                    <Pen></Pen>
+                    <Eraser></Eraser>
+                    <InputRange min={10} max={1000}></InputRange>
+                    <Palette></Palette>
+                    <Undo></Undo>
+                    <Redo></Redo>
+                  </div>
                 </div>
               </div>
+              <PaletteComponent colors={colors}></PaletteComponent>
             </div>
-            <PaletteComponent colors={colors}></PaletteComponent>
           </div>
         </div>
       </div>
