@@ -43,7 +43,7 @@ function ChatList() {
     <>
       <div className="absolute bottom-12 left-20 z-50 bg-gray-200 bg-opacity-50 ">
         <div className="relative">
-          <div className="w-[350px] h-[400px] overflow-auto border ">
+          <div className="w-[350px] h-[400px] overflow-auto ">
             <ul className="p-0 pt-3">
               {/* {chat.map(({ name, message }, index) => (
                 <div key={index}>
@@ -53,7 +53,7 @@ function ChatList() {
               {renderChat()}
             </ul>
           </div>
-          <div className="absolute -bottom-10 left-0 w-full h-10   border-gray-200">
+          <div className="absolute -bottom-10 left-0 w-full bg-purple-100 border-2 border-gray-200 hover:bg-purple-300 ">
             <form onSubmit={onMessageSubmit} className="flex">
               <input
                 className="w-full h-full p-2"
