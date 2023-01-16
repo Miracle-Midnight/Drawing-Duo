@@ -8,9 +8,7 @@ export const dataSourceOptions: DataSourceOptions = {
   password: '1234',
   database: 'drawingduo',
   entities: ['dist/src/*/entities/*.entity.{js,ts}'],
-
   migrations: ['dist/db/migrations/*.{js.ts}'],
-
   synchronize: true,
 };
 

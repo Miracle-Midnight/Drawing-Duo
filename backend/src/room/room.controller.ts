@@ -22,6 +22,7 @@ export class RoomController {
     return this.roomService.getAllImage();
   }
 
+  @ApiOperation({ summary: '이미지 선택' })
   @Post()
   selectImage(@Body() selectImageDto: SelectImageDto) {
     return this.roomService.selectImage(selectImageDto);
@@ -43,7 +44,6 @@ export class RoomController {
     @Param('id', ParseIntPipe, PositiveIntPipe) id: number,
     @Body() createRoomDto: CreateRoomDto,
   ) {
-    console.log(id);
     return this.roomService.createRoom(id, createRoomDto);
   }
 

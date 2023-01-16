@@ -15,7 +15,7 @@ export class LobbyController {
     return this.lobbyService.myroom(userid);
   }
 
-  @ApiOperation({ summary: '방 입장' })
+  @ApiOperation({ summary: '초대방 입장' })
   @Post('in')
   inRoom(@Body() enterRoomDto: EnterRoomDto) {
     return this.lobbyService.inRoom(enterRoomDto);
