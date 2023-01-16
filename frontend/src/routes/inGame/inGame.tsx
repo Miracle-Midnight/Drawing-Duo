@@ -5,13 +5,44 @@ import UserState from "../../components/userState/userState";
 import InGameCanvas from "../../components/inGameCanvas/inGameCanvas";
 import SideNav from "../../components/sideNav/sideNav";
 import Image from "../../assets/image_numbering_label.png";
-import palette from "../../assets/palette-9-svgrepo-com.svg";
+
 import Pen from "../../components/drawTools/pen";
 import Eraser from "../../components/drawTools/eraser";
 import Palette from "../../components/drawTools/palette";
 import Undo from "../../components/drawTools/undo";
 import Redo from "../../components/drawTools/redo";
 import InputRange from "../../components/inputRange/inputRange";
+import ColorSection from "../../components/colorSection/colorSection";
+import PaletteComponent from "../../components/palette/palette";
+
+const colors = [
+  {
+    red: 255,
+    green: 0,
+    blue: 0,
+  },
+  {
+    red: 255,
+    green: 120,
+    blue: 120,
+  },
+  {
+    red: 0,
+    green: 120,
+    blue: 120,
+  },
+  {
+    red: 0,
+    green: 120,
+    blue: 120,
+  },
+  {
+    red: 0,
+    green: 120,
+    blue: 120,
+  },
+];
+
 function InGame() {
   return (
     <div className="ml-20">
@@ -34,6 +65,7 @@ function InGame() {
                 </div>
               </div>
             </div>
+            <PaletteComponent colors={colors}></PaletteComponent>
           </div>
         </div>
       </div>
