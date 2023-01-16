@@ -10,6 +10,7 @@ export function useImages() {
     axios
       .get("/api/room")
       .then((res) => {
+        console.log(res.data.data);
         dispatch(change(res.data.data));
       })
       .catch((err) => {

@@ -7,6 +7,7 @@ import UserState from "../../components/userState/userState";
 import { io, Socket } from "socket.io-client";
 import { Container } from "react-bootstrap";
 import { ImageList } from "../../components/imageList/imageList";
+import { Invite } from "../../components/invite/invite";
 
 function GameLobby() {
   const socketRef = useRef<Socket>();
@@ -138,6 +139,15 @@ function GameLobby() {
 
     getMedia();
 
+    axios
+      .get("/api/friend" + sessionStorage.getItem("userid"))
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     return () => {
       if (socketRef.current) {
         socketRef.current.disconnect();
@@ -150,14 +160,20 @@ function GameLobby() {
 
   //-----------------------------------------------------------------------------
 
-
-
   const navigate = useNavigate();
 
   const [isReady, setIsReady] = React.useState(false);
 
   const handleReady = () => {
     setIsReady(!isReady);
+    axios
+      .get("/api/game/" + sessionStorage.getItem("roomId"))
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     navigate("/InGame/" + sessionStorage.getItem("roomId"));
   };
 
@@ -190,6 +206,7 @@ function GameLobby() {
               state="On"
             ></UserState>
           </div>
+          <Invite />
           <button
             type="button"
             className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "

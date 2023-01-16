@@ -18,6 +18,7 @@ import { GamelobbyModule } from './gamelobby/gamelobby.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { RoomGatewayModule } from './gateway/gateway.module';
+import { dataSourceOptions } from 'db/data-source';
 
 @Module({
   imports: [
@@ -29,22 +30,7 @@ import { RoomGatewayModule } from './gateway/gateway.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('DB_HOST'),
-        port: parseInt(configService.get('DB_PORT')),
-        username: configService.get('DB_USERNAME'),
-        password: configService.get('DB_PASSWORD'),
-        database: configService.get('DB_DATABASE'),
-        entities: ['dist/src/*/entities/*.entity.{js,ts}'],
-        migrations: ['dist/db/migrations/*.{js.ts}'],
-        synchronize: false,
-        logging: true,
-      }),
-      inject: [ConfigService],
-    }),
+    TypeOrmModule.forRoot(dataSourceOptions),
     RoomGatewayModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'build'),

@@ -27,6 +27,7 @@ export class UserController {
     @UploadedFile() file: Express.Multer.File,
     @Body() userDto: UserDto,
   ) {
+    console.log(userDto);
     return this.userService.signUp(userDto, 'profile', file);
   }
 
