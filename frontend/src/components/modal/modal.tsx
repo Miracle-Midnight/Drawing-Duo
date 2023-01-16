@@ -9,21 +9,16 @@ function CenteredModal(props: any) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">방 만들기</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">{props.headerTitle}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>방 제목</Form.Label>
-            <Form.Control type="email" placeholder="OO야 빨리와" />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>비밀 번호</Form.Label>
-            <Form.Control type="password" placeholder="비밀 번호" />
+            <Form.Label>{props.bodyTitle}</Form.Label>
+            <Form.Control type="email" placeholder={props.placeholder} />
           </Form.Group>
           <Button variant="primary" type="submit" className="float-right">
-            방 만들기
+            {props.buttonTitle}
           </Button>
         </Form>
       </Modal.Body>

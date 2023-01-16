@@ -1,4 +1,4 @@
-function FriendsCard({ name, isConnected, isInvited }: any) {
+function FriendsCard({ name, isConnected, isInvited, isInviting }: any) {
   return (
     <li className="flex flex-row mb-2 border-gray-400">
       <div className="transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white  rounded-md flex flex-1 items-center p-4">
@@ -19,6 +19,14 @@ function FriendsCard({ name, isConnected, isInvited }: any) {
               </button>
               <button className="bg-red-300 hover:bg-red-600 text-gray-800 hover:text-white font-bold py-2 px-4 rounded inline-flex items-center">
                 <span>거절</span>
+              </button>
+            </div>
+          ) : null}
+          {isInviting === true ? (
+            <div>
+              {/* todo : 수락, 거절 버튼 svg로 만들기 */}
+              <button className="bg-purple-300 hover:bg-purple-600 text-gray-800 hover:text-white font-bold py-2 px-4 rounded inline-flex items-center mr-1">
+                <span>초대</span>
               </button>
             </div>
           ) : null}
