@@ -4,9 +4,15 @@ import UserState from "../../components/userState/userState";
 import React, { useState, useEffect } from "react";
 import ImageCard from "../../components/imageCard/imageCard";
 import HeaderNav from "../../components/headerNav/header";
+import FriendsCardList from "../../components/friendsCardList/friendsCardList";
+
 import "./gameLobby.css";
 
 function GameLobby() {
+  const [isClicked, setIsClicked] = useState(false);
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+  };
   return (
     <Container className="gameLobby-container">
       <HeaderNav />
@@ -22,6 +28,7 @@ function GameLobby() {
             <ImageCard imageSrc="https://item.kakaocdn.net/do/c620e34ce78db64b44ff1e422a35e2787154249a3890514a43687a85e6b6cc82"></ImageCard>
             <ImageCard imageSrc="https://item.kakaocdn.net/do/43319a30d6de449e135d3d14898a3d0e960f4ab09fe6e38bae8c63030c9b37f9"></ImageCard>
             <ImageCard imageSrc="https://pbs.twimg.com/profile_images/1555643525362028546/Yw3x29re_400x400.jpg"></ImageCard>
+            <ImageCard imageSrc="https://cdn.spotvnews.co.kr/news/photo/202211/566905_791856_4315.jpg"></ImageCard>
           </div>
         </div>
         <div className="flex flex-col justify-between">
@@ -29,13 +36,24 @@ function GameLobby() {
             <UserState name="박선도"></UserState>
             <UserState name="김영우"></UserState>
           </div>
-          <button
-            type="button"
-            className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-          >
-            게임 시작
-          </button>
+          <div>
+            <button
+              type="button"
+              onClick={handleClick}
+              className="py-2 px-4  bg-purple-500 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mb-3 "
+            >
+              친구 초대
+            </button>
+            <button
+              type="button"
+              className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+            >
+              게임 시작
+            </button>
+          </div>
         </div>
+
+        {isClicked === true ? <FriendsCardList title={"친구 초대"}></FriendsCardList> : null}
       </div>
     </Container>
   );
