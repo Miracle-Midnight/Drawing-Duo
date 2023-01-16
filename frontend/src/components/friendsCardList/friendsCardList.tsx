@@ -2,12 +2,14 @@ import FriendsCard from "../friendsCard/friendsCard";
 import { useState, useEffect } from "react";
 import _ from "lodash";
 import "./friendsCardList.css";
+import CenteredModal from "../../components/modal/modal";
 
 function FriendsCardList({ title, friends }: any) {
   const [isCloseClicked, setIsCloseClicked] = useState(false);
 
   const [searchValue, setSearchValue] = useState("");
   const [filteredFriends, setFilteredFriends] = useState(friends);
+  const [modalShow, setModalShow] = useState(false);
 
   const closeFriendsCardList = () => {
     setIsCloseClicked(!isCloseClicked);
@@ -26,7 +28,7 @@ function FriendsCardList({ title, friends }: any) {
       return friend.name.toLowerCase().includes(searchValue.toLowerCase());
     });
     setFilteredFriends(filtered);
-  }, 500);
+  }, 250);
 
   return (
     <>
@@ -49,7 +51,16 @@ function FriendsCardList({ title, friends }: any) {
             <h3 className="text-3xl font-medium leading-6 text-center text-gray-900 ">
               {title}
             </h3>
+            <div className="w-full">
+              <button
+                className="w-full mb-2 mt-3 py-2 text-md font-medium text-white bg-purple-600 border border-transparent rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-purple-500"
+                onClick={() => setModalShow(true)}
+              >
+                친구 추가
+              </button>
+            </div>
           </div>
+          <CenteredModal show={modalShow} headerTitle="친구 추가" bodyTitle="친구 닉네임" buttonTitle="친구 추가" placeholder="닉네임을 입력하세요"  onHide={() => setModalShow(false)} />
           <div className="search-container">
             <input
               type="text"

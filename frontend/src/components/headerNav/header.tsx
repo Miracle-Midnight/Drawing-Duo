@@ -118,7 +118,7 @@ function HeaderNav() {
           </div>
         </div>
 
-        <CenteredModal show={modalShow} onHide={() => setModalShow(false)} />
+        <CenteredModal show={modalShow} headerTitle="방만들기" bodyTitle="방 제목" buttonTitle="방 만들기" placeholder="OO야 빨리와"  onHide={() => setModalShow(false)} />
       </nav>
       {isClicked === true ? (
         <FriendsCardList
