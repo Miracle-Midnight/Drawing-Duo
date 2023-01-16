@@ -43,9 +43,9 @@ export class FriendService {
   async getFriendList(userid) {
     const user = await this.userRepository.findOne({
       where: { id: userid },
-      relations: ['childUser'],
+      relations: ['childUser', 'childUser.profile'],
     });
-    return user.childUser.map(this.childuserFilter);
+    return user.childUser.map(this.childuserFilterAddnic);
   }
 
   async inviteFriend(inviteDto) {
@@ -69,5 +69,11 @@ export class FriendService {
   readonly childuserFilter = (user: User) => ({
     id: user.id,
     userid: user.userid,
+  });
+
+  readonly childuserFilterAddnic = (user: User) => ({
+    id: user.id,
+    userid: user.userid,
+    nickname: user.profile.nickname,
   });
 }
