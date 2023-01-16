@@ -24,6 +24,26 @@ export class LobbyService {
   // async getLobby(): Promise<Room[]> {
   //   return this.roomRepository.find();
   // }
+  async myroom(userid) {
+    const user = await this.userRepository.findOne({
+      where: { id: userid },
+      relations: ['room', 'room.image', 'room.user'],
+    });
+    if (!user) throw new NotFoundException('유저가 존재하지 않습니다.');
+    if (user.room.length == 0)
+      throw new ForbiddenException('방이 존재하지 않습니다.');
+    console.log(user.room);
+    const result = [];
+    user.room.map((room) => {
+      result.push({
+        roomid: room.id,
+        title: room.title,
+        image: room.image,
+        user: room.user.map(this.userFilter),
+      });
+    });
+    return result;
+  }
 
   async inRoom(enterRoomDto: EnterRoomDto) {
     const { userid, title } = enterRoomDto;
@@ -103,27 +123,6 @@ export class LobbyService {
     // console.log(targetRoom);
 
     return { userNickName: userinfo.profile.nickname };
-  }
-
-  async myroom(userid) {
-    const user = await this.userRepository.findOne({
-      where: { id: userid },
-      relations: ['room', 'room.image', 'room.user'],
-    });
-    if (!user) throw new NotFoundException('유저가 존재하지 않습니다.');
-    if (user.room.length == 0)
-      throw new ForbiddenException('방이 존재하지 않습니다.');
-    console.log(user.room);
-    const result = [];
-    user.room.map((room) => {
-      result.push({
-        roomid: room.id,
-        title: room.title,
-        image: room.image,
-        user: room.user.map(this.userFilter),
-      });
-    });
-    return result;
   }
 
   readonly userFilter = (user: User) => ({
