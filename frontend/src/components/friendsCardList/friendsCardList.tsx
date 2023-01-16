@@ -1,6 +1,7 @@
 import FriendsCard from "../friendsCard/friendsCard";
 import { useState, useEffect } from "react";
 import _ from "lodash";
+import "./friendsCardList.css";
 
 function FriendsCardList({ title, friends }: any) {
   const [isCloseClicked, setIsCloseClicked] = useState(false);
@@ -49,12 +50,12 @@ function FriendsCardList({ title, friends }: any) {
               {title}
             </h3>
           </div>
-          <div>
+          <div className="search-container">
             <input
               type="text"
               value={searchValue}
               onChange={handleSearch}
-              placeholder="Search for friends"
+              placeholder="친구를 검색해보세요"
             />
           </div>
           <ul className="pl-0 flex flex-col w-full overflow-auto">
