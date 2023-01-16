@@ -5,9 +5,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import HeaderNav from "../../components/headerNav/header";
 import UserState from "../../components/userState/userState";
 import { io, Socket } from "socket.io-client";
-import { Container } from "react-bootstrap";
 import { ImageList } from "../../components/imageList/imageList";
 import { Invite } from "../../components/invite/invite";
+import { useDispatch } from "react-redux";
+import { add } from "../../states/friendsSlice";
 
 function GameLobby() {
   const socketRef = useRef<Socket>();
@@ -19,6 +20,8 @@ function GameLobby() {
 
   const [remoteNickname, setRemoteNickname] = useState<string>("");
   const [profileImageURL, setProfileImageURL] = useState<string>("");
+
+  const dispatch = useDispatch();
 
   const getMedia = async () => {
     try {
@@ -140,9 +143,9 @@ function GameLobby() {
     getMedia();
 
     axios
-      .get("/api/friend" + sessionStorage.getItem("userid"))
+      .get("/api/friend/" + sessionStorage.getItem("userid"))
       .then((res) => {
-        console.log(res.data);
+        dispatch(add(res.data.data));
       })
       .catch((err) => {
         console.log(err);
@@ -168,13 +171,22 @@ function GameLobby() {
     setIsReady(!isReady);
     axios
       .get("/api/game/" + sessionStorage.getItem("roomId"))
-      .then((res) => {
-        console.log(res.data);
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
     navigate("/InGame/" + sessionStorage.getItem("roomId"));
+  };
+
+  const deleteRoom = () => {
+    axios
+      .delete("/api/room/" + sessionStorage.getItem("roomId"))
+      .then((res) => {
+        document.location.href = "/";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // const imageList = [
@@ -207,6 +219,13 @@ function GameLobby() {
             ></UserState>
           </div>
           <Invite />
+          <button
+            type="button"
+            className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
+            onClick={deleteRoom}
+          >
+            뒤로 가기
+          </button>
           <button
             type="button"
             className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "

@@ -5,9 +5,7 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  OneToMany,
   ManyToMany,
-  JoinTable,
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
@@ -33,7 +31,7 @@ export class Room extends BaseEntity {
   @ManyToMany(() => User, (user) => user.room)
   user: User[];
 
-  @ManyToOne(() => Image, (image) => image.room)
+  @ManyToOne(() => Image, (image) => image.room, { onDelete: 'SET NULL' })
   @JoinColumn()
   image: Image;
 }

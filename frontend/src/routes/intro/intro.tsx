@@ -3,9 +3,13 @@ import HeaderNav from "../../components/headerNav/header";
 import Card from "../../components/card/card";
 import "./intro.css";
 import axios from "axios";
+import { add } from "../../states/friendsSlice";
+import { useDispatch } from "react-redux";
 
 function Intro() {
   const [lobbyList, setLobbyList] = useState([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     sessionStorage.removeItem("roomId");
@@ -16,6 +20,16 @@ function Intro() {
       .get("/api/lobby/" + sessionStorage.getItem("userid"))
       .then((res) => {
         setLobbyList(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get("/api/friend/" + sessionStorage.getItem("userid"))
+      .then((res) => {
+        console.log(res.data);
+        dispatch(add(res.data.data));
       })
       .catch((err) => {
         console.log(err);

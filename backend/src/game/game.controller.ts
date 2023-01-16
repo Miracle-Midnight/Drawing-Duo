@@ -1,8 +1,17 @@
-import { Controller, Patch, Param, ParseIntPipe, Post } from '@nestjs/common';
+import {
+  Controller,
+  Patch,
+  Param,
+  ParseIntPipe,
+  Post,
+  Get,
+} from '@nestjs/common';
 import { PositiveIntPipe } from 'src/common/pipes/positiveInt.pipe';
 import { GameUserReadyDto } from './dto/game-user-ready.dto';
 import { GameService } from './game.service';
 import { Body } from '@nestjs/common/decorators';
+// import { EnterGameDto } from './dto/enter-game.dto';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('game')
 export class GameController {
@@ -11,6 +20,12 @@ export class GameController {
   @Patch()
   userReady(@Body() gameUserReadyDto: GameUserReadyDto) {
     return this.gameService.userReady(gameUserReadyDto);
+  }
+
+  @ApiOperation({ summary: '게임 입장' })
+  @Get(':id') // roomid
+  inGame(@Param('id', ParseIntPipe, PositiveIntPipe) id: number) {
+    return this.gameService.inGame(id);
   }
 
   // 게임 생성과 동시에 room과 game이 연결됨

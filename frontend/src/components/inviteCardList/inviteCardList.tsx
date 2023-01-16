@@ -1,8 +1,9 @@
-import axios from "axios";
-import { useEffect } from "react";
-import InviteCard from "../inviteCard/inviteCard";
-function InviteCardList() {
+import { RootState } from "../../store";
+import { useSelector } from "react-redux";
+import FriendsCard from "../friendsCard/friendsCard";
 
+function InviteCardList() {
+  const friendsList = useSelector((state: RootState) => state.friends.friends);
 
   return (
     <div className="right-0 top-0 w-[380px] h-screen overflow-auto bg-gray-300 bg-opacity-50 z-50">
@@ -14,8 +15,17 @@ function InviteCardList() {
           </h3>
         </div>
         <ul className="pl-0 flex flex-col w-full overflow-auto">
-          <InviteCard name="김승덕" isConnected={true}></InviteCard>
-          <InviteCard name="김승덕" isConnected={true}></InviteCard>
+          {friendsList.map((friend: any) => {
+            return (
+              <FriendsCard
+                key={friend.id}
+                name={friend.userid}
+                isConnected={true}
+                isInvited={false}
+                isInviteTab={true}
+              ></FriendsCard>
+            );
+          })}
         </ul>
       </div>
     </div>

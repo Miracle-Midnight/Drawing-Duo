@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import FriendsCardList from "../friendsCardList/friendsCardList";
+import { InvitedButton } from "../invitedButton/invitedButton";
 import { Logout } from "../logout/logout";
 
 export function Profile() {
@@ -30,6 +31,7 @@ export function Profile() {
             <span>친구 목록</span>
           </span>
         </button>
+        <InvitedButton />
         <Logout />
       </div>
       {isOpenFriendModal ? <FriendsCardList /> : null}

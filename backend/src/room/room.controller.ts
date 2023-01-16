@@ -7,6 +7,9 @@ import { PositiveIntPipe } from 'src/common/pipes/positiveInt.pipe';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ReadOnlyRoomDto } from './dto/room.dto';
 import { SelectImageDto } from './dto/select-image.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UseInterceptors } from '@nestjs/common/decorators/core/use-interceptors.decorator';
+import { UploadedFile } from '@nestjs/common/decorators/http/route-params.decorator';
 
 @Controller('room')
 export class RoomController {
@@ -19,9 +22,16 @@ export class RoomController {
     return this.roomService.getAllImage();
   }
 
+  @ApiOperation({ summary: '이미지 선택' })
   @Post()
   selectImage(@Body() selectImageDto: SelectImageDto) {
     return this.roomService.selectImage(selectImageDto);
+  }
+
+  @Post('save/:id') // room id
+  @UseInterceptors(FileInterceptor('image'))
+  saveImage(@UploadedFile() file: Express.Multer.File, @Param('id') roomid) {
+    return this.roomService.saveImage(+roomid, 'roomimg', file);
   }
 
   @ApiResponse({
@@ -34,7 +44,6 @@ export class RoomController {
     @Param('id', ParseIntPipe, PositiveIntPipe) id: number,
     @Body() createRoomDto: CreateRoomDto,
   ) {
-    console.log(id);
     return this.roomService.createRoom(id, createRoomDto);
   }
 

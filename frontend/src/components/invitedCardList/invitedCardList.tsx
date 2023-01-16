@@ -1,10 +1,13 @@
-import FriendsCard from "../friendsCard/friendsCard";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-function FriendsCardList() {
-  const friendsList = useSelector((state: RootState) => state.friends.friends);
+import { inviteMap } from "../invitedButton/invitedButton";
+import InvitedCard from "../invitedCard/invitedCard";
 
+interface invitation {
+  [key: string]: any;
+}
+
+function InvitedCardList({ invitedMap }: { invitedMap: inviteMap }) {
+    
+    
   return (
     <div className="right-0 top-0 w-[380px] h-screen overflow-auto bg-gray-300 bg-opacity-50 z-50">
       <div className="container flex flex-col items-center justify-center w-full mx-auto">
@@ -14,15 +17,14 @@ function FriendsCardList() {
           </h3>
         </div>
         <ul className="pl-0 flex flex-col w-full overflow-auto">
-          {friendsList.map((friend: any) => {
+          {invitedMap.forEach((value: any, key: any) => {
             return (
-              <FriendsCard
-                key={friend.id}
-                name={friend.userid}
+              <InvitedCard
+                key={parseInt(value.inviteuser)}
+                roomNum={value.userid}
                 isConnected={true}
-                isInvited={false}
-                isInviteTab={false}
-              ></FriendsCard>
+                isInvited={true}
+              ></InvitedCard>
             );
           })}
         </ul>
@@ -31,4 +33,4 @@ function FriendsCardList() {
   );
 }
 
-export default FriendsCardList;
+export default InvitedCardList;

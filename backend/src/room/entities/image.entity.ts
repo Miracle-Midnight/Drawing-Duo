@@ -15,6 +15,9 @@ export class Image extends BaseEntity {
   @Column()
   type: boolean; // game: true, profile: false
 
+  @Column({ default: false, nullable: true })
+  modified: boolean; // room완성 image:true
+
   @Column({ nullable: true })
   image: string;
 

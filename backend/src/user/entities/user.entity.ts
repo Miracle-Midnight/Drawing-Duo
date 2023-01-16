@@ -34,6 +34,12 @@ export class User extends BaseEntity {
   @Column({ default: false })
   ready: boolean;
 
+  @Column('varchar', { array: true, default: [] })
+  inviteuser: string[];
+
+  @Column('int', { array: true, default: [] })
+  inviteroom: number[];
+
   @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
   @JoinColumn()
   profile: Profile;

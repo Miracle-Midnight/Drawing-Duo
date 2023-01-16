@@ -5,9 +5,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Room } from './entities/room.entity';
 import { Image } from './entities/image.entity';
 import { User } from 'src/user/entities/user.entity';
+import { MulterModule } from '@nestjs/platform-express';
+import * as multer from 'multer';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Room, Image, User])],
+  imports: [
+    TypeOrmModule.forFeature([Room, Image, User]),
+    MulterModule.register({
+      dest: './uploads',
+      storage: multer.memoryStorage(),
+    }),
+  ],
   controllers: [RoomController],
   providers: [RoomService],
 })

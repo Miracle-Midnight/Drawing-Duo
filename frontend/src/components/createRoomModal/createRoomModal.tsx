@@ -24,7 +24,6 @@ function CreateRoomModal(props: any) {
         title: roomName,
       })
       .then((res) => {
-        console.log(res.data);
         sessionStorage.setItem("roomTitle", res.data.data.title);
         sessionStorage.setItem("roomId", res.data.data.roomid);
         navigate("/room/" + res.data.data.roomid);
