@@ -48,6 +48,24 @@ export class FriendService {
     return user.childUser.map(this.childuserFilter);
   }
 
+  async inviteFriend(inviteDto) {
+    const { userId, friendId, roomid } = inviteDto; //userId= username
+    const invitedUser = await this.userRepository.findOne({
+      where: { id: friendId },
+    });
+    invitedUser.inviteuser = [...invitedUser.inviteuser, userId];
+    invitedUser.inviteroom = [...invitedUser.inviteroom, roomid];
+    await this.userRepository.save(invitedUser);
+    return invitedUser;
+  }
+
+  async getInvite(userid) {
+    const user = await this.userRepository.findOne({
+      where: { id: userid },
+    });
+    return { inviteuser: user.inviteuser, inviteroom: user.inviteroom };
+  }
+
   readonly childuserFilter = (user: User) => ({
     id: user.id,
     userid: user.userid,
