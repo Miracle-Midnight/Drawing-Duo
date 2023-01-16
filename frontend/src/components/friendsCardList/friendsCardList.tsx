@@ -1,6 +1,19 @@
 import FriendsCard from "../friendsCard/friendsCard";
 import { useState } from "react";
 
+const friends = [
+  { name: "김승덕", isConnected: true, isInvited: false, isInviting: true },
+  { name: "박선도", isConnected: false, isInvited: true },
+  { name: "박선도", isConnected: false },
+  { name: "박선도", isConnected: false },
+  { name: "박선도", isConnected: false },
+  { name: "박선도", isConnected: false },
+  { name: "박선도", isConnected: false },
+  { name: "박선도", isConnected: false },
+  { name: "박선도", isConnected: false },
+  { name: "박선도", isConnected: false },
+];
+
 function FriendsCardList({ title }: any) {
   const [isCloseClicked, setIsCloseClicked] = useState(false);
 
@@ -31,17 +44,14 @@ function FriendsCardList({ title }: any) {
             </h3>
           </div>
           <ul className="pl-0 flex flex-col w-full overflow-auto">
-            <FriendsCard
-              name="김승덕"
-              isConnected={true}
-              isInvited={true}
-            ></FriendsCard>
-            <FriendsCard
-              name="김승덕"
-              isConnected={true}
-              isInvited={false}
-              isInviting={true}
-            ></FriendsCard>
+            {friends.map((friend) => (
+              <FriendsCard
+                name={friend.name}
+                isConnected={friend.isConnected}
+                isInvited={friend.isInvited}
+                isInviting={friend.isInviting}
+              />
+            ))}
           </ul>
         </div>
       </div>
