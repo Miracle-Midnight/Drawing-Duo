@@ -4,7 +4,7 @@ import { RootState } from "../../store";
 import { useState, useEffect } from "react";
 import _ from "lodash";
 import "./friendsCardList.css";
-function FriendsCardList({ title, friends }: any) {
+function FriendsCardList({ friends }: any) {
   const friendsList = useSelector((state: RootState) => state.friends.friends);
 
   const [searchValue, setSearchValue] = useState("");

@@ -18,7 +18,7 @@ module.exports = {
         historyApiFallback: true,
         proxy: {
           "/user_inform": {
-            target: "http://localhost:3000/",
+            target: "http://3.34.143.117:3000/",
             changeOrigin: true,
           },
         },
