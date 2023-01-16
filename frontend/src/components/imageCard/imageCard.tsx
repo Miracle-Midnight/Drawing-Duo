@@ -10,7 +10,7 @@ function ImageCard({ imageSrc }: any) {
             <div className="prod-img flex justify-center">
               <img
                 src={imageSrc}
-                className="object-cover object-center w-80"
+                className="object-cover object-center w-80 h-80"
               />
             </div>
             
