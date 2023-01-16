@@ -120,7 +120,7 @@ function HeaderNav() {
 
         <CenteredModal show={modalShow} onHide={() => setModalShow(false)} />
       </nav>
-      {isClicked === true ? <FriendsCardList></FriendsCardList> : null}
+      {isClicked === true ? <FriendsCardList title={"친구 목록"}></FriendsCardList> : null}
     </div>
   );
 }
