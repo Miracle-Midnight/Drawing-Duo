@@ -2,6 +2,7 @@ import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Like, Repository } from 'typeorm';
+import { ForbiddenException } from '@nestjs/common';
 
 @Injectable()
 export class FriendService {
@@ -43,18 +44,35 @@ export class FriendService {
   async getFriendList(userid) {
     const user = await this.userRepository.findOne({
       where: { id: userid },
-      relations: ['childUser'],
+      relations: ['childUser', 'childUser.profile'],
     });
-    return user.childUser.map(this.childuserFilter);
+    return user.childUser.map(this.childuserFilterAddnic);
   }
 
   async inviteFriend(inviteDto) {
-    const { userId, friendId, roomid } = inviteDto; //userId= username
+    const { userId, nickname, friendId, roomId } = inviteDto; //userId= username
     const invitedUser = await this.userRepository.findOne({
       where: { id: friendId },
     });
-    invitedUser.inviteuser = [...invitedUser.inviteuser, userId];
-    invitedUser.inviteroom = [...invitedUser.inviteroom, roomid];
+
+    if (invitedUser.invitedinfo == null) {
+      invitedUser.invitedinfo = [
+        { inviteUser: userId, inviteNickname: nickname, inviteRoom: roomId },
+      ];
+      await this.userRepository.save(invitedUser);
+      return invitedUser;
+    }
+
+    const DuplicateUsers = invitedUser.invitedinfo.find(
+      (element) => element.inviteUser == userId,
+    );
+    if (DuplicateUsers) {
+      throw new ForbiddenException('이미 초대한 유저입니다.');
+    }
+    invitedUser.invitedinfo = [
+      ...invitedUser.invitedinfo,
+      { inviteUser: userId, inviteNickname: nickname, inviteRoom: roomId },
+    ];
     await this.userRepository.save(invitedUser);
     return invitedUser;
   }
@@ -63,11 +81,17 @@ export class FriendService {
     const user = await this.userRepository.findOne({
       where: { id: userid },
     });
-    return { inviteuser: user.inviteuser, inviteroom: user.inviteroom };
+    return user.invitedinfo;
   }
 
   readonly childuserFilter = (user: User) => ({
     id: user.id,
     userid: user.userid,
+  });
+
+  readonly childuserFilterAddnic = (user: User) => ({
+    id: user.id,
+    userid: user.userid,
+    nickname: user.profile.nickname,
   });
 }

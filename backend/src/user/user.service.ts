@@ -65,6 +65,14 @@ export class UserService {
       throw new UnauthorizedException('이미 존재하는 아이디입니다.');
     }
 
+    const isNicknameExist = await this.profileRepository.findOne({
+      where: { nickname: userDto.nickname },
+    });
+
+    if (isNicknameExist) {
+      throw new UnauthorizedException('이미 존재하는 닉네임입니다.');
+    }
+
     try {
       const key = `${folder}/${Date.now()}_${path.basename(
         file.originalname,

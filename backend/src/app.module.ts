@@ -41,7 +41,7 @@ import { dataSourceOptions } from 'db/data-source';
         database: configService.get('DB_DATABASE'),
         entities: ['dist/src/*/entities/*.entity.{js,ts}'],
         migrations: ['dist/db/migrations/*.{js.ts}'],
-        synchronize: false,
+        synchronize: true,
         logging: true,
       }),
       inject: [ConfigService],
