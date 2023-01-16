@@ -1,7 +1,7 @@
 import FriendsCard from "../friendsCard/friendsCard";
 import { useState } from "react";
 
-function FriendsCardList({title}:any) {
+function FriendsCardList({ title }: any) {
   const [isCloseClicked, setIsCloseClicked] = useState(false);
 
   const closeFriendsCardList = () => {
@@ -39,32 +39,9 @@ function FriendsCardList({title}:any) {
             <FriendsCard
               name="김승덕"
               isConnected={true}
-              isInvited={true}
+              isInvited={false}
+              isInviting={true}
             ></FriendsCard>
-            <FriendsCard
-              name="김승덕"
-              isConnected={true}
-              isInvited={true}
-            ></FriendsCard>
-            <FriendsCard
-              name="김승덕"
-              isConnected={false}
-              isInvited={true}
-            ></FriendsCard>
-            <FriendsCard
-              name="김승덕"
-              isConnected={true}
-              isInvited={true}
-            ></FriendsCard>
-            <FriendsCard name="김승덕" isConnected={true}></FriendsCard>
-            <FriendsCard
-              name="김승덕"
-              isConnected={true}
-              isInvited={true}
-            ></FriendsCard>
-            <FriendsCard name="김승덕" isConnected={true}></FriendsCard>
-            <FriendsCard name="김승덕" isConnected={true}></FriendsCard>
-            <FriendsCard name="김승덕" isConnected={true}></FriendsCard>
           </ul>
         </div>
       </div>
