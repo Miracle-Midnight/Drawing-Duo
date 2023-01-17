@@ -5,7 +5,7 @@ module.exports = {
   entry: "./src/index.tsx",
   output: {
     filename: "index.js",
-    path: path.resolve(__dirname + "/../backend/dist", "build"),
+    path: path.resolve(__dirname, "build"),
   },
   devServer: {
     static: {
