@@ -4,8 +4,8 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: "./src/index.tsx",
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname + "/build"),
+    filename: "index.js",
+    path: path.resolve(__dirname + "/../backend/dist", "build"),
   },
   devServer: {
     static: {
@@ -17,8 +17,8 @@ module.exports = {
         port: 3000,
         historyApiFallback: true,
         proxy: {
-          "/user_inform": {
-            target: "http://3.34.143.117:3000/",
+          "/api": {
+            target: "http://3.34.143.117:3000",
             changeOrigin: true,
           },
         },
@@ -67,10 +67,6 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
-  },
-  output: {
-    filename: "index.js",
-    path: path.resolve(__dirname + "/../backend/dist", "build"),
   },
   plugins: [
     new HtmlWebPackPlugin({
