@@ -20,7 +20,7 @@ export function getSvgPathFromStroke(stroke: number[][]) {
 
 /* 인자로 주어진 배열을 loop을 돌리면서, element 2개씩 묶어서 pairs에 저장 후 반환 */
 export function toPairs<T>(arr: T[]): T[][] {
-  let pairs: T[][] = [];
+  const pairs: T[][] = [];
 
   for (let i = 0; i < arr.length - 1; i += 2) {
     pairs.push([arr[i], arr[i + 1]]);

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { memo } from "react";
 
 export interface UserCursorProps {
   point: number[];
@@ -6,7 +6,7 @@ export interface UserCursorProps {
   isActive: boolean;
 }
 
-export const UserCursor = React.memo(
+export const UserCursor = memo(
   ({ point, color, isActive }: UserCursorProps) => {
     return (
       <svg>
@@ -19,12 +19,13 @@ export const UserCursor = React.memo(
         <text
           x={point[0]}
           y={point[1]}
-          text-anchor="middle"
-          alignment-baseline="central"
+          textAnchor="middle"
+          alignmentBaseline="central"
         >
-          <tspan font-weight="bold">James</tspan>
+          <tspan fontWeight="bold">James</tspan>
         </text>
       </svg>
     );
   }
 );
+UserCursor.displayName = "UserCursor";
