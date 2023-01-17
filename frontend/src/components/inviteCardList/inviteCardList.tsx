@@ -15,15 +15,17 @@ function InviteCardList() {
           </h3>
         </div>
         <ul className="pl-0 flex flex-col w-full overflow-auto">
-          {friendsList.map((friend: any) => {
+          {friendsList.map((friend: any, idx: number) => {
             return (
-              <FriendsCard
-                friendKey={friend.id}
-                name={friend.userid}
-                isConnected={true}
-                isInvited={false}
-                isInviteTab={true}
-              ></FriendsCard>
+              <div key={idx}>
+                <FriendsCard
+                  friendKey={friend.id}
+                  name={friend.userid}
+                  isConnected={true}
+                  isInvited={false}
+                  isInviteTab={true}
+                ></FriendsCard>
+              </div>
             );
           })}
         </ul>

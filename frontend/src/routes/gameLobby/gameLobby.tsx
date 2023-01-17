@@ -36,7 +36,9 @@ function GameLobby() {
     setIsReady(!isReady);
     axios
       .get("/api/game/" + sessionStorage.getItem("roomId"))
-      .then((res) => {})
+      .then((res) => {
+        console.log(res);
+      })
       .catch((err) => {
         console.log(err);
       });
