@@ -19,7 +19,6 @@ export function InvitedButton() {
     axios
       .get("/api/friend/invite/" + sessionStorage.getItem("userid"))
       .then((res) => {
-        console.log(res.data);
         setInvitedList(res.data.data);
       })
       .catch((err) => {

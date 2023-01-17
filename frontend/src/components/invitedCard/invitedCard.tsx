@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface friendProps {
-  userKey: number;
+  userKey: string;
   inviteRoom: number;
   inviteNickname: string;
   isConnected: boolean;
@@ -12,16 +12,16 @@ interface friendProps {
 
 function IsOnline({
   isConnected,
-  userKey,
+  inviteNickname,
 }: {
   isConnected: boolean;
-  userKey: number;
+  inviteNickname: string;
 }) {
   const connection = isConnected ? "접속중" : "접속중 아님";
 
   return (
     <div className="flex-1 pl-1 md:mr-16">
-      <div className="font-medium ">{userKey}</div>
+      <div className="font-medium ">{inviteNickname}</div>
       <div className="text-sm text-gray-600 ">{connection}</div>
     </div>
   );
@@ -30,18 +30,21 @@ function IsOnline({
 function InviteFromFriend({
   isInvited,
   inviteRoom,
-  inviteNickname,
+  userKey,
 }: {
   isInvited: boolean;
   inviteRoom: number;
-  inviteNickname: string;
+  userKey: string;
 }) {
   const navigate = useNavigate();
   const handleAcceptButton = () => {
+    console.log(typeof sessionStorage.getItem("userid"));
+    console.log(typeof userKey);
+    console.log(typeof inviteRoom);
     axios
       .post("/api/friend/invite/accept", {
         userId: sessionStorage.getItem("userid"),
-        inviteNickname: inviteNickname,
+        inviteUser: userKey,
         roomId: inviteRoom,
       })
       .then((res) => {
@@ -59,7 +62,7 @@ function InviteFromFriend({
     axios
       .post("/api/friend/invite/reject", {
         userId: sessionStorage.getItem("userid"),
-        inviteNickname: inviteNickname,
+        inviteUser: userKey,
         roomId: inviteRoom,
       })
       .then((res) => {
@@ -103,11 +106,11 @@ function InvitedCard({
   return (
     <li className="flex flex-row mb-2 border-gray-400">
       <div className="transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white  rounded-md flex flex-1 items-center p-4">
-        <IsOnline isConnected={isConnected} userKey={userKey} />
+        <IsOnline isConnected={isConnected} inviteNickname={inviteNickname} />
         <InviteFromFriend
           isInvited={isInvited}
           inviteRoom={inviteRoom}
-          inviteNickname={inviteNickname}
+          userKey={userKey}
         />
       </div>
     </li>

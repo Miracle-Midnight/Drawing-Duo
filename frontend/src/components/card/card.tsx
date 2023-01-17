@@ -10,23 +10,9 @@ function Card({ title, frameImageSrc, needTitle, roomId, users }: any) {
   // const userData = [];
 
   const joinRoom = () => {
-    axios
-      .post("/api/lobby/in", {
-        userid: sessionStorage.getItem("userid"),
-        title: title,
-      })
-      .then((res) => {
-        sessionStorage.setItem("roomTitle", title);
-        sessionStorage.setItem("roomId", roomId);
-        // users.map((user: any) => {
-        //   userData.push(user.userid);
-        // });
-        // sessionStorage.setItem("users", JSON.stringify(userData));
-        navigate("/InGame/" + roomId);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    sessionStorage.setItem("roomTitle", title);
+    sessionStorage.setItem("roomId", roomId);
+    navigate("/InGame/" + roomId);
   };
 
   return (

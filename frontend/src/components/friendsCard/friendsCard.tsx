@@ -51,9 +51,6 @@ function InviteFriend({
   name: string;
 }) {
   const inviteFriend = () => {
-    console.log(sessionStorage.getItem("userid"));
-    console.log(name);
-    console.log(sessionStorage.getItem("roomId"));
 
     axios
       .post("/api/friend/invite", {
@@ -63,7 +60,6 @@ function InviteFriend({
         nickname: sessionStorage.getItem("userNickname"),
       })
       .then((res) => {
-        console.log(res);
       })
       .catch((err) => {
         console.log("에러 데스");

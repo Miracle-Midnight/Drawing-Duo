@@ -30,18 +30,7 @@ function GameLobby() {
 
   const navigate = useNavigate();
 
-  const [isReady, setIsReady] = React.useState(false);
-
   const handleReady = () => {
-    setIsReady(!isReady);
-    axios
-      .get("/api/game/" + sessionStorage.getItem("roomId"))
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     navigate("/InGame/" + sessionStorage.getItem("roomId"));
   };
 

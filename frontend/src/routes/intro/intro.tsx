@@ -15,7 +15,6 @@ function Intro() {
     axios
       .get("/api/lobby/" + sessionStorage.getItem("userid"))
       .then((res) => {
-        console.log(res);
         if (res.data == null) return;
         setLobbyList(res.data.data);
       })

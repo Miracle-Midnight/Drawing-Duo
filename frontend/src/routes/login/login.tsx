@@ -34,8 +34,6 @@ function Login() {
         password: inputPw,
       })
       .then((res) => {
-        console.log(res.data.data.userid);
-        console.log(res.data.data.token);
         alert("로그인 성공");
         sessionStorage.setItem("userid", res.data.data.userid);
         sessionStorage.setItem("userToken", res.data.data.token);

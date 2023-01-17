@@ -12,7 +12,6 @@ export function Profile() {
   const dispatch = useDispatch();
 
   const handleOpenFriendModal = useCallback(() => {
-    console.log(isOpenFriendModal);
     isOpenFriendModal
       ? setIsOpenFriendModal(false)
       : setIsOpenFriendModal(true);
@@ -20,7 +19,6 @@ export function Profile() {
     axios
       .get("/api/friend/" + sessionStorage.getItem("userid"))
       .then((res) => {
-        // console.log(res.data);
         dispatch(add(res.data.data));
       })
       .catch((err) => {

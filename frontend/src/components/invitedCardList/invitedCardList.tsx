@@ -2,8 +2,6 @@ import { inviteList } from "../invitedButton/invitedButton";
 import InvitedCard from "../invitedCard/invitedCard";
 
 function InvitedCardList({ invitedList }: inviteList) {
-  console.log("====================================");
-  console.log(invitedList);
   return (
     <div className="right-0 top-0 w-[380px] h-screen overflow-auto bg-gray-300 bg-opacity-50 z-50">
       <div className="container flex flex-col items-center justify-center w-full mx-auto">
@@ -18,7 +16,7 @@ function InvitedCardList({ invitedList }: inviteList) {
                 return (
                   <div key={e.inviteUser}>
                     <InvitedCard
-                      userKey={parseInt(e.inviteUser)}
+                      userKey={e.inviteUser}
                       inviteRoom={e.inviteRoom}
                       inviteNickname={e.inviteNickname}
                       isConnected={true}

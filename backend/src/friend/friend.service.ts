@@ -96,9 +96,11 @@ export class FriendService {
     const user = await this.userRepository.findOne({
       where: { id: userId },
     });
+    console.log(inviteDto);
     user.invitedinfo = user.invitedinfo.filter(
       (element) => element.inviteUser != inviteUser,
     );
+    console.log(user.invitedinfo);
     await this.userRepository.save(user);
 
     // 방 입장

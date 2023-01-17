@@ -11,10 +11,8 @@ import { useNavigate } from "react-router-dom";
 //   setisHintImageOn: Dispatch<SetStateAction<boolean>>;
 // }
 
-function SideNav() {
+function SideNav(users: any) {
   const navigate = useNavigate();
-
-  const users = JSON.parse(sessionStorage.getItem("users") || "[]");
 
   const [isMicOn, setisMicOn] = useState(false);
   const [isSoundOn, setisSoundOn] = useState(false);
@@ -48,9 +46,11 @@ function SideNav() {
         <div className="side-nav">
           <ul className="flex flex-col justify-center pt-10">
             <InGamePlayer name="나" />
-            {users.map((user: any) => {
-              <InGamePlayer name={user.userid} />;
-            })}
+            {/* {users.map((user: any, idx: number) => {
+              <div key={idx}>
+                <InGamePlayer name={user} />;
+              </div>;
+            })} */}
           </ul>
         </div>
         <div className="mt-10 mb-10">
@@ -261,7 +261,7 @@ function SideNav() {
           </div>
         </div>
       </nav>
-      {isChatOn === true ? (
+      {/* {isChatOn === true ? (
         <div>
           <ChatList></ChatList>
         </div>
@@ -269,7 +269,7 @@ function SideNav() {
         <div className="hidden">
           <ChatList></ChatList>
         </div>
-      )}
+      )} */}
 
       {isHintImageOn === true ? <HintImage></HintImage> : null}
     </div>
