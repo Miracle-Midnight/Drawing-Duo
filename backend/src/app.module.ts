@@ -43,6 +43,7 @@ import { dataSourceOptions } from 'db/data-source';
         migrations: ['dist/db/migrations/*.{js.ts}'],
         synchronize: false,
         logging: true,
+        cache: true,
       }),
       inject: [ConfigService],
     }),
