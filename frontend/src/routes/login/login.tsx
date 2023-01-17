@@ -29,7 +29,6 @@ function Login() {
   // login 버튼 클릭 이벤트
   const onClickLogin = () => {
     axios
-      // .post("http://54.180.100.213:3000/api/users/login", {
       .post("/api/users/login", {
         userid: inputId,
         password: inputPw,

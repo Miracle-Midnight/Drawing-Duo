@@ -123,11 +123,7 @@ export class UserService {
   }
 
   // 게임 그림 스토리지와 DB에 저장.
-  async uploadImg(
-    @Body() UserDto,
-    folder: string,
-    files: Array<Express.Multer.File>,
-  ) {
+  async uploadImg(folder: string, files: Array<Express.Multer.File>) {
     const key1 = `${folder}/${Date.now()}_${path.basename(
       files[0].originalname,
     )}`.replace(/ /g, '');
@@ -176,7 +172,7 @@ export class UserService {
     return newimage;
   }
 
-  async saveRGB(id, rgbDto) {
+  async saveRGB(id: number, rgbDto) {
     const image = await this.imageRepository.findOne({
       where: { id: id },
     });

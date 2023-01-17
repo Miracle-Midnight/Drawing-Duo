@@ -50,11 +50,8 @@ export class UserController {
   // 그림이미지 원본과, 프레임 이미지 저장.
   @UseInterceptors(FilesInterceptor('image', 2))
   @Post('uploads')
-  uploadFile(
-    @UploadedFiles() files: Array<Express.Multer.File>,
-    @Body() userDto,
-  ) {
-    return this.userService.uploadImg(userDto, 'game', files);
+  uploadFile(@UploadedFiles() files: Array<Express.Multer.File>) {
+    return this.userService.uploadImg('game', files);
   }
 
   @Post('rgb/:id') // image id
