@@ -15,7 +15,7 @@ import { UploadedFile } from '@nestjs/common/decorators/http/route-params.decora
 export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
-  // pagination 구현하기
+  // pagination 구현하기, 구현 시 cache 빼기
   @ApiOperation({ summary: '이미지 전체 조회' })
   @Get()
   getAllImage() {
