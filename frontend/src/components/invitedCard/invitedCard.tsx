@@ -37,11 +37,12 @@ function InviteFromFriend({
   inviteNickname: string;
 }) {
   const navigate = useNavigate();
-  const handleInviteToggle = () => {
+  const handleAcceptButton = () => {
     axios
-      .post("/api/friend/invite", {
+      .post("/api/friend/invite/accept", {
         userId: sessionStorage.getItem("userid"),
         inviteNickname: inviteNickname,
+        roomId: inviteRoom,
       })
       .then((res) => {
         sessionStorage.setItem("roomTitle", res.data.data.title);
@@ -59,7 +60,7 @@ function InviteFromFriend({
       {isInvited ? (
         <div>
           <button
-            onClick={handleInviteToggle}
+            onClick={handleAcceptButton}
             className="bg-green-300 hover:bg-green-600 text-gray-800 hover:text-white font-bold py-2 px-4 rounded inline-flex items-center mr-1"
           >
             <span>수락</span>

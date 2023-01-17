@@ -169,3 +169,7 @@ export function VoiceChat({
     </div>
   );
 }
+
+VoiceChat.defaultProps = {
+  setRemoteNickname: () => {},
+};

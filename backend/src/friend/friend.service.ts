@@ -2,13 +2,18 @@ import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Like, Repository } from 'typeorm';
-import { ForbiddenException } from '@nestjs/common';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import { InviteDto } from './dto/invite.dto';
+import { InviteAcceptDto } from './dto/invite-accept.dto';
+import { Room } from 'src/room/entities/room.entity';
 
 @Injectable()
 export class FriendService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(Room)
+    private roomRepository: Repository<Room>,
   ) {}
 
   async serchUser(friendname: string) {
@@ -49,7 +54,7 @@ export class FriendService {
     return user.childUser.map(this.childuserFilterAddnic);
   }
 
-  async inviteFriend(inviteDto) {
+  async inviteFriend(inviteDto: InviteDto) {
     const { userId, nickname, friendId, roomId } = inviteDto; //userId= username
     const invitedUser = await this.userRepository.findOne({
       where: { id: friendId },
@@ -84,6 +89,55 @@ export class FriendService {
     const user = await this.userRepository.findOne({
       where: { id: userid },
     });
+    return user.invitedinfo;
+  }
+
+  async acceptInvite(inviteDto: InviteAcceptDto) {
+    const { userId, inviteUser, roomId } = inviteDto;
+
+    // 해당 초대목록 삭제
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    user.invitedinfo = user.invitedinfo.filter(
+      (element) => element.inviteUser != inviteUser,
+    );
+    await this.userRepository.save(user);
+
+    // 방 입장
+    const targetRoom = await this.roomRepository.findOne({
+      where: { id: roomId },
+      relations: ['user'],
+    });
+    if (!targetRoom) throw new NotFoundException('방이 존재하지 않습니다.');
+
+    if (targetRoom.user.length >= 2) {
+      throw new ForbiddenException('방이 꽉 찼습니다.');
+    }
+
+    const userinfo = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['room', 'profile'],
+    });
+    if (!userinfo) throw new NotFoundException('유저가 존재하지 않습니다.');
+
+    userinfo.room = [...userinfo.room, targetRoom];
+    await this.userRepository.save(userinfo);
+
+    return { userNickName: userinfo.profile.nickname };
+  }
+
+  async rejectInvite(inviteDto: InviteAcceptDto) {
+    const { userId, inviteUser } = inviteDto;
+
+    // 해당 초대목록 삭제
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    user.invitedinfo = user.invitedinfo.filter(
+      (element) => element.inviteUser != inviteUser,
+    );
+    await this.userRepository.save(user);
     return user.invitedinfo;
   }
 

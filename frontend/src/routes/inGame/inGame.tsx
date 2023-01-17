@@ -62,6 +62,7 @@ function InGame() {
           </div>
         </div>
       </div>
+      <VoiceChat />
     </div>
   );
 }

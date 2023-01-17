@@ -39,12 +39,20 @@ export class AuthService {
     }
 
     const payload = { userid: isUserExist.userid, sub: isUserExist.id };
-    console.log(isUserExist.id);
-    return {
-      token: this.JwtService.sign(payload),
-      userid: isUserExist.id,
-      nickname: isUserExist.profile.nickname,
-      image: isUserExist.profile.image.image,
-    };
+
+    if (!isUserExist.profile.image) {
+      return {
+        token: this.JwtService.sign(payload),
+        userid: isUserExist.id,
+        nickname: isUserExist.profile.nickname,
+      };
+    } else {
+      return {
+        token: this.JwtService.sign(payload),
+        userid: isUserExist.id,
+        nickname: isUserExist.profile.nickname,
+        image: isUserExist.profile.image.image,
+      };
+    }
   }
 }
