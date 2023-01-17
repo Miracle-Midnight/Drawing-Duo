@@ -16,14 +16,13 @@ export class AuthService {
 
   async jwtLogIn(data: LoginREquestDto) {
     const { userid, password } = data;
-    console.log(userid, password);
 
     //* 해당하는 email이 있는지
     const isUserExist = await this.userRepository.findOne({
       where: { userid: userid },
       relations: ['profile', 'profile.image'],
     });
-    console.log(isUserExist);
+
     if (!isUserExist) {
       throw new UnauthorizedException('이메일과 비밀번호를 확인해주세요.');
     }
