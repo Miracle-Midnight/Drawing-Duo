@@ -9,6 +9,7 @@ import { DrawTools } from "../../components/drawTools/drawContainer";
 import InputRange from "../../components/inputRange/inputRange";
 import ColorSection from "../../components/colorSection/colorSection";
 import PaletteComponent from "../../components/palette/palette";
+import { VoiceChat } from "../../components/voiceChat/voiceChat";
 
 const colors = [
   {

@@ -1,147 +1,21 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./gameLobby.css";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import HeaderNav from "../../components/headerNav/header";
 import UserState from "../../components/userState/userState";
-import { io, Socket } from "socket.io-client";
 import { ImageList } from "../../components/imageList/imageList";
 import { Invite } from "../../components/invite/invite";
 import { useDispatch } from "react-redux";
 import { add } from "../../states/friendsSlice";
+import { VoiceChat } from "../../components/voiceChat/voiceChat";
 
 function GameLobby() {
-  const socketRef = useRef<Socket>();
-  const myVideoRef = useRef<HTMLVideoElement>(null);
-  const remoteVideoRef = useRef<HTMLVideoElement>(null);
-  const pcRef = useRef<RTCPeerConnection>();
-
-  const { roomId } = useParams();
-
   const [remoteNickname, setRemoteNickname] = useState<string>("");
-  const [profileImageURL, setProfileImageURL] = useState<string>("");
 
   const dispatch = useDispatch();
 
-  const getMedia = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: false,
-        audio: true,
-      });
-
-      if (myVideoRef.current) {
-        myVideoRef.current.srcObject = stream;
-      }
-      if (!(pcRef.current && socketRef.current)) {
-        return;
-      }
-      stream.getTracks().forEach((track) => {
-        if (!pcRef.current) {
-          return;
-        }
-        pcRef.current.addTrack(track, stream);
-      });
-
-      pcRef.current.onicecandidate = (e) => {
-        if (e.candidate) {
-          if (!socketRef.current) {
-            return;
-          }
-          console.log("recv candidate");
-          socketRef.current.emit("candidate", e.candidate, roomId);
-        }
-      };
-
-      pcRef.current.ontrack = (e) => {
-        if (remoteVideoRef.current) {
-          remoteVideoRef.current.srcObject = e.streams[0];
-        }
-      };
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const createOffer = async () => {
-    console.log("create offer");
-    if (!(pcRef.current && socketRef.current)) {
-      return;
-    }
-    try {
-      const sdp = await pcRef.current.createOffer();
-      pcRef.current.setLocalDescription(sdp);
-      console.log("sent the offer");
-      socketRef.current.emit("offer", sdp, roomId);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const createAnswer = async (sdp: RTCSessionDescription) => {
-    console.log("create answer");
-    if (!(pcRef.current && socketRef.current)) {
-      return;
-    }
-    try {
-      pcRef.current.setRemoteDescription(sdp);
-      const answerSdp = await pcRef.current.createAnswer();
-      pcRef.current.setLocalDescription(answerSdp);
-
-      console.log("sent the answer");
-      socketRef.current.emit("answer", answerSdp, roomId);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   useEffect(() => {
-    socketRef.current = io("http://localhost:3000");
-
-    pcRef.current = new RTCPeerConnection({
-      iceServers: [
-        {
-          urls: "stun:stun.l.google.com:19302",
-        },
-      ],
-    });
-
-    socketRef.current.on("all_users", (allUsers: Array<{ id: string }>) => {
-      if (allUsers.length > 0) {
-        createOffer();
-      }
-    });
-    socketRef.current.on("getOffer", (sdp: RTCSessionDescription) => {
-      console.log("recv offer");
-      createAnswer(sdp);
-    });
-    socketRef.current.on("getAnswer", (sdp: RTCSessionDescription) => {
-      console.log("recv answer");
-      if (!pcRef.current) {
-        return;
-      }
-      pcRef.current.setRemoteDescription(sdp);
-    });
-
-    socketRef.current.on("getCandidate", async (candidate: RTCIceCandidate) => {
-      if (!pcRef.current) {
-        return;
-      }
-
-      await pcRef.current.addIceCandidate(candidate);
-    });
-    socketRef.current.emit("join_room", {
-      roomId: roomId,
-      userId: socketRef.current.id,
-    });
-
-    socketRef.current.on("new_user", async (user: any) => {
-      setRemoteNickname(user.profile.nickname);
-      setProfileImageURL(user.profile.image.image);
-    });
-
-    getMedia();
-
     axios
       .get("/api/friend/" + sessionStorage.getItem("userid"))
       .then((res) => {
@@ -150,15 +24,6 @@ function GameLobby() {
       .catch((err) => {
         console.log(err);
       });
-
-    return () => {
-      if (socketRef.current) {
-        socketRef.current.disconnect();
-      }
-      if (pcRef.current) {
-        pcRef.current.close();
-      }
-    };
   }, []);
 
   //-----------------------------------------------------------------------------
@@ -212,11 +77,7 @@ function GameLobby() {
               image={sessionStorage.getItem("profileImage")}
               state="On"
             ></UserState>
-            <UserState
-              name={remoteNickname}
-              image={profileImageURL}
-              state="On"
-            ></UserState>
+            <UserState name={remoteNickname} state="On"></UserState>
           </div>
           <Invite />
           <button
@@ -235,29 +96,7 @@ function GameLobby() {
           </button>
         </div>
       </div>
-      <div>
-        <audio
-          id="remotevideo"
-          style={{
-            width: 240,
-            height: 240,
-            backgroundColor: "black",
-            display: "flex",
-          }}
-          ref={myVideoRef}
-          autoPlay
-        />
-        <audio
-          id="remotevideo"
-          style={{
-            width: 240,
-            height: 240,
-            backgroundColor: "black",
-          }}
-          ref={remoteVideoRef}
-          autoPlay
-        />
-      </div>
+      <VoiceChat setRemoteNickname={setRemoteNickname} />
     </div>
   );
 }
