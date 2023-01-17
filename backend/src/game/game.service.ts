@@ -5,6 +5,7 @@ import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { Game } from './entities/game.entity';
 import { GameUserReadyDto } from './dto/game-user-ready.dto';
+import { EnterGameDto } from './dto/enter-game.dto';
 
 @Injectable()
 export class GameService {
@@ -40,13 +41,30 @@ export class GameService {
     console.log(room);
 
     let cnt = 0;
-    room.users.forEach((user) => {
+    room.user.forEach((user) => {
       if (user.ready) {
         cnt++;
       }
     });
 
     return { cnt: cnt };
+  }
+
+  async inGame(id: number) {
+    const room = await this.roomRepository.findOne({
+      where: { id },
+      relations: ['user', 'user.profile', 'image'],
+    });
+
+    const usersName = room.user.map((user) => ({
+      nickname: user.profile.nickname,
+    }));
+
+    return {
+      usersName: usersName,
+      frameImage: room.image.frameImage,
+      rgb: room.image.rgb,
+    };
   }
 
   // 게임 생성과 동시에 room과 game이 연결됨
@@ -62,9 +80,9 @@ export class GameService {
     await this.gameRepository.save(oldgame);
     console.log(oldgame);
 
-    for (let i = 0; i < oldroom.users.length; i++) {
-      oldroom.users[i].ready = false;
-      await this.userRepository.save(oldroom.users[i]);
+    for (let i = 0; i < oldroom.user.length; i++) {
+      oldroom.user[i].ready = false;
+      await this.userRepository.save(oldroom.user[i]);
     }
 
     return { gameid: oldgame.id };
@@ -81,9 +99,9 @@ export class GameService {
       relations: ['users'],
     });
 
-    for (let i = 0; i < room.users.length; i++) {
-      room.users[i].ready = false;
-      await this.userRepository.save(room.users[i]);
+    for (let i = 0; i < room.user.length; i++) {
+      room.user[i].ready = false;
+      await this.userRepository.save(room.user[i]);
     }
 
     return this.gameRepository.remove(game);

@@ -7,6 +7,8 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 import { Profile } from './profile.entity';
@@ -23,21 +25,26 @@ export class User extends BaseEntity {
   @Column()
   userid: string;
 
-  @Column({ nullable: true })
-  socketid: string;
-
   @Column()
   password: string;
 
   @Column({ default: false })
   ready: boolean;
 
+  @Column('jsonb', { nullable: true })
+  invitedinfo: {
+    inviteUser: string;
+    inviteNickname: string;
+    inviteRoom: number;
+  }[];
+
   @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
   @JoinColumn()
   profile: Profile;
 
-  @ManyToOne(() => Room, (room) => room.users, { onDelete: 'SET NULL' })
-  room: Room;
+  @ManyToMany(() => Room, (room) => room.user)
+  @JoinTable()
+  room: Room[];
 
   @ManyToOne((type) => User, (user) => user.childUser)
   parentUser: User;

@@ -47,7 +47,7 @@ function Register() {
       formData.append("nickname", inputNickname);
 
       axios
-        .post("http://54.180.100.213:3000/api/users/signup", formData, {
+        .post("/api/users/signup", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -84,7 +84,7 @@ function Register() {
           을 해주세요.
         </span>
         <div className="p-6 mt-8">
-          <form action="#">
+          <div>
             <div className="flex flex-col mb-2">
               <div className=" relative ">
                 <input
@@ -155,7 +155,7 @@ function Register() {
                 </button>
               </div>
             </form>
-          </form>
+          </div>
         </div>
       </div>
     </Container>

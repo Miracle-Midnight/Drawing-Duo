@@ -65,6 +65,14 @@ export class UserService {
       throw new UnauthorizedException('이미 존재하는 아이디입니다.');
     }
 
+    const isNicknameExist = await this.profileRepository.findOne({
+      where: { nickname: userDto.nickname },
+    });
+
+    if (isNicknameExist) {
+      throw new UnauthorizedException('이미 존재하는 닉네임입니다.');
+    }
+
     try {
       const key = `${folder}/${Date.now()}_${path.basename(
         file.originalname,
@@ -114,21 +122,62 @@ export class UserService {
     }
   }
 
-  async uploadImg(@Body() UserDto, file: Express.Multer.File) {
-    const { userid } = UserDto;
-    const path = `http://localhost:3000/media/profile/${file.filename}`;
-    const newImage = await this.imageRepository.create({
-      type: false,
-      image: path,
+  // 게임 그림 스토리지와 DB에 저장.
+  async uploadImg(folder: string, files: Array<Express.Multer.File>) {
+    const key1 = `${folder}/${Date.now()}_${path.basename(
+      files[0].originalname,
+    )}`.replace(/ /g, '');
+
+    const key2 = `${folder}/${Date.now()}_${path.basename(
+      files[1].originalname,
+    )}`.replace(/ /g, '');
+
+    const imagePath1 = `https://${this.S3_BUCKET_NAME}.s3.amazonaws.com/${key1}`;
+    const imagePath2 = `https://${this.S3_BUCKET_NAME}.s3.amazonaws.com/${key2}`;
+    try {
+      const s3Object = await this.awsS3
+        .putObject({
+          Bucket: this.S3_BUCKET_NAME,
+          Key: key1,
+          Body: files[0].buffer,
+          ACL: 'public-read',
+          ContentType: files[0].mimetype,
+        })
+        .promise();
+    } catch (error) {
+      throw new BadRequestException(`File upload failed : ${error}`);
+    }
+
+    try {
+      const s3Object = await this.awsS3
+        .putObject({
+          Bucket: this.S3_BUCKET_NAME,
+          Key: key2,
+          Body: files[1].buffer,
+          ACL: 'public-read',
+          ContentType: files[1].mimetype,
+        })
+        .promise();
+    } catch (error) {
+      throw new BadRequestException(`File upload failed : ${error}`);
+    }
+
+    const newimage = await this.imageRepository.create();
+    newimage.type = true;
+    newimage.modified = false;
+    newimage.image = imagePath1;
+    newimage.frameImage = imagePath2;
+    await this.imageRepository.save(newimage);
+
+    return newimage;
+  }
+
+  async saveRGB(id: number, rgbDto) {
+    const image = await this.imageRepository.findOne({
+      where: { id: id },
     });
-    await this.imageRepository.save(newImage);
-    // const user = await this.userRepository.findOne({
-    //   where: { id: userid },
-    //   relations: ['image'],
-    // });
-    // user.image.image = path;
-    // user.image.type = false;
-    // await this.userRepository.save(user);
-    return newImage;
+    image.rgb = rgbDto;
+    await this.imageRepository.save(image);
+    return image.rgb;
   }
 }

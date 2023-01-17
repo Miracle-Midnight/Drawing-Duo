@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 function InGamePlayer({ name }: any) {
   return (
     <li className="pb-1">

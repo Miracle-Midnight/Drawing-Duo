@@ -29,7 +29,6 @@ function Login() {
   // login 버튼 클릭 이벤트
   const onClickLogin = () => {
     axios
-      // .post("http://54.180.100.213:3000/api/users/login", {
       .post("/api/users/login", {
         userid: inputId,
         password: inputPw,
@@ -38,9 +37,10 @@ function Login() {
         console.log(res.data.data.userid);
         console.log(res.data.data.token);
         alert("로그인 성공");
-        sessionStorage.setItem("userKey", res.data.data.userid);
+        sessionStorage.setItem("userid", res.data.data.userid);
         sessionStorage.setItem("userToken", res.data.data.token);
         sessionStorage.setItem("userNickname", res.data.data.nickname);
+        sessionStorage.setItem("userProfileImage", res.data.data.image);
         document.location.href = "/";
         // }
       })

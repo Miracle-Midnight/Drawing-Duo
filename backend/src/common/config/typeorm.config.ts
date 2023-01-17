@@ -6,12 +6,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   port: parseInt(process.env.DB_PORT),
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  // entities: [__dirname + '/*/entities/*.entity.{js,ts}'],
+  database: process.env.DB_DATABASE,
   entities: ['dist/src/*/entities/*.entity.{js,ts}'],
   migrations: ['dist/db/migrations/*.{js.ts}'],
-  synchronize: true,
-  // autoLoadEntities: true,
-  logging: true,
-  // keepConnectionAlive: true,
 };

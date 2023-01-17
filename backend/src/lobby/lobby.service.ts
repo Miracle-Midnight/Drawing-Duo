@@ -21,42 +21,43 @@ export class LobbyService {
     private imageRepository: Repository<Image>,
   ) {}
 
-  async getLobby(): Promise<Room[]> {
-    return this.roomRepository.find();
+  async myroom(userid) {
+    const user = await this.userRepository.findOne({
+      where: { id: userid },
+      relations: ['room', 'room.image', 'room.user'],
+    });
+    if (!user) throw new NotFoundException('유저가 존재하지 않습니다.');
+    if (user.room.length == 0)
+      throw new ForbiddenException('방이 존재하지 않습니다.');
+    console.log(user.room);
+    const result = [];
+    user.room.map((room) => {
+      result.push({
+        roomid: room.id,
+        title: room.title,
+        image: room.image,
+        user: room.user.map(this.userFilter),
+      });
+    });
+    return result;
   }
 
-  async inRoom(enterRoomDto: EnterRoomDto) {
-    const { userid, roomid, password, imageid } = enterRoomDto;
+  readonly userFilter = (user: User) => ({
+    id: user.id,
+    userid: user.userid,
+  });
 
-    // 룸에 몇명의 user가 있는지 확인하고 4명이 넘으면 에러
-    const checkUser = await this.roomRepository.findOne({
-      where: { id: roomid },
-      relations: ['users'],
-    });
-    if (checkUser.users.length >= 4) {
-      throw new ForbiddenException('방이 꽉 찼습니다.');
-    }
+  async inRoom(enterRoomDto: EnterRoomDto) {
+    const { userid, title } = enterRoomDto;
 
     const targetRoom = await this.roomRepository.findOne({
-      where: { id: roomid },
-      relations: ['images', 'users'],
+      where: { title },
+      relations: ['user'],
     });
     if (!targetRoom) throw new NotFoundException('방이 존재하지 않습니다.');
 
-    // 비밀번호 체크
-    // if (password) {
-    //   if (targetRoom.password !== password) {
-    //     throw new ForbiddenException('비밀번호가 틀렸습니다.');
-    //   }
-    // }
-
-    if (imageid) {
-      const image = await this.imageRepository.findOneBy({ id: imageid });
-      if (!image) throw new NotFoundException('이미지가 존재하지 않습니다.');
-      // 이미지 중복 - 2개 이상 안들어감 (해결 필요)
-      targetRoom.images = [...targetRoom.images, image];
-      console.log(targetRoom.images);
-      await this.roomRepository.save(targetRoom);
+    if (targetRoom.user.length >= 2) {
+      throw new ForbiddenException('방이 꽉 찼습니다.');
     }
 
     const userinfo = await this.userRepository.findOne({
@@ -65,39 +66,29 @@ export class LobbyService {
     });
     if (!userinfo) throw new NotFoundException('유저가 존재하지 않습니다.');
 
-    userinfo.room = targetRoom;
+    userinfo.room = [...userinfo.room, targetRoom];
     await this.userRepository.save(userinfo);
 
     return { userNickName: userinfo.profile.nickname };
   }
 
   async outRoom(enterRoomDto: EnterRoomDto) {
-    const { userid, roomid, imageid } = enterRoomDto;
+    const { userid, title } = enterRoomDto;
     const userinfo = await this.userRepository.findOne({
       where: { id: userid },
       relations: ['room', 'profile'],
     });
-    if (!userinfo.room) {
-      throw new ForbiddenException('방에 입장하지 않았습니다.');
+    if (!userinfo.room.length) {
+      throw new ForbiddenException('입장한 방이 없습니다.');
     }
 
-    userinfo.room = null;
-    userinfo.ready = false;
+    for (let i = 0; i < userinfo.room.length; i++) {
+      if (userinfo.room[i].title == title) {
+        userinfo.room.splice(i, 1);
+        break;
+      }
+    }
     await this.userRepository.save(userinfo);
-
-    const targetRoom = await this.roomRepository.findOne({
-      where: { id: roomid },
-      relations: ['images', 'users'],
-    });
-
-    if (imageid) {
-      const image = await this.imageRepository.findOneBy({ id: imageid });
-      targetRoom.images = targetRoom.images.filter(
-        (img) => img.id !== image.id,
-      );
-      await this.roomRepository.save(targetRoom);
-    }
-    console.log(targetRoom);
 
     return { userNickName: userinfo.profile.nickname };
   }

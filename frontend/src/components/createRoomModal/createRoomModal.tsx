@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function CenteredModal(props: any) {
+function CreateRoomModal(props: any) {
   const navigate = useNavigate();
 
   const [roomName, setRoomName] = useState("");
@@ -19,24 +19,18 @@ function CenteredModal(props: any) {
   };
 
   const handleCreateRoom = () => {
-    navigate("/room");
-
-    // axios
-    //   .post(
-    //     "http://54.180.125.6:3000/api/room/" +
-    //       sessionStorage.getItem("userKey"),
-    //     {
-    //       title: roomName,
-    //     }
-    //   )
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     sessionStorage.setItem("roomId", res.data.roomid);
-    //     navigate("http://54.180.125.6:3000/room/" + res.data.roomid);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .post("/api/room/" + sessionStorage.getItem("userid"), {
+        title: roomName,
+      })
+      .then((res) => {
+        sessionStorage.setItem("roomTitle", res.data.data.title);
+        sessionStorage.setItem("roomId", res.data.data.roomid);
+        navigate("/room/" + res.data.data.roomid);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -74,4 +68,4 @@ function CenteredModal(props: any) {
   );
 }
 
-export default CenteredModal;
+export default CreateRoomModal;

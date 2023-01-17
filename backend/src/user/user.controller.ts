@@ -27,6 +27,7 @@ export class UserController {
     @UploadedFile() file: Express.Multer.File,
     @Body() userDto: UserDto,
   ) {
+    console.log(userDto);
     return this.userService.signUp(userDto, 'profile', file);
   }
 
@@ -38,12 +39,23 @@ export class UserController {
     return this.authService.jwtLogIn(userDto);
   }
 
-  @UseInterceptors(FileInterceptor('image', multerOptions('profile')))
-  @Post('upload')
-  uploadFile(@UploadedFile() file: Express.Multer.File, @Body() userDto) {
-    console.log(file);
-    console.log(userDto);
-    // return { image: `http://localhost:3000/media/profile/${file.filename}` };
-    return this.userService.uploadImg(userDto, file);
+  // @UseInterceptors(FileInterceptor('image', multerOptions('profile')))
+  // @Post('upload')
+  // uploadFile(@UploadedFile() file: Express.Multer.File, @Body() userDto) {
+  //   console.log(file);
+  //   console.log(userDto);
+  //   // return { image: `http://localhost:3000/media/profile/${file.filename}` };
+  //   return this.userService.uploadImg(userDto, file);
+  // }
+  // 그림이미지 원본과, 프레임 이미지 저장.
+  @UseInterceptors(FilesInterceptor('image', 2))
+  @Post('uploads')
+  uploadFile(@UploadedFiles() files: Array<Express.Multer.File>) {
+    return this.userService.uploadImg('game', files);
+  }
+
+  @Post('rgb/:id') // image id
+  saveRGB(@Param('id') id: number, @Body() rgbDto) {
+    return this.userService.saveRGB(id, rgbDto);
   }
 }

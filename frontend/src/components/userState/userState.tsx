@@ -1,30 +1,31 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./userState.css";
 
-const UserState = ({ name, image, state }: any) => {
+const UserState = ({ name }: any) => {
+  const [isMicOn, setisMicOn] = useState(false);
+
+  const toggleMicHandler = () => {
+    // isMicOn의 상태를 변경하는 메소드를 구현
+    setisMicOn(!isMicOn);
+  };
+
   return (
     <div className="shadow rounded-2xl bg-white p-4 py-3 my-2">
       <div className="flex-row gap-4 flex justify-center items-center">
-        <div className="flex-shrink-0">
-          <a href="#" className="relative block xl:contents lg:hidden">
-            <img
-              alt="profil"
-              src={image}
-              className="mx-auto object-cover rounded-full h-16 w-16 "
-            />
-          </a>
-        </div>
         <div className=" flex flex-col">
-          <span className="text-lg font-medium text-gray-600 ">{name}</span>
-          {state === "lose" ? (
-            <span className="text-s p-1 text-gray-100 text-center bg-gray-600 rounded-lg shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-red-200">
-              {state}
-            </span>
-          ) : (
-            <span className="text-s p-1 text-gray-100 text-center bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-green-200">
-              {state}
-            </span>
-          )}
+          <span className="text-lg font-medium text-gray-600 text-center">
+            {name}
+          </span>
+          <div className="flex flex-row">
+            <button
+              onClick={toggleMicHandler}
+              className={`text-s p-1 text-gray-100 px-5 text-center  rounded-lg shadow-md focus:outline-none focus:ring-2  ${
+                isMicOn ? "active bg-purple-600" : "bg-gray-600"
+              }`}
+            >
+              {isMicOn ? "mic on" : "mic off"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
