@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
 import { Canvas } from "../../components/canvas/canvas";
-import Image from "../../assets/image_numbering_label.png";
 
 import { DrawTools } from "../../components/drawTools/drawContainer";
 import PaletteComponent from "../../components/palette/palette";

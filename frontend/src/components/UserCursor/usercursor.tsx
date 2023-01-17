@@ -28,4 +28,4 @@ export const UserCursor = memo(
     );
   }
 );
-UserCursor.displayName = "UserCursor";
+UserCursor.displayName = "usercursor";
