@@ -47,8 +47,24 @@ function InviteFromFriend({
       .then((res) => {
         sessionStorage.setItem("roomTitle", res.data.data.title);
         sessionStorage.setItem("roomId", inviteRoom.toString());
-        navigate("/room/" + inviteRoom);
         isInvited = false;
+        navigate("/room/" + inviteRoom);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleRejectButton = () => {
+    axios
+      .post("/api/friend/invite/reject", {
+        userId: sessionStorage.getItem("userid"),
+        inviteNickname: inviteNickname,
+        roomId: inviteRoom,
+      })
+      .then((res) => {
+        isInvited = false;
+        document.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -65,7 +81,10 @@ function InviteFromFriend({
           >
             <span>수락</span>
           </button>
-          <button className="bg-red-300 hover:bg-red-600 text-gray-800 hover:text-white font-bold py-2 px-4 rounded inline-flex items-center">
+          <button
+            onClick={handleRejectButton}
+            className="bg-red-300 hover:bg-red-600 text-gray-800 hover:text-white font-bold py-2 px-4 rounded inline-flex items-center"
+          >
             <span>거절</span>
           </button>
         </div>

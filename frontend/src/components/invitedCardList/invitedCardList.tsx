@@ -13,19 +13,21 @@ function InvitedCardList({ invitedList }: inviteList) {
           </h3>
         </div>
         <ul className="pl-0 flex flex-col w-full overflow-auto">
-          {invitedList.map((e: any) => {
-            return (
-              <div key={e.inviteUser}>
-                <InvitedCard
-                  userKey={parseInt(e.inviteUser)}
-                  inviteRoom={e.inviteRoom}
-                  inviteNickname={e.inviteNickname}
-                  isConnected={true}
-                  isInvited={true}
-                ></InvitedCard>
-              </div>
-            );
-          })}
+          {invitedList
+            ? invitedList.map((e: any) => {
+                return (
+                  <div key={e.inviteUser}>
+                    <InvitedCard
+                      userKey={parseInt(e.inviteUser)}
+                      inviteRoom={e.inviteRoom}
+                      inviteNickname={e.inviteNickname}
+                      isConnected={true}
+                      isInvited={true}
+                    ></InvitedCard>
+                  </div>
+                );
+              })
+            : null}
         </ul>
       </div>
     </div>
