@@ -34,4 +34,5 @@ awareness.setLocalState({
   point: [20, 20],
   color: random(USER_COLORS),
   isActive: false,
+  windowSize: [window.innerWidth, window.innerHeight],
 });

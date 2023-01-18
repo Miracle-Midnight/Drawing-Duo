@@ -10,6 +10,7 @@ export function useLine(line: Y.Map<any>) {
   const [color, setColor] = useState<string>();
   const [pts, setPts] = useState<number[][]>([]);
   const [size, setSize] = useState<number>();
+  const [windowSize, setWindowSize] = useState<number[]>();
 
   /* line을 관찰하면서 변화가 생기면, 완료 상태 정보 수정 */
   useEffect(() => {
@@ -18,6 +19,7 @@ export function useLine(line: Y.Map<any>) {
       setIsComplete(current.isComplete);
       setColor(current.userColor);
       setSize(current.size);
+      setWindowSize(current.windowsize);
     }
 
     handleChange();
@@ -47,5 +49,5 @@ export function useLine(line: Y.Map<any>) {
       points.unobserve(handleChange);
     };
   }, [line]);
-  return { points: pts, color, isComplete, size }; // size추가
+  return { points: pts, color, isComplete, size, windowSize }; // size추가
 }

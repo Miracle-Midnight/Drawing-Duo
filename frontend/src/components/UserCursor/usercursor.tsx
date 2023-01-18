@@ -4,21 +4,29 @@ export interface UserCursorProps {
   point: number[];
   color: string;
   isActive: boolean;
+  windowSize: number[];
 }
 
 export const UserCursor = memo(
-  ({ point, color, isActive }: UserCursorProps) => {
+  ({ point, color, isActive, windowSize }: UserCursorProps) => {
+    const newPoints: number[] = [];
+    if (windowSize) {
+      const newPointX = (window.innerWidth * point[0]) / windowSize[0];
+      const newPointY = (window.innerHeight * point[1]) / windowSize[1];
+      newPoints.push(newPointX, newPointY);
+    }
+
     return (
       <svg>
         <circle
-          cx={point[0]}
-          cy={point[1]}
+          cx={newPoints[0]}
+          cy={newPoints[1]}
           r={20}
           fill={isActive ? color : "grey"}
         />
         <text
-          x={point[0]}
-          y={point[1]}
+          x={newPoints[0]}
+          y={newPoints[1]}
           textAnchor="middle"
           alignmentBaseline="central"
         >
