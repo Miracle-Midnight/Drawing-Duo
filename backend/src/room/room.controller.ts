@@ -48,7 +48,10 @@ export class RoomController {
   }
 
   @Delete(':id') // room id
-  deleteRoom(@Param('id', ParseIntPipe, PositiveIntPipe) id: number) {
-    return this.roomService.deleteRoom(id);
+  deleteRoom(
+    @Param('id', ParseIntPipe, PositiveIntPipe) id: number,
+    @Body() userid,
+  ) {
+    return this.roomService.deleteRoom(id, userid);
   }
 }
