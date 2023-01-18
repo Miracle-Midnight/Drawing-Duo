@@ -64,7 +64,7 @@ export class RoomService {
   }
 
   async createRoom(id: number, createRoomDto: CreateRoomDto) {
-    const newRoom = this.roomRepository.create(createRoomDto);
+    const newRoom = await this.roomRepository.create(createRoomDto);
     const user = await this.userRepository.findOne({
       where: { id },
       relations: ['profile'],

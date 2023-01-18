@@ -55,7 +55,7 @@ export class FriendService {
   }
 
   async inviteFriend(inviteDto: InviteDto) {
-    const { userId, nickname, friendId, roomId } = inviteDto; //userId= username
+    const { userId, nickname, friendId, roomId } = inviteDto; //userId = username
     const invitedUser = await this.userRepository.findOne({
       where: { id: friendId },
     });
