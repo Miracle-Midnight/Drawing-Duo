@@ -1,5 +1,4 @@
 /* library */
-import { SizeMe } from "react-sizeme";
 import * as Y from "yjs";
 import { getStroke } from "perfect-freehand";
 import { memo } from "react";
