@@ -47,7 +47,7 @@ export class RoomController {
     return this.roomService.createRoom(id, createRoomDto);
   }
 
-  @Delete(':id') // room id
+  @Post('delete/:id') // room id
   deleteRoom(
     @Param('id', ParseIntPipe, PositiveIntPipe) id: number,
     @Body() userid,
