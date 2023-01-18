@@ -59,7 +59,7 @@ export class GameService {
     const usersName = room.user.map((user) => ({
       nickname: user.profile.nickname,
     }));
-
+    
     return {
       usersName: usersName,
       frameImage: room.image.frameImage,

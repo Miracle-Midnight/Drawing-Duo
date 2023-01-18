@@ -4,6 +4,7 @@ import { sizeReducer } from "./states/sizeSlice";
 import { eraseReducer } from "./states/eraseSlice";
 import { imageReducer } from "./states/imageSlice";
 import { friendsReducer } from "./states/friendsSlice";
+import { filteredFriendsReducer } from "./states/filteredFriendsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     erase: eraseReducer,
     image: imageReducer,
     friends: friendsReducer,
+    filteredFriends: filteredFriendsReducer,
   },
 });
 

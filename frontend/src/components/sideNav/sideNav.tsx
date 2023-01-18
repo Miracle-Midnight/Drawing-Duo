@@ -5,16 +5,15 @@ import InGamePlayer from "../inGamePlayer/inGamePlayer";
 import HintImage from "../hintImage/hintImage";
 import ChatList from "../chatList/chatList";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 // interface Props {
 //   isHintImageOn: boolean;
 //   setisHintImageOn: Dispatch<SetStateAction<boolean>>;
 // }
 
-function SideNav() {
+function SideNav(users: any) {
   const navigate = useNavigate();
-
-  const users = JSON.parse(sessionStorage.getItem("users") || "[]");
 
   const [isMicOn, setisMicOn] = useState(false);
   const [isSoundOn, setisSoundOn] = useState(false);
@@ -36,6 +35,16 @@ function SideNav() {
   };
 
   const handleExit = () => {
+    axios
+      .post("/api/room/save/" + sessionStorage.getItem("roomId"), {
+        userId: sessionStorage.getItem("userid"),
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     navigate("/");
   };
 
@@ -47,9 +56,12 @@ function SideNav() {
         </div>
         <div className="side-nav">
           <ul className="flex flex-col justify-center pt-10">
-            <InGamePlayer name="나" />
-            {users.map((user: any) => {
-              <InGamePlayer name={user.userid} />;
+            {/* <InGamePlayer name="나" /> */}
+            {users.users.map((user: any, idx: number) => {
+              console.log(user);
+              <div key={idx}>
+                <InGamePlayer name={user.nickname} />;
+              </div>;
             })}
           </ul>
         </div>
@@ -261,7 +273,7 @@ function SideNav() {
           </div>
         </div>
       </nav>
-      {isChatOn === true ? (
+      {/* {isChatOn === true ? (
         <div>
           <ChatList></ChatList>
         </div>
@@ -269,7 +281,7 @@ function SideNav() {
         <div className="hidden">
           <ChatList></ChatList>
         </div>
-      )}
+      )} */}
 
       {isHintImageOn === true ? <HintImage></HintImage> : null}
     </div>

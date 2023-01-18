@@ -1,45 +1,34 @@
 /* library */
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 /* module from local */
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
-import { Canvas } from "../../components/canvas/canvas";
 
 import { DrawTools } from "../../components/drawTools/drawContainer";
 import PaletteComponent from "../../components/palette/palette";
-
-const colors = [
-  {
-    red: 255,
-    green: 0,
-    blue: 0,
-  },
-  {
-    red: 255,
-    green: 120,
-    blue: 120,
-  },
-  {
-    red: 0,
-    green: 120,
-    blue: 120,
-  },
-  {
-    red: 0,
-    green: 120,
-    blue: 120,
-  },
-  {
-    red: 0,
-    green: 120,
-    blue: 120,
-  },
-];
+import { VoiceChat } from "../../components/voiceChat/voiceChat";
+import axios from "axios";
 
 function InGame() {
+  const [Image, setImage] = useState<string>("");
+  const [users, setUsers] = useState([]);
+  const [color, setColor] = useState([]);
+  useEffect(() => {
+    axios
+      .get("/api/game/" + sessionStorage.getItem("roomId"))
+      .then((res) => {
+        console.log(res.data.data.usersName);
+        setImage(res.data.data.frameImage);
+        setUsers(res.data.data.usersName);
+        setColor(res.data.data.rgb);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <div className="flex flex-row h-screen">
-      <SideNav />
+      <SideNav users={users} />
       <div>
         <div className="">
           <div className="grid">
@@ -54,11 +43,12 @@ function InGame() {
                   </div>
                 </div>
               </div>
-              <PaletteComponent colors={colors}></PaletteComponent>
+              <PaletteComponent colors={color}></PaletteComponent>
             </div>
           </div>
         </div>
       </div>
+      <VoiceChat />
     </div>
   );
 }

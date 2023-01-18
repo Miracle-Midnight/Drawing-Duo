@@ -1,9 +1,8 @@
 import { inviteList } from "../invitedButton/invitedButton";
 import InvitedCard from "../invitedCard/invitedCard";
+import SearchInput from "../searchInput/searchInput";
 
 function InvitedCardList({ invitedList }: inviteList) {
-  console.log("====================================");
-  console.log(invitedList);
   return (
     <div className="right-0 top-0 w-[380px] h-screen overflow-auto bg-gray-300 bg-opacity-50 z-50">
       <div className="container flex flex-col items-center justify-center w-full mx-auto">
@@ -13,19 +12,21 @@ function InvitedCardList({ invitedList }: inviteList) {
           </h3>
         </div>
         <ul className="pl-0 flex flex-col w-full overflow-auto">
-          {invitedList.map((e: any) => {
-            return (
-              <div key={e.inviteUser}>
-                <InvitedCard
-                  userKey={parseInt(e.inviteUser)}
-                  inviteRoom={e.inviteRoom}
-                  inviteNickname={e.inviteNickname}
-                  isConnected={true}
-                  isInvited={true}
-                ></InvitedCard>
-              </div>
-            );
-          })}
+          {invitedList
+            ? invitedList.map((e: any) => {
+                return (
+                  <div key={e.inviteUser}>
+                    <InvitedCard
+                      userKey={e.inviteUser}
+                      inviteRoom={e.inviteRoom}
+                      inviteNickname={e.inviteNickname}
+                      isConnected={true}
+                      isInvited={true}
+                    ></InvitedCard>
+                  </div>
+                );
+              })
+            : null}
         </ul>
       </div>
     </div>

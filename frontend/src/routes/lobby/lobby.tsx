@@ -251,14 +251,12 @@ function Lobby(props: any) {
         .get("/api/lobby")
         .then((res) => {
           setRoomData(res.data.data);
-          console.log(res.data.data);
         })
         .catch();
 
       axios
         .get("/api/room")
         .then((res) => {
-          console.log(res.data.data);
           setJoinRoomData(res.data.data);
         })
         .catch((err) => {

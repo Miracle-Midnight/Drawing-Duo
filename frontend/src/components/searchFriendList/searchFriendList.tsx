@@ -1,12 +1,15 @@
-import FriendsCard from "../friendsCard/friendsCard";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useState, useEffect } from "react";
 import _ from "lodash";
-import "./friendsCardList.css";
 import SearchInput from "../searchInput/searchInput";
-function FriendsCardList({ friends }: any) {
-  const friendsList = useSelector((state: RootState) => state.friends.friends);
+import SearchCard from "../searchCard/searchCard";
+import { useDispatch } from "react-redux";
+
+function SearchFriendsList({ friends }: any) {
+  const filteredFriendsList = useSelector(
+    (state: RootState) => state.filteredFriends.filteredFriends
+  );
 
   const [searchValue, setSearchValue] = useState("");
   const [filteredFriends, setFilteredFriends] = useState(friends);
@@ -32,20 +35,19 @@ function FriendsCardList({ friends }: any) {
       <div className="container flex flex-col items-center justify-center w-full mx-auto">
         <div className="w-full px-4 py-2 mb-2 bg-white border rounded-md shadow sm:px-6 ">
           <h3 className="text-3xl font-medium leading-6 text-center text-gray-900 ">
-            친구 목록
+            유저 검색
           </h3>
         </div>
+        <SearchInput />
         <ul className="pl-0 flex flex-col w-full overflow-auto">
-          {friendsList.map((friend: any, idx: number) => {
+          {filteredFriendsList.map((friend: any, idx: number) => {
+            console.log(friend.userid);
             return (
               <div key={idx}>
-                <FriendsCard
+                <SearchCard
                   friendKey={friend.id}
                   name={friend.userid}
-                  isConnected={true}
-                  isInvited={false}
-                  isInviteTab={false}
-                ></FriendsCard>
+                ></SearchCard>
               </div>
             );
           })}
@@ -55,4 +57,4 @@ function FriendsCardList({ friends }: any) {
   );
 }
 
-export default FriendsCardList;
+export default SearchFriendsList;

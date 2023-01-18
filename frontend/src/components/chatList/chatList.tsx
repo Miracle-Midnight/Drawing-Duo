@@ -2,7 +2,7 @@ import Chat from "../chat/chat";
 import io from "socket.io-client";
 import { useState, useEffect } from "react";
 
-const socket = io("http://localhost:5000");
+const socket = io("http://localhost:3000");
 
 interface Chat {
   name: string;
@@ -12,7 +12,6 @@ interface Chat {
 function ChatList() {
   const [state, setState] = useState<Chat>({ message: "", name: "" });
   const [chat, setChat] = useState<Chat[]>([]);
-  console.log(state);
 
   useEffect(() => {
     socket.on("message", ({ name, message }) => {
