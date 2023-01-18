@@ -18,7 +18,7 @@ module.exports = {
         historyApiFallback: true,
         proxy: {
           "/api": {
-            target: "https://3.34.143.117:3000",
+            target: "https://drawingduo.shop",
             changeOrigin: true,
           },
         },

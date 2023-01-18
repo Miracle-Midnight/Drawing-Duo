@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { useParams } from "react-router-dom";
@@ -88,7 +87,7 @@ export function VoiceChat({
   };
 
   useEffect(() => {
-    socketRef.current = io("http://localhost:3000");
+    socketRef.current = io("https://drawingduo.shop");
 
     pcRef.current = new RTCPeerConnection({
       iceServers: [
