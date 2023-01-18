@@ -3,6 +3,7 @@ import * as Y from "yjs";
 import { WebrtcProvider } from "y-webrtc";
 import { IndexeddbPersistence } from "y-indexeddb";
 import { USER_COLORS } from "./constants";
+import * as awarenessProtocol from "y-protocols/awareness";
 
 const roomId: string = sessionStorage.getItem("roomId")!;
 
@@ -10,7 +11,14 @@ const roomId: string = sessionStorage.getItem("roomId")!;
 export const doc = new Y.Doc();
 
 /* webrtc로 동일한 room에 있는 유저간 doc 동기화 */
-export const provider = new WebrtcProvider(roomId, doc); // webrtc를 활용하여서 사용자와의 연동
+export const provider = new WebrtcProvider(roomId, doc, {
+  // Specify signaling servers. The client will connect to every signaling server concurrently to find other peers as fast as possible.
+  signaling: ["ws://54.180.118.157:4444"],
+  awareness: new awarenessProtocol.Awareness(doc),
+  maxConns: 4,
+  filterBcConns: true,
+  peerOpts: {},
+}); // webrtc를 활용하여서 사용자와의 연동
 
 /* 세션을 통해 document정보 유지 */
 // new IndexeddbPersistence("test", doc);

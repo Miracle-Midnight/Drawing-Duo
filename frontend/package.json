@@ -56,7 +56,7 @@
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1",
     "y-indexeddb": "^9.0.9",
-    "y-webrtc": "^10.2.3",
+    "y-webrtc": "^10.2.4",
     "yjs": "^13.5.44"
   },
   "scripts": {
