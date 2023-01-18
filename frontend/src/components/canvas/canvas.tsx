@@ -32,8 +32,6 @@ export function Canvas() {
 
   const isErase = useSelector((state: RootState) => state.erase.isErase);
 
-  // const { handleColorChange } = useColorChange();
-
   const handleMouseOver = useCallback(
     (e: React.MouseEvent<SVGSVGElement>) => {
       const starget = e.target as HTMLElement;
@@ -52,8 +50,14 @@ export function Canvas() {
   const handlePointerDown = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
       e.currentTarget.setPointerCapture(e.pointerId);
+
+      awareness.setLocalStateField("windowSize", [
+        window.innerWidth,
+        window.innerHeight,
+      ]);
+
       if (!isErase) {
-        // startLine(getPoint(e.clientX, e.clientY)); // 현재 viewport 기준
+        // startLine(getPoint(e.clientX, e.clientY), sizeState); // 현재 viewport 기준
         startLine(getPoint(e.pageX, e.pageY), sizeState); // 전체 page 기준(scroll 포함)
       }
     },
@@ -109,7 +113,7 @@ export function Canvas() {
         onPointerLeave={() => awareness.setLocalStateField("isActive", false)}
         onMouseOver={handleMouseOver}
         className="h-screen w-full"
-        viewBox={`0 0 ${window.innerWidth} ${window.innerHeight}`}
+        viewBox={`0 0 ${window.innerWidth} ${window.innerHeight} `}
       >
         <image href={Image} width="100%" height="100%"></image>
         {lines.map((line, i) => (
@@ -133,6 +137,11 @@ export function Canvas() {
               }
               color={
                 value.color as React.ComponentProps<typeof UserCursor>["color"]
+              }
+              windowSize={
+                value.windowSize as React.ComponentProps<
+                  typeof UserCursor
+                >["windowSize"]
               }
             />
           );

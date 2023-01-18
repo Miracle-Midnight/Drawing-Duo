@@ -8,6 +8,7 @@ import { DrawTools } from "../../components/drawTools/drawContainer";
 import PaletteComponent from "../../components/palette/palette";
 import { VoiceChat } from "../../components/voiceChat/voiceChat";
 import axios from "axios";
+import { Canvas } from "../../components/canvas/canvas";
 
 function InGame() {
   const [Image, setImage] = useState<string>("");
