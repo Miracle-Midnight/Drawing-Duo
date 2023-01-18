@@ -49,7 +49,7 @@ function SideNav(users: any) {
   };
 
   return (
-    <div className="flex h-full  left-0 border border-purple-800  ">
+    <div className="absolute flex h-full  left-0 border border-purple-800  z-50">
       <nav className="flex flex-col justify-between w-20 h-screen bg-white ">
         <div className="flex justify-center pt-3">
           <img src={logoSmall} alt="logo" width="45px"></img>

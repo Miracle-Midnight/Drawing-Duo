@@ -4,13 +4,12 @@ import { useSelector } from "react-redux";
 /* module from local */
 import { Line } from "../line/line";
 import { useLines } from "../../hooks/useLines";
-import { UserCursor } from "../UserCursor/usercursor";
+import { UserCursor } from "../userCursor/usercursor";
 import { useUsers } from "../../useUsers";
 import { awareness, yLines } from "../../y";
 import { useKeyboardEvents } from "../../hooks/useKeyboradEvents";
-import { useEraseButton } from "../../hooks/useEraseButton";
-import { useColorChange } from "../../hooks/useLineColor";
 import { RootState } from "../../store";
+import Image from "../../assets/image_numbering_label.png";
 
 function getPoint(x: number, y: number) {
   return [x, y];
@@ -18,8 +17,8 @@ function getPoint(x: number, y: number) {
 
 /* 화면에 보일 캔버스 그림 정보 */
 export function Canvas() {
-  const size1 = useSelector((state: RootState) => state.size.value); // size reducer의 state중 value
-  const users = useUsers(awareness, (state: any) => state);
+  const sizeState = useSelector((state: RootState) => state.size.value); // size reducer의 state중 value
+  const users = useUsers(awareness, (state) => state);
   /* lines은 최종 화면에서 선 별로 저장 한 Ymap이다 */
   const {
     lines,
@@ -55,10 +54,10 @@ export function Canvas() {
       e.currentTarget.setPointerCapture(e.pointerId);
       if (!isErase) {
         // startLine(getPoint(e.clientX, e.clientY)); // 현재 viewport 기준
-        startLine(getPoint(e.pageX, e.pageY), size1); // 전체 page 기준(scroll 포함)
+        startLine(getPoint(e.pageX, e.pageY), sizeState); // 전체 page 기준(scroll 포함)
       }
     },
-    [startLine, isErase, size1]
+    [startLine, isErase, sizeState]
   );
 
   /* 포인터가 눌러진 체, 움직이면 추가해준다 */
@@ -110,12 +109,9 @@ export function Canvas() {
         onPointerLeave={() => awareness.setLocalStateField("isActive", false)}
         onMouseOver={handleMouseOver}
         className="h-screen w-full"
+        viewBox={`0 0 ${window.innerWidth} ${window.innerHeight}`}
       >
-        <image
-          href="https://drawing-duo.s3.amazonaws.com/game/1673685128409_image2_numbering_label.jpg"
-          width="100%"
-          height="100%"
-        ></image>
+        <image href={Image} width="100%" height="100%"></image>
         {lines.map((line, i) => (
           <Line key={line.get("id")} line={line} idx={i} />
         ))}

@@ -8,7 +8,7 @@ interface props {
 
 function Undo(props: props) {
   return (
-    <button className="w-10 h-10 " >
+    <button className="w-10 h-10 " onClick={props.undo}>
       <svg
         width="20"
         height="20"
