@@ -37,7 +37,10 @@ export class RoomService {
   }
 
   async getAllImage() {
-    return await this.imageRepository.find({ where: { type: true } });
+    return await this.imageRepository.find({
+      where: { type: true },
+      cache: 60000,
+    });
   }
 
   async selectImage(selectImageDto: SelectImageDto) {

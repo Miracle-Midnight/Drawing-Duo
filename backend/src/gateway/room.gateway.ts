@@ -13,7 +13,7 @@ import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
 
 @WebSocketGateway({
-  cors: { origin: 'http/localhost:3000', methods: ['GET', 'POST'] },
+  cors: { origin: '*', methods: ['GET', 'POST'] },
 })
 export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
   @WebSocketServer() server: Server;
