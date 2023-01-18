@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRoomDto } from './dto/create-room.dto';
@@ -64,7 +64,7 @@ export class RoomService {
   }
 
   async createRoom(id: number, createRoomDto: CreateRoomDto) {
-    const newRoom = this.roomRepository.create(createRoomDto);
+    const newRoom = await this.roomRepository.create(createRoomDto);
     const user = await this.userRepository.findOne({
       where: { id },
       relations: ['profile'],
@@ -81,12 +81,20 @@ export class RoomService {
     };
   }
 
-  async deleteRoom(id: number) {
-    const room = await this.roomRepository.findOneBy({ id });
+  async deleteRoom(id: number, userid) {
+    const { userId } = userid;
+    console.log(userId);
+    const room = await this.roomRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
     if (!room) {
       throw new NotFoundException('방이 존재하지 않습니다.');
     }
-
+    if (room.user.length > 1) {
+      room.user = room.user.filter((element) => element.id != userId);
+      return this.roomRepository.save(room);
+    }
     return this.roomRepository.remove(room);
   }
 

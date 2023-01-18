@@ -12,6 +12,8 @@ import { VoiceChat } from "../../components/voiceChat/voiceChat";
 
 function GameLobby() {
   const [remoteNickname, setRemoteNickname] = useState<string>("");
+  const [friendsPick, setFriendsPick] = useState<string>("");
+  const [myPick, setMyPick] = useState<string>("");
 
   const dispatch = useDispatch();
 
@@ -36,7 +38,10 @@ function GameLobby() {
 
   const deleteRoom = () => {
     axios
-      .delete("/api/room/" + sessionStorage.getItem("roomId"))
+      .post("/api/room/delete/" + sessionStorage.getItem("roomId"), {
+        userId: sessionStorage.getItem("userid"),
+      })
+
       .then((res) => {
         document.location.href = "/";
       })
@@ -60,7 +65,7 @@ function GameLobby() {
         이미지를 골라주세요
       </div>
       <div className="flex justify-evenly ">
-        <ImageList />
+        <ImageList friendsPick={friendsPick} setMyPick={setMyPick} />
         <div className="flex flex-col justify-between">
           <div className="flex flex-col justify-between">
             <UserState
@@ -87,7 +92,11 @@ function GameLobby() {
           </button>
         </div>
       </div>
-      <VoiceChat setRemoteNickname={setRemoteNickname} />
+      <VoiceChat
+        setRemoteNickname={setRemoteNickname}
+        setFriendsPick={setFriendsPick}
+        myPick={myPick}
+      />
     </div>
   );
 }

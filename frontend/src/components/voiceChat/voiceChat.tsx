@@ -1,18 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import { useParams } from "react-router-dom";
 
 export function VoiceChat({
   setRemoteNickname,
+  setFriendsPick,
+  myPick,
 }: {
   setRemoteNickname: (nickname: string) => void;
+  setFriendsPick: (pick: string) => void;
+  myPick: string;
 }) {
   const socketRef = useRef<Socket>();
   const myVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const pcRef = useRef<RTCPeerConnection>();
 
-  const { roomId } = useParams();
+  const roomId = sessionStorage.getItem("roomId");
 
   const getMedia = async () => {
     try {
@@ -87,7 +91,9 @@ export function VoiceChat({
   };
 
   useEffect(() => {
-    socketRef.current = io("https://drawingduo.shop");
+    socketRef.current = io("https://drawingduo.shop", {
+      transports: ["websocket"],
+    });
 
     pcRef.current = new RTCPeerConnection({
       iceServers: [
@@ -111,7 +117,7 @@ export function VoiceChat({
       if (!pcRef.current) {
         return;
       }
-      pcRef.current.setRemoteDescription(sdp);
+      pcRef.current.setRemoteDescription(new RTCSessionDescription(sdp));
     });
 
     socketRef.current.on("getCandidate", async (candidate: RTCIceCandidate) => {
@@ -119,15 +125,20 @@ export function VoiceChat({
         return;
       }
 
-      await pcRef.current.addIceCandidate(candidate);
+      await pcRef.current.addIceCandidate(new RTCIceCandidate(candidate));
     });
+
     socketRef.current.emit("join_room", {
       roomId: roomId,
-      userId: socketRef.current.id,
+      userId: sessionStorage.getItem("userid"),
     });
 
     socketRef.current.on("new_user", async (user: any) => {
       setRemoteNickname(user.profile.nickname);
+    });
+
+    socketRef.current.on("select-image", (image: any) => {
+      setFriendsPick(image.image);
     });
 
     getMedia();
@@ -142,10 +153,15 @@ export function VoiceChat({
     };
   }, []);
 
+  useEffect(() => {
+    if (socketRef.current) {
+      socketRef.current.emit("select-image", { image: myPick });
+    }
+  }, [myPick]);
+
   return (
     <div>
       <audio
-        id="remotevideo"
         style={{
           width: 240,
           height: 240,
@@ -172,4 +188,6 @@ export function VoiceChat({
 
 VoiceChat.defaultProps = {
   setRemoteNickname: () => void 0,
+  setFriendsPick: () => void 0,
+  myPick: "",
 };

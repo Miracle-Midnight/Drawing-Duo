@@ -16,7 +16,7 @@ function getPoint(x: number, y: number) {
 
 /* 화면에 보일 캔버스 그림 정보 */
 
-export function Canvas({ Image }: { Image: string }) {
+export function Canvas({ frameImage }: { frameImage: string }) {
   const sizeState = useSelector((state: RootState) => state.size.value); // size reducer의 state중 value
   const users = useUsers(awareness, (state) => state);
   /* lines은 최종 화면에서 선 별로 저장 한 Ymap이다 */
@@ -115,7 +115,7 @@ export function Canvas({ Image }: { Image: string }) {
         className="h-screen w-full"
         viewBox={`0 0 ${window.innerWidth} ${window.innerHeight} `}
       >
-        <image href={Image} width="100%" height="100%"></image>
+        <image href={frameImage} width="100%" height="100%"></image>
         {lines.map((line, i) => (
           <Line key={line.get("id")} line={line} idx={i} />
         ))}
