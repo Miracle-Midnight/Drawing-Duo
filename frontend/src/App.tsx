@@ -5,7 +5,7 @@ import Intro from "./routes/intro/intro";
 import axios from "axios";
 
 const App: React.FC = () => {
-  axios.defaults.baseURL = "http://3.34.143.117:3000";
+  axios.defaults.baseURL = "https://drawingduo.shop";
   // 로그인 상태 관리
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
