@@ -5,8 +5,6 @@ import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
 
 import { DrawTools } from "../../components/drawTools/drawContainer";
-import InputRange from "../../components/inputRange/inputRange";
-import ColorSection from "../../components/colorSection/colorSection";
 import PaletteComponent from "../../components/palette/palette";
 import { VoiceChat } from "../../components/voiceChat/voiceChat";
 import axios from "axios";
@@ -35,9 +33,9 @@ function InGame() {
         <div className="">
           <div className="grid">
             <div className="flex justify-center border border-black relative">
-              <svg className="h-screen w-screen">
-                <image href={Image} width="100%" height="100%"></image>
-              </svg>
+              <div className="h-screen w-screen">
+                <Canvas></Canvas>
+              </div>
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
                 <div className="w-30 h-10 shadow px-5">
                   <div>

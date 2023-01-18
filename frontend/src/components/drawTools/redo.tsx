@@ -8,7 +8,7 @@ interface props {
 
 function Redo(props: props) {
   return (
-    <button className="w-10 h-10 ">
+    <button className="w-10 h-10 " onClick={props.redo}>
       <svg
         width="20"
         height="20"
