@@ -35,16 +35,16 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   };
 
   const handleExit = () => {
-    axios
-      .post("/api/room/save/" + sessionStorage.getItem("roomId"), {
-        userId: sessionStorage.getItem("userid"),
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // axios
+    //   .post("/api/room/save/" + sessionStorage.getItem("roomId"), {
+    //     userId: sessionStorage.getItem("userid"),
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
     navigate("/");
   };
 
@@ -62,8 +62,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
         <div className="side-nav">
           <ul className="flex flex-col justify-center pt-10">
             {/* <InGamePlayer name="나" /> */}
-            {users.users.map((user: any, idx: number) => {
-              console.log(user);
+            {users.map((user: any, idx: number) => {
               <div key={idx}>
                 <InGamePlayer name={user.nickname} />;
               </div>;
