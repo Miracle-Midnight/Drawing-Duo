@@ -37,6 +37,7 @@ function InviteFromFriend({
   userKey: string;
 }) {
   const navigate = useNavigate();
+
   const handleAcceptButton = () => {
     console.log(typeof sessionStorage.getItem("userid"));
     console.log(typeof userKey);

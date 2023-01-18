@@ -4,8 +4,14 @@ import { useImages } from "../../hooks/useImages";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
-export function ImageList() {
-  const [isClicked, setIsClicked] = useState<string>("");
+export function ImageList({
+  friendsPick,
+  setMyPick,
+}: {
+  friendsPick: string;
+  setMyPick: (pick: string) => void;
+}) {
+  const [isClicked, setIsClicked] = useState<number>();
 
   const imageList = useSelector((state: RootState) => state.image.imageList);
   const { getImages } = useImages();
@@ -15,7 +21,8 @@ export function ImageList() {
   }, []);
 
   const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsClicked(e.currentTarget.id);
+    setIsClicked(parseInt(e.currentTarget.id));
+    setMyPick(imageList[parseInt(e.currentTarget.id)].image);
     // socketRef.current?.emit("image", {
     //   id: e.currentTarget.id,
     //   src: imageList[parseInt(e.currentTarget.id)],
@@ -35,19 +42,47 @@ export function ImageList() {
                     onClick={handleImageClick}
                     className="flex flex-col justify-center bg-white rounded-lg shadow-2xl card"
                   >
-                    {isClicked != idx.toString() ? (
+                    {/* 친구가 선택하지 않은 이미지 */}
+                    {friendsPick != image.image ? (
                       <div className="prod-img flex justify-center">
-                        <img
-                          src={image.image}
-                          className=" object-center w-80"
-                        />
+                        {/* 내가 선택하지 않은 이미지 */}
+                        {isClicked != idx ? (
+                          <div className="prod-img flex justify-center">
+                            <img
+                              src={image.image}
+                              className=" object-center w-80"
+                            />
+                          </div>
+                        ) : (
+                          // 내가 선택한 이미지
+                          <div className="prod-img flex justify-center border border-primary border-5">
+                            <img
+                              src={image.image}
+                              className=" object-center w-80"
+                            />
+                          </div>
+                        )}
                       </div>
                     ) : (
-                      <div className="prod-img flex justify-center border border-primary border-5">
-                        <img
-                          src={image.image}
-                          className=" object-center w-80"
-                        />
+                      // 친구가 선택한 이미지
+                      <div className="prod-img flex justify-center border border-danger border-5">
+                        {/* 내가 선택하지 않은 이미지 */}
+                        {isClicked != idx ? (
+                          <div className="prod-img flex justify-center">
+                            <img
+                              src={image.image}
+                              className=" object-center w-80"
+                            />
+                          </div>
+                        ) : (
+                          // 내가 선택한 이미지
+                          <div className="prod-img flex justify-center border border-primary border-5">
+                            <img
+                              src={image.image}
+                              className=" object-center w-80"
+                            />
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>

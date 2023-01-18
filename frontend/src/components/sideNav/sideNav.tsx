@@ -12,7 +12,7 @@ import axios from "axios";
 //   setisHintImageOn: Dispatch<SetStateAction<boolean>>;
 // }
 
-function SideNav(users: any) {
+function SideNav({ users, Image }: { users: any; Image: string }) {
   const navigate = useNavigate();
 
   const [isMicOn, setisMicOn] = useState(false);
@@ -52,7 +52,12 @@ function SideNav(users: any) {
     <div className="absolute flex h-full  left-0 border border-purple-800  z-50">
       <nav className="flex flex-col justify-between w-20 h-screen bg-white ">
         <div className="flex justify-center pt-3">
-          <img src={logoSmall} alt="logo" width="45px"></img>
+          <img
+            onClick={handleExit}
+            src={logoSmall}
+            alt="logo"
+            width="45px"
+          ></img>
         </div>
         <div className="side-nav">
           <ul className="flex flex-col justify-center pt-10">
@@ -283,7 +288,7 @@ function SideNav(users: any) {
         </div>
       )} */}
 
-      {isHintImageOn === true ? <HintImage></HintImage> : null}
+      {isHintImageOn === true ? <HintImage Image={Image}></HintImage> : null}
     </div>
   );
 }
