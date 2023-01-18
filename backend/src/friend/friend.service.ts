@@ -121,7 +121,7 @@ export class FriendService {
     userinfo.room = [...userinfo.room, targetRoom];
     await this.userRepository.save(userinfo);
 
-    return { userNickName: userinfo.profile.nickname };
+    return { userNickName: userinfo.profile.nickname, room: targetRoom };
   }
 
   async rejectInvite(inviteDto: InviteAcceptDto) {
