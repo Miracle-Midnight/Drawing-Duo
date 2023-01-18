@@ -15,6 +15,7 @@ function getPoint(x: number, y: number) {
 }
 
 /* 화면에 보일 캔버스 그림 정보 */
+
 export function Canvas({ Image }: { Image: string }) {
   const sizeState = useSelector((state: RootState) => state.size.value); // size reducer의 state중 value
   const users = useUsers(awareness, (state) => state);
