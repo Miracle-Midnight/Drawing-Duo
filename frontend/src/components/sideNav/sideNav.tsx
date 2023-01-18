@@ -5,6 +5,7 @@ import InGamePlayer from "../inGamePlayer/inGamePlayer";
 import HintImage from "../hintImage/hintImage";
 import ChatList from "../chatList/chatList";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 // interface Props {
 //   isHintImageOn: boolean;
@@ -34,6 +35,16 @@ function SideNav(users: any) {
   };
 
   const handleExit = () => {
+    axios
+      .post("/api/room/save/" + sessionStorage.getItem("roomId"), {
+        userId: sessionStorage.getItem("userid"),
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     navigate("/");
   };
 
@@ -45,12 +56,13 @@ function SideNav(users: any) {
         </div>
         <div className="side-nav">
           <ul className="flex flex-col justify-center pt-10">
-            <InGamePlayer name="나" />
-            {/* {users.map((user: any, idx: number) => {
+            {/* <InGamePlayer name="나" /> */}
+            {users.users.map((user: any, idx: number) => {
+              console.log(user);
               <div key={idx}>
-                <InGamePlayer name={user} />;
+                <InGamePlayer name={user.nickname} />;
               </div>;
-            })} */}
+            })}
           </ul>
         </div>
         <div className="mt-10 mb-10">

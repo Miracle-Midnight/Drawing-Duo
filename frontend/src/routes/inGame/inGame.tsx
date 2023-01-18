@@ -11,50 +11,18 @@ import PaletteComponent from "../../components/palette/palette";
 import { VoiceChat } from "../../components/voiceChat/voiceChat";
 import axios from "axios";
 
-const colors = [
-  {
-    red: 255,
-    green: 0,
-    blue: 0,
-  },
-  {
-    red: 255,
-    green: 120,
-    blue: 120,
-  },
-  {
-    red: 0,
-    green: 120,
-    blue: 120,
-  },
-  {
-    red: 0,
-    green: 120,
-    blue: 120,
-  },
-  {
-    red: 0,
-    green: 120,
-    blue: 120,
-  },
-];
-
 function InGame() {
-  const [Image, setImage] = useState();
-  const [users, setUsers] = useState<any>([]);
-  const [color, setColor] = useState({
-    red: 0,
-    green: 0,
-    blue: 0,
-  });
+  const [Image, setImage] = useState<string>("");
+  const [users, setUsers] = useState([]);
+  const [color, setColor] = useState([]);
   useEffect(() => {
     axios
-      .get("/api/game" + sessionStorage.getItem("roomId"))
+      .get("/api/game/" + sessionStorage.getItem("roomId"))
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.data.usersName);
         setImage(res.data.data.frameImage);
         setUsers(res.data.data.usersName);
-        // setColor(res.data.data.rgb);
+        setColor(res.data.data.rgb);
       })
       .catch((err) => {
         console.log(err);
@@ -77,7 +45,7 @@ function InGame() {
                   </div>
                 </div>
               </div>
-              <PaletteComponent colors={colors}></PaletteComponent>
+              <PaletteComponent colors={color}></PaletteComponent>
             </div>
           </div>
         </div>

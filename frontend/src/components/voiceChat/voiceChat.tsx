@@ -153,6 +153,7 @@ export function VoiceChat({
           backgroundColor: "black",
           display: "flex",
         }}
+        muted
         ref={myVideoRef}
         autoPlay
       />
@@ -171,5 +172,5 @@ export function VoiceChat({
 }
 
 VoiceChat.defaultProps = {
-  setRemoteNickname: () => {},
+  setRemoteNickname: () => void 0,
 };
