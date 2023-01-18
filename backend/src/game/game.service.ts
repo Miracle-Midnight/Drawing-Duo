@@ -62,6 +62,7 @@ export class GameService {
 
     return {
       usersName: usersName,
+      originImage: room.image.image,
       frameImage: room.image.frameImage,
       rgb: room.image.rgb,
     };
