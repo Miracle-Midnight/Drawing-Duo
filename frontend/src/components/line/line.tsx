@@ -1,5 +1,4 @@
 /* library */
-import { SizeMe } from "react-sizeme";
 import * as Y from "yjs";
 import { getStroke } from "perfect-freehand";
 import { memo } from "react";
@@ -20,8 +19,9 @@ memo를 활용하여서, 부모 component가 re-render되었을때, 자식 compo
 고로 object이 props로 온다면, useMemo를 사용해서, 해당 object을 메모리에 보존&전달
 
 - 인자로 point와 complete의 Ymap이 들어온다
+!!!! responsive하게 하기 위해서 추후 성능 고려
 */
-export const Line = memo(function Line({ line, idx }: LineProps) {
+export const Line = function Line({ line, idx }: LineProps) {
   const { points, color, isComplete, size, windowSize } = useLine(line); // size 받기
 
   const newPoints: number[][] = [];
@@ -35,4 +35,4 @@ export const Line = memo(function Line({ line, idx }: LineProps) {
   const pathData = getSvgPathFromStroke(getStroke(newPoints, { size: size })); // size option 주기
 
   return <path d={pathData} data-id={`${idx}`} fill={color} />;
-});
+};

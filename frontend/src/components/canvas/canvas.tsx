@@ -32,8 +32,6 @@ export function Canvas() {
 
   const isErase = useSelector((state: RootState) => state.erase.isErase);
 
-  // const { handleColorChange } = useColorChange();
-
   const handleMouseOver = useCallback(
     (e: React.MouseEvent<SVGSVGElement>) => {
       const starget = e.target as HTMLElement;
