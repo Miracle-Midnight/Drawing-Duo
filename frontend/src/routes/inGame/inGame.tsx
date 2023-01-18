@@ -35,7 +35,7 @@ function InGame() {
           <div className="grid">
             <div className="flex justify-center border border-black relative">
               <div className="h-screen w-screen">
-                <Canvas></Canvas>
+                <Canvas Image={Image}></Canvas>
               </div>
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
                 <div className="w-30 h-10 shadow px-5">
