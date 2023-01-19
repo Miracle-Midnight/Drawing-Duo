@@ -17,7 +17,7 @@ export function InvitedButton() {
       : setIsClickInviteToggle(true);
 
     axios
-      .get("/api/friend/invite/" + sessionStorage.getItem("userid"))
+      .get("/friend/invite/" + sessionStorage.getItem("userid"))
       .then((res) => {
         setInvitedList(res.data.data);
       })

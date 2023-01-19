@@ -36,7 +36,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
 
   const handleExit = () => {
     // axios
-    //   .post("/api/room/save/" + sessionStorage.getItem("roomId"), {
+    //   .post("/room/save/" + sessionStorage.getItem("roomId"), {
     //     userId: sessionStorage.getItem("userid"),
     //   })
     //   .then((res) => {

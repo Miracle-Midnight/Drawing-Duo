@@ -16,7 +16,7 @@ export function VoiceChat({
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const pcRef = useRef<RTCPeerConnection>();
 
-  const roomId = sessionStorage.getItem("roomId");
+  const roomId = useParams();
 
   const getMedia = async () => {
     try {

@@ -11,7 +11,7 @@ function SearchInput() {
 
   const handleSearchButton = (event: any) => {
     axios
-      .get("/api/friend/serch/" + searchValue)
+      .get("/friend/serch/" + searchValue)
       .then((res) => {
         dispatch(add(res.data.data));
       })

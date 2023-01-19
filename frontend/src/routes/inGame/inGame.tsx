@@ -9,6 +9,7 @@ import PaletteComponent from "../../components/palette/palette";
 import { VoiceChat } from "../../components/voiceChat/voiceChat";
 import axios from "axios";
 import { Canvas } from "../../components/canvas/canvas";
+import VoiceChat1 from "../../components/voiceChat/voiceChat1";
 
 function InGame() {
   const [Image, setImage] = useState<string>("");
@@ -17,7 +18,7 @@ function InGame() {
   const [color, setColor] = useState([]);
   useEffect(() => {
     axios
-      .get("/api/game/" + sessionStorage.getItem("roomId"))
+      .get("/game/" + sessionStorage.getItem("roomId"))
       .then((res) => {
         setFrameImage(res.data.data.frameImage);
         setImage(res.data.data.originImage);
