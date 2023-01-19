@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-18.04
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - name: Checkout source code
         uses: actions/checkout@master
