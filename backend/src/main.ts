@@ -13,7 +13,6 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new SuccessInterceptor());
-  app.setGlobalPrefix('api');
   app.use(
     ['/docs', '/docs-json'],
     expressBasicAuth({

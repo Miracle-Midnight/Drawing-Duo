@@ -19,6 +19,7 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { RoomGatewayModule } from './gateway/gateway.module';
 import { dataSourceOptions } from 'db/data-source';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -48,16 +49,12 @@ import { dataSourceOptions } from 'db/data-source';
       inject: [ConfigService],
     }),
     RoomGatewayModule,
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client'),
-      exclude: ['/api*'],
-    }),
     AuthModule,
     FriendModule,
     GamelobbyModule,
   ],
   controllers: [AppController, ResultController],
-  providers: [ResultService, AwsService],
+  providers: [ResultService, AwsService, AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
