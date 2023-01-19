@@ -126,7 +126,9 @@ export function VoiceChat({
       }
 
       await pcRef.current.addIceCandidate(new RTCIceCandidate(candidate));
+      console.log("candidate add success");
     });
+    getMedia();
 
     socketRef.current.emit("join_room", {
       roomId: roomId,
@@ -134,14 +136,9 @@ export function VoiceChat({
     });
 
     socketRef.current.on("new_user", async (user: any) => {
-      setRemoteNickname(user.profile.nickname);
+      createOffer();
+      setRemoteNickname(user[0].profile.nickname);
     });
-
-    socketRef.current.on("select-image", (image: any) => {
-      setFriendsPick(image.image);
-    });
-
-    getMedia();
 
     return () => {
       if (socketRef.current) {
@@ -155,7 +152,16 @@ export function VoiceChat({
 
   useEffect(() => {
     if (socketRef.current) {
-      socketRef.current.emit("select-image", { image: myPick });
+      socketRef.current.on("select-image", async (image: any) => {
+        console.log(image);
+        // setFriendsPick(image.image);
+      });
+    }
+  });
+
+  useEffect(() => {
+    if (socketRef.current) {
+      socketRef.current.emit("select-image", { roomId: roomId, image: myPick });
     }
   }, [myPick]);
 
@@ -191,3 +197,5 @@ VoiceChat.defaultProps = {
   setFriendsPick: () => void 0,
   myPick: "",
 };
+
+export default VoiceChat;
