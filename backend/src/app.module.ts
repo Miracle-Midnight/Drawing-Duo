@@ -49,7 +49,7 @@ import { dataSourceOptions } from 'db/data-source';
     }),
     RoomGatewayModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client'),
+      rootPath: join(__dirname, '..', 'build'),
       exclude: ['/api*'],
     }),
     AuthModule,
