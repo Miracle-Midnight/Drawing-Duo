@@ -13,9 +13,10 @@ export const doc = new Y.Doc();
 /* webrtc로 동일한 room에 있는 유저간 doc 동기화 */
 export const provider = new WebrtcProvider(roomId, doc, {
   // Specify signaling servers. The client will connect to every signaling server concurrently to find other peers as fast as possible.
-  signaling: ["ws://54.180.118.157:4444"],
+  signaling: ["ws://54.180.118.157:4000"],
+  password: null,
   awareness: new awarenessProtocol.Awareness(doc),
-  maxConns: 4,
+  maxConns: 20,
   filterBcConns: true,
   peerOpts: {},
 }); // webrtc를 활용하여서 사용자와의 연동
