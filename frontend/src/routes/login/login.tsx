@@ -29,7 +29,7 @@ function Login() {
   // login 버튼 클릭 이벤트
   const onClickLogin = () => {
     axios
-      .post("/api/users/login", {
+      .post("/users/login", {
         userid: inputId,
         password: inputPw,
       })

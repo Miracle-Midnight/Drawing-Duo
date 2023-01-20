@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useRef, useEffect } from "react";
 import { io, Socket } from "socket.io-client";
 import { useParams } from "react-router-dom";
 
-export function VoiceChat({
+function VoiceChat({
   setRemoteNickname,
   setFriendsPick,
   myPick,
@@ -11,26 +11,29 @@ export function VoiceChat({
   setFriendsPick: (pick: string) => void;
   myPick: string;
 }) {
-  const socketRef = useRef<Socket>();
+  const roomId = useParams().id;
   const myVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
+
   const pcRef = useRef<RTCPeerConnection>();
+  const socketRef = useRef<Socket>();
 
-  const roomId = sessionStorage.getItem("roomId");
-
-  const getMedia = async () => {
+  async function getMedia() {
     try {
+      // 미디어 디바이스 인터페이스를 구현하는 mediaDevices 객체에서 연결된 모든 기기를 가져올 수 있음
+      // 기기 변경 사항을 수신 대기, 기기를 열어 미디어 스트림을 가져올 수 있음
       const stream = await navigator.mediaDevices.getUserMedia({
         video: false,
         audio: true,
       });
-
       if (myVideoRef.current) {
         myVideoRef.current.srcObject = stream;
       }
+
       if (!(pcRef.current && socketRef.current)) {
         return;
       }
+
       stream.getTracks().forEach((track) => {
         if (!pcRef.current) {
           return;
@@ -44,7 +47,10 @@ export function VoiceChat({
             return;
           }
           console.log("recv candidate");
-          socketRef.current.emit("candidate", e.candidate, roomId);
+          socketRef.current.emit("candidate", {
+            candidate: e.candidate,
+            roomId: roomId,
+          });
         }
       };
 
@@ -56,68 +62,70 @@ export function VoiceChat({
     } catch (e) {
       console.error(e);
     }
-  };
+  }
 
-  const createOffer = async () => {
-    console.log("create offer");
+  async function createOffer() {
     if (!(pcRef.current && socketRef.current)) {
       return;
     }
     try {
+      console.log("create offer");
       const sdp = await pcRef.current.createOffer();
       pcRef.current.setLocalDescription(sdp);
       console.log("sent the offer");
-      socketRef.current.emit("offer", sdp, roomId);
+      socketRef.current.emit("offer", { sdp: sdp, roomId: roomId });
     } catch (e) {
       console.error(e);
     }
-  };
+  }
 
-  const createAnswer = async (sdp: RTCSessionDescription) => {
-    console.log("create answer");
+  async function createAnswer(sdp: RTCSessionDescription) {
     if (!(pcRef.current && socketRef.current)) {
       return;
     }
     try {
+      console.log("create answer");
       pcRef.current.setRemoteDescription(sdp);
       const answerSdp = await pcRef.current.createAnswer();
       pcRef.current.setLocalDescription(answerSdp);
 
       console.log("sent the answer");
-      socketRef.current.emit("answer", answerSdp, roomId);
+      socketRef.current.emit("answer", { sdp: answerSdp, roomId: roomId });
     } catch (e) {
       console.error(e);
     }
-  };
+  }
 
   useEffect(() => {
-    socketRef.current = io("https://drawingduo.shop", {
-      transports: ["websocket"],
+    pcRef.current = new RTCPeerConnection();
+
+    socketRef.current = io("https://drawingduo.shop");
+
+    socketRef.current.emit("join_room", {
+      roomId: roomId,
+      userId: sessionStorage.getItem("userid"),
     });
 
-    pcRef.current = new RTCPeerConnection({
-      iceServers: [
-        {
-          urls: "stun:stun.l.google.com:19302",
-        },
-      ],
-    });
-
-    socketRef.current.on("all_users", (allUsers: Array<{ id: string }>) => {
+    socketRef.current.on("all_users", (allUsers: any) => {
       if (allUsers.length > 0) {
         createOffer();
       }
     });
+
     socketRef.current.on("getOffer", (sdp: RTCSessionDescription) => {
-      console.log("recv offer");
-      createAnswer(sdp);
-    });
-    socketRef.current.on("getAnswer", (sdp: RTCSessionDescription) => {
-      console.log("recv answer");
       if (!pcRef.current) {
         return;
       }
-      pcRef.current.setRemoteDescription(new RTCSessionDescription(sdp));
+      console.log("get offer");
+      createAnswer(sdp);
+    });
+
+    socketRef.current.on("getAnswer", (sdp: RTCSessionDescription) => {
+      if (!pcRef.current) {
+        return;
+      }
+      console.log("get answer");
+      pcRef.current.setRemoteDescription(sdp);
     });
 
     socketRef.current.on("getCandidate", async (candidate: RTCIceCandidate) => {
@@ -125,23 +133,18 @@ export function VoiceChat({
         return;
       }
 
-      await pcRef.current.addIceCandidate(new RTCIceCandidate(candidate));
-    });
-
-    socketRef.current.emit("join_room", {
-      roomId: roomId,
-      userId: sessionStorage.getItem("userid"),
-    });
-
-    socketRef.current.on("new_user", async (user: any) => {
-      setRemoteNickname(user.profile.nickname);
-    });
-
-    socketRef.current.on("select-image", (image: any) => {
-      setFriendsPick(image.image);
+      await pcRef.current.addIceCandidate(candidate);
+      console.log("candidate add success");
     });
 
     getMedia();
+
+    console.log(pcRef);
+    console.log(socketRef);
+
+    socketRef.current.on("new_user", async (user: any) => {
+      setRemoteNickname(user[0].profile.nickname);
+    });
 
     return () => {
       if (socketRef.current) {
@@ -155,33 +158,23 @@ export function VoiceChat({
 
   useEffect(() => {
     if (socketRef.current) {
-      socketRef.current.emit("select-image", { image: myPick });
+      socketRef.current.on("select-image", async (image: any) => {
+        console.log(image);
+        setFriendsPick(image.image);
+      });
+    }
+  });
+
+  useEffect(() => {
+    if (socketRef.current) {
+      socketRef.current.emit("select-image", { roomId: roomId, image: myPick });
     }
   }, [myPick]);
 
   return (
     <div>
-      <audio
-        style={{
-          width: 240,
-          height: 240,
-          backgroundColor: "black",
-          display: "flex",
-        }}
-        muted
-        ref={myVideoRef}
-        autoPlay
-      />
-      <audio
-        id="remotevideo"
-        style={{
-          width: 240,
-          height: 240,
-          backgroundColor: "black",
-        }}
-        ref={remoteVideoRef}
-        autoPlay
-      />
+      <audio autoPlay muted ref={myVideoRef} />
+      <audio autoPlay ref={remoteVideoRef} />
     </div>
   );
 }
@@ -191,3 +184,5 @@ VoiceChat.defaultProps = {
   setFriendsPick: () => void 0,
   myPick: "",
 };
+
+export default VoiceChat;

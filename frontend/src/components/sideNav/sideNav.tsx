@@ -29,6 +29,16 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   const [isChatOn, setisChatOn] = useState(false);
 
   const handleExit = () => {
+    // axios
+    //   .post("/room/save/" + sessionStorage.getItem("roomId"), {
+    //     userId: sessionStorage.getItem("userid"),
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
     navigate("/");
   };
 

@@ -38,11 +38,13 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
 
   @SubscribeMessage('join_room')
   async handleJoin(@MessageBody() data, @ConnectedSocket() socket: Socket) {
+    console.log(data);
     socket.join(data.roomId);
     this.logger.log(`Client joined: ${socket.id} ${data.roomId}`);
     this.roomMap.set(socket.id, data.roomId);
+    console.log(this.roomMap);
     const usersInRoom = this.server.sockets.adapter.rooms.get(data.roomId);
-    if (usersInRoom.size > 1) {
+    if (usersInRoom.size >= 1) {
       socket.to(data.roomId).emit('all_users', Array.from(usersInRoom));
     }
     const user = await this.userRepository.find({
@@ -89,5 +91,6 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
       .to(this.roomMap.get(socket.id))
       .emit('user_exit', socket.id);
     this.roomMap.delete(socket.id);
+    console.log(this.roomMap);
   }
 }
