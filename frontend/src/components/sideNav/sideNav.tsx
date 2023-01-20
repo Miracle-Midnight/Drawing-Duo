@@ -11,6 +11,8 @@ import MicOffElem from "./sideNavAtoms/micElems/micOffElem";
 import SoundOnElem from "./sideNavAtoms/soundElems/soundOnElem";
 import SoundOffElem from "./sideNavAtoms/soundElems/soundOffElem";
 import MicOnOffMolecule from "./sideNavMolecules/micOnOffMolecule";
+import SoundOnOffMolecule from "./sideNavMolecules/soundOnOffMolecule";
+import ImageOnOffMolecule from "./sideNavMolecules/imageOnOffMolecules";
 
 // interface Props {
 //   isHintImageOn: boolean;
@@ -20,21 +22,10 @@ import MicOnOffMolecule from "./sideNavMolecules/micOnOffMolecule";
 function SideNav({ users, Image }: { users: any; Image: string }) {
   const navigate = useNavigate();
 
-  const [isMicOn, setisMicOn] = useState(false);
-  const [isSoundOn, setisSoundOn] = useState(false);
   const [isHintImageOn, setisHintImageOn] = useState(false);
   const [isChatOn, setisChatOn] = useState(false);
 
-  // const toggleMicHandler = () => {
-  //   // isMicOn의 상태를 변경하는 메소드를 구현
-  //   setisMicOn(!isMicOn);
-  // };
-  const toggleSoundHandler = () => {
-    setisSoundOn(!isSoundOn);
-  };
-  const toggleHintImageHandler = () => {
-    setisHintImageOn(!isHintImageOn);
-  };
+ 
   const toggleChatHandler = () => {
     setisChatOn(!isChatOn);
   };
@@ -67,7 +58,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
         <div className="mt-10 mb-10">
           <div className="side-nav mt-10">
             <ul>
-              <li
+              {/* <li
                 className="my-12 text-center"
                 onClick={toggleHintImageHandler}
               >
@@ -87,16 +78,12 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
                     </svg>
                   </span>
                 </a>
-              </li>
+              </li> */}
 
+              <ImageOnOffMolecule />
               <MicOnOffMolecule />
-              <li className="my-12 text-center" onClick={toggleSoundHandler}>
-                <a href="#">
-                  <span className="h-6 w-6 text-gray-500  mx-auto hover:text-gray-800  transition-colors duration-200">
-                    {isSoundOn === false ? <SoundOffElem /> : <SoundOnElem />}
-                  </span>
-                </a>
-              </li>
+
+              <SoundOnOffMolecule />
 
               <li className="my-12 text-center" onClick={toggleChatHandler}>
                 <a href="#">
