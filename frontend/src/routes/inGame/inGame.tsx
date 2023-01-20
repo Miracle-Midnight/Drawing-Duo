@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 /* module from local */
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
-import { DrawTools } from "../../components/drawTools/drawContainer";
+
+import { DrawTools } from "../../components/drawTools/drawTools";
 import { Palette } from "../../components/palette/palette";
 import axios from "axios";
 import { Canvas } from "../../components/canvas/canvas";
@@ -29,16 +30,16 @@ function InGame() {
   }, []);
   return (
     <div className="grid grid-cols-10 overflow-y-hidden w-full">
-      <div className="col-span-1 h-full">
+      <div className="col-span-1 flex h-full">
         <SideNav users={users} Image={Image} />
-      </div>
-
-      <div className="col-span-8 h-full">
-        <Canvas frameImage={frameImage} />
         <DrawTools />
       </div>
 
-      <div className="col-span-1 h-full">
+      <div className="col-span-8 h-screen">
+        <Canvas frameImage={frameImage} />
+      </div>
+
+      <div className="col-span-1">
         <Palette colors={color} />
       </div>
       <VoiceChat />

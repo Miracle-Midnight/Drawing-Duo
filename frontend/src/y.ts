@@ -16,7 +16,7 @@ export const provider = new WebrtcProvider(roomId, doc, {
   signaling: ["ws://54.180.118.157:4000"],
   awareness: new awarenessProtocol.Awareness(doc),
   maxConns: 20,
-  filterBcConns: true,
+  filterBcConns: false,
   peerOpts: {},
 }); // webrtc를 활용하여서 사용자와의 연동
 
