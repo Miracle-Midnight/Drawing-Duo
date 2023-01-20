@@ -41,6 +41,7 @@ function InGame() {
       <div className="col-span-1 h-full">
         <Palette colors={color} />
       </div>
+      <VoiceChat />
     </div>
   );
 }

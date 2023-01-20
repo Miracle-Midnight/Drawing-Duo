@@ -97,9 +97,7 @@ function VoiceChat({
   }
 
   useEffect(() => {
-    pcRef.current = new RTCPeerConnection({
-      iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
-    });
+    pcRef.current = new RTCPeerConnection();
 
     socketRef.current = io("localhost:3000");
 
@@ -135,7 +133,7 @@ function VoiceChat({
         return;
       }
 
-      await pcRef.current.addIceCandidate(candidate); //new RTCIceCandidate(candidate));
+      await pcRef.current.addIceCandidate(candidate);
       console.log("candidate add success");
     });
 
@@ -145,7 +143,6 @@ function VoiceChat({
     console.log(socketRef);
 
     socketRef.current.on("new_user", async (user: any) => {
-      createOffer();
       setRemoteNickname(user[0].profile.nickname);
     });
 
