@@ -31,18 +31,20 @@ export function Canvas({ frameImage }: { frameImage: string }) {
     redoLine,
   } = useLines();
 
-  const isErase = useSelector((state: RootState) => state.erase.isErase);
+  const drawTool = useSelector(
+    (state: RootState) => state.drawTool.currentTool
+  );
 
   const handleMouseOver = useCallback(
     (e: any) => {
       const starget = e.target as HTMLElement;
       const eidx = starget.dataset.id;
 
-      if (isErase && eidx !== undefined) {
+      if (drawTool == "erase" && eidx !== undefined) {
         yLines.delete(+eidx, 1);
       }
     },
-    [isErase]
+    [drawTool]
   );
 
   useKeyboardEvents();
@@ -57,18 +59,18 @@ export function Canvas({ frameImage }: { frameImage: string }) {
         window.innerHeight,
       ]);
 
-      if (!isErase) {
+      if (drawTool == "draw") {
         // startLine(getPoint(e.clientX, e.clientY), sizeState); // 현재 viewport 기준
         startLine(getPoint(e.pageX, e.pageY), sizeState); // 전체 page 기준(scroll 포함)
       }
     },
-    [startLine, isErase, sizeState]
+    [startLine, drawTool, sizeState]
   );
 
   /* 포인터가 눌러진 체, 움직이면 추가해준다 */
   const handlePointerMove = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
-      if (!isErase) {
+      if (drawTool == "draw") {
         // const point = getPoint(e.clientX, e.clientY);
         const point = getPoint(e.pageX, e.pageY);
 
@@ -79,7 +81,7 @@ export function Canvas({ frameImage }: { frameImage: string }) {
         }
       }
     },
-    [addPointToLine, isErase]
+    [addPointToLine, drawTool]
   );
 
   /* 포인터가 해제되었을 때, 완료해준다 */
