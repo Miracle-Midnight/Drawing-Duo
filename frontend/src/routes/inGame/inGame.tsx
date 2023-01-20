@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
 
-import { DrawTools } from "../../components/drawTools/drawContainer";
+import { DrawTools } from "../../components/drawTools/drawTools";
 import { Palette } from "../../components/palette/palette";
 import { VoiceChat } from "../../components/voiceChat/voiceChat";
 import axios from "axios";
@@ -57,26 +57,26 @@ function InGame() {
   //     });
   // }, []);
   return (
-    <div className="grid grid-cols-10 overflow-y-hidden w-full">
-      <div className="col-span-1 h-full">
+    <div className="grid grid-cols-10 overflow-hidden w-full">
+      <div className="col-span-1 flex h-full">
         <SideNav
           users={users}
           Image={
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5QPTO0dfQhrhSVMfjUTjj-7uh1zyqNnjYCg&usqp=CAU"
           }
         />
+        <DrawTools />
       </div>
 
-      <div className="col-span-8 h-full">
+      <div className="col-span-8 h-screen">
         <Canvas
           frameImage={
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGjm4-o47252sQwPAHTJzKXz1qm2t8lxEU3g&usqp=CAU"
           }
         />
-        <DrawTools />
       </div>
 
-      <div className="col-span-1 h-full">
+      <div className="col-span-1">
         <Palette colors={colors} />
       </div>
     </div>

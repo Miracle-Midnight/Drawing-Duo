@@ -9,13 +9,14 @@ function ColorSection(props: colorWithNumber) {
   const { handleColorChange } = useColorChange();
   return (
     <button
+      className="w-full p-3"
       onClick={() =>
         handleColorChange(`rgba(${props.red},${props.green},${props.blue})`)
       }
     >
       <div>{props.number}</div>
       <div
-        className="w-10 h-6"
+        className="w-full h-10"
         style={{
           backgroundColor: `rgba(${props.red},${props.green},${props.blue})`,
         }}

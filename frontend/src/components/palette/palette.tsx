@@ -6,15 +6,13 @@ export interface color {
   green: number;
 }
 
-
-
 interface colorType {
   colors: color[];
 }
 
 export function Palette({ colors }: colorType) {
   return (
-    <div className="border">
+    <div className="border h-full ">
       {colors.map((color: color, index: number) => (
         <div key={index}>
           <ColorSection
