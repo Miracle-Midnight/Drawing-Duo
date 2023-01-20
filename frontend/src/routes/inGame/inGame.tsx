@@ -5,7 +5,7 @@ import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
 
 import { DrawTools } from "../../components/drawTools/drawContainer";
-import PaletteComponent from "../../components/palette/palette";
+import { Palette } from "../../components/palette/palette";
 import { VoiceChat } from "../../components/voiceChat/voiceChat";
 import axios from "axios";
 import { Canvas } from "../../components/canvas/canvas";
@@ -39,10 +39,10 @@ const colors = [
 ];
 
 function InGame() {
-  const [Image, setImage] = useState<string>("");
-  const [frameImage, setFrameImage] = useState<string>("");
+  // const [Image, setImage] = useState<string>("");
+  // const [frameImage, setFrameImage] = useState<string>("");
   const [users, setUsers] = useState<any>([]);
-  const [color, setColor] = useState([]);
+  // const [color, setColor] = useState([]);
   // useEffect(() => {
   //   axios
   //     .get("/api/game/" + sessionStorage.getItem("roomId"))
@@ -57,36 +57,27 @@ function InGame() {
   //     });
   // }, []);
   return (
-    <div className="relative">
-      <div className="flex flex-row h-screen">
+    <div className="grid grid-cols-10 overflow-y-hidden w-full">
+      <div className="col-span-1 h-full">
         <SideNav
           users={users}
           Image={
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5QPTO0dfQhrhSVMfjUTjj-7uh1zyqNnjYCg&usqp=CAU"
           }
         />
-        <div>
-          <div>
-            <div className="grid">
-              <div className="flex justify-center border border-black">
-                <div>
-                  <Canvas
-                    frameImage={
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGjm4-o47252sQwPAHTJzKXz1qm2t8lxEU3g&usqp=CAU"
-                    }
-                  ></Canvas>
-                </div>
-                <div className="absolute z-51 bottom-0 left-1/2 -translate-x-1/2 ">
-                  <div className="w-30 h-10 shadow px-5">
-                    <DrawTools />
-                  </div>
-                </div>
-                <PaletteComponent colors={colors}></PaletteComponent>
-              </div>
-            </div>
-          </div>
-        </div>
-        <VoiceChat />
+      </div>
+
+      <div className="col-span-8 h-full">
+        <Canvas
+          frameImage={
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGjm4-o47252sQwPAHTJzKXz1qm2t8lxEU3g&usqp=CAU"
+          }
+        />
+        <DrawTools />
+      </div>
+
+      <div className="col-span-1 h-full">
+        <Palette colors={colors} />
       </div>
     </div>
   );

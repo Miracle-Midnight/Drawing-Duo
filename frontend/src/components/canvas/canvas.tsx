@@ -1,5 +1,5 @@
 /* library */
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 /* module from local */
 import { Line } from "../line/line";
@@ -94,6 +94,8 @@ export function Canvas({ frameImage }: { frameImage: string }) {
     [completeLine]
   );
 
+  // const isFill = useMemo(()=>)
+
   return (
     <div>
       <svg
@@ -104,9 +106,9 @@ export function Canvas({ frameImage }: { frameImage: string }) {
         onPointerLeave={() => awareness.setLocalStateField("isActive", false)}
         onMouseOver={handleMouseOver}
         viewBox={`0 0 ${window.innerWidth} ${window.innerHeight} `}
-        className="absolute z-47"
+
         // style={{
-        //   pointerEvents: "none", => button을 눌러서 이미지를 클릭 가능케해서 채우기를 구현
+        //   pointerEvents: "none",
         // }}
       >
         {lines.map((line, i) => (

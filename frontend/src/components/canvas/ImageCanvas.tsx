@@ -21,7 +21,7 @@ export function ImageCanvas({ src }: srcProps) {
     };
   }, [src]);
 
-  return <canvas ref={canvasRef} />;
+  return <canvas ref={canvasRef} className="absolute left-1/2 top-1/2" />;
 }
 
 export default ImageCanvas;
