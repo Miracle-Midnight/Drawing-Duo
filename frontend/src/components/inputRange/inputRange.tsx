@@ -18,6 +18,7 @@ function InputRange({ min, max }: range) {
     <span>
       <input
         type="range"
+        value={size}
         onChange={(e) => dispatch(changeSize(+e.target.value))}
         min={min}
         max={max}

@@ -1,6 +1,6 @@
 import "./sideNav.css";
 import logoSmall from "../../assets/logo-small.png";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InGamePlayer from "../inGamePlayer/inGamePlayer";
 import HintImage from "../hintImage/hintImage";
 import ChatList from "../chatList/chatList";
@@ -35,21 +35,11 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   };
 
   const handleExit = () => {
-    // axios
-    //   .post("/api/room/save/" + sessionStorage.getItem("roomId"), {
-    //     userId: sessionStorage.getItem("userid"),
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
     navigate("/");
   };
 
   return (
-    <div className="absolute flex h-full  left-0 border border-purple-800  z-50">
+    <div className="flex h-full  left-0 border border-purple-800  z-50">
       <nav className="flex flex-col justify-between w-20 h-screen bg-white ">
         <div className="flex justify-center pt-3">
           <img
