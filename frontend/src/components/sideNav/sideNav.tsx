@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import MicOnElem from "./sideNavElems/micElems/micOnElem";
 import MicOffElem from "./sideNavElems/micElems/micOffElem";
+import SoundOnElem from "./sideNavElems/soundElems/soundOnElem";
+import SoundOffElem from "./sideNavElems/soundElems/soundOffElem";
 
 // interface Props {
 //   isHintImageOn: boolean;
@@ -95,43 +97,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
               <li className="my-12 text-center" onClick={toggleSoundHandler}>
                 <a href="#">
                   <span className="h-6 w-6 text-gray-500  mx-auto hover:text-gray-800  transition-colors duration-200">
-                    {isSoundOn === false ? (
-                      <svg
-                        version="1.1"
-                        id="Layer_1"
-                        width="20"
-                        height="20"
-                        className="m-auto"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlnsXlink="http://www.w3.org/1999/xlink"
-                        x="0px"
-                        y="0px"
-                        viewBox="0 0 122.88 100.13"
-                        xmlSpace="preserve"
-                      >
-                        <g>
-                          <path
-                            className="st0"
-                            d="M85.66,37.03c-1.4-1.4-1.4-3.66,0-5.05c1.4-1.4,3.66-1.4,5.05,0l13.03,13.03l13.03-13.03 c1.4-1.4,3.66-1.4,5.05,0c1.4,1.4,1.4,3.66,0,5.05L108.8,50.06l13.03,13.03c1.4,1.4,1.4,3.66,0,5.05c-1.4,1.4-3.66,1.4-5.05,0 l-13.03-13.03L90.72,68.14c-1.4,1.4-3.66,1.4-5.05,0c-1.4-1.4-1.4-3.66,0-5.05L98.7,50.06L85.66,37.03L85.66,37.03z M11.39,23.67 h26.4L60.26,1.05c1.39-1.4,3.64-1.4,5.04-0.01c0.7,0.7,1.05,1.61,1.05,2.53h0.01v92.99c0,1.97-1.6,3.57-3.57,3.57 c-1,0-1.91-0.41-2.56-1.08L37.98,80.29H11.39c-3.13,0-5.98-1.28-8.04-3.34C1.28,74.89,0,72.04,0,68.91V35.06 c0-3.13,1.28-5.98,3.34-8.04C5.4,24.95,8.25,23.67,11.39,23.67L11.39,23.67z M39.26,30.82H11.39c-1.16,0-2.22,0.48-2.99,1.25 c-0.77,0.77-1.25,1.83-1.25,2.99v33.85c0,1.16,0.48,2.22,1.25,2.99c0.77,0.77,1.83,1.25,2.99,1.25h27.87v0.02 c0.81,0,1.62,0.27,2.29,0.83l17.67,14.9V12.21L41.97,29.57C41.32,30.33,40.34,30.82,39.26,30.82L39.26,30.82z"
-                          />
-                        </g>
-                      </svg>
-                    ) : (
-                      <svg
-                        id="Layer_1"
-                        data-name="Layer 1"
-                        width="20"
-                        height="20"
-                        className="m-auto"
-                        fill="rgb(219,0,255)"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 122.88 96.65"
-                      >
-                        <title>sound</title>
-                        <path d="M11,22.84H36.47L58.17,1A3.44,3.44,0,0,1,63,1a3.39,3.39,0,0,1,1,2.44h0V93.2a3.46,3.46,0,0,1-5.93,2.41L36.65,77.49H11a11,11,0,0,1-11-11V33.83a11,11,0,0,1,11-11Zm65.12,15a3.22,3.22,0,1,1,6.1-2,43.3,43.3,0,0,1,1.56,13.27c-.09,4.76-.78,9.44-2.13,12.21a3.23,3.23,0,1,1-5.8-2.83c.93-1.92,1.43-5.59,1.5-9.48a37.13,37.13,0,0,0-1.23-11.12Zm16.64-12a3.23,3.23,0,0,1,6-2.48c3,7.18,4.61,16.23,4.75,25.22s-1.17,17.72-4,24.77a3.22,3.22,0,1,1-6-2.4C96,64.64,97.15,56.66,97,48.6s-1.58-16.36-4.28-22.81Zm16.09-10.23a3.22,3.22,0,1,1,5.8-2.8,86.65,86.65,0,0,1,8.24,36.44c.09,12.22-2.37,24.39-7.73,34.77a3.22,3.22,0,0,1-5.73-3c4.88-9.43,7.11-20.56,7-31.77a80,80,0,0,0-7.6-33.69ZM37.89,29.74H11A4.11,4.11,0,0,0,6.9,33.83V66.51A4.11,4.11,0,0,0,11,70.6h26.9s2,.69,2.21.83L57.16,85.8v-74L40.52,28.53a3.46,3.46,0,0,1-2.63,1.21Z" />
-                      </svg>
-                    )}
+                    {isSoundOn === false ? <SoundOffElem /> : <SoundOnElem />}
                   </span>
                 </a>
               </li>
