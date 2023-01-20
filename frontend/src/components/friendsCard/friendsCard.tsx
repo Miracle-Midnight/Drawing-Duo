@@ -52,7 +52,7 @@ function InviteFriend({
 }) {
   const inviteFriend = () => {
     axios
-      .post("/api/friend/invite", {
+      .post("/friend/invite", {
         userId: sessionStorage.getItem("userid"),
         friendId: friendKey,
         roomId: sessionStorage.getItem("roomId"),

@@ -20,7 +20,7 @@ function CreateRoomModal(props: any) {
 
   const handleCreateRoom = () => {
     axios
-      .post("/api/room/" + sessionStorage.getItem("userid"), {
+      .post("/room/" + sessionStorage.getItem("userid"), {
         title: roomName,
       })
       .then((res) => {

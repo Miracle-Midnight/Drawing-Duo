@@ -13,7 +13,7 @@ function Intro() {
     sessionStorage.removeItem("users");
 
     axios
-      .get("/api/lobby/" + sessionStorage.getItem("userid"))
+      .get("/lobby/" + sessionStorage.getItem("userid"))
       .then((res) => {
         if (res.data == null) return;
         setLobbyList(res.data.data);

@@ -43,7 +43,7 @@ function InviteFromFriend({
     console.log(typeof userKey);
     console.log(typeof inviteRoom);
     axios
-      .post("/api/friend/invite/accept", {
+      .post("/friend/invite/accept", {
         userId: sessionStorage.getItem("userid"),
         inviteUser: userKey,
         roomId: inviteRoom,
@@ -61,7 +61,7 @@ function InviteFromFriend({
 
   const handleRejectButton = () => {
     axios
-      .post("/api/friend/invite/reject", {
+      .post("/friend/invite/reject", {
         userId: sessionStorage.getItem("userid"),
         inviteUser: userKey,
         roomId: inviteRoom,

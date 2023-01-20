@@ -47,7 +47,7 @@ function Register() {
       formData.append("nickname", inputNickname);
 
       axios
-        .post("/api/users/signup", formData, {
+        .post("/users/signup", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

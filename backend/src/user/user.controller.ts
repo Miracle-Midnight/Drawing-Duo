@@ -21,6 +21,11 @@ export class UserController {
     private readonly authService: AuthService,
   ) {}
 
+  @Get()
+  helllo() {
+    return 'DrawingDuo hello';
+  }
+
   @Post('signup')
   @UseInterceptors(FileInterceptor('image'))
   async signUp(

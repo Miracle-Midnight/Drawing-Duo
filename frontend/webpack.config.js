@@ -1,4 +1,3 @@
-/* eslint @typescript-eslint/no-var-requires: "off" */
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
@@ -18,7 +17,7 @@ module.exports = {
         port: 3000,
         historyApiFallback: true,
         proxy: {
-          "/api": {
+          "/": {
             target: "https://drawingduo.shop",
             changeOrigin: true,
           },

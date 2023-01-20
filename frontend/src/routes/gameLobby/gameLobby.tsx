@@ -8,7 +8,7 @@ import { ImageList } from "../../components/imageList/imageList";
 import { Invite } from "../../components/invite/invite";
 import { useDispatch } from "react-redux";
 import { add } from "../../states/friendsSlice";
-import { VoiceChat } from "../../components/voiceChat/voiceChat";
+import VoiceChat from "../../components/voiceChat/voiceChat";
 
 function GameLobby() {
   const [remoteNickname, setRemoteNickname] = useState<string>("");
@@ -19,7 +19,7 @@ function GameLobby() {
 
   useEffect(() => {
     axios
-      .get("/api/friend/" + sessionStorage.getItem("userid"))
+      .get("/friend/" + sessionStorage.getItem("userid"))
       .then((res) => {
         dispatch(add(res.data.data));
       })
@@ -38,7 +38,7 @@ function GameLobby() {
 
   const deleteRoom = () => {
     axios
-      .post("/api/room/delete/" + sessionStorage.getItem("roomId"), {
+      .post("/room/delete/" + sessionStorage.getItem("roomId"), {
         userId: sessionStorage.getItem("userid"),
       })
 

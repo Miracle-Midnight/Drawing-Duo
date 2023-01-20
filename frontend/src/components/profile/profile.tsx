@@ -20,7 +20,7 @@ export function Profile() {
       : setIsOpenFriendModal(true);
 
     axios
-      .get("/api/friend/" + sessionStorage.getItem("userid"))
+      .get("/friend/" + sessionStorage.getItem("userid"))
       .then((res) => {
         dispatch(add(res.data.data));
       })

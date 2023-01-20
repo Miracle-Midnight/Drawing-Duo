@@ -8,7 +8,7 @@ export function useImages() {
 
   const getImages = () => {
     axios
-      .get("/api/room")
+      .get("/room")
       .then((res) => {
         dispatch(change(res.data.data));
       })
