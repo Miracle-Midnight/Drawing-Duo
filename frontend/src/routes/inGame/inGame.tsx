@@ -65,7 +65,7 @@ function InGame() {
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5QPTO0dfQhrhSVMfjUTjj-7uh1zyqNnjYCg&usqp=CAU"
           }
         />
-        <DrawTools />
+        {/* <DrawTools /> */}
       </div>
 
       <div className="col-span-8 h-screen">

@@ -22,7 +22,7 @@ export function DrawTools() {
   } = useLines();
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-row">
       <Pen></Pen>
       <Eraser></Eraser>
       <InputRange min={1} max={100}></InputRange>
