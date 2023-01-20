@@ -13,6 +13,7 @@ import SoundOffElem from "./sideNavAtoms/soundElems/soundOffElem";
 import MicOnOffMolecule from "./sideNavMolecules/micOnOffMolecule";
 import SoundOnOffMolecule from "./sideNavMolecules/soundOnOffMolecule";
 import ImageOnOffMolecule from "./sideNavMolecules/imageOnOffMolecules";
+import ChatOnOffMolecule from "./sideNavMolecules/chatOnOffMolecule";
 
 // interface Props {
 //   isHintImageOn: boolean;
@@ -25,7 +26,6 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   const [isHintImageOn, setisHintImageOn] = useState(false);
   const [isChatOn, setisChatOn] = useState(false);
 
- 
   const toggleChatHandler = () => {
     setisChatOn(!isChatOn);
   };
@@ -58,14 +58,11 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
         <div className="mt-10 mb-10">
           <div className="side-nav mt-10">
             <ul>
-              
-
               <ImageOnOffMolecule />
               <MicOnOffMolecule />
-
               <SoundOnOffMolecule />
-
-              <li className="my-12 text-center" onClick={toggleChatHandler}>
+              <ChatOnOffMolecule isChatOn={isChatOn} setisChatOn={setisChatOn} />
+              {/* <li className="my-12 text-center" onClick={toggleChatHandler}>
                 <a href="#">
                   <span className="h-6 w-6 text-gray-500  mx-auto hover:text-gray-800  transition-colors duration-200">
                     <svg
@@ -95,7 +92,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
                     </svg>
                   </span>
                 </a>
-              </li>
+              </li> */}
               <li className="my-12 text-center">
                 <a href="#">
                   <span className="h-6 w-6 text-gray-500  mx-auto hover:text-gray-800  transition-colors duration-200">
@@ -125,7 +122,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
           </div>
         </div>
       </nav>
-      {/* {isChatOn === true ? (
+      {isChatOn === true ? (
         <div>
           <ChatList></ChatList>
         </div>
@@ -133,7 +130,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
         <div className="hidden">
           <ChatList></ChatList>
         </div>
-      )} */}
+      )}
 
       {isHintImageOn === true ? <HintImage Image={Image}></HintImage> : null}
     </div>
