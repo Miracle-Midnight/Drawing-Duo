@@ -22,7 +22,8 @@ function VoiceChat({
     try {
       // 미디어 디바이스 인터페이스를 구현하는 mediaDevices 객체에서 연결된 모든 기기를 가져올 수 있음
       // 기기 변경 사항을 수신 대기, 기기를 열어 미디어 스트림을 가져올 수 있음
-      const stream = await navigator.mediaDevices.getUserMedia({
+
+      const stream = await window.navigator.mediaDevices.getUserMedia({
         video: false,
         audio: true,
       });
@@ -97,7 +98,9 @@ function VoiceChat({
   }
 
   useEffect(() => {
-    pcRef.current = new RTCPeerConnection();
+    pcRef.current = new RTCPeerConnection({
+      iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+    });
 
     socketRef.current = io("https://drawingduo.shop");
 
@@ -138,9 +141,6 @@ function VoiceChat({
     });
 
     getMedia();
-
-    console.log(pcRef);
-    console.log(socketRef);
 
     socketRef.current.on("new_user", async (user: any) => {
       setRemoteNickname(user[0].profile.nickname);
