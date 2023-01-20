@@ -3,13 +3,11 @@ import { useEffect, useState } from "react";
 /* module from local */
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
-
 import { DrawTools } from "../../components/drawTools/drawContainer";
 import PaletteComponent from "../../components/palette/palette";
-import { VoiceChat } from "../../components/voiceChat/voiceChat";
 import axios from "axios";
 import { Canvas } from "../../components/canvas/canvas";
-import VoiceChat1 from "../../components/voiceChat/voiceChat1";
+import VoiceChat from "../../components/voiceChat/voiceChat";
 
 function InGame() {
   const [Image, setImage] = useState<string>("");

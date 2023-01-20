@@ -8,8 +8,7 @@ import { ImageList } from "../../components/imageList/imageList";
 import { Invite } from "../../components/invite/invite";
 import { useDispatch } from "react-redux";
 import { add } from "../../states/friendsSlice";
-import { VoiceChat } from "../../components/voiceChat/voiceChat";
-import VoiceChat1 from "../../components/voiceChat/voiceChat1";
+import VoiceChat from "../../components/voiceChat/voiceChat";
 
 function GameLobby() {
   const [remoteNickname, setRemoteNickname] = useState<string>("");
