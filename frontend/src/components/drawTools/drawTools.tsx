@@ -1,5 +1,5 @@
 /* library */
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 /* module from local */
 import Pen from "./pen";
 import Eraser from "./eraser";
@@ -9,6 +9,11 @@ import InputRange from "../inputRange/inputRange";
 import { Fill } from "./fill";
 
 import { useLines } from "../../hooks/useLines";
+
+interface Position {
+  x: number;
+  y: number;
+}
 
 export function DrawTools() {
   const {
@@ -22,45 +27,46 @@ export function DrawTools() {
   } = useLines();
 
   const [position, setPosition] = useState({ x: 200, y: 100 });
-  const [isMouseDown, setIsMouseDown] = useState(false);
+  const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const drawingTools = document.getElementById("drawingTools");
-    if (drawingTools) {
-      drawingTools.addEventListener("mousedown", () => {
-        setIsMouseDown(true);
-      });
-      drawingTools.addEventListener("mouseup", () => {
-        setIsMouseDown(false);
-      });
+    const handleMouseDown = (e: MouseEvent) => {
+      e.preventDefault();
+      const { clientX, clientY } = e;
+      const { top, left } = divRef.current!.getBoundingClientRect();
+      setPosition({ x: clientX - left, y: clientY - top });
+    };
 
-      drawingTools.addEventListener("mousemove", (event: MouseEvent) => {
-        if (isMouseDown) {
-          setPosition({ x: event.clientX, y: event.clientY });
-        }
-      });
-      return () => {
-        drawingTools.removeEventListener("mousedown", () => {
-          setIsMouseDown(true);
-        });
-        drawingTools.removeEventListener("mouseup", () => {
-          setIsMouseDown(false);
-        });
+    const handleMouseMove = (e: MouseEvent) => {
+      const { clientX, clientY } = e;
+      setPosition({ x: clientX - position.x, y: clientY - position.y });
+    };
 
-        drawingTools.removeEventListener("mousemove", (event: MouseEvent) => {
-          if (isMouseDown) {
-            setPosition({ x: event.clientX, y: event.clientY });
-          }
-        });
-      };
-    }
-  }, [isMouseDown]);
+    const handleMouseUp = () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [position]);
 
   return (
     <div
-      id="drawingTools"
-      style={{ position: "absolute", left: position.x, top: position.y }}
-      className="flex flex-row"
+      ref={divRef}
+      style={{
+        position: "absolute",
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+      }}
+      className="flex flex-row shadow-sm bg-white w-[600px]"
     >
       <Pen></Pen>
       <Eraser></Eraser>
