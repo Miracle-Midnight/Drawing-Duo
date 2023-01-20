@@ -23,6 +23,7 @@
     "@types/socket.io-client": "^3.0.0",
     "@types/styled-components": "^5.1.26",
     "autoprefixer": "^10.4.13",
+    "aws-sdk": "^2.1298.0",
     "axios": "^1.2.2",
     "babel-loader": "^9.1.2",
     "bootstrap": "^5.2.3",
