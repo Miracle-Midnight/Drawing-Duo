@@ -1,5 +1,5 @@
 /* library */
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useRef } from "react";
 import { useSelector } from "react-redux";
 /* module from local */
 import { Line } from "../line/line";
@@ -10,6 +10,7 @@ import { awareness, yLines } from "../../y";
 import { useKeyboardEvents } from "../../hooks/useKeyboradEvents";
 import { RootState } from "../../store";
 import { ImageCanvas } from "./ImageCanvas";
+import { start } from "repl";
 
 function getPoint(x: number, y: number) {
   return [x, y];
@@ -20,6 +21,7 @@ function getPoint(x: number, y: number) {
 export function Canvas({ frameImage }: { frameImage: string }) {
   const sizeState = useSelector((state: RootState) => state.size.value); // size reducer의 state중 value
   const users = useUsers(awareness, (state) => state);
+
   /* lines은 최종 화면에서 선 별로 저장 한 Ymap이다 */
   const {
     lines,
@@ -60,8 +62,12 @@ export function Canvas({ frameImage }: { frameImage: string }) {
       ]);
 
       if (drawTool == "draw") {
-        // startLine(getPoint(e.clientX, e.clientY), sizeState); // 현재 viewport 기준
-        startLine(getPoint(e.pageX, e.pageY), sizeState); // 전체 page 기준(scroll 포함)
+        const canvasElement = document.getElementById("svgCanvas");
+        const status = canvasElement?.getBoundingClientRect();
+        if (status?.left) {
+          // startLine(getPoint(e.clientX, e.clientY), sizeState); // 현재 viewport 기준
+          startLine(getPoint(e.pageX - status?.left, e.pageY), sizeState); // 전체 page 기준(scroll 포함)
+        }
       }
     },
     [startLine, drawTool, sizeState]
@@ -71,13 +77,15 @@ export function Canvas({ frameImage }: { frameImage: string }) {
   const handlePointerMove = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
       if (drawTool == "draw") {
+        const canvasElement = document.getElementById("svgCanvas");
+        const status = canvasElement?.getBoundingClientRect();
         // const point = getPoint(e.clientX, e.clientY);
-        const point = getPoint(e.pageX, e.pageY);
-
-        awareness.setLocalStateField("point", point);
-
-        if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-          addPointToLine(point);
+        if (status?.left) {
+          const point = getPoint(e.pageX - status?.left, e.pageY);
+          awareness.setLocalStateField("point", point);
+          if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+            addPointToLine(point);
+          }
         }
       }
     },
@@ -99,6 +107,7 @@ export function Canvas({ frameImage }: { frameImage: string }) {
   return (
     <div className="relative h-full">
       <svg
+        id="svgCanvas"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
