@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
 import { DrawTools } from "../../components/drawTools/drawContainer";
-import PaletteComponent from "../../components/palette/palette";
+import { Palette } from "../../components/palette/palette";
 import axios from "axios";
 import { Canvas } from "../../components/canvas/canvas";
 import VoiceChat from "../../components/voiceChat/voiceChat";
@@ -28,28 +28,19 @@ function InGame() {
       });
   }, []);
   return (
-    <div className="flex flex-row h-screen">
-      <SideNav users={users} Image={Image} />
-      <div>
-        <div className="">
-          <div className="grid">
-            <div className="flex justify-center border border-black relative">
-              <div className="h-screen w-screen">
-                <Canvas frameImage={frameImage}></Canvas>
-              </div>
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
-                <div className="w-30 h-10 shadow px-5">
-                  <div>
-                    <DrawTools />
-                  </div>
-                </div>
-              </div>
-              <PaletteComponent colors={color}></PaletteComponent>
-            </div>
-          </div>
-        </div>
+    <div className="grid grid-cols-10 overflow-y-hidden w-full">
+      <div className="col-span-1 h-full">
+        <SideNav users={users} Image={Image} />
       </div>
-      <VoiceChat />
+
+      <div className="col-span-8 h-full">
+        <Canvas frameImage={frameImage} />
+        <DrawTools />
+      </div>
+
+      <div className="col-span-1 h-full">
+        <Palette colors={color} />
+      </div>
     </div>
   );
 }

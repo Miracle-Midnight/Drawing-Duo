@@ -1,7 +1,7 @@
 /* library */
 import { configureStore } from "@reduxjs/toolkit";
 import { sizeReducer } from "./states/sizeSlice";
-import { eraseReducer } from "./states/eraseSlice";
+import { drawToolReducer } from "./states/drawToolSlice";
 import { imageReducer } from "./states/imageSlice";
 import { friendsReducer } from "./states/friendsSlice";
 import { filteredFriendsReducer } from "./states/filteredFriendsSlice";
@@ -9,7 +9,7 @@ import { filteredFriendsReducer } from "./states/filteredFriendsSlice";
 export const store = configureStore({
   reducer: {
     size: sizeReducer,
-    erase: eraseReducer,
+    drawTool: drawToolReducer,
     image: imageReducer,
     friends: friendsReducer,
     filteredFriends: filteredFriendsReducer,

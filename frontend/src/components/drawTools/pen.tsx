@@ -1,8 +1,7 @@
 /* library */
-import React from "react";
 import { useDispatch } from "react-redux";
 /* module from local */
-import { draw } from "../../states/eraseSlice";
+import { draw } from "../../states/drawToolSlice";
 
 function Pen() {
   const dispatch = useDispatch();

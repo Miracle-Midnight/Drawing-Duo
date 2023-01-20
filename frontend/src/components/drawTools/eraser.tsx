@@ -2,7 +2,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 /* module from local */
-import { erase } from "../../states/eraseSlice";
+import { erase } from "../../states/drawToolSlice";
 
 function Eraser() {
   const dispatch = useDispatch();
