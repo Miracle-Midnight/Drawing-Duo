@@ -97,7 +97,7 @@ export function Canvas({ frameImage }: { frameImage: string }) {
   // const isFill = useMemo(()=>)
 
   return (
-    <div>
+    <div className="relative h-full">
       <svg
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
@@ -105,8 +105,8 @@ export function Canvas({ frameImage }: { frameImage: string }) {
         onPointerEnter={() => awareness.setLocalStateField("isActive", true)}
         onPointerLeave={() => awareness.setLocalStateField("isActive", false)}
         onMouseOver={handleMouseOver}
-        viewBox={`0 0 ${window.innerWidth} ${window.innerHeight} `}
-
+        // viewBox={`0 0 ${window.innerWidth} ${window.innerHeight} `}
+        className="w-full h-full object-cover absolute"
         // style={{
         //   pointerEvents: "none",
         // }}
@@ -143,7 +143,6 @@ export function Canvas({ frameImage }: { frameImage: string }) {
         })}
       </svg>
       <ImageCanvas src={frameImage} />
-      {/* <img src={frameImage} width="100%" height="100%"></img> */}
     </div>
   );
 }

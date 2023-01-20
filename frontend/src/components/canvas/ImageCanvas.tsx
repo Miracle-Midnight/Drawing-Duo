@@ -14,14 +14,12 @@ export function ImageCanvas({ src }: srcProps) {
       const canvas = canvasRef.current;
       if (!canvas) return;
       const ctx = canvas.getContext("2d");
-      canvas.width = img.width;
-      canvas.height = img.height;
       if (ctx === null) return;
       ctx.drawImage(img, 0, 0);
     };
   }, [src]);
 
-  return <canvas ref={canvasRef} className="absolute left-1/2 top-1/2" />;
+  return <canvas ref={canvasRef} className="w-full h-full" />;
 }
 
 export default ImageCanvas;
