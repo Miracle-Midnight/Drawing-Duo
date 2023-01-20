@@ -99,7 +99,7 @@ function VoiceChat({
   useEffect(() => {
     pcRef.current = new RTCPeerConnection();
 
-    socketRef.current = io("localhost:3000");
+    socketRef.current = io("https://drawingduo.shop");
 
     socketRef.current.emit("join_room", {
       roomId: roomId,
