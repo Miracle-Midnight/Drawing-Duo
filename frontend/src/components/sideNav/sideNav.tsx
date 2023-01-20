@@ -88,13 +88,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
                   </span>
                 </a>
               </li>
-              {/* <li className="my-12 text-center" onClick={toggleMicHandler}>
-                <a href="#">
-                  <span className="h-6 w-6 text-gray-500  mx-auto hover:text-gray-800  transition-colors duration-200">
-                    {isMicOn === false ? <MicOffElem /> : <MicOnElem />}
-                  </span>
-                </a>
-              </li> */}
+
               <MicOnOffMolecule />
               <li className="my-12 text-center" onClick={toggleSoundHandler}>
                 <a href="#">
