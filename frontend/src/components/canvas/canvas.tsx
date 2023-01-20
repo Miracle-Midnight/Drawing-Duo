@@ -9,6 +9,7 @@ import { useUsers } from "../../useUsers";
 import { awareness, yLines } from "../../y";
 import { useKeyboardEvents } from "../../hooks/useKeyboradEvents";
 import { RootState } from "../../store";
+import { ImageCanvas } from "./ImageCanvas";
 
 function getPoint(x: number, y: number) {
   return [x, y];
@@ -33,7 +34,7 @@ export function Canvas({ frameImage }: { frameImage: string }) {
   const isErase = useSelector((state: RootState) => state.erase.isErase);
 
   const handleMouseOver = useCallback(
-    (e: React.MouseEvent<SVGSVGElement>) => {
+    (e: any) => {
       const starget = e.target as HTMLElement;
       const eidx = starget.dataset.id;
 
@@ -91,20 +92,8 @@ export function Canvas({ frameImage }: { frameImage: string }) {
     [completeLine]
   );
 
-  // const [_, forceUpdate] = useReducer((s) => !s, false);
-
-  // useEffect(() => {
-  //   const timeout = setInterval(forceUpdate, 10);
-  //   return () => clearInterval(timeout);
-  // }, []);
-
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-      }}
-    >
+    <div>
       <svg
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
@@ -112,10 +101,12 @@ export function Canvas({ frameImage }: { frameImage: string }) {
         onPointerEnter={() => awareness.setLocalStateField("isActive", true)}
         onPointerLeave={() => awareness.setLocalStateField("isActive", false)}
         onMouseOver={handleMouseOver}
-        className="h-screen w-full"
         viewBox={`0 0 ${window.innerWidth} ${window.innerHeight} `}
+        className="absolute z-47"
+        // style={{
+        //   pointerEvents: "none", => button을 눌러서 이미지를 클릭 가능케해서 채우기를 구현
+        // }}
       >
-        <image href={frameImage} width="100%" height="100%"></image>
         {lines.map((line, i) => (
           <Line key={line.get("id")} line={line} idx={i} />
         ))}
@@ -147,6 +138,8 @@ export function Canvas({ frameImage }: { frameImage: string }) {
           );
         })}
       </svg>
+      <ImageCanvas src={frameImage} />
+      {/* <img src={frameImage} width="100%" height="100%"></img> */}
     </div>
   );
 }

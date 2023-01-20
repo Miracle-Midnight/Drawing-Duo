@@ -12,7 +12,7 @@ interface colorType {
 
 function Palette({ colors }: colorType) {
   return (
-    <div className="absolute right-24 top-20 p-10 h-4/5 overflow-auto shadow-md rounded-sm">
+    <div className="absolute z-49 right-24 top-20 p-10 h-4/5 overflow-auto shadow-md rounded-sm">
       <div className="flex flex-col">
         {colors.map((color: color, index: number) => (
           <div key={index}>

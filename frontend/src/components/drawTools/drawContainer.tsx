@@ -22,15 +22,13 @@ export function DrawTools() {
   } = useLines();
 
   return (
-    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
+    <div className="absolute z-48 bottom-0 left-1/2 -translate-x-1/2 ">
       <div className="w-[500px] h-10 shadow px-5">
-        <div className="">
-          <Pen></Pen>
-          <Eraser></Eraser>
-          <InputRange min={1} max={100}></InputRange>
-          <Undo undo={undoLine}></Undo>
-          <Redo redo={redoLine}></Redo>
-        </div>
+        <Pen></Pen>
+        <Eraser></Eraser>
+        <InputRange min={1} max={100}></InputRange>
+        <Undo undo={undoLine}></Undo>
+        <Redo redo={redoLine}></Redo>
       </div>
     </div>
   );
