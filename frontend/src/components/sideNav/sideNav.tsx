@@ -6,10 +6,11 @@ import HintImage from "../hintImage/hintImage";
 import ChatList from "../chatList/chatList";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import MicOnElem from "./sideNavElems/micElems/micOnElem";
-import MicOffElem from "./sideNavElems/micElems/micOffElem";
-import SoundOnElem from "./sideNavElems/soundElems/soundOnElem";
-import SoundOffElem from "./sideNavElems/soundElems/soundOffElem";
+import MicOnElem from "./sideNavAtoms/micElems/micOnElem";
+import MicOffElem from "./sideNavAtoms/micElems/micOffElem";
+import SoundOnElem from "./sideNavAtoms/soundElems/soundOnElem";
+import SoundOffElem from "./sideNavAtoms/soundElems/soundOffElem";
+import MicOnOffMolecule from "./sideNavMolecules/micOnOffMolecule";
 
 // interface Props {
 //   isHintImageOn: boolean;
@@ -24,10 +25,10 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   const [isHintImageOn, setisHintImageOn] = useState(false);
   const [isChatOn, setisChatOn] = useState(false);
 
-  const toggleMicHandler = () => {
-    // isMicOn의 상태를 변경하는 메소드를 구현
-    setisMicOn(!isMicOn);
-  };
+  // const toggleMicHandler = () => {
+  //   // isMicOn의 상태를 변경하는 메소드를 구현
+  //   setisMicOn(!isMicOn);
+  // };
   const toggleSoundHandler = () => {
     setisSoundOn(!isSoundOn);
   };
@@ -87,13 +88,14 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
                   </span>
                 </a>
               </li>
-              <li className="my-12 text-center" onClick={toggleMicHandler}>
+              {/* <li className="my-12 text-center" onClick={toggleMicHandler}>
                 <a href="#">
                   <span className="h-6 w-6 text-gray-500  mx-auto hover:text-gray-800  transition-colors duration-200">
                     {isMicOn === false ? <MicOffElem /> : <MicOnElem />}
                   </span>
                 </a>
-              </li>
+              </li> */}
+              <MicOnOffMolecule />
               <li className="my-12 text-center" onClick={toggleSoundHandler}>
                 <a href="#">
                   <span className="h-6 w-6 text-gray-500  mx-auto hover:text-gray-800  transition-colors duration-200">
