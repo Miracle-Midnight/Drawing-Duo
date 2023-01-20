@@ -14,7 +14,7 @@ export const doc = new Y.Doc();
 export const provider = new WebrtcProvider(roomId, doc, {
   // Specify signaling servers. The client will connect to every signaling server concurrently to find other peers as fast as possible.
   signaling: ["ws://54.180.118.157:4000"],
-
+  password: '',
   awareness: new awarenessProtocol.Awareness(doc),
   maxConns: 20,
   filterBcConns: true,
