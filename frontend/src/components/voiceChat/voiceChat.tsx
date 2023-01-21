@@ -22,7 +22,7 @@ function VoiceChat({
   const pcRef = useRef<RTCPeerConnection>();
   const socketRef = useRef<Socket>();
 
-  let isStarted = useSelector((state: RootState) => state.gameStart.start);
+  const isStarted = useSelector((state: RootState) => state.gameStart.start);
 
   async function getMedia() {
     try {
