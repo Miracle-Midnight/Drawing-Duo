@@ -17,7 +17,28 @@ export const provider = new WebrtcProvider(roomId, doc, {
   awareness: new awarenessProtocol.Awareness(doc),
   maxConns: 20,
   filterBcConns: false,
-  peerOpts: {},
+  peerOpts: {
+    initiator: false,
+    channelConfig: {},
+    channelName: "<random string>",
+    config: {
+      iceServers: [
+        { urls: "stun:stun.l.google.com:19302" },
+        { urls: "stun:global.stun.twilio.com:3478?transport=udp" },
+      ],
+    },
+    offerOptions: {},
+    answerOptions: {},
+    sdpTransform: function (sdp: any) {
+      return sdp;
+    },
+    stream: false,
+    streams: [],
+    trickle: true,
+    allowHalfTrickle: false,
+    wrtc: {}, // RTCPeerConnection/RTCSessionDescription/RTCIceCandidate
+    objectMode: false,
+  },
 }); // webrtc를 활용하여서 사용자와의 연동
 
 /* 세션을 통해 document정보 유지 */
