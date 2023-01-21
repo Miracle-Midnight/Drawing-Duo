@@ -9,6 +9,7 @@ import InputRange from "../inputRange/inputRange";
 import { Fill } from "./fill";
 
 import { useLines } from "../../hooks/useLines";
+import "./drawTools.css";
 
 interface Position {
   x: number;
@@ -31,6 +32,9 @@ export function DrawTools() {
 
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
+      if (e.target !== divRef.current) {
+        return;
+      }
       e.preventDefault();
       const { clientX, clientY } = e;
       const { top, left } = divRef.current!.getBoundingClientRect();
@@ -60,13 +64,13 @@ export function DrawTools() {
 
   return (
     <div
+      className="flex flex-row shadow-sm bg-white w-[600px] movable-div"
       ref={divRef}
       style={{
         position: "absolute",
         left: `${position.x}px`,
         top: `${position.y}px`,
       }}
-      className="flex flex-row shadow-sm bg-white w-[600px]"
     >
       <Pen></Pen>
       <Eraser></Eraser>
@@ -74,6 +78,7 @@ export function DrawTools() {
       <Undo undo={undoLine}></Undo>
       <Redo redo={redoLine}></Redo>
       <Fill></Fill>
+      <div>handle</div>
     </div>
   );
 }
