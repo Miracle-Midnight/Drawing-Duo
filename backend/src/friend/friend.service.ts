@@ -104,7 +104,7 @@ export class FriendService {
     // 방 입장
     const targetRoom = await this.roomRepository.findOne({
       where: { id: roomId },
-      relations: ['user'],
+      relations: ['user', 'user.profile'],
     });
     if (!targetRoom) throw new NotFoundException('방이 존재하지 않습니다.');
 
@@ -121,7 +121,10 @@ export class FriendService {
     userinfo.room = [...userinfo.room, targetRoom];
     await this.userRepository.save(userinfo);
 
-    return { userNickName: userinfo.profile.nickname, room: targetRoom };
+    return {
+      userNickName: userinfo.profile.nickname,
+      roomUser: targetRoom.user[0].profile.nickname,
+    };
   }
 
   async rejectInvite(inviteDto: InviteAcceptDto) {
