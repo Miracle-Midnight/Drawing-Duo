@@ -3,15 +3,18 @@ import { io, Socket } from "socket.io-client";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import axios from "axios";
 
 function VoiceChat({
   setRemoteNickname,
   setFriendsPick,
   myPick,
+  imageId,
 }: {
   setRemoteNickname: (nickname: string) => void;
   setFriendsPick: (pick: string) => void;
   myPick: string;
+  imageId: number | undefined;
 }) {
   const navigate = useNavigate();
 
@@ -174,6 +177,14 @@ function VoiceChat({
     if (socketRef.current) {
       console.log(isStarted);
       if (isStarted) {
+        axios
+          .post("/room", {
+            roomid: sessionStorage.getItem("roomId"),
+            imageid: imageId,
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         socketRef.current.emit("game-start", { roomId: roomId });
       }
       socketRef.current.emit("select-image", { roomId: roomId, image: myPick });
@@ -192,6 +203,7 @@ VoiceChat.defaultProps = {
   setRemoteNickname: () => void 0,
   setFriendsPick: () => void 0,
   myPick: "",
+  imageId: 0,
 };
 
 export default VoiceChat;

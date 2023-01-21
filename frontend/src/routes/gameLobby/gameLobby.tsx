@@ -38,7 +38,7 @@ function GameLobby() {
   const handleReady = () => {
     if (myPick === friendsPick) {
       axios
-        .post("/room/" + sessionStorage.getItem("roomId"), {
+        .post("/room", {
           roomid: sessionStorage.getItem("roomId"),
           imageid: imageId,
         })
@@ -107,6 +107,7 @@ function GameLobby() {
         setRemoteNickname={setRemoteNickname}
         setFriendsPick={setFriendsPick}
         myPick={myPick}
+        imageId={imageId}
       />
     </div>
   );
