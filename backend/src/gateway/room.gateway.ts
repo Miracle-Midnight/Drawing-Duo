@@ -42,6 +42,7 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
     this.logger.log(`Client joined: ${socket.id} ${data.roomId}`);
     this.roomMap.set(socket.id, data.roomId);
     console.log(this.roomMap);
+
     const usersInRoom = this.server.sockets.adapter.rooms.get(data.roomId);
     if (usersInRoom.size >= 1) {
       socket.to(data.roomId).emit('all_users', Array.from(usersInRoom));
@@ -75,6 +76,12 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
   handleSelectImage(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     this.logger.log(`Client selected image: ${socket.id} ${data.image}`);
     socket.to(data.roomId).emit('image selected', data.image);
+  }
+
+  @SubscribeMessage('game-start')
+  handleGameStart(@MessageBody() data, @ConnectedSocket() socket: Socket) {
+    this.logger.log(`Client started game: ${socket.id} ${socket.nsp.name}`);
+    socket.to(data.roomId).emit('game started');
   }
 
   @SubscribeMessage('message')
