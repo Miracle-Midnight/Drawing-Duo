@@ -65,12 +65,12 @@ export function DrawTools() {
   return (
     <div
       className="flex flex-row shadow-sm bg-white w-[600px] movable-div"
-      ref={divRef}
-      style={{
-        position: "absolute",
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-      }}
+      // ref={divRef}
+      // style={{
+      //   position: "absolute",
+      //   left: `${position.x}px`,
+      //   top: `${position.y}px`,
+      // }}
     >
       <Pen></Pen>
       <Eraser></Eraser>
@@ -78,7 +78,7 @@ export function DrawTools() {
       <Undo undo={undoLine}></Undo>
       <Redo redo={redoLine}></Redo>
       <Fill></Fill>
-      <div>handle</div>
+      <div>test</div>
     </div>
   );
 }
