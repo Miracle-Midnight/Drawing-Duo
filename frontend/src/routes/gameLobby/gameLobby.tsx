@@ -2,20 +2,27 @@ import React, { useEffect, useState } from "react";
 import "./gameLobby.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import HeaderNav from "../../components/headerNav/header";
 import UserState from "../../components/userState/userState";
 import { ImageList } from "../../components/imageList/imageList";
 import { Invite } from "../../components/invite/invite";
-import { useDispatch } from "react-redux";
 import { add } from "../../states/friendsSlice";
 import VoiceChat from "../../components/voiceChat/voiceChat";
+import { setStarted } from "../../states/gameStartSlice";
+import { RootState } from "../../store";
 
 function GameLobby() {
   const [remoteNickname, setRemoteNickname] = useState<string>("");
   const [friendsPick, setFriendsPick] = useState<string>("");
   const [myPick, setMyPick] = useState<string>("");
+  const [isReady, setIsReady] = useState<boolean>(false);
+
+  let isStarted = useSelector((state: RootState) => state.gameStart.start);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -30,10 +37,13 @@ function GameLobby() {
 
   //-----------------------------------------------------------------------------
 
-  const navigate = useNavigate();
-
   const handleReady = () => {
-    navigate("/InGame/" + sessionStorage.getItem("roomId"));
+    if (myPick === friendsPick) {
+      dispatch(setStarted(true));
+      navigate("/InGame/" + sessionStorage.getItem("roomId"));
+    } else {
+      alert("모두 같은 이미지를 선택해 주세요!");
+    }
   };
 
   const deleteRoom = () => {
@@ -41,7 +51,6 @@ function GameLobby() {
       .post("/room/delete/" + sessionStorage.getItem("roomId"), {
         userId: sessionStorage.getItem("userid"),
       })
-
       .then((res) => {
         document.location.href = "/";
       })
