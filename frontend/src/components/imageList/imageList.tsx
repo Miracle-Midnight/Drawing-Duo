@@ -7,9 +7,11 @@ import { RootState } from "../../store";
 export function ImageList({
   friendsPick,
   setMyPick,
+  setImageId,
 }: {
   friendsPick: string;
   setMyPick: (pick: string) => void;
+  setImageId: (id: number) => void;
 }) {
   const [isClicked, setIsClicked] = useState<number>();
 
@@ -23,10 +25,7 @@ export function ImageList({
   const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsClicked(parseInt(e.currentTarget.id));
     setMyPick(imageList[parseInt(e.currentTarget.id)].image);
-    // socketRef.current?.emit("image", {
-    //   id: e.currentTarget.id,
-    //   src: imageList[parseInt(e.currentTarget.id)],
-    // });
+    setImageId(imageList[parseInt(e.currentTarget.id)].id);
   };
 
   return (
