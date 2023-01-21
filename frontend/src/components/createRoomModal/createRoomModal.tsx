@@ -8,7 +8,7 @@ function CreateRoomModal(props: any) {
 
   const [roomName, setRoomName] = useState("");
 
-  const onEnterPress = (e: any) => {
+  const onEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleCreateRoom();
     }
