@@ -13,11 +13,32 @@ export const doc = new Y.Doc();
 /* webrtc로 동일한 room에 있는 유저간 doc 동기화 */
 export const provider = new WebrtcProvider(roomId, doc, {
   // Specify signaling servers. The client will connect to every signaling server concurrently to find other peers as fast as possible.
-  signaling: ["wss://54.180.118.157:10000"],
+  signaling: ["ws://54.180.118.157:4000"],
   awareness: new awarenessProtocol.Awareness(doc),
   maxConns: 20,
   filterBcConns: false,
-  peerOpts: {},
+  peerOpts: {
+    initiator: false,
+    channelConfig: {},
+    channelName: "<random string>",
+    config: {
+      iceServers: [
+        { urls: "stun:stun.l.google.com:19302" },
+        { urls: "stun:global.stun.twilio.com:3478?transport=udp" },
+      ],
+    },
+    offerOptions: {},
+    answerOptions: {},
+    sdpTransform: function (sdp: any) {
+      return sdp;
+    },
+    stream: false,
+    streams: [],
+    trickle: true,
+    allowHalfTrickle: false,
+    wrtc: {}, // RTCPeerConnection/RTCSessionDescription/RTCIceCandidate
+    objectMode: false,
+  },
 }); // webrtc를 활용하여서 사용자와의 연동
 
 /* 세션을 통해 document정보 유지 */
