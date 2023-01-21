@@ -29,8 +29,8 @@ function InGame() {
       });
   }, []);
   return (
-    <div className="grid grid-cols-10 overflow-y-hidden w-full">
-      <div className="col-span-1 flex h-full">
+    <div className="h-full grid grid-cols-10 overflow-y-hidden w-full">
+      <div className="flex h-full">
         <SideNav users={users} Image={Image} />
         <DrawTools />
       </div>

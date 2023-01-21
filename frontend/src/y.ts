@@ -4,6 +4,7 @@ import { WebrtcProvider } from "y-webrtc";
 import { IndexeddbPersistence } from "y-indexeddb";
 import { USER_COLORS } from "./constants";
 import * as awarenessProtocol from "y-protocols/awareness";
+import axios from "axios";
 
 const roomId: string = sessionStorage.getItem("roomId")!;
 
@@ -15,6 +16,7 @@ export const provider = new WebrtcProvider(roomId, doc, {
   // Specify signaling servers. The client will connect to every signaling server concurrently to find other peers as fast as possible.
   signaling: ["ws://54.180.118.157:4000"],
   awareness: new awarenessProtocol.Awareness(doc),
+
   maxConns: 20,
   filterBcConns: false,
   peerOpts: {
@@ -53,6 +55,14 @@ export const awareness = provider.awareness;
 
 /* 공유 데이터를 담는 YArray 생성, doc에서 lines라는 Y배열을 가진 clinet끼리 공유*/
 export const yLines: Y.Array<Y.Map<any>> = doc.getArray("lines");
+// setInterval(() => console.log(yLines), 2000);
+
+// axios
+//   .post("/", yLines.toJSON())
+//   .then((res) => {
+//     console.log(res);
+//   })
+//   .catch((err) => console.log(err));
 
 /* 취소 기능을 위해 manager 생성 */
 export const undoManager = new Y.UndoManager(yLines);

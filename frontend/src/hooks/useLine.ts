@@ -16,6 +16,7 @@ export function useLine(line: Y.Map<any>) {
   useEffect(() => {
     function handleChange() {
       const current = line.toJSON(); // YMap을 json객체 형태로 전환
+      // console.log(current);
       setIsComplete(current.isComplete);
       setColor(current.userColor);
       setSize(current.size);
