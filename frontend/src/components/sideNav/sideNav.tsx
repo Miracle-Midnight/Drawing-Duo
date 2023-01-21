@@ -15,6 +15,7 @@ import SoundOnOffMolecule from "./sideNavMolecules/soundOnOffMolecule";
 import ImageOnOffMolecule from "./sideNavMolecules/imageOnOffMolecules";
 import ChatOnOffMolecule from "./sideNavMolecules/chatOnOffMolecule";
 import CloseButtonElem from "./sideNavAtoms/closeButtonElem/closeButtonElem";
+import { DrawTools } from "../drawTools/drawTools";
 
 // interface Props {
 //   isHintImageOn: boolean;
@@ -65,6 +66,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
         <div className="mt-10 mb-10">
           <div className="side-nav mt-10">
             <ul>
+              <DrawTools />
               <ImageOnOffMolecule
                 isHintImageOn={isHintImageOn}
                 setisHintImageOn={setisHintImageOn}
