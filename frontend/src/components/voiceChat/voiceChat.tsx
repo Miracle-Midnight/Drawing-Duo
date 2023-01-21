@@ -99,10 +99,7 @@ function VoiceChat({
 
   useEffect(() => {
     pcRef.current = new RTCPeerConnection({
-      iceServers: [
-        { urls: "stun:stun.l.google.com:19302" },
-        { urls: "stun:global.stun.twilio.com:3478?transport=udp" },
-      ],
+      iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
     });
 
     socketRef.current = io("https://drawingduo.shop");
