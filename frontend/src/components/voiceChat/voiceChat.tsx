@@ -1,22 +1,31 @@
 import { useRef, useEffect } from "react";
 import { io, Socket } from "socket.io-client";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import axios from "axios";
 
 function VoiceChat({
   setRemoteNickname,
   setFriendsPick,
   myPick,
+  imageId,
 }: {
   setRemoteNickname: (nickname: string) => void;
   setFriendsPick: (pick: string) => void;
   myPick: string;
+  imageId: number | undefined;
 }) {
+  const navigate = useNavigate();
+
   const roomId = useParams().id;
   const myVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
 
   const pcRef = useRef<RTCPeerConnection>();
   const socketRef = useRef<Socket>();
+
+  const isStarted = useSelector((state: RootState) => state.gameStart.start);
 
   async function getMedia() {
     try {
@@ -146,6 +155,14 @@ function VoiceChat({
       setRemoteNickname(user[0].profile.nickname);
     });
 
+    socketRef.current.on("image selected", async (image: any) => {
+      setFriendsPick(image);
+    });
+
+    socketRef.current.on("game started", async () => {
+      navigate("/InGame/" + sessionStorage.getItem("roomId"));
+    });
+
     return () => {
       if (socketRef.current) {
         socketRef.current.disconnect();
@@ -158,18 +175,21 @@ function VoiceChat({
 
   useEffect(() => {
     if (socketRef.current) {
-      socketRef.current.on("select-image", async (image: any) => {
-        console.log(image);
-        setFriendsPick(image.image);
-      });
-    }
-  });
-
-  useEffect(() => {
-    if (socketRef.current) {
+      console.log(isStarted);
+      if (isStarted) {
+        axios
+          .post("/room", {
+            roomid: sessionStorage.getItem("roomId"),
+            imageid: imageId,
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        socketRef.current.emit("game-start", { roomId: roomId });
+      }
       socketRef.current.emit("select-image", { roomId: roomId, image: myPick });
     }
-  }, [myPick]);
+  }, [myPick, isStarted]);
 
   return (
     <div>
@@ -183,6 +203,7 @@ VoiceChat.defaultProps = {
   setRemoteNickname: () => void 0,
   setFriendsPick: () => void 0,
   myPick: "",
+  imageId: 0,
 };
 
 export default VoiceChat;
