@@ -3,9 +3,6 @@ import { useState, useEffect } from "react";
 /* module from local */
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
-import { useYjsProvider } from "../../hooks/useYjsProvider";
-import { setYjs } from "../../states/yjsSlice";
-import { useDispatch } from "react-redux";
 
 import { DrawTools } from "../../components/drawTools/drawTools";
 import { Palette } from "../../components/palette/palette";
@@ -19,8 +16,6 @@ function InGame() {
   const [users, setUsers] = useState<any>([]);
   const [color, setColor] = useState([]);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     axios
       .get("/game/" + sessionStorage.getItem("roomId"))
@@ -33,10 +28,6 @@ function InGame() {
       .catch((err) => {
         console.log(err);
       });
-
-    const { yLines, provider, undoManager, doc, awareness } = useYjsProvider();
-
-    dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
   }, []);
   return (
     <div className="h-full grid grid-cols-10 overflow-y-hidden w-full">
