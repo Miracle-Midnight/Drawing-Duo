@@ -1,9 +1,9 @@
 import ColorSection from "../colorSection/colorSection";
 
 export interface color {
-  red: number;
-  blue: number;
-  green: number;
+  r: number;
+  b: number;
+  g: number;
 }
 
 interface colorType {
@@ -11,15 +11,17 @@ interface colorType {
 }
 
 export function Palette({ colors }: colorType) {
+  console.log("pallet");
+  console.log(colors);
   return (
     <div className="border h-full ">
       {colors.map((color: color, index: number) => (
         <div key={index}>
           <ColorSection
             number={index + 1}
-            red={color.red}
-            green={color.green}
-            blue={color.blue}
+            r={color.r}
+            g={color.g}
+            b={color.b}
           />
         </div>
       ))}

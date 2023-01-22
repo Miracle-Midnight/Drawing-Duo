@@ -6,19 +6,21 @@ interface colorWithNumber extends color {
 }
 
 function ColorSection(props: colorWithNumber) {
+  console.log("colorSection");
+  console.log(props);
   const { handleColorChange } = useColorChange();
   return (
     <button
       className="w-full p-3"
       onClick={() =>
-        handleColorChange(`rgba(${props.red},${props.green},${props.blue})`)
+        handleColorChange(`rgba(${props.r},${props.g},${props.b})`)
       }
     >
       <div>{props.number}</div>
       <div
         className="w-full h-10"
         style={{
-          backgroundColor: `rgba(${props.red},${props.green},${props.blue})`,
+          backgroundColor: `rgba(${props.r},${props.g},${props.b})`,
         }}
       ></div>
     </button>

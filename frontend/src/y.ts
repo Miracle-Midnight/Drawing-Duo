@@ -72,3 +72,5 @@
 // //   isActive: false,
 // //   windowSize: [window.innerWidth, window.innerHeight],
 // // });
+
+export {};
