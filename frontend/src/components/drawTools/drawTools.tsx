@@ -10,6 +10,7 @@ import { Fill } from "./fill";
 
 import { useLines } from "../../hooks/useLines";
 import "./drawTools.css";
+import Palette from "./palette";
 
 interface Position {
   x: number;
@@ -64,7 +65,7 @@ export function DrawTools() {
 
   return (
     <div
-      className="flex flex-row shadow-sm bg-white w-[600px] movable-div"
+      className="flex flex-row shadow-sm bg-white gap-2 p-2 rounded-md w-fit "
       // ref={divRef}
       // style={{
       //   position: "absolute",
@@ -78,7 +79,7 @@ export function DrawTools() {
       <Undo undo={undoLine}></Undo>
       <Redo redo={redoLine}></Redo>
       <Fill></Fill>
-      <div>test</div>
+      {/* <Palette></Palette> */}
     </div>
   );
 }
