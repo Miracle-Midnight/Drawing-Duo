@@ -42,16 +42,26 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   const [isClickPen, setisClickPen] = useState(false);
   const [isPaletteOn, setisPaletteOn] = useState(false);
   const [isClickEraser, setisClickEraser] = useState(false);
+  const [isFillon, setisFillon] = useState(false);
 
   const togglePenHandler = () => {
     setisClickPen(true);
     setisClickEraser(false);
+    setisFillon(false);
   };
 
   const toggleEraserHandler = () => {
     setisClickEraser(true);
     setisClickPen(false);
+    setisFillon(false);
   };
+
+  const toggleFillHandler = () => {
+    setisFillon(true);
+    setisClickPen(false);
+    setisClickEraser(false);
+  };
+
   const togglePaletteHandler = () => {
     setisPaletteOn(!isPaletteOn);
   };
@@ -125,9 +135,11 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
                     <div onClick={toggleEraserHandler}>
                       <Eraser isClickEraser={isClickEraser} />
                     </div>
-                    <Fill />
+                    <div onClick={toggleFillHandler}>
+                      <Fill isFillon={isFillon} />
+                    </div>
                     <div onClick={togglePaletteHandler}>
-                      <Palette></Palette>
+                      <Palette isPaletteOn={isPaletteOn}></Palette>
                     </div>
                     <Undo undo={undoLine}></Undo>
                     <Redo redo={redoLine}></Redo>

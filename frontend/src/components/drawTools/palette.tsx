@@ -1,4 +1,4 @@
-function Palette() {
+function Palette(props: any) {
   return (
     <button className="w-10 h-10">
       <svg
@@ -7,7 +7,7 @@ function Palette() {
         className="m-auto"
         version="1.1"
         id="_x32_"
-        fill="currentColor"
+        fill={props.isPaletteOn === true ? "rgb(219,0,255)" : "currentColor"}
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
         viewBox="0 0 512 512"
