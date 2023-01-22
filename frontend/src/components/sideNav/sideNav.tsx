@@ -30,17 +30,23 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   const [isHintImageOn, setisHintImageOn] = useState(false);
   const [isChatOn, setisChatOn] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [showDrawTools, setShowDrawTools] = useState(false);
+
+  function handleClickDrawTools() {
+    setShowDrawTools(!showDrawTools);
+  }
+
   const handleExit = () => {
-    // axios
-    //   .post("/room/save/" + sessionStorage.getItem("roomId"), {
-    //     userId: sessionStorage.getItem("userid"),
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .post("/room/save/" + sessionStorage.getItem("roomId"), {
+        userId: sessionStorage.getItem("userid"),
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     navigate("/");
   };
 
@@ -69,7 +75,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
           <div className="side-nav mt-10">
             <ul>
               <li>
-                <ToolsElem />
+                <ToolsElem  />
 
                 <DrawTools />
               </li>
