@@ -11,8 +11,6 @@ interface colorType {
 }
 
 export function Palette({ colors }: colorType) {
-  console.log("pallet");
-  console.log(colors);
   return (
     <div className="border h-full ">
       {colors.map((color: color, index: number) => (

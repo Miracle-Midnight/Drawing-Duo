@@ -35,6 +35,8 @@ export function Canvas({ frameImage }: { frameImage: string }) {
     (state: RootState) => state.drawTool.currentTool
   );
 
+  useKeyboardEvents();
+
   const handleMouseOver = useCallback(
     (e: any) => {
       const starget = e.target as HTMLElement;
@@ -46,8 +48,6 @@ export function Canvas({ frameImage }: { frameImage: string }) {
     },
     [drawTool]
   );
-
-  useKeyboardEvents();
 
   const handlePointerDown = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
@@ -108,9 +108,9 @@ export function Canvas({ frameImage }: { frameImage: string }) {
         onPointerLeave={() => awareness.setLocalStateField("isActive", false)}
         onMouseOver={handleMouseOver}
         className="w-full h-full object-cover absolute"
-        // style={{
-        //   pointerEvents: "none",
-        // }}
+        style={{
+          pointerEvents: drawTool == "fill" ? "none" : "auto",
+        }}
       >
         {lines.map((line, i) => (
           <Line key={line.get("id")} line={line} idx={i} />

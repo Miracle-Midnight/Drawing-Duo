@@ -1,5 +1,5 @@
 /* library */
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 /* module from local */
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
@@ -20,9 +20,6 @@ function InGame() {
   const [color, setColor] = useState([]);
 
   const dispatch = useDispatch();
-  const { yLines, provider, undoManager, doc, awareness } = useYjsProvider();
-
-  dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
 
   useEffect(() => {
     axios

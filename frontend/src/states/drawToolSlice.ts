@@ -1,6 +1,5 @@
 /* library */
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
 
 type drawToolCategory = "draw" | "erase" | "fill";
 

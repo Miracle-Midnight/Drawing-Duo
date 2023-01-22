@@ -3,13 +3,22 @@ import "./card.css";
 import Player from "../player/player";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useYjsProvider } from "../../hooks/useYjsProvider";
+import { setYjs } from "../../states/yjsSlice";
 
 function Card({ title, frameImageSrc, needTitle, roomId, users }: any) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const joinRoom = () => {
     sessionStorage.setItem("roomTitle", title);
     sessionStorage.setItem("roomId", roomId);
+
+    // DUBUG
+    const { yLines, provider, undoManager, doc, awareness } = useYjsProvider();
+    dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
+
     navigate("/InGame/" + roomId);
   };
 
