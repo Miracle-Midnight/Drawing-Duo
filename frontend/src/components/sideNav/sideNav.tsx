@@ -39,11 +39,18 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   const [isHintImageOn, setisHintImageOn] = useState(false);
   const [isChatOn, setisChatOn] = useState(false);
   const [modalShow, setModalShow] = useState(false);
-  const [sizeShow, setSizeShow] = useState(false);
+  const [isClickPen, setisClickPen] = useState(false);
   const [isPaletteOn, setisPaletteOn] = useState(false);
+  const [isClickEraser, setisClickEraser] = useState(false);
 
-  const toggleSizeHandler = () => {
-    setSizeShow(!sizeShow);
+  const togglePenHandler = () => {
+    setisClickPen(true);
+    setisClickEraser(false);
+  };
+
+  const toggleEraserHandler = () => {
+    setisClickEraser(true);
+    setisClickPen(false);
   };
   const togglePaletteHandler = () => {
     setisPaletteOn(!isPaletteOn);
@@ -112,10 +119,12 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
               <li className=" text-center">
                 <div className="flex flex-col p-1 items-center border-t-2 border-b-2 shadow-sm border-gray-300 rounded-md">
                   <div className="relative">
-                    <div onClick={toggleSizeHandler}>
-                      <Pen />
+                    <div onClick={togglePenHandler}>
+                      <Pen isClickPen={isClickPen} />
                     </div>
-                    <Eraser />
+                    <div onClick={toggleEraserHandler}>
+                      <Eraser isClickEraser={isClickEraser} />
+                    </div>
                     <Fill />
                     <div onClick={togglePaletteHandler}>
                       <Palette></Palette>
@@ -125,7 +134,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
 
                     <div
                       className={
-                        sizeShow === true
+                        isClickPen === true
                           ? "absolute top-20 left-20 -rotate-90"
                           : "absolute top-20 left-20 -rotate-90 hidden"
                       }
