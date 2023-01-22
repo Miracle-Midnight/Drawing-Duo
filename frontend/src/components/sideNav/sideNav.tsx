@@ -67,6 +67,9 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
         <div className="mt-10 mb-10">
           <div className="side-nav mt-10">
             <ul>
+              <li>
+                <DrawTools />
+              </li>
               <ImageOnOffMolecule
                 isHintImageOn={isHintImageOn}
                 setisHintImageOn={setisHintImageOn}
