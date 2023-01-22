@@ -19,6 +19,8 @@ export const store = configureStore({
     gameStart: gameStartReducer,
     yjs: yjsReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
