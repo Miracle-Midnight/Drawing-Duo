@@ -15,7 +15,7 @@ function InputRange({ min, max }: range) {
   const dispatch = useDispatch(); // global state을 변경하기 위해 존재
 
   return (
-    <div className="m-auto">
+    <div className="m-auto flex flex-row gap-2">
       <input
         type="range"
         value={size}
@@ -23,7 +23,8 @@ function InputRange({ min, max }: range) {
         min={min}
         max={max}
       ></input>
-      <label>{`Size: ${size}`}</label>
+
+      <label>{`${size}`}</label>
     </div>
   );
 }
