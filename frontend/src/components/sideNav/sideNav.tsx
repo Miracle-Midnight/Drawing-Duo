@@ -18,7 +18,13 @@ import CloseButtonElem from "./sideNavAtoms/closeButtonElem/closeButtonElem";
 import { DrawTools } from "../drawTools/drawTools";
 import CloseRoomModal from "../closeRoomModal/closeRoomModal";
 import ToolsElem from "./sideNavAtoms/toolsElem/toolsElem";
-
+import Pen from "../drawTools/pen";
+import Eraser from "../drawTools/eraser";
+import InputRange from "../inputRange/inputRange";
+import Fill from "../drawTools/fill";
+import Undo from "../drawTools/undo";
+import Redo from "../drawTools/redo";
+import { useLines } from "../../hooks/useLines";
 // interface Props {
 //   isHintImageOn: boolean;
 //   setisHintImageOn: Dispatch<SetStateAction<boolean>>;
@@ -50,6 +56,16 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
     navigate("/");
   };
 
+  const {
+    isSynced,
+    lines,
+    startLine,
+    addPointToLine,
+    completeLine,
+    undoLine,
+    redoLine,
+  } = useLines();
+
   return (
     <div className="flex h-full  left-0 border border-purple-800  z-50">
       <nav className="flex flex-col justify-between w-20 h-screen bg-white ">
@@ -74,11 +90,23 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
         <div className="mt-10 mb-10">
           <div className="side-nav mt-10">
             <ul>
-              <li>
-                <ToolsElem  />
+              <li className=" text-center">
+                <div className="flex flex-col p-1 items-center border-t-2 border-b-2 shadow-sm border-gray-300 rounded-md">
+                  <Pen />
+
+                  <Eraser />
+                  <Fill />
+                  <Undo undo={undoLine}></Undo>
+                  <Redo redo={redoLine}></Redo>
+                </div>
+              </li>
+              <li className=" text-center"></li>
+
+              {/* <li>
+                <ToolsElem />
 
                 <DrawTools />
-              </li>
+              </li> */}
               <ImageOnOffMolecule
                 isHintImageOn={isHintImageOn}
                 setisHintImageOn={setisHintImageOn}
@@ -108,6 +136,11 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
           onHide={() => setModalShow(false)}
         />
       </nav>
+      <div className="relative">
+        <div className="absolute top-50 left-0 -rotate-90">
+        <InputRange min={1} max={100} />
+        </div>
+      </div>
       {isChatOn === true ? (
         <div>
           <ChatList></ChatList>
