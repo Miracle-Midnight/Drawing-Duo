@@ -40,6 +40,8 @@ function GameLobby() {
   //-----------------------------------------------------------------------------
 
   const handleReady = () => {
+    const { yLines, provider, undoManager, doc, awareness } = useYjsProvider();
+    dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
     setIsReady(true);
   };
 
@@ -54,10 +56,6 @@ function GameLobby() {
           console.log(err);
         });
       dispatch(setStarted(true));
-      // DUBUG
-      const { yLines, provider, undoManager, doc, awareness } =
-        useYjsProvider();
-      dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
 
       navigate("/InGame/" + sessionStorage.getItem("roomId"));
     } else {
