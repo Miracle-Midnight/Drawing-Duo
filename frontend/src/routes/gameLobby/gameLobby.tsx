@@ -9,6 +9,8 @@ import { Invite } from "../../components/invite/invite";
 import { useDispatch } from "react-redux";
 import { add } from "../../states/friendsSlice";
 import VoiceChat from "../../components/voiceChat/voiceChat";
+import { useYjsProvider } from "../../hooks/useYjsProvider";
+import { setYjs } from "../../states/yjsSlice";
 
 function GameLobby() {
   const [remoteNickname, setRemoteNickname] = useState<string>("");
@@ -33,6 +35,9 @@ function GameLobby() {
   const navigate = useNavigate();
 
   const handleReady = () => {
+    const { yLines, provider, undoManager, doc, awareness } = useYjsProvider();
+
+    dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
     navigate("/InGame/" + sessionStorage.getItem("roomId"));
   };
 

@@ -1,10 +1,12 @@
 /* library */
 import { configureStore } from "@reduxjs/toolkit";
+/* module from local */
 import { sizeReducer } from "./states/sizeSlice";
 import { drawToolReducer } from "./states/drawToolSlice";
 import { imageReducer } from "./states/imageSlice";
 import { friendsReducer } from "./states/friendsSlice";
 import { filteredFriendsReducer } from "./states/filteredFriendsSlice";
+import { yjsReducer } from "./states/yjsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +15,7 @@ export const store = configureStore({
     image: imageReducer,
     friends: friendsReducer,
     filteredFriends: filteredFriendsReducer,
+    yjs: yjsReducer,
   },
 });
 

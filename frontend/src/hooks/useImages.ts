@@ -1,6 +1,5 @@
 import axios from "axios";
-import { useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { change } from "../states/imageSlice";
 
 export function useImages() {

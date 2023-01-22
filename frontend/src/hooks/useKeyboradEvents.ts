@@ -1,18 +1,21 @@
 /* library */
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 /* move from locale */
-import { undoManager } from "../y";
+import { RootState } from "../store";
 
 export function useKeyboardEvents() {
+  const undoManager = useSelector((state: RootState) => state.yjs.undoManager);
+
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       switch (e.key) {
         case "z": {
           if (e.ctrlKey || e.metaKey) {
             if (e.shiftKey) {
-              undoManager.redo();
+              undoManager?.redo();
             } else {
-              undoManager.undo();
+              undoManager?.undo();
             }
             break;
           }
