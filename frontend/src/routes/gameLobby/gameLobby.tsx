@@ -12,6 +12,8 @@ import { add } from "../../states/friendsSlice";
 import VoiceChat from "../../components/voiceChat/voiceChat";
 import { setStarted } from "../../states/gameStartSlice";
 import { RootState } from "../../store";
+import { useYjsProvider } from "../../hooks/useYjsProvider";
+import { setYjs } from "../../states/yjsSlice";
 
 function GameLobby() {
   const [remoteNickname, setRemoteNickname] = useState<string>("");
@@ -50,6 +52,10 @@ function GameLobby() {
     } else {
       alert("모두 같은 이미지를 선택해 주세요!");
     }
+    const { yLines, provider, undoManager, doc, awareness } = useYjsProvider();
+
+    dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
+    navigate("/InGame/" + sessionStorage.getItem("roomId"));
   };
 
   const deleteRoom = () => {
