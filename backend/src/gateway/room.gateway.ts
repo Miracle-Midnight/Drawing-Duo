@@ -78,6 +78,12 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
     socket.to(data.roomId).emit('image selected', data.image);
   }
 
+  @SubscribeMessage('game-ready')
+  handleGameReady(@MessageBody() data, @ConnectedSocket() socket: Socket) {
+    this.logger.log(`Client is ready: ${socket.id} ${socket.nsp.name}`);
+    socket.to(data.roomId).emit('game ready', data.isReady);
+  }
+
   @SubscribeMessage('game-start')
   handleGameStart(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     this.logger.log(`Client started game: ${socket.id} ${socket.nsp.name}`);
