@@ -107,7 +107,7 @@ export function Canvas({ frameImage }: { frameImage: string }) {
         onPointerEnter={() => awareness.setLocalStateField("isActive", true)}
         onPointerLeave={() => awareness.setLocalStateField("isActive", false)}
         onMouseOver={handleMouseOver}
-        className="w-full h-full object-cover absolute"
+        className="w-full h-full overflow-hidden object-cover absolute"
         style={{
           pointerEvents: drawTool == "fill" ? "none" : "auto",
         }}

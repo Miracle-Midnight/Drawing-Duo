@@ -14,12 +14,26 @@ export function ImageCanvas({ src }: srcProps) {
     img.onload = () => {
       const canvas = canvasRef.current;
       if (!canvas) return;
+      canvas.width = img.width;
+      canvas.height = img.height;
       const ctx = canvas.getContext("2d");
       if (ctx === null) return;
       ctx.drawImage(img, 0, 0);
       setContext(ctx);
     };
   }, [src]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    canvas.addEventListener(
+      "touchmove",
+      (e) => {
+        e.preventDefault();
+      },
+      { passive: false }
+    );
+  }, []);
 
   const handlePointerDown = useCallback((e: React.PointerEvent<any>) => {
     console.log(e.clientX);
@@ -30,7 +44,8 @@ export function ImageCanvas({ src }: srcProps) {
     <canvas
       ref={canvasRef}
       onPointerDown={handlePointerDown}
-      className="w-full h-full"
+      style={{ touchAction: "none" }}
+      className="w-full h-full overflow-hidden"
     />
   );
 }
