@@ -6,8 +6,6 @@ interface colorWithNumber extends color {
 }
 
 function ColorSection(props: colorWithNumber) {
-  console.log("colorSection");
-  console.log(props);
   const { handleColorChange } = useColorChange();
   return (
     <button

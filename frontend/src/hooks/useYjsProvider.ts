@@ -2,6 +2,7 @@
 import * as Y from "yjs";
 import { WebrtcProvider } from "y-webrtc";
 import * as awarenessProtocol from "y-protocols/awareness";
+// import { useSelector } from "react-redux";
 
 export function useYjsProvider() {
   const roomId: string = sessionStorage.getItem("roomId")!;

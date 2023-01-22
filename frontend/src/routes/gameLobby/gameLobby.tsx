@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./gameLobby.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import HeaderNav from "../../components/headerNav/header";
 import UserState from "../../components/userState/userState";
@@ -11,7 +11,7 @@ import { Invite } from "../../components/invite/invite";
 import { add } from "../../states/friendsSlice";
 import VoiceChat from "../../components/voiceChat/voiceChat";
 import { setStarted } from "../../states/gameStartSlice";
-import { RootState } from "../../store";
+
 import { useYjsProvider } from "../../hooks/useYjsProvider";
 import { setYjs } from "../../states/yjsSlice";
 
@@ -48,11 +48,12 @@ function GameLobby() {
           console.log(err);
         });
       dispatch(setStarted(true));
-      navigate("/InGame/" + sessionStorage.getItem("roomId"));
+      // DUBUG
       const { yLines, provider, undoManager, doc, awareness } =
         useYjsProvider();
-
       dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
+
+      navigate("/InGame/" + sessionStorage.getItem("roomId"));
     } else {
       alert("모두 같은 이미지를 선택해 주세요!");
     }
