@@ -127,7 +127,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
           <div className="side-nav mt-10">
             <ul>
               <li className=" text-center">
-                <div className="flex flex-col p-1 items-center border-t-2 border-b-2 shadow-sm border-gray-300 rounded-md">
+                <div className="flex flex-col p-1 items-center border-t-2 border-b-2 border-gray-100">
                   <div className="relative">
                     <div onClick={togglePenHandler}>
                       <Pen isClickPen={isClickPen} />
