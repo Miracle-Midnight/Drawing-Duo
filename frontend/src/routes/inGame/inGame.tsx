@@ -1,5 +1,6 @@
 /* library */
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 /* module from local */
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
@@ -15,6 +16,7 @@ function InGame() {
   const [frameImage, setFrameImage] = useState<string>("");
   const [users, setUsers] = useState<any>([]);
   const [color, setColor] = useState([]);
+
   useEffect(() => {
     axios
       .get("/game/" + sessionStorage.getItem("roomId"))

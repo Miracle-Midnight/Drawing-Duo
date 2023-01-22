@@ -11,8 +11,6 @@ interface colorType {
 }
 
 export function Palette({ colors }: colorType) {
-  console.log("pallet");
-  console.log(colors);
   return (
     <div className="center-container" >
       <div className="grid grid-cols-2 border rounded-lg shadow-sm  h-screen overflow-auto my-auto">

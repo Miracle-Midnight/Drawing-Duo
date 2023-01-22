@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 interface srcProps {
   src: string;
@@ -6,6 +6,7 @@ interface srcProps {
 
 export function ImageCanvas({ src }: srcProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
   useEffect(() => {
     const img = new Image();
@@ -16,10 +17,22 @@ export function ImageCanvas({ src }: srcProps) {
       const ctx = canvas.getContext("2d");
       if (ctx === null) return;
       ctx.drawImage(img, 0, 0);
+      setContext(ctx);
     };
   }, [src]);
 
-  return <canvas ref={canvasRef} className="object-contain w-96 h-screen" />;
+  const handlePointerDown = useCallback((e: React.PointerEvent<any>) => {
+    console.log(e.clientX);
+    console.log(e.clientY);
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      onPointerDown={handlePointerDown}
+      className="w-full h-full"
+    />
+  );
 }
 
 export default ImageCanvas;
