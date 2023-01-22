@@ -11,15 +11,14 @@ import { Invite } from "../../components/invite/invite";
 import { add } from "../../states/friendsSlice";
 import VoiceChat from "../../components/voiceChat/voiceChat";
 import { setStarted } from "../../states/gameStartSlice";
-import { RootState } from "../../store";
-import { useYjsProvider } from "../../hooks/useYjsProvider";
-import { setYjs } from "../../states/yjsSlice";
 
 function GameLobby() {
   const [remoteNickname, setRemoteNickname] = useState<string>("");
   const [friendsPick, setFriendsPick] = useState<string>("");
   const [myPick, setMyPick] = useState<string>("");
   const [imageId, setImageId] = useState<number>();
+  const [isReady, setIsReady] = useState<boolean>(false);
+  const [friendsReady, setFriendsReady] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,7 +37,11 @@ function GameLobby() {
   //-----------------------------------------------------------------------------
 
   const handleReady = () => {
-    if (myPick === friendsPick) {
+    setIsReady(true);
+  };
+
+  const handleStart = () => {
+    if (myPick === friendsPick && isReady === friendsReady) {
       axios
         .post("/room", {
           roomid: sessionStorage.getItem("roomId"),
@@ -49,10 +52,6 @@ function GameLobby() {
         });
       dispatch(setStarted(true));
       navigate("/InGame/" + sessionStorage.getItem("roomId"));
-      const { yLines, provider, undoManager, doc, awareness } =
-        useYjsProvider();
-
-      dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
     } else {
       alert("모두 같은 이미지를 선택해 주세요!");
     }
@@ -100,20 +99,32 @@ function GameLobby() {
           >
             뒤로 가기
           </button>
-          <button
-            type="button"
-            className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-            onClick={handleReady}
-          >
-            게임 시작
-          </button>
+          {isReady ? (
+            <button
+              type="button"
+              className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+              onClick={handleStart}
+            >
+              게임 시작
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+              onClick={handleReady}
+            >
+              준비 완료
+            </button>
+          )}
         </div>
       </div>
       <VoiceChat
         setRemoteNickname={setRemoteNickname}
         setFriendsPick={setFriendsPick}
+        setFriendsReady={setFriendsReady}
         myPick={myPick}
         imageId={imageId}
+        isReady={isReady}
       />
     </div>
   );
