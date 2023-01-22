@@ -15,7 +15,7 @@ function InputRange({ min, max }: range) {
   const dispatch = useDispatch(); // global state을 변경하기 위해 존재
 
   return (
-    <div>
+    <div className="m-auto">
       <input
         type="range"
         value={size}

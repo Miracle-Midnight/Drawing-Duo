@@ -12,6 +12,7 @@ export function Fill() {
         width="20"
         height="20"
         viewBox="0 0 32 32"
+        className="m-auto"
         xmlns="http://www.w3.org/2000/svg"
       >
         <g fill="none">
