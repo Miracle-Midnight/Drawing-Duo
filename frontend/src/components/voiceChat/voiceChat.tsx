@@ -8,13 +8,17 @@ import axios from "axios";
 function VoiceChat({
   setRemoteNickname,
   setFriendsPick,
+  setFriendsReady,
   myPick,
   imageId,
+  isReady,
 }: {
   setRemoteNickname: (nickname: string) => void;
   setFriendsPick: (pick: string) => void;
+  setFriendsReady: (ready: boolean) => void;
   myPick: string;
   imageId: number | undefined;
+  isReady: boolean;
 }) {
   const navigate = useNavigate();
 
@@ -32,7 +36,7 @@ function VoiceChat({
       // 미디어 디바이스 인터페이스를 구현하는 mediaDevices 객체에서 연결된 모든 기기를 가져올 수 있음
       // 기기 변경 사항을 수신 대기, 기기를 열어 미디어 스트림을 가져올 수 있음
 
-      const stream = await window.navigator.mediaDevices.getUserMedia({
+      const stream = await navigator.mediaDevices.getUserMedia({
         video: false,
         audio: true,
       });
@@ -163,6 +167,10 @@ function VoiceChat({
       navigate("/InGame/" + sessionStorage.getItem("roomId"));
     });
 
+    socketRef.current.on("game ready", async (isReady: boolean) => {
+      setFriendsReady(isReady);
+    });
+
     return () => {
       if (socketRef.current) {
         socketRef.current.disconnect();
@@ -187,9 +195,13 @@ function VoiceChat({
           });
         socketRef.current.emit("game-start", { roomId: roomId });
       }
+      socketRef.current.emit("game-ready", {
+        roomId: roomId,
+        isReady: isReady,
+      });
       socketRef.current.emit("select-image", { roomId: roomId, image: myPick });
     }
-  }, [myPick, isStarted]);
+  }, [myPick, isStarted, isReady]);
 
   return (
     <div>
@@ -202,8 +214,10 @@ function VoiceChat({
 VoiceChat.defaultProps = {
   setRemoteNickname: () => void 0,
   setFriendsPick: () => void 0,
+  setFriendsReady: () => void 0,
   myPick: "",
   imageId: 0,
+  isReady: false,
 };
 
 export default VoiceChat;

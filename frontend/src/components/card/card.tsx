@@ -11,8 +11,6 @@ function Card({ title, frameImageSrc, needTitle, roomId, users }: any) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const userData = [];
-
   const joinRoom = () => {
     sessionStorage.setItem("roomTitle", title);
     sessionStorage.setItem("roomId", roomId);

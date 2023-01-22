@@ -1,6 +1,5 @@
 /* library */
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 /* module from local */
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
