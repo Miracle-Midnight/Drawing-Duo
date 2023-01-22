@@ -36,13 +36,13 @@ function InGame() {
         {/* <DrawTools /> */}
       </div>
 
-      <div className="col-span-8 h-screen">
+      <div className="col-span-9 h-screen">
         <Canvas frameImage={frameImage} />
       </div>
 
-      <div className="col-span-1">
+      {/* <div className="col-span-1">
         <Palette colors={color} />
-      </div>
+      </div> */}
       <VoiceChat />
     </div>
   );

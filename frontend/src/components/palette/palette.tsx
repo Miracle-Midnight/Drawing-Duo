@@ -13,7 +13,7 @@ interface colorType {
 export function Palette({ colors }: colorType) {
   return (
     <div className="center-container" >
-      <div className="grid grid-cols-2 border rounded-lg shadow-sm  h-screen overflow-auto my-auto">
+      <div className="grid grid-cols-2 border rounded-lg shadow-sm h-96 overflow-auto my-auto">
         {colors.map((color: color, index: number) => (
           <div key={index}>
             <ColorSection

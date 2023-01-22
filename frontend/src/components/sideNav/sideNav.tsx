@@ -1,6 +1,6 @@
 import "./sideNav.css";
 import logoSmall from "../../assets/logo-small.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InGamePlayer from "../inGamePlayer/inGamePlayer";
 import HintImage from "../hintImage/hintImage";
 import ChatList from "../chatList/chatList";
@@ -25,6 +25,8 @@ import Fill from "../drawTools/fill";
 import Undo from "../drawTools/undo";
 import Redo from "../drawTools/redo";
 import { useLines } from "../../hooks/useLines";
+import Palette from "../drawTools/palette";
+import PaletteComponent from "../palette/palette";
 
 // interface Props {
 //   isHintImageOn: boolean;
@@ -38,6 +40,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   const [isChatOn, setisChatOn] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [sizeShow, setSizeShow] = useState(false);
+  const [color, setColor] = useState([]);
   const toggleSizeHandler = () => {
     setSizeShow(!sizeShow);
   };
@@ -55,6 +58,17 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
       });
     navigate("/");
   };
+
+  useEffect(() => {
+    axios
+      .get("/game/" + sessionStorage.getItem("roomId"))
+      .then((res) => {
+        setColor(res.data.data.rgb);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const {
     isSynced,
@@ -98,8 +112,10 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
                     </div>
                     <Eraser />
                     <Fill />
+                    <Palette></Palette>
                     <Undo undo={undoLine}></Undo>
                     <Redo redo={redoLine}></Redo>
+
                     <div
                       className={
                         sizeShow === true
@@ -109,16 +125,14 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
                     >
                       <InputRange min={1} max={100} />
                     </div>
+                    <div className="absolute w-36 top-20 left-20">
+                      <PaletteComponent colors={color} />
+                    </div>
                   </div>
                 </div>
               </li>
               <li className=" text-center"></li>
 
-              {/* <li>
-                <ToolsElem />
-
-                <DrawTools />
-              </li> */}
               <ImageOnOffMolecule
                 isHintImageOn={isHintImageOn}
                 setisHintImageOn={setisHintImageOn}
