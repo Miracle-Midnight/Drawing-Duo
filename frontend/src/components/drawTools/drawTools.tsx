@@ -28,58 +28,15 @@ export function DrawTools() {
     redoLine,
   } = useLines();
 
-  const [position, setPosition] = useState({ x: 200, y: 100 });
-  const divRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleMouseDown = (e: MouseEvent) => {
-      if (e.target !== divRef.current) {
-        return;
-      }
-      e.preventDefault();
-      const { clientX, clientY } = e;
-      const { top, left } = divRef.current!.getBoundingClientRect();
-      setPosition({ x: clientX - left, y: clientY - top });
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      setPosition({ x: clientX - position.x, y: clientY - position.y });
-    };
-
-    const handleMouseUp = () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-    };
-
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      window.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [position]);
-
   return (
-    <div
-      className="flex flex-row shadow-sm bg-white gap-2 p-2 rounded-md w-fit "
-      // ref={divRef}
-      // style={{
-      //   position: "absolute",
-      //   left: `${position.x}px`,
-      //   top: `${position.y}px`,
-      // }}
-    >
+    <div className="flex flex-row shadow-sm bg-white gap-2 p-2 rounded-tr-lg  rounded-br-lg w-fit ">
       <Pen></Pen>
       <Eraser></Eraser>
       <InputRange min={1} max={100}></InputRange>
-      <Undo undo={undoLine}></Undo>
-      <Redo redo={redoLine}></Redo>
       <Fill></Fill>
       {/* <Palette></Palette> */}
+      <Undo undo={undoLine}></Undo>
+      <Redo redo={redoLine}></Redo>
     </div>
   );
 }
