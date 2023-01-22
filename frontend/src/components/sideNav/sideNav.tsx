@@ -92,7 +92,10 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
             </ul>
           </div>
         </div>
-        <CloseRoomModal modalShow={modalShow} setModalShow={setModalShow} onHide={() => setModalShow(false)} />
+        <CloseRoomModal
+          modalShow={modalShow}
+          onHide={() => setModalShow(false)}
+        />
       </nav>
       {isChatOn === true ? (
         <div>

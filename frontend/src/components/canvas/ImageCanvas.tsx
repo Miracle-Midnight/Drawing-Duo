@@ -19,7 +19,7 @@ export function ImageCanvas({ src }: srcProps) {
     };
   }, [src]);
 
-  return <canvas ref={canvasRef} className="w-full h-full" />;
+  return <canvas ref={canvasRef} className="object-contain w-96 h-screen" />;
 }
 
 export default ImageCanvas;
