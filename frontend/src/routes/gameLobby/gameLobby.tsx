@@ -49,13 +49,13 @@ function GameLobby() {
         });
       dispatch(setStarted(true));
       navigate("/InGame/" + sessionStorage.getItem("roomId"));
+      const { yLines, provider, undoManager, doc, awareness } =
+        useYjsProvider();
+
+      dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
     } else {
       alert("모두 같은 이미지를 선택해 주세요!");
     }
-    const { yLines, provider, undoManager, doc, awareness } = useYjsProvider();
-
-    dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
-    navigate("/InGame/" + sessionStorage.getItem("roomId"));
   };
 
   const deleteRoom = () => {
