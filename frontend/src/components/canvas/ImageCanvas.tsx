@@ -14,6 +14,8 @@ export function ImageCanvas({ src }: srcProps) {
     img.onload = () => {
       const canvas = canvasRef.current;
       if (!canvas) return;
+      canvas.width = img.width;
+canvas.height = img.height;
       const ctx = canvas.getContext("2d");
       if (ctx === null) return;
       ctx.drawImage(img, 0, 0);
@@ -30,7 +32,7 @@ export function ImageCanvas({ src }: srcProps) {
     <canvas
       ref={canvasRef}
       onPointerDown={handlePointerDown}
-      className="w-full h-full"
+      className="w-full h-full canvas"
     />
   );
 }
