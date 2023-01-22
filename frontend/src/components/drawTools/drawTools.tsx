@@ -29,14 +29,16 @@ export function DrawTools() {
   } = useLines();
 
   return (
-    <div className="flex flex-row shadow-sm bg-white gap-2 p-2 rounded-tr-lg  rounded-br-lg w-fit ">
-      <Pen></Pen>
-      <Eraser></Eraser>
-      <InputRange min={1} max={100}></InputRange>
-      <Fill></Fill>
-      {/* <Palette></Palette> */}
-      <Undo undo={undoLine}></Undo>
-      <Redo redo={redoLine}></Redo>
+    <div className="absolute left-20">
+      <div className="flex flex-row shadow-sm bg-white gap-2 p-2 rounded-tr-lg  rounded-br-lg w-fit ">
+        <Pen></Pen>
+        <Eraser></Eraser>
+        <InputRange min={1} max={100}></InputRange>
+        <Fill></Fill>
+        {/* <Palette></Palette> */}
+        <Undo undo={undoLine}></Undo>
+        <Redo redo={redoLine}></Redo>
+      </div>
     </div>
   );
 }

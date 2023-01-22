@@ -25,6 +25,7 @@ import Fill from "../drawTools/fill";
 import Undo from "../drawTools/undo";
 import Redo from "../drawTools/redo";
 import { useLines } from "../../hooks/useLines";
+
 // interface Props {
 //   isHintImageOn: boolean;
 //   setisHintImageOn: Dispatch<SetStateAction<boolean>>;
@@ -36,11 +37,10 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   const [isHintImageOn, setisHintImageOn] = useState(false);
   const [isChatOn, setisChatOn] = useState(false);
   const [modalShow, setModalShow] = useState(false);
-  const [showDrawTools, setShowDrawTools] = useState(false);
-
-  function handleClickDrawTools() {
-    setShowDrawTools(!showDrawTools);
-  }
+  const [sizeShow, setSizeShow] = useState(false);
+  const toggleSizeHandler = () => {
+    setSizeShow(!sizeShow);
+  };
 
   const handleExit = () => {
     axios
@@ -92,12 +92,24 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
             <ul>
               <li className=" text-center">
                 <div className="flex flex-col p-1 items-center border-t-2 border-b-2 shadow-sm border-gray-300 rounded-md">
-                  <Pen />
-
-                  <Eraser />
-                  <Fill />
-                  <Undo undo={undoLine}></Undo>
-                  <Redo redo={redoLine}></Redo>
+                  <div className="relative">
+                    <div onClick={toggleSizeHandler}>
+                      <Pen />
+                    </div>
+                    <Eraser />
+                    <Fill />
+                    <Undo undo={undoLine}></Undo>
+                    <Redo redo={redoLine}></Redo>
+                    <div
+                      className={
+                        sizeShow === true
+                          ? "absolute top-20 left-20 -rotate-90"
+                          : "absolute top-20 left-20 -rotate-90 hidden"
+                      }
+                    >
+                      <InputRange min={1} max={100} />
+                    </div>
+                  </div>
                 </div>
               </li>
               <li className=" text-center"></li>
@@ -136,11 +148,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
           onHide={() => setModalShow(false)}
         />
       </nav>
-      <div className="relative">
-        <div className="absolute top-50 left-0 -rotate-90">
-        <InputRange min={1} max={100} />
-        </div>
-      </div>
+
       {isChatOn === true ? (
         <div>
           <ChatList></ChatList>
