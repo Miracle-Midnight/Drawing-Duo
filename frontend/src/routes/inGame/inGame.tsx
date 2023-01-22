@@ -33,7 +33,7 @@ function InGame() {
     <div className="h-full grid grid-cols-10 overflow-y-hidden w-full">
       <div className="flex h-full">
         <SideNav users={users} Image={Image} />
-        <DrawTools />
+        {/* <DrawTools /> */}
       </div>
 
       <div className="col-span-8 h-screen">
