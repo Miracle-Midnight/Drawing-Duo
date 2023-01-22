@@ -40,9 +40,13 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   const [isChatOn, setisChatOn] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [sizeShow, setSizeShow] = useState(false);
-  const [color, setColor] = useState([]);
+  const [isPaletteOn, setisPaletteOn] = useState(false);
+
   const toggleSizeHandler = () => {
     setSizeShow(!sizeShow);
+  };
+  const togglePaletteHandler = () => {
+    setisPaletteOn(!isPaletteOn);
   };
 
   const handleExit = () => {
@@ -58,6 +62,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
       });
     navigate("/");
   };
+  const [color, setColor] = useState([]);
 
   useEffect(() => {
     axios
@@ -112,7 +117,9 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
                     </div>
                     <Eraser />
                     <Fill />
-                    <Palette></Palette>
+                    <div onClick={togglePaletteHandler}>
+                      <Palette></Palette>
+                    </div>
                     <Undo undo={undoLine}></Undo>
                     <Redo redo={redoLine}></Redo>
 
@@ -125,7 +132,13 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
                     >
                       <InputRange min={1} max={100} />
                     </div>
-                    <div className="absolute w-36 top-20 left-20">
+                    <div
+                      className={
+                        isPaletteOn === true
+                          ? "absolute w-36 top-20 left-20"
+                          : "absolute w-36 top-20 left-20 hidden"
+                      }
+                    >
                       <PaletteComponent colors={color} />
                     </div>
                   </div>
