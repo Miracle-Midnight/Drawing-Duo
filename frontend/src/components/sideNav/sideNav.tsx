@@ -16,6 +16,7 @@ import ImageOnOffMolecule from "./sideNavMolecules/imageOnOffMolecules";
 import ChatOnOffMolecule from "./sideNavMolecules/chatOnOffMolecule";
 import CloseButtonElem from "./sideNavAtoms/closeButtonElem/closeButtonElem";
 import { DrawTools } from "../drawTools/drawTools";
+import CloseRoomModal from "../closeRoomModal/closeRoomModal";
 
 // interface Props {
 //   isHintImageOn: boolean;
@@ -27,7 +28,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
 
   const [isHintImageOn, setisHintImageOn] = useState(false);
   const [isChatOn, setisChatOn] = useState(false);
-
+  const [modalShow, setModalShow] = useState(false);
   const handleExit = () => {
     // axios
     //   .post("/room/save/" + sessionStorage.getItem("roomId"), {
@@ -78,7 +79,10 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
                 setisChatOn={setisChatOn}
               />
 
-              <li className="my-12 text-center" onClick={handleExit}>
+              <li
+                className="my-12 text-center"
+                onClick={() => setModalShow(true)}
+              >
                 <a href="#">
                   <span className="h-6 w-6 text-gray-500  mx-auto hover:text-gray-800  transition-colors duration-200">
                     <CloseButtonElem></CloseButtonElem>
@@ -88,6 +92,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
             </ul>
           </div>
         </div>
+        <CloseRoomModal modalShow={modalShow} setModalShow={setModalShow} onHide={() => setModalShow(false)} />
       </nav>
       {isChatOn === true ? (
         <div>
