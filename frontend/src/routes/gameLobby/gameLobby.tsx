@@ -131,6 +131,7 @@ function GameLobby() {
         myPick={myPick}
         imageId={imageId}
         isReady={isReady}
+        remoteNickname={remoteNickname}
       />
     </div>
   );

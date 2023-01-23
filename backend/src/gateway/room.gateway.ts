@@ -11,6 +11,7 @@ import { MessageBody, SubscribeMessage } from '@nestjs/websockets';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
+import { Room } from 'src/room/entities/room.entity';
 
 @WebSocketGateway({
   cors: { origin: '*', methods: ['GET', 'POST'] },
@@ -24,6 +25,7 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
 
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(Room) private roomRepository: Repository<Room>,
   ) {
     this.roomMap = new Map();
   }
@@ -38,14 +40,29 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
 
   @SubscribeMessage('join_room')
   async handleJoin(@MessageBody() data, @ConnectedSocket() socket: Socket) {
-    console.log(data);
     socket.join(data.roomId);
     this.logger.log(`Client joined: ${socket.id} ${data.roomId}`);
     this.roomMap.set(socket.id, data.roomId);
     console.log(this.roomMap);
+
     const usersInRoom = this.server.sockets.adapter.rooms.get(data.roomId);
-    if (usersInRoom.size >= 1) {
+    if (usersInRoom.size > 1) {
       socket.to(data.roomId).emit('all_users', Array.from(usersInRoom));
+
+      const room = await this.roomRepository.findOne({
+        where: { id: data.roomId },
+        relations: ['user', 'users.profile'],
+      });
+
+      const newUser = await this.userRepository.findOne({
+        where: { id: data.userId },
+        relations: ['profile'],
+      });
+
+      const usersName = room.user.filter(
+        (user) => user.profile.nickname != newUser.profile.nickname,
+      );
+      socket.emit('get_users', usersName);
     }
     const user = await this.userRepository.find({
       where: { id: data.userId },
@@ -76,6 +93,12 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
   handleSelectImage(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     this.logger.log(`Client selected image: ${socket.id} ${data.image}`);
     socket.to(data.roomId).emit('image selected', data.image);
+  }
+
+  @SubscribeMessage('game-ready')
+  handleGameReady(@MessageBody() data, @ConnectedSocket() socket: Socket) {
+    this.logger.log(`Client is ready: ${socket.id} ${socket.nsp.name}`);
+    socket.to(data.roomId).emit('game ready', data.isReady);
   }
 
   @SubscribeMessage('game-start')
