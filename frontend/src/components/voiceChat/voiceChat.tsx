@@ -43,6 +43,7 @@ function VoiceChat({
         video: false,
         audio: true,
       });
+
       if (myVideoRef.current) {
         myVideoRef.current.srcObject = stream;
       }
@@ -58,18 +59,18 @@ function VoiceChat({
         pcRef.current.addTrack(track, stream);
       });
 
-      pcRef.current.onicecandidate = (e) => {
-        if (e.candidate) {
-          if (!socketRef.current) {
-            return;
-          }
-          console.log("recv candidate");
-          socketRef.current.emit("candidate", {
-            candidate: e.candidate,
-            roomId: roomId,
-          });
-        }
-      };
+      // pcRef.current.onicecandidate = (e) => {
+      //   if (e.candidate) {
+      //     if (!socketRef.current) {
+      //       return;
+      //     }
+      //     console.log("receive candidate");
+      //     socketRef.current.emit("candidate", {
+      //       candidate: e.candidate,
+      //       roomId: roomId,
+      //     });
+      //   }
+      // };
 
       pcRef.current.ontrack = (e) => {
         if (remoteVideoRef.current) {
@@ -88,7 +89,7 @@ function VoiceChat({
     try {
       console.log("create offer");
       const sdp = await pcRef.current.createOffer();
-      pcRef.current.setLocalDescription(sdp);
+      await pcRef.current.setLocalDescription(sdp);
       console.log("sent the offer");
       socketRef.current.emit("offer", { sdp: sdp, roomId: roomId });
     } catch (e) {
@@ -102,9 +103,9 @@ function VoiceChat({
     }
     try {
       console.log("create answer");
-      pcRef.current.setRemoteDescription(sdp);
+      await pcRef.current.setRemoteDescription(sdp);
       const answerSdp = await pcRef.current.createAnswer();
-      pcRef.current.setLocalDescription(answerSdp);
+      await pcRef.current.setLocalDescription(answerSdp);
 
       console.log("sent the answer");
       socketRef.current.emit("answer", { sdp: answerSdp, roomId: roomId });
@@ -125,9 +126,23 @@ function VoiceChat({
       ],
     });
 
-    socketRef.current = io("https://drawingduo.shop");
+    socketRef.current = io("https://drawingduo.shop/Room");
 
-    console.log("join_room!");
+    pcRef.current.onicecandidate = (e) => {
+      if (e.candidate) {
+        if (!socketRef.current) {
+          return;
+        }
+        console.log("receive candidate");
+        socketRef.current.emit("candidate", {
+          candidate: e.candidate,
+          roomId: roomId,
+        });
+      }
+    };
+
+    getMedia();
+
     socketRef.current.emit("join_room", {
       roomId: roomId,
       userId: sessionStorage.getItem("userid"),
@@ -140,20 +155,20 @@ function VoiceChat({
       }
     });
 
-    socketRef.current.on("getOffer", (sdp: RTCSessionDescription) => {
+    socketRef.current.on("getOffer", async (sdp: RTCSessionDescription) => {
       if (!pcRef.current) {
         return;
       }
       console.log("get offer");
-      createAnswer(sdp);
+      await createAnswer(sdp);
     });
 
-    socketRef.current.on("getAnswer", (sdp: RTCSessionDescription) => {
+    socketRef.current.on("getAnswer", async (sdp: RTCSessionDescription) => {
       if (!pcRef.current) {
         return;
       }
       console.log("get answer");
-      pcRef.current.setRemoteDescription(sdp);
+      await pcRef.current.setRemoteDescription(sdp);
     });
 
     socketRef.current.on("getCandidate", async (candidate: RTCIceCandidate) => {
@@ -164,8 +179,6 @@ function VoiceChat({
       await pcRef.current.addIceCandidate(candidate);
       console.log("candidate add success");
     });
-
-    getMedia();
 
     socketRef.current.on("new_user", async (user: any) => {
       console.log("new_user!");

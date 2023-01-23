@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./gameLobby.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -63,7 +63,7 @@ function GameLobby() {
           });
         dispatch(setStarted(true));
 
-        navigate("/InGame/" + sessionStorage.getItem("roomId"));
+        navigate(`/Room/${sessionStorage.getItem("roomId")}/InGame`);
       } else {
         alert("모두 준비해주세요!");
       }
