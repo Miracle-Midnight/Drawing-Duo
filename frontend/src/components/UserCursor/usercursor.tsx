@@ -9,6 +9,8 @@ export interface UserCursorProps {
 
 export const UserCursor = memo(
   ({ point, color, isActive, windowSize }: UserCursorProps) => {
+    const name = sessionStorage.getItem("userNickname");
+
     const newPoints: number[] = [];
     if (windowSize) {
       const newPointX = (window.innerWidth * point[0]) / windowSize[0];
@@ -30,7 +32,7 @@ export const UserCursor = memo(
           textAnchor="middle"
           alignmentBaseline="central"
         >
-          <tspan fontWeight="bold">James</tspan>
+          <tspan fontWeight="bold">{name}</tspan>
         </text>
       </svg>
     );
