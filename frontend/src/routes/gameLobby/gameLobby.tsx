@@ -35,29 +35,38 @@ function GameLobby() {
       .catch((err) => {
         console.log(err);
       });
+
+    setMyPick("");
+    setFriendsPick("");
+    setIsReady(false);
+    dispatch(setStarted(false));
   }, []);
 
   //-----------------------------------------------------------------------------
 
   const handleReady = () => {
+    setIsReady(true);
     const { yLines, provider, undoManager, doc, awareness } = useYjsProvider();
     dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
-    setIsReady(true);
   };
 
   const handleStart = () => {
-    if (myPick === friendsPick && isReady === friendsReady) {
-      axios
-        .post("/room", {
-          roomid: sessionStorage.getItem("roomId"),
-          imageid: imageId,
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      dispatch(setStarted(true));
+    if (myPick === friendsPick) {
+      if (isReady === friendsReady) {
+        axios
+          .post("/room", {
+            roomid: sessionStorage.getItem("roomId"),
+            imageid: imageId,
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        dispatch(setStarted(true));
 
-      navigate("/InGame/" + sessionStorage.getItem("roomId"));
+        navigate("/InGame/" + sessionStorage.getItem("roomId"));
+      } else {
+        alert("모두 준비해주세요!");
+      }
     } else {
       alert("모두 같은 이미지를 선택해 주세요!");
     }

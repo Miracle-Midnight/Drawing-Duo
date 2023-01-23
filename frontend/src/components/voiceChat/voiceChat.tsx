@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import axios from "axios";
-import { Stream } from "stream";
 
 function VoiceChat({
   setRemoteNickname,
@@ -33,7 +32,7 @@ function VoiceChat({
   const socketRef = useRef<Socket>();
 
   const isStarted = useSelector((state: RootState) => state.gameStart.start);
-  const isMicOn = useSelector((state: RootState) => state.mic.isMicOn);
+  // const isMicOn = useSelector((state: RootState) => state.mic.isMicOn);
 
   async function getMedia() {
     try {
@@ -128,13 +127,14 @@ function VoiceChat({
 
     socketRef.current = io("https://drawingduo.shop");
 
+    console.log("join_room!");
     socketRef.current.emit("join_room", {
       roomId: roomId,
       userId: sessionStorage.getItem("userid"),
     });
 
     socketRef.current.on("all_users", (allUsers: any) => {
-      console.log(allUsers);
+      console.log("all_users!");
       if (allUsers.length > 1) {
         createOffer();
       }
@@ -168,26 +168,31 @@ function VoiceChat({
     getMedia();
 
     socketRef.current.on("new_user", async (user: any) => {
+      console.log("new_user!");
       setRemoteNickname(user[0].profile.nickname);
     });
 
-    socketRef.current.on("get_users", async (users: Array<string>) => {
-      setRemoteNickname(users[0]);
-    });
+    if (remoteNickname === "") {
+      socketRef.current.on("get_Nickname", async (nickname: any) => {
+        console.log("get_Nickname!");
+        setRemoteNickname(nickname);
+      });
+    }
 
     socketRef.current.on("image selected", async (image: any) => {
+      console.log("image selected!");
       setFriendsPick(image);
     });
 
     socketRef.current.on("game started", async () => {
+      console.log("game started!");
       navigate("/InGame/" + sessionStorage.getItem("roomId"));
     });
 
     socketRef.current.on("game ready", async (isReady: boolean) => {
+      console.log("game ready!");
       setFriendsReady(isReady);
     });
-
-    myVideoRef.current;
 
     return () => {
       if (socketRef.current) {
@@ -201,7 +206,16 @@ function VoiceChat({
 
   useEffect(() => {
     if (socketRef.current) {
-      console.log(isStarted);
+      console.log("send nickname!");
+      socketRef.current.emit("send-Nickname", {
+        roomId: roomId,
+        nickname: sessionStorage.getItem("UserNickname"),
+      });
+    }
+  }, [remoteNickname]);
+
+  useEffect(() => {
+    if (socketRef.current) {
       if (isStarted) {
         axios
           .post("/room", {
@@ -211,12 +225,15 @@ function VoiceChat({
           .catch((err) => {
             console.log(err);
           });
+        console.log("game-start!");
         socketRef.current.emit("game-start", { roomId: roomId });
       }
+      console.log("game-ready!");
       socketRef.current.emit("game-ready", {
         roomId: roomId,
         isReady: isReady,
       });
+      console.log("select-image!");
       socketRef.current.emit("select-image", { roomId: roomId, image: myPick });
     }
   }, [myPick, isStarted, isReady]);
