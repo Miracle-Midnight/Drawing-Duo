@@ -9,9 +9,10 @@ import {
 import { PositiveIntPipe } from 'src/common/pipes/positiveInt.pipe';
 import { GameUserReadyDto } from './dto/game-user-ready.dto';
 import { GameService } from './game.service';
-import { Body } from '@nestjs/common/decorators';
+import { Body, UploadedFile, UseInterceptors } from '@nestjs/common/decorators';
 // import { EnterGameDto } from './dto/enter-game.dto';
 import { ApiOperation } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('game')
 export class GameController {
@@ -33,6 +34,13 @@ export class GameController {
   createGame(@Param('id', ParseIntPipe, PositiveIntPipe) id: number) {
     return this.gameService.createGame(id);
   }
+
+  // @ApiOperation({ summary: 'Ymap 저장' })
+  // @Post('save/:id') // room id
+  // @UseInterceptors(FileInterceptor('image'))
+  // saveYmap(@UploadedFile() file: Express.Multer.File, @Param('id') roomid) {
+  //   return this.gameService.saveYmap(+roomid, 'Ymap', file);
+  // }
 
   @Post('delete/:id') // gameid
   deleteGame(@Param('id', ParseIntPipe, PositiveIntPipe) id: number) {

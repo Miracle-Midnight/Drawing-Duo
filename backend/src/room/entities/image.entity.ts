@@ -27,6 +27,9 @@ export class Image extends BaseEntity {
   @Column('jsonb', { nullable: true })
   rgb: { b: number; g: number; r: number }[];
 
+  // @Column({ nullable: true })
+  // Ymap: string;
+
   @OneToMany(() => Room, (room) => room.image)
   room: Room[];
 }
