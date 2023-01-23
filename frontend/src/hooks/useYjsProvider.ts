@@ -16,7 +16,18 @@ export function useYjsProvider() {
     awareness: new awarenessProtocol.Awareness(doc),
     maxConns: 20,
     filterBcConns: false,
-    peerOpts: {},
+    peerOpts: {
+      config: {
+        iceServers: [
+          { urls: "stun:stun.l.google.com:19302" },
+          {
+            urls: "turn:3.35.19.170:3478?transport=udp",
+            username: "drawingduo",
+            credential: "9697",
+          },
+        ],
+      },
+    },
   });
   const awareness = provider.awareness;
   const yLines: Y.Array<Y.Map<any>> = doc.getArray("lines");

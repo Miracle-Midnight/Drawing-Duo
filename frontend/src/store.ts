@@ -8,6 +8,7 @@ import { friendsReducer } from "./states/friendsSlice";
 import { filteredFriendsReducer } from "./states/filteredFriendsSlice";
 import { gameStartReducer } from "./states/gameStartSlice";
 import { yjsReducer } from "./states/yjsSlice";
+import { micReducer } from "./states/micSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     filteredFriends: filteredFriendsReducer,
     gameStart: gameStartReducer,
     yjs: yjsReducer,
+    mic: micReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import axios from "axios";
+import { Stream } from "stream";
 
 function VoiceChat({
   setRemoteNickname,
@@ -12,6 +13,7 @@ function VoiceChat({
   myPick,
   imageId,
   isReady,
+  remoteNickname,
 }: {
   setRemoteNickname: (nickname: string) => void;
   setFriendsPick: (pick: string) => void;
@@ -19,6 +21,7 @@ function VoiceChat({
   myPick: string;
   imageId: number | undefined;
   isReady: boolean;
+  remoteNickname: string;
 }) {
   const navigate = useNavigate();
 
@@ -30,6 +33,7 @@ function VoiceChat({
   const socketRef = useRef<Socket>();
 
   const isStarted = useSelector((state: RootState) => state.gameStart.start);
+  const isMicOn = useSelector((state: RootState) => state.mic.isMicOn);
 
   async function getMedia() {
     try {
@@ -112,7 +116,14 @@ function VoiceChat({
 
   useEffect(() => {
     pcRef.current = new RTCPeerConnection({
-      iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+      iceServers: [
+        { urls: "stun:stun.l.google.com:19302" },
+        {
+          urls: "turn:3.35.19.170:3478?transport=udp",
+          username: "drawingduo",
+          credential: "9697",
+        },
+      ],
     });
 
     socketRef.current = io("https://drawingduo.shop");
@@ -123,7 +134,8 @@ function VoiceChat({
     });
 
     socketRef.current.on("all_users", (allUsers: any) => {
-      if (allUsers.length > 0) {
+      console.log(allUsers);
+      if (allUsers.length > 1) {
         createOffer();
       }
     });
@@ -159,6 +171,10 @@ function VoiceChat({
       setRemoteNickname(user[0].profile.nickname);
     });
 
+    socketRef.current.on("get_users", async (users: Array<string>) => {
+      setRemoteNickname(users[0]);
+    });
+
     socketRef.current.on("image selected", async (image: any) => {
       setFriendsPick(image);
     });
@@ -170,6 +186,8 @@ function VoiceChat({
     socketRef.current.on("game ready", async (isReady: boolean) => {
       setFriendsReady(isReady);
     });
+
+    myVideoRef.current;
 
     return () => {
       if (socketRef.current) {
@@ -218,6 +236,7 @@ VoiceChat.defaultProps = {
   myPick: "",
   imageId: 0,
   isReady: false,
+  remoteNickname: "",
 };
 
 export default VoiceChat;
