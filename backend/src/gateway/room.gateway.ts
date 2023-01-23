@@ -54,6 +54,12 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
     socket.to(data.roomId).emit('new_user', user);
   }
 
+  @SubscribeMessage('send-Nickname')
+  handleSendID(@MessageBody() data, @ConnectedSocket() socket: Socket) {
+    this.logger.log(`Client sent ID: ${socket.id} ${socket.nsp.name}`);
+    socket.to(data.roomId).emit('get_Nickname', data.nickname);
+  }
+
   @SubscribeMessage('offer')
   handleOffer(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     this.logger.log(`Client sent offer: ${socket.id} ${socket.nsp.name}`);
