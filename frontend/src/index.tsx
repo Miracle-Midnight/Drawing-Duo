@@ -17,19 +17,19 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <StrictMode>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/Room" element={<GameLobby />} />
-          <Route path="/Room/:id" element={<GameLobby />} />
-          <Route path="/Room/:id/InGame" element={<InGame />} />
-          <Route path="/Register" element={<Register />} />
-          <Route path="/Intro" element={<Intro />} />
-        </Routes>
-      </BrowserRouter>
-    </StrictMode>
+    {/* <StrictMode> */}
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Room" element={<GameLobby />} />
+        <Route path="/Room/:id" element={<GameLobby />} />
+        <Route path="/Room/:id/InGame" element={<InGame />} />
+        <Route path="/Register" element={<Register />} />
+        <Route path="/Intro" element={<Intro />} />
+      </Routes>
+    </BrowserRouter>
+    {/* </StrictMode> */}
   </Provider>
 );
 

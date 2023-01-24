@@ -59,24 +59,29 @@ function VoiceChat({
         pcRef.current.addTrack(track, stream);
       });
 
-      // pcRef.current.onicecandidate = (e) => {
-      //   if (e.candidate) {
-      //     if (!socketRef.current) {
-      //       return;
-      //     }
-      //     console.log("receive candidate");
-      //     socketRef.current.emit("candidate", {
-      //       candidate: e.candidate,
-      //       roomId: roomId,
-      //     });
-      //   }
-      // };
+      pcRef.current.onicecandidate = (e) => {
+        if (e.candidate) {
+          if (!socketRef.current) {
+            return;
+          }
+          console.log("receive candidate");
+          socketRef.current.emit("candidate", {
+            candidate: e.candidate,
+            roomId: roomId,
+          });
+        }
+      };
 
       pcRef.current.ontrack = (e) => {
         if (remoteVideoRef.current) {
           remoteVideoRef.current.srcObject = e.streams[0];
         }
       };
+
+      socketRef.current.emit("join_room", {
+        roomId: roomId,
+        userId: sessionStorage.getItem("userid"),
+      });
     } catch (e) {
       console.error(e);
     }
@@ -128,25 +133,23 @@ function VoiceChat({
 
     socketRef.current = io("https://drawingduo.shop/Room");
 
-    pcRef.current.onicecandidate = (e) => {
-      if (e.candidate) {
-        if (!socketRef.current) {
-          return;
-        }
-        console.log("receive candidate");
-        socketRef.current.emit("candidate", {
-          candidate: e.candidate,
-          roomId: roomId,
-        });
-      }
-    };
+    // pcRef.current.onicecandidate = (e) => {
+    //   if (e.candidate) {
+    //     if (!socketRef.current) {
+    //       return;
+    //     }
+    //     console.log("receive candidate");
+    //     socketRef.current.emit("candidate", {
+    //       candidate: e.candidate,
+    //       roomId: roomId,
+    //     });
+    //   }
+    // };
 
-    getMedia();
-
-    socketRef.current.emit("join_room", {
-      roomId: roomId,
-      userId: sessionStorage.getItem("userid"),
-    });
+    // socketRef.current.emit("join_room", {
+    //   roomId: roomId,
+    //   userId: sessionStorage.getItem("userid"),
+    // });
 
     socketRef.current.on("all_users", (allUsers: any) => {
       console.log("all_users!");
@@ -183,14 +186,23 @@ function VoiceChat({
     socketRef.current.on("new_user", async (user: any) => {
       console.log("new_user!");
       setRemoteNickname(user[0].profile.nickname);
+      sessionStorage.setItem("friendNickname", user[0].profile.nickname);
+
+      if (socketRef.current) {
+        console.log("send nickname!");
+        socketRef.current.emit("send-Nickname", {
+          roomId: roomId,
+          nickname: sessionStorage.getItem("userNickname"),
+        });
+      }
     });
 
-    if (remoteNickname === "") {
-      socketRef.current.on("get_Nickname", async (nickname: any) => {
-        console.log("get_Nickname!");
-        setRemoteNickname(nickname);
-      });
-    }
+    socketRef.current.on("get_Nickname", async (nickname: any) => {
+      console.log("get_Nickname!");
+      console.log(nickname);
+      setRemoteNickname(nickname);
+      sessionStorage.setItem("friendNickname", nickname);
+    });
 
     socketRef.current.on("image selected", async (image: any) => {
       console.log("image selected!");
@@ -199,13 +211,15 @@ function VoiceChat({
 
     socketRef.current.on("game started", async () => {
       console.log("game started!");
-      navigate("/InGame/" + sessionStorage.getItem("roomId"));
+      navigate(`/Room/${sessionStorage.getItem("roomId")}/InGame`);
     });
 
     socketRef.current.on("game ready", async (isReady: boolean) => {
       console.log("game ready!");
       setFriendsReady(isReady);
     });
+
+    getMedia();
 
     return () => {
       if (socketRef.current) {
@@ -216,16 +230,6 @@ function VoiceChat({
       }
     };
   }, []);
-
-  useEffect(() => {
-    if (socketRef.current) {
-      console.log("send nickname!");
-      socketRef.current.emit("send-Nickname", {
-        roomId: roomId,
-        nickname: sessionStorage.getItem("UserNickname"),
-      });
-    }
-  }, [remoteNickname]);
 
   useEffect(() => {
     if (socketRef.current) {
@@ -246,10 +250,15 @@ function VoiceChat({
         roomId: roomId,
         isReady: isReady,
       });
+    }
+  }, [isStarted, isReady]);
+
+  useEffect(() => {
+    if (socketRef.current) {
       console.log("select-image!");
       socketRef.current.emit("select-image", { roomId: roomId, image: myPick });
     }
-  }, [myPick, isStarted, isReady]);
+  }, [myPick]);
 
   return (
     <div>

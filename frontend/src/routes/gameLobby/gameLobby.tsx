@@ -101,7 +101,6 @@ function GameLobby() {
           <div className="flex flex-col justify-between">
             <UserState
               name={sessionStorage.getItem("userNickname")}
-              image={sessionStorage.getItem("profileImage")}
               state="On"
             ></UserState>
             <UserState name={remoteNickname} state="On"></UserState>
