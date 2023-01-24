@@ -36,8 +36,8 @@ function IsOnline({
   const connection = isConnected ? "접속중" : "접속중 아님";
 
   return (
-    <div className="flex-1 pl-1 md:mr-16">
-      <div className="font-medium ">{name}</div>
+    <div className="flex-1 pl-1">
+      <div className="font-medium">{name}</div>
       <div className="text-sm text-gray-600 ">{connection}</div>
     </div>
   );
