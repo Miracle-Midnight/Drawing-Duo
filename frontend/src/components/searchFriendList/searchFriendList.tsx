@@ -33,7 +33,7 @@ function SearchFriendsList({ friends }: any) {
   return (
     <div className="absolute -right-20 top-0 w-[300px] h-[400px] overflow-auto bg-gray-300 z-50">
       <div className="flex flex-col items-center justify-center w-full mx-auto">
-        <div className="w-full px-4 py-2 mb-2 bg-white border rounded-md shadow sm:px-6 ">
+        <div className="w-full px-4 py-2 bg-white border rounded-md shadow sm:px-6 ">
           <h3 className="text-3xl font-medium leading-6 text-center text-gray-900 ">
             유저 검색
           </h3>

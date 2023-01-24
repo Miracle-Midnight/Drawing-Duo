@@ -56,7 +56,7 @@ export function Profile() {
         <button
           type="button"
           onClick={handleOpenSearchFriendModal}
-          className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 mx-auto"
+          className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 mx-auto"
           role="menuitem"
         >
           <span className="flex flex-col">
