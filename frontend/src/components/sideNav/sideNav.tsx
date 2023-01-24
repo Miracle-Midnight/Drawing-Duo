@@ -124,7 +124,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
           </ul>
         </div>
         <div className="mt-10 mb-10">
-          <div className="side-nav mt-10">
+          <div className="side-nav">
             <ul>
               <li className=" text-center">
                 <div className="flex flex-col p-1 items-center border-t-2 border-b-2 border-gray-100">
@@ -193,6 +193,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
         </div>
         <CloseRoomModal
           modalShow={modalShow}
+          setModalShow={setModalShow}
           onHide={() => setModalShow(false)}
         />
       </nav>

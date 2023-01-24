@@ -4,7 +4,7 @@ import { Form, Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function CloseRoomModal(props: any) {
-  const [show, setShow] = useState(props.show);
+  
 
   // const navigate = useNavigate();
 
@@ -66,7 +66,7 @@ function CloseRoomModal(props: any) {
             variant="secondary"
             type="button"
             className="float-right"
-            onClick={() => setShow(false)}
+            onClick={() => props.setModalShow(false)}
           >
             취소
           </Button>
