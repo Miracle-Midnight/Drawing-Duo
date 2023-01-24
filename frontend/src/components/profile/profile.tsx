@@ -36,7 +36,7 @@ export function Profile() {
   }, [isOpenSearchFriendModal]);
 
   return (
-    <div className="absolute right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg  ring-1 ring-black ring-opacity-5">
+    <div className="absolute -right-10 w-36 mt-2 origin-top-right bg-white rounded-md shadow-lg  ring-1 ring-black ring-opacity-5">
       <div
         className="py-1 "
         role="menu"
@@ -46,7 +46,7 @@ export function Profile() {
         <button
           type="button"
           onClick={handleOpenFriendModal}
-          className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
+          className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900  mx-auto"
           role="menuitem"
         >
           <span className="flex flex-col">
@@ -56,7 +56,7 @@ export function Profile() {
         <button
           type="button"
           onClick={handleOpenSearchFriendModal}
-          className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
+          className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 mx-auto"
           role="menuitem"
         >
           <span className="flex flex-col">
