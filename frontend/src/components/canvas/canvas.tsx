@@ -1,5 +1,5 @@
 /* library */
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 /* module from local */
 import { Line } from "../line/line";
@@ -9,12 +9,24 @@ import { useUsers } from "../../useUsers";
 import { useKeyboardEvents } from "../../hooks/useKeyboradEvents";
 import { RootState } from "../../store";
 import { ImageCanvas } from "./ImageCanvas";
+import { saveImage } from "../../states/svgImageSlice";
+import { useDispatch } from "react-redux";
+import html2canvas from "html2canvas";
 
 function getPoint(x: number, y: number) {
   return [x, y];
 }
 
-export function Canvas({ frameImage }: { frameImage: string }) {
+export function Canvas({
+  frameImage,
+  isExit,
+}: {
+  frameImage: string;
+  isExit: boolean;
+}) {
+  const dispatch = useDispatch();
+  const formData = new FormData();
+
   const sizeState = useSelector((state: RootState) => state.size.value);
   const [awareness, yLines] = useSelector((state: RootState) => [
     state.yjs.awareness,
@@ -95,7 +107,29 @@ export function Canvas({ frameImage }: { frameImage: string }) {
     [completeLine]
   );
 
-  // const isFill = useMemo(()=>)
+  const handleSaveImage = async () => {
+    console.log("왜 안들어오나요?");
+    console.log(document.getElementById("saveImage"));
+    const element = document.getElementById("saveImage");
+    console.log(element);
+    if (element) {
+      console.log(element as HTMLElement);
+      // htmlToImage.toPng(element as HTMLElement).then(function (dataUrl) {
+      await html2canvas(element).then(async function (canvas) {
+        console.log("들어는 오나요?");
+        console.log(canvas);
+        formData.append("image", canvas.toDataURL("image/png"));
+      });
+      console.log(formData.get("image"));
+      dispatch(saveImage(formData));
+    }
+  };
+
+  useEffect(() => {
+    if (isExit) {
+      handleSaveImage();
+    }
+  }, [isExit]);
 
   return (
     <div className="relative h-full">

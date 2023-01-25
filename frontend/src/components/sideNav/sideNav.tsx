@@ -27,16 +27,26 @@ import Redo from "../drawTools/redo";
 import { useLines } from "../../hooks/useLines";
 import Palette from "../drawTools/palette";
 import PaletteComponent from "../palette/palette";
-import * as htmlToImage from "html-to-image";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 // interface Props {
 //   isHintImageOn: boolean;
 //   setisHintImageOn: Dispatch<SetStateAction<boolean>>;
 // }
 
-function SideNav({ users, Image }: { users: any; Image: string }) {
+function SideNav({
+  users,
+  Image,
+  setIsExit,
+}: {
+  users: any;
+  Image: string;
+  setIsExit: (isExit: boolean) => void;
+}) {
   const navigate = useNavigate();
   const formData = new FormData();
+  const svgImage = useSelector((state: RootState) => state.svgImage.image);
 
   const [isHintImageOn, setisHintImageOn] = useState(false);
   const [isChatOn, setisChatOn] = useState(false);
@@ -71,20 +81,16 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   };
 
   const handleExit = () => {
-    htmlToImage
-      .toCanvas(document.getElementById("canvas") as HTMLElement)
-      .then(function (canvas) {
-        const dataUrl = canvas.toDataURL("image/png");
-        formData.append("image", dataUrl);
-      });
-
+    setIsExit(true);
     axios
-      .post("/room/save/" + sessionStorage.getItem("roomId"), formData, {
+      .post("/room/save/" + sessionStorage.getItem("roomId"), svgImage, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
+        console.log(res);
+        setIsExit(false);
         navigate("/");
       })
       .catch((err) => {

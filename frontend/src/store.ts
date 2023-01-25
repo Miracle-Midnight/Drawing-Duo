@@ -9,6 +9,7 @@ import { filteredFriendsReducer } from "./states/filteredFriendsSlice";
 import { gameStartReducer } from "./states/gameStartSlice";
 import { yjsReducer } from "./states/yjsSlice";
 import { micReducer } from "./states/micSlice";
+import { svgImageReducer } from "./states/svgImageSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     gameStart: gameStartReducer,
     yjs: yjsReducer,
     mic: micReducer,
+    svgImage: svgImageReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),
