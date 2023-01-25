@@ -1,6 +1,7 @@
 import { Socket, Server } from 'socket.io';
 import {
   OnGatewayInit,
+  OnGatewayDisconnect,
   OnGatewayConnection,
   WebSocketGateway,
   WebSocketServer,
@@ -13,9 +14,12 @@ import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
 
 @WebSocketGateway({
+  namespace: 'Room',
   cors: { origin: '*', methods: ['GET', 'POST'] },
 })
-export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
+export class RoomGateway
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
   @WebSocketServer() server: Server;
 
   private logger = new Logger('RoomGateway');
@@ -36,6 +40,15 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
     this.logger.log(`Client connected: ${socket.id} ${socket.nsp.name}`);
   }
 
+  handleDisconnect(@ConnectedSocket() socket: Socket) {
+    this.logger.log(`Client disconnected: ${socket.id} ${socket.nsp.name}`);
+    socket.broadcast
+      .to(this.roomMap.get(socket.id))
+      .emit('user_exit', socket.id);
+    this.roomMap.delete(socket.id);
+    console.log(this.roomMap);
+  }
+
   @SubscribeMessage('join_room')
   async handleJoin(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     socket.join(data.roomId);
@@ -43,8 +56,14 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
     this.roomMap.set(socket.id, data.roomId);
     console.log(this.roomMap);
 
-    const usersInRoom = this.server.sockets.adapter.rooms.get(data.roomId);
-    if (usersInRoom.size > 1) {
+    const usersInRoom = [];
+    this.roomMap.forEach((value, key) => {
+      if (value === data.roomId) {
+        usersInRoom.push(key);
+      }
+    });
+    // const usersInRoom = this.server.sockets.adapter.rooms.get(data.roomId);
+    if (usersInRoom.length > 1) {
       socket.to(data.roomId).emit('all_users', Array.from(usersInRoom));
     }
     const user = await this.userRepository.find({
@@ -56,7 +75,7 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
 
   @SubscribeMessage('send-Nickname')
   handleSendID(@MessageBody() data, @ConnectedSocket() socket: Socket) {
-    this.logger.log(`Client sent ID: ${socket.id} ${socket.nsp.name}`);
+    this.logger.log(`Client sent Nickname: ${socket.id} ${socket.nsp.name}`);
     socket.to(data.roomId).emit('get_Nickname', data.nickname);
   }
 
@@ -100,15 +119,5 @@ export class RoomGateway implements OnGatewayInit, OnGatewayConnection {
   handleMessage(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     this.logger.log(`Client sent message: ${socket.id} ${data.message}`);
     socket.to(data.roomId).emit('message', data.name, data.message);
-  }
-
-  @SubscribeMessage('disconnect')
-  handleDisconnect(@ConnectedSocket() socket: Socket) {
-    this.logger.log(`Client disconnected: ${socket.id} ${socket.nsp.name}`);
-    socket.broadcast
-      .to(this.roomMap.get(socket.id))
-      .emit('user_exit', socket.id);
-    this.roomMap.delete(socket.id);
-    console.log(this.roomMap);
   }
 }
