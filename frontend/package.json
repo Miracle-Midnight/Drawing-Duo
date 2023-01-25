@@ -31,6 +31,7 @@
     "css-loader": "^6.7.3",
     "env-cmd": "^10.1.0",
     "html-loader": "^4.2.0",
+    "html-to-image": "^1.11.4",
     "html-webpack-plugin": "^5.5.0",
     "lodash": "^4.17.21",
     "peer": "^0.6.1",

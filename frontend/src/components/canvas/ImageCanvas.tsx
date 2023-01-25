@@ -14,8 +14,8 @@ export function ImageCanvas({ src }: srcProps) {
     img.onload = () => {
       const canvas = canvasRef.current;
       if (!canvas) return;
-      canvas.width = img.width;
-      canvas.height = img.height;
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
       const ctx = canvas.getContext("2d");
       if (ctx === null) return;
       ctx.drawImage(img, 0, 0);
@@ -46,7 +46,7 @@ export function ImageCanvas({ src }: srcProps) {
       ref={canvasRef}
       onPointerDown={handlePointerDown}
       style={{ touchAction: "none" }}
-      className="w-full h-full overflow-hidden"
+      className="w-full h-full overflow-hidden object-contain"
     />
   );
 }

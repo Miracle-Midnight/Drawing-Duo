@@ -38,13 +38,13 @@ function InviteFriend({
     <div className="text-xs text-gray-600 ">
       <div>
         <div className="flex-1 pl-1 md:mr-16">
-          <div className="font-medium color-black ">{name}</div>
+          <div className=" color-black font-extrabold text-lg">{name}</div>
         </div>
         <button
           onClick={inviteFriend}
           className="bg-green-300 hover:bg-green-600 text-gray-800 hover:text-white font-bold py-2 px-4 rounded inline-flex items-center mr-1"
         >
-          <span>초대</span>
+          <span>친구 추가</span>
         </button>
       </div>
     </div>
