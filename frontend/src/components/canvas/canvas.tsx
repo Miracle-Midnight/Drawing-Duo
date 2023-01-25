@@ -2,11 +2,13 @@
 import React, { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 /* module from local */
-import { Line } from "../line/line";
 import { useLines } from "../../hooks/useLines";
-import { UserCursor } from "../userCursor/usercursor";
-import { useUsers } from "../../useUsers";
 import { useKeyboardEvents } from "../../hooks/useKeyboradEvents";
+import { useConnection } from "../../hooks/useConnection";
+
+import { useUsers } from "../../useUsers";
+import { UserCursor } from "../userCursor/usercursor";
+import { Line } from "../line/line";
 import { RootState } from "../../store";
 import { ImageCanvas } from "./ImageCanvas";
 import { saveImage } from "../../states/svgImageSlice";
@@ -33,15 +35,10 @@ export function Canvas({
     state.yjs.yLines,
   ]);
   const users = useUsers(awareness, (state) => state);
-  const {
-    lines,
-    isSynced,
-    startLine,
-    addPointToLine,
-    completeLine,
-    undoLine,
-    redoLine,
-  } = useLines();
+  const { lines, startLine, addPointToLine, completeLine, undoLine, redoLine } =
+    useLines();
+
+  useConnection();
 
   const drawTool = useSelector(
     (state: RootState) => state.drawTool.currentTool
@@ -118,7 +115,12 @@ export function Canvas({
       await html2canvas(element).then(async function (canvas) {
         console.log("들어는 오나요?");
         console.log(canvas);
-        formData.append("image", canvas.toDataURL("image/png"));
+        const image = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.download = image;
+        console.log("들어오셨군요");
+        console.log(link.download);
+        formData.append("image", link.download);
       });
       console.log(formData.get("image"));
       dispatch(saveImage(formData));
@@ -132,7 +134,7 @@ export function Canvas({
   }, [isExit]);
 
   return (
-    <div className="relative h-full">
+    <div className="relative h-full" id="saveImage">
       <svg
         id="svgCanvas"
         onPointerDown={handlePointerDown}
@@ -150,7 +152,6 @@ export function Canvas({
           <Line key={line.get("id")} line={line} idx={i} />
         ))}
         {Array.from(users.entries()).map(([key, value]: any) => {
-          if (key === awareness.clientID) return null;
           if (!value.point || !value.color || value.isActive === undefined) {
             return null;
           }
@@ -173,6 +174,7 @@ export function Canvas({
                   typeof UserCursor
                 >["windowSize"]
               }
+              userId={key}
             />
           );
         })}

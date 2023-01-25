@@ -1,15 +1,25 @@
 import { memo } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 export interface UserCursorProps {
   point: number[];
   color: string;
   isActive: boolean;
   windowSize: number[];
+  userId: number;
 }
 
 export const UserCursor = memo(
-  ({ point, color, isActive, windowSize }: UserCursorProps) => {
-    const name = sessionStorage.getItem("friendNickname");
+  ({ point, color, isActive, windowSize, userId }: UserCursorProps) => {
+    const awareness = useSelector((state: RootState) => state.yjs.awareness);
+
+    let name;
+    if (userId === awareness.clientID) {
+      name = sessionStorage.getItem("userNickname");
+    } else {
+      name = sessionStorage.getItem("friendNickname");
+    }
 
     const newPoints: number[] = [];
     if (windowSize) {

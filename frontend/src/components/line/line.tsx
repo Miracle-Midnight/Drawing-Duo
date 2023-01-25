@@ -32,7 +32,7 @@ export const Line = function Line({ line, idx }: LineProps) {
       newPoints.push([newPointX, newPointY]);
     });
   }
-  const pathData = getSvgPathFromStroke(getStroke(newPoints, { size: size })); // size option 주기
+  const pathData = getSvgPathFromStroke(getStroke(newPoints, { size: size }));
 
   return <path d={pathData} data-id={`${idx}`} fill={color} />;
 };
