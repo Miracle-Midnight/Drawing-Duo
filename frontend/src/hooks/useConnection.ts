@@ -10,6 +10,10 @@ export function useConnection() {
 
   const provider = useSelector((state: RootState) => state.yjs.provider);
 
+  function handleConnect() {
+    setIsSynced(true);
+  }
+
   useEffect(() => {
     function handleDisconnect() {
       provider?.disconnect();
