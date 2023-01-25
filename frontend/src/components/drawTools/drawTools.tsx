@@ -18,15 +18,8 @@ interface Position {
 }
 
 export function DrawTools() {
-  const {
-    isSynced,
-    lines,
-    startLine,
-    addPointToLine,
-    completeLine,
-    undoLine,
-    redoLine,
-  } = useLines();
+  const { lines, startLine, addPointToLine, completeLine, undoLine, redoLine } =
+    useLines();
 
   return (
     <div className="absolute left-20">

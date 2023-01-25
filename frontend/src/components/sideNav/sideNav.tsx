@@ -94,15 +94,8 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
       });
   }, []);
 
-  const {
-    isSynced,
-    lines,
-    startLine,
-    addPointToLine,
-    completeLine,
-    undoLine,
-    redoLine,
-  } = useLines();
+  const { lines, startLine, addPointToLine, completeLine, undoLine, redoLine } =
+    useLines();
 
   return (
     <div className="flex h-full  left-0 border border-purple-800  z-50">

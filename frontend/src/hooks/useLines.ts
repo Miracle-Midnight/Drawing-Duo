@@ -13,14 +13,12 @@ interface User {
 }
 
 export function useLines() {
-  const [isSynced, setIsSynced] = useState<boolean>(false);
   const [lines, setLines] = useState<Y.Map<any>[]>([]);
   const rCurrentLine = useRef<Y.Map<any>>();
 
-  const [yLines, provider, undoManager, doc, awareness] = useSelector(
+  const [yLines, undoManager, doc, awareness] = useSelector(
     (state: RootState) => [
       state.yjs.yLines,
-      state.yjs.provider,
       state.yjs.undoManager,
       state.yjs.doc,
       state.yjs.awareness,
@@ -44,7 +42,7 @@ export function useLines() {
 
     const yLine = new Y.Map();
 
-    undoManager.stopCapturing();
+    // undoManager.stopCapturing();
 
     const user = awareness.getLocalState() as User;
 
@@ -89,54 +87,7 @@ export function useLines() {
     undoManager.redo();
   }, []);
 
-  useEffect(() => {
-    function handleConnect() {
-      setIsSynced(true);
-      setLines(yLines.toArray());
-    }
-
-    function handleDisconnect() {
-      provider.off("sync", handleConnect);
-      provider.disconnect();
-    }
-
-    window.addEventListener("beforeunload", handleDisconnect);
-
-    provider.on("sync", handleConnect);
-
-    provider.connect();
-
-    return () => {
-      // handleDisconnect();
-      // window.removeEventListener("beforeunload", handleDisconnect);
-    };
-  }, []);
-
-  useEffect(() => {
-    function handleConnect() {
-      setIsSynced(true);
-      setLines(yLines.toArray());
-    }
-
-    function handleDisconnect() {
-      provider.off("sync", handleConnect);
-      provider.disconnect();
-    }
-
-    window.addEventListener("beforeunload", handleDisconnect);
-
-    provider.on("sync", handleConnect);
-
-    provider.connect();
-
-    return () => {
-      // handleDisconnect();
-      // window.removeEventListener("beforeunload", handleDisconnect);
-    };
-  }, []);
-
   return {
-    isSynced,
     lines,
     startLine,
     addPointToLine,
