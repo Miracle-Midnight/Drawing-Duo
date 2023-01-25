@@ -9,7 +9,7 @@ export interface UserCursorProps {
 
 export const UserCursor = memo(
   ({ point, color, isActive, windowSize }: UserCursorProps) => {
-    const name = sessionStorage.getItem("userNickname");
+    const name = sessionStorage.getItem("friendNickname");
 
     const newPoints: number[] = [];
     if (windowSize) {

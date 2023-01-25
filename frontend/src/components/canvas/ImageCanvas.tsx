@@ -6,8 +6,7 @@ interface srcProps {
 
 export function ImageCanvas({ src }: srcProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
-
+  const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   useEffect(() => {
     const img = new Image();
     img.src = src;
@@ -19,7 +18,7 @@ export function ImageCanvas({ src }: srcProps) {
       const ctx = canvas.getContext("2d");
       if (ctx === null) return;
       ctx.drawImage(img, 0, 0);
-      setContext(ctx);
+      contextRef.current = ctx;
     };
   }, [src]);
 
@@ -36,9 +35,14 @@ export function ImageCanvas({ src }: srcProps) {
   }, []);
 
   const handlePointerDown = useCallback((e: React.PointerEvent<any>) => {
-    const imageDate = context?.getImageData(e.clientX, e.clientY, 1, 1);
-    console.log("hi");
-    console.log(imageDate);
+    const imageData = contextRef.current?.getImageData(
+      e.nativeEvent.offsetX,
+      e.nativeEvent.offsetY,
+      1,
+      1
+    );
+    const pixelData = imageData?.data;
+    console.log(pixelData);
   }, []);
 
   return (

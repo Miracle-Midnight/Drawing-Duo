@@ -11,6 +11,7 @@ function Intro() {
     sessionStorage.removeItem("roomId");
     sessionStorage.removeItem("roomTitle");
     sessionStorage.removeItem("users");
+    sessionStorage.removeItem("friendNickname");
 
     axios
       .get("/lobby/" + sessionStorage.getItem("userid"))

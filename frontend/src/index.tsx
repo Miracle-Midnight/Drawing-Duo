@@ -8,29 +8,28 @@ import Register from "./routes/register/register";
 import GameLobby from "./routes/gameLobby/gameLobby";
 import InGame from "./routes/inGame/inGame";
 import Intro from "./routes/intro/intro";
-import React from "react";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import { StrictMode } from "react";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/room" element={<GameLobby />} />
-          <Route path="/room/:id" element={<GameLobby />} />
-          <Route path="/Register" element={<Register />} />
-          <Route path="/InGame" element={<InGame />} />
-          <Route path="/InGame/:id" element={<InGame />} />
-          <Route path="/Intro" element={<Intro />} />
-        </Routes>
-      </BrowserRouter>
-    </React.StrictMode>
+    {/* <StrictMode> */}
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Room" element={<GameLobby />} />
+        <Route path="/Room/:id" element={<GameLobby />} />
+        <Route path="/Room/:id/InGame" element={<InGame />} />
+        <Route path="/Register" element={<Register />} />
+        <Route path="/Intro" element={<Intro />} />
+      </Routes>
+    </BrowserRouter>
+    {/* </StrictMode> */}
   </Provider>
 );
 

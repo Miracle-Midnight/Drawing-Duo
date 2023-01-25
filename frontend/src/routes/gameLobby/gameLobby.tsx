@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./gameLobby.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -35,29 +35,38 @@ function GameLobby() {
       .catch((err) => {
         console.log(err);
       });
+
+    setMyPick("");
+    setFriendsPick("");
+    setIsReady(false);
+    dispatch(setStarted(false));
   }, []);
 
   //-----------------------------------------------------------------------------
 
   const handleReady = () => {
+    setIsReady(true);
     const { yLines, provider, undoManager, doc, awareness } = useYjsProvider();
     dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
-    setIsReady(true);
   };
 
   const handleStart = () => {
-    if (myPick === friendsPick && isReady === friendsReady) {
-      axios
-        .post("/room", {
-          roomid: sessionStorage.getItem("roomId"),
-          imageid: imageId,
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      dispatch(setStarted(true));
+    if (myPick === friendsPick) {
+      if (isReady === friendsReady) {
+        axios
+          .post("/room", {
+            roomid: sessionStorage.getItem("roomId"),
+            imageid: imageId,
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        dispatch(setStarted(true));
 
-      navigate("/InGame/" + sessionStorage.getItem("roomId"));
+        navigate(`/Room/${sessionStorage.getItem("roomId")}/InGame`);
+      } else {
+        alert("모두 준비해주세요!");
+      }
     } else {
       alert("모두 같은 이미지를 선택해 주세요!");
     }
@@ -92,7 +101,6 @@ function GameLobby() {
           <div className="flex flex-col justify-between">
             <UserState
               name={sessionStorage.getItem("userNickname")}
-              image={sessionStorage.getItem("profileImage")}
               state="On"
             ></UserState>
             <UserState name={remoteNickname} state="On"></UserState>

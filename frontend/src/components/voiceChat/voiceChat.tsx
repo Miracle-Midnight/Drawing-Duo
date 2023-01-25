@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import axios from "axios";
-import { Stream } from "stream";
 
 function VoiceChat({
   setRemoteNickname,
@@ -33,7 +32,7 @@ function VoiceChat({
   const socketRef = useRef<Socket>();
 
   const isStarted = useSelector((state: RootState) => state.gameStart.start);
-  const isMicOn = useSelector((state: RootState) => state.mic.isMicOn);
+  // const isMicOn = useSelector((state: RootState) => state.mic.isMicOn);
 
   async function getMedia() {
     try {
@@ -44,6 +43,7 @@ function VoiceChat({
         video: false,
         audio: true,
       });
+
       if (myVideoRef.current) {
         myVideoRef.current.srcObject = stream;
       }
@@ -64,7 +64,7 @@ function VoiceChat({
           if (!socketRef.current) {
             return;
           }
-          console.log("recv candidate");
+          console.log("receive candidate");
           socketRef.current.emit("candidate", {
             candidate: e.candidate,
             roomId: roomId,
@@ -77,6 +77,11 @@ function VoiceChat({
           remoteVideoRef.current.srcObject = e.streams[0];
         }
       };
+
+      socketRef.current.emit("join_room", {
+        roomId: roomId,
+        userId: sessionStorage.getItem("userid"),
+      });
     } catch (e) {
       console.error(e);
     }
@@ -89,7 +94,7 @@ function VoiceChat({
     try {
       console.log("create offer");
       const sdp = await pcRef.current.createOffer();
-      pcRef.current.setLocalDescription(sdp);
+      await pcRef.current.setLocalDescription(sdp);
       console.log("sent the offer");
       socketRef.current.emit("offer", { sdp: sdp, roomId: roomId });
     } catch (e) {
@@ -103,9 +108,9 @@ function VoiceChat({
     }
     try {
       console.log("create answer");
-      pcRef.current.setRemoteDescription(sdp);
+      await pcRef.current.setRemoteDescription(sdp);
       const answerSdp = await pcRef.current.createAnswer();
-      pcRef.current.setLocalDescription(answerSdp);
+      await pcRef.current.setLocalDescription(answerSdp);
 
       console.log("sent the answer");
       socketRef.current.emit("answer", { sdp: answerSdp, roomId: roomId });
@@ -126,34 +131,47 @@ function VoiceChat({
       ],
     });
 
-    socketRef.current = io("https://drawingduo.shop");
+    socketRef.current = io("https://drawingduo.shop/Room");
 
-    socketRef.current.emit("join_room", {
-      roomId: roomId,
-      userId: sessionStorage.getItem("userid"),
-    });
+    // pcRef.current.onicecandidate = (e) => {
+    //   if (e.candidate) {
+    //     if (!socketRef.current) {
+    //       return;
+    //     }
+    //     console.log("receive candidate");
+    //     socketRef.current.emit("candidate", {
+    //       candidate: e.candidate,
+    //       roomId: roomId,
+    //     });
+    //   }
+    // };
+
+    // socketRef.current.emit("join_room", {
+    //   roomId: roomId,
+    //   userId: sessionStorage.getItem("userid"),
+    // });
 
     socketRef.current.on("all_users", (allUsers: any) => {
-      console.log(allUsers);
+      console.log("all_users!");
       if (allUsers.length > 1) {
         createOffer();
       }
     });
 
-    socketRef.current.on("getOffer", (sdp: RTCSessionDescription) => {
+    socketRef.current.on("getOffer", async (sdp: RTCSessionDescription) => {
       if (!pcRef.current) {
         return;
       }
       console.log("get offer");
-      createAnswer(sdp);
+      await createAnswer(sdp);
     });
 
-    socketRef.current.on("getAnswer", (sdp: RTCSessionDescription) => {
+    socketRef.current.on("getAnswer", async (sdp: RTCSessionDescription) => {
       if (!pcRef.current) {
         return;
       }
       console.log("get answer");
-      pcRef.current.setRemoteDescription(sdp);
+      await pcRef.current.setRemoteDescription(sdp);
     });
 
     socketRef.current.on("getCandidate", async (candidate: RTCIceCandidate) => {
@@ -165,29 +183,43 @@ function VoiceChat({
       console.log("candidate add success");
     });
 
-    getMedia();
-
     socketRef.current.on("new_user", async (user: any) => {
+      console.log("new_user!");
       setRemoteNickname(user[0].profile.nickname);
+      sessionStorage.setItem("friendNickname", user[0].profile.nickname);
+
+      if (socketRef.current) {
+        console.log("send nickname!");
+        socketRef.current.emit("send-Nickname", {
+          roomId: roomId,
+          nickname: sessionStorage.getItem("userNickname"),
+        });
+      }
     });
 
-    socketRef.current.on("get_users", async (users: Array<string>) => {
-      setRemoteNickname(users[0]);
+    socketRef.current.on("get_Nickname", async (nickname: any) => {
+      console.log("get_Nickname!");
+      console.log(nickname);
+      setRemoteNickname(nickname);
+      sessionStorage.setItem("friendNickname", nickname);
     });
 
     socketRef.current.on("image selected", async (image: any) => {
+      console.log("image selected!");
       setFriendsPick(image);
     });
 
     socketRef.current.on("game started", async () => {
-      navigate("/InGame/" + sessionStorage.getItem("roomId"));
+      console.log("game started!");
+      navigate(`/Room/${sessionStorage.getItem("roomId")}/InGame`);
     });
 
     socketRef.current.on("game ready", async (isReady: boolean) => {
+      console.log("game ready!");
       setFriendsReady(isReady);
     });
 
-    myVideoRef.current;
+    getMedia();
 
     return () => {
       if (socketRef.current) {
@@ -201,7 +233,6 @@ function VoiceChat({
 
   useEffect(() => {
     if (socketRef.current) {
-      console.log(isStarted);
       if (isStarted) {
         axios
           .post("/room", {
@@ -211,15 +242,23 @@ function VoiceChat({
           .catch((err) => {
             console.log(err);
           });
+        console.log("game-start!");
         socketRef.current.emit("game-start", { roomId: roomId });
       }
+      console.log("game-ready!");
       socketRef.current.emit("game-ready", {
         roomId: roomId,
         isReady: isReady,
       });
+    }
+  }, [isStarted, isReady]);
+
+  useEffect(() => {
+    if (socketRef.current) {
+      console.log("select-image!");
       socketRef.current.emit("select-image", { roomId: roomId, image: myPick });
     }
-  }, [myPick, isStarted, isReady]);
+  }, [myPick]);
 
   return (
     <div>

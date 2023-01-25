@@ -39,9 +39,6 @@ function InviteFromFriend({
   const navigate = useNavigate();
 
   const handleAcceptButton = () => {
-    console.log(typeof sessionStorage.getItem("userid"));
-    console.log(typeof userKey);
-    console.log(typeof inviteRoom);
     axios
       .post("/friend/invite/accept", {
         userId: sessionStorage.getItem("userid"),
