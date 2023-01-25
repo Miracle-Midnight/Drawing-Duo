@@ -111,6 +111,7 @@ export function Canvas({ frameImage }: { frameImage: string }) {
           <Line key={line.get("id")} line={line} idx={i} />
         ))}
         {Array.from(users.entries()).map(([key, value]: any) => {
+          if (key === awareness.clientID) return null;
           if (!value.point || !value.color || value.isActive === undefined) {
             return null;
           }
@@ -133,7 +134,6 @@ export function Canvas({ frameImage }: { frameImage: string }) {
                   typeof UserCursor
                 >["windowSize"]
               }
-              userId={key}
             />
           );
         })}
