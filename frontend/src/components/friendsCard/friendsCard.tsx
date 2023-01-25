@@ -16,7 +16,7 @@ function FriendsCard({
 }: friendProps) {
   return (
     <li className="flex flex-row mb-2 border-gray-400">
-      <div className="transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white  rounded-md flex flex-1 items-center p-4">
+      <div className="transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white  rounded-md flex flex-1 items-center p-2">
         <IsOnline isConnected={isConnected} name={name} />
         {isInviteTab ? (
           <InviteFriend friendKey={friendKey} name={name} />
@@ -68,7 +68,7 @@ function InviteFriend({
       <div>
         <button
           onClick={inviteFriend}
-          className="bg-green-300 hover:bg-green-600 text-gray-800 hover:text-white font-bold py-2 px-4 rounded inline-flex items-center mr-1"
+          className="bg-green-300 hover:bg-green-600 text-gray-800 hover:text-white font-bold py-2 px-4 rounded inline-flex items-center"
         >
           <span>초대</span>
         </button>

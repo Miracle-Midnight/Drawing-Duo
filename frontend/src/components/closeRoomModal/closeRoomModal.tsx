@@ -39,7 +39,7 @@ function CloseRoomModal(props: any) {
     <Modal
       {...props}
       size="md"
-      aria-labelledby="contained-modal-title-vcenter"
+      
       centered
     >
       <Modal.Header closeButton onClick={props.onHide}>

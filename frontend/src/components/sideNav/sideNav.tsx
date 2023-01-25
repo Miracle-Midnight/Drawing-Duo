@@ -40,12 +40,14 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   const [isChatOn, setisChatOn] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [isClickPen, setisClickPen] = useState(false);
+  const [isSizeOn, setisSizeOn] = useState(false);
   const [isPaletteOn, setisPaletteOn] = useState(false);
   const [isClickEraser, setisClickEraser] = useState(false);
   const [isFillon, setisFillon] = useState(false);
 
   const togglePenHandler = () => {
     setisClickPen(true);
+    setisSizeOn(!isSizeOn);
     setisClickEraser(false);
     setisFillon(false);
   };
@@ -146,7 +148,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
 
                     <div
                       className={
-                        isClickPen === true
+                        isSizeOn === true
                           ? "absolute top-20 left-20 -rotate-90"
                           : "absolute top-20 left-20 -rotate-90 hidden"
                       }
@@ -192,7 +194,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
           </div>
         </div>
         <CloseRoomModal
-          modalShow={modalShow}
+          show={modalShow}
           setModalShow={setModalShow}
           onHide={() => setModalShow(false)}
         />
