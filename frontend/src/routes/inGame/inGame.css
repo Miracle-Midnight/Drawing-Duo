@@ -9,3 +9,9 @@
   padding-left: 0;
   margin-right: 0;
 }
+
+.no-scroll {
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+

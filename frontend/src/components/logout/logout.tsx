@@ -12,7 +12,7 @@ export function Logout() {
   return (
     <button
       type="submit"
-      className="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
+      className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 mx-auto"
       role="menuitem"
       onClick={handleLogout}
     >
