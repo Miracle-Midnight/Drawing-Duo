@@ -27,6 +27,7 @@ import Redo from "../drawTools/redo";
 import { useLines } from "../../hooks/useLines";
 import Palette from "../drawTools/palette";
 import PaletteComponent from "../palette/palette";
+import * as htmlToImage from "html-to-image";
 
 // interface Props {
 //   isHintImageOn: boolean;
@@ -35,6 +36,7 @@ import PaletteComponent from "../palette/palette";
 
 function SideNav({ users, Image }: { users: any; Image: string }) {
   const navigate = useNavigate();
+  const formData = new FormData();
 
   const [isHintImageOn, setisHintImageOn] = useState(false);
   const [isChatOn, setisChatOn] = useState(false);
@@ -67,17 +69,25 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   };
 
   const handleExit = () => {
+    htmlToImage
+      .toCanvas(document.getElementById("canvas") as HTMLElement)
+      .then(function (canvas) {
+        const dataUrl = canvas.toDataURL("image/png");
+        formData.append("image", dataUrl);
+      });
+
     axios
-      .post("/room/save/" + sessionStorage.getItem("roomId"), {
-        userId: sessionStorage.getItem("userid"),
+      .post("/room/save/" + sessionStorage.getItem("roomId"), formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((res) => {
-        console.log(res);
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
       });
-    navigate("/");
   };
   const [color, setColor] = useState([]);
 

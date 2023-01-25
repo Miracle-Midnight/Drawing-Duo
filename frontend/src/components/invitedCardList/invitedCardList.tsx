@@ -1,6 +1,5 @@
 import { inviteList } from "../invitedButton/invitedButton";
 import InvitedCard from "../invitedCard/invitedCard";
-import SearchInput from "../searchInput/searchInput";
 
 function InvitedCardList({ invitedList }: inviteList) {
   return (

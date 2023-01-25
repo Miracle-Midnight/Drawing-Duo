@@ -52,7 +52,7 @@ function GameLobby() {
 
   const handleStart = () => {
     if (myPick === friendsPick) {
-      if (isReady === friendsReady) {
+      if (isReady && friendsReady) {
         axios
           .post("/room", {
             roomid: sessionStorage.getItem("roomId"),
