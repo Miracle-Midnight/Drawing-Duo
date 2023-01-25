@@ -105,31 +105,33 @@ function GameLobby() {
             ></UserState>
             <UserState name={remoteNickname} state="On"></UserState>
           </div>
-          <Invite />
-          <button
-            type="button"
-            className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
-            onClick={deleteRoom}
-          >
-            뒤로 가기
-          </button>
-          {isReady ? (
+          <div className="flex flex-col justify-between h-48">
+            <Invite />
             <button
               type="button"
-              className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-              onClick={handleStart}
+              className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
+              onClick={deleteRoom}
             >
-              게임 시작
+              뒤로 가기
             </button>
-          ) : (
-            <button
-              type="button"
-              className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-              onClick={handleReady}
-            >
-              준비 완료
-            </button>
-          )}
+            {isReady ? (
+              <button
+                type="button"
+                className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                onClick={handleStart}
+              >
+                게임 시작
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                onClick={handleReady}
+              >
+                준비 완료
+              </button>
+            )}
+          </div>
         </div>
       </div>
       <VoiceChat

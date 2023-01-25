@@ -49,7 +49,7 @@ export function ImageList({
                           <div className="prod-img flex justify-center">
                             <img
                               src={image.image}
-                              className=" object-center w-80"
+                              className=" object-center w-80 h-80"
                             />
                           </div>
                         ) : (
@@ -57,7 +57,7 @@ export function ImageList({
                           <div className="prod-img flex justify-center border border-primary border-5">
                             <img
                               src={image.image}
-                              className=" object-center w-80"
+                              className=" object-center w-80 h-80"
                             />
                           </div>
                         )}
@@ -70,7 +70,7 @@ export function ImageList({
                           <div className="prod-img flex justify-center">
                             <img
                               src={image.image}
-                              className=" object-center w-80"
+                              className=" object-center w-80 h-80"
                             />
                           </div>
                         ) : (
@@ -78,7 +78,7 @@ export function ImageList({
                           <div className="prod-img flex justify-center border border-primary border-5">
                             <img
                               src={image.image}
-                              className=" object-center w-80"
+                              className=" object-center w-80 h-80"
                             />
                           </div>
                         )}

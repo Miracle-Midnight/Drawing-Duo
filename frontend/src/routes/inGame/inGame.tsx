@@ -9,6 +9,8 @@ import { Palette } from "../../components/palette/palette";
 import axios from "axios";
 import { Canvas } from "../../components/canvas/canvas";
 import VoiceChat from "../../components/voiceChat/voiceChat";
+import * as HtmlToImage from "html-to-image";
+// const toImage = HtmlToImage.toImage as any;
 
 function InGame() {
   const [Image, setImage] = useState<string>("");
@@ -30,13 +32,13 @@ function InGame() {
       });
   }, []);
   return (
-    <div className="h-full grid grid-cols-10 overflow-y-hidden w-full">
+    <div className="h-full grid grid-cols-12 overflow-hidden w-full no-scroll">
       <div className="flex h-full">
         <SideNav users={users} Image={Image} />
         {/* <DrawTools /> */}
       </div>
 
-      <div className="col-span-9 h-screen">
+      <div className="col-span-11 h-screen">
         <Canvas frameImage={frameImage} />
       </div>
 
