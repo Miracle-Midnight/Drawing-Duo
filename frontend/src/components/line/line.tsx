@@ -32,7 +32,9 @@ export const Line = function Line({ line, idx }: LineProps) {
       newPoints.push([newPointX, newPointY]);
     });
   }
-  const pathData = getSvgPathFromStroke(getStroke(newPoints, { size: size }));
+  const pathData = getSvgPathFromStroke(
+    getStroke(newPoints, { size: size, simulatePressure: false })
+  );
 
   return <path d={pathData} data-id={`${idx}`} fill={color} />;
 };

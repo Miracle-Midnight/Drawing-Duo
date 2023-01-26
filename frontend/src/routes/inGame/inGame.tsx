@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
 
-import { DrawTools } from "../../components/drawTools/drawTools";
-import { Palette } from "../../components/palette/palette";
 import axios from "axios";
 import { Canvas } from "../../components/canvas/canvas";
 import VoiceChat from "../../components/voiceChat/voiceChat";
