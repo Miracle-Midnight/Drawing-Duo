@@ -17,7 +17,6 @@ function InGame() {
   const [frameImage, setFrameImage] = useState<string>("");
   const [users, setUsers] = useState<any>([]);
   const [color, setColor] = useState([]);
-  const [isExit, setisExit] = useState(false);
 
   useEffect(() => {
     axios
@@ -35,11 +34,11 @@ function InGame() {
   return (
     <div className="h-full grid grid-cols-12 overflow-hidden w-full no-scroll">
       <div className="flex h-full">
-        <SideNav users={users} Image={Image} setIsExit={setisExit} />
+        <SideNav users={users} Image={Image} />
       </div>
 
       <div className="col-span-11 h-screen">
-        <Canvas frameImage={frameImage} isExit={isExit} />
+        <Canvas frameImage={frameImage} />
       </div>
 
       <VoiceChat />

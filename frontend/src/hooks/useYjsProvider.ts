@@ -8,14 +8,15 @@ export function useYjsProvider() {
   const roomId: string = sessionStorage.getItem("roomId")!;
   const doc = new Y.Doc();
   const provider = new WebrtcProvider(roomId, doc, {
-    signaling: [
-      "wss://signaling.yjs.dev",
-      "wss://y-webrtc-signaling-eu.herokuapp.com",
-      "wss://y-webrtc-signaling-us.herokuapp.com",
-    ],
-    awareness: new awarenessProtocol.Awareness(doc),
-    maxConns: 20,
-    filterBcConns: false,
+    // signaling: [
+    //   // "wss://signaling.yjs.dev",
+    //   // "wss://y-webrtc-signaling-eu.herokuapp.com",
+    //   "wss://y-webrtc-signaling-us.herokuapp.com",
+    //   // "wss://43.200.177.227:4000",
+    // ],
+    // awareness: new awarenessProtocol.Awareness(doc),
+    // maxConns: 20,
+    // filterBcConns: false,
     peerOpts: {
       config: {
         iceServers: [

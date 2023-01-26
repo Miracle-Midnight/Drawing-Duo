@@ -1,12 +1,18 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { isExitt } from "../../states/isExitSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 function CloseRoomModal(props: any) {
-  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // const navigate = useNavigate();
+  const svgImage = useSelector((state: RootState) => state.svgImage.formData);
+  const isExit = useSelector((state: RootState) => state.isExit.isExit);
 
   // const [roomName, setRoomName] = useState("");
 
@@ -20,28 +26,13 @@ function CloseRoomModal(props: any) {
   //   setRoomName(e.target.value);
   // };
 
-  const handleExitRoom = () => {
-    axios
-      .post("/room/" + sessionStorage.getItem("userid"), {
-        // title: roomName,
-      })
-      .then((res) => {
-        // sessionStorage.setItem("roomTitle", res.data.data.title);
-        // sessionStorage.setItem("roomId", res.data.data.roomid);
-        // navigate("/room/" + res.data.data.roomid);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const handleExit = () => {
+    // navigate("/");
+    dispatch(isExitt(true));
   };
 
   return (
-    <Modal
-      {...props}
-      size="md"
-      
-      centered
-    >
+    <Modal {...props} size="md" centered>
       <Modal.Header closeButton onClick={props.onHide}>
         <Modal.Title id="contained-modal-title-vcenter">종료</Modal.Title>
       </Modal.Header>
@@ -49,7 +40,7 @@ function CloseRoomModal(props: any) {
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>종료하시겠습니까?</Form.Label>
-            <div>종료하면 자동으로 현재 그림이 저장됩니다.</div>
+            <div>종료하면 현재까지 그린 그림이 저장됩니다.</div>
           </Form.Group>
 
           <Button
@@ -58,7 +49,7 @@ function CloseRoomModal(props: any) {
             className="float-right ml-3"
             // onClick={handleCreateRoom}
 
-            onClick={handleExitRoom}
+            onClick={handleExit}
           >
             종료
           </Button>
@@ -66,7 +57,7 @@ function CloseRoomModal(props: any) {
             variant="secondary"
             type="button"
             className="float-right"
-            onClick={() => props.setModalShow(false)}
+            onClick={props.onHide}
           >
             취소
           </Button>

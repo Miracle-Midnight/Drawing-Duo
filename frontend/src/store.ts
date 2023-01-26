@@ -10,6 +10,7 @@ import { gameStartReducer } from "./states/gameStartSlice";
 import { yjsReducer } from "./states/yjsSlice";
 import { micReducer } from "./states/micSlice";
 import { svgImageReducer } from "./states/svgImageSlice";
+import { isExitReducer } from "./states/isExitSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     yjs: yjsReducer,
     mic: micReducer,
     svgImage: svgImageReducer,
+    isExit: isExitReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

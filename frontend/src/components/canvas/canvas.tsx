@@ -1,5 +1,5 @@
 /* library */
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 /* module from local */
 import { useLines } from "../../hooks/useLines";
@@ -14,20 +14,22 @@ import { ImageCanvas } from "./ImageCanvas";
 import { saveImage } from "../../states/svgImageSlice";
 import { useDispatch } from "react-redux";
 import html2canvas from "html2canvas";
+import { saveAs } from "file-saver";
+import { getType } from "@reduxjs/toolkit";
+
+import { isExitt } from "../../states/isExitSlice";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function getPoint(x: number, y: number) {
   return [x, y];
 }
 
-export function Canvas({
-  frameImage,
-  isExit,
-}: {
-  frameImage: string;
-  isExit: boolean;
-}) {
+export function Canvas({ frameImage }: { frameImage: string }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const formData = new FormData();
+  const formData = useSelector((state: RootState) => state.svgImage.formData);
+  const isExit = useSelector((state: RootState) => state.isExit.isExit);
 
   const sizeState = useSelector((state: RootState) => state.size.value);
   const [awareness, yLines] = useSelector((state: RootState) => [
@@ -105,30 +107,57 @@ export function Canvas({
   );
 
   const handleSaveImage = async () => {
-    console.log("왜 안들어오나요?");
-    console.log(document.getElementById("saveImage"));
     const element = document.getElementById("saveImage");
-    console.log(element);
-    if (element) {
-      console.log(element as HTMLElement);
-      // htmlToImage.toPng(element as HTMLElement).then(function (dataUrl) {
-      await html2canvas(element).then(async function (canvas) {
-        console.log("들어는 오나요?");
-        console.log(canvas);
-        const image = canvas.toDataURL("image/png");
-        const link = document.createElement("a");
-        link.download = image;
-        console.log("들어오셨군요");
-        console.log(link.download);
-        formData.append("image", link.download);
+    const childNodes = element?.childNodes;
+    childNodes?.forEach((child) => {
+      if (child.nodeName == "circle" || child.nodeName == "text") {
+        child.remove();
+      }
+    });
+
+    await html2canvas(element as HTMLElement).then(function (canvas) {
+      console.log("들어옵니다!");
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL("image/png");
+      link.download = `${sessionStorage.getItem("roomId")}.png`;
+
+      formData.set("image", link.download);
+    });
+    console.log("gkgkgkkgkgkgkgkgkgkgkgkgkgkgk");
+    console.log(formData.get("image"));
+    dispatch(saveImage(formData));
+
+    axios
+      .post(`/room/save/${sessionStorage.getItem("roomId")}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        dispatch(isExitt(false));
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      console.log(formData.get("image"));
-      dispatch(saveImage(formData));
-    }
+
+    // const image = new Image();
+    // const element = document.getElementById("saveImage");
+    // if (element) {
+    //   // htmlToImage.toPng(element as HTMLElement).then(function (dataUrl) {
+    //   await html2canvas(element).then(async function (canvas) {
+    //     image.src = canvas.toDataURL("image/png");
+    //     formData.set("image", image.src);
+    //   });
+    //   dispatch(saveImage(formData));
+    // }
   };
 
   useEffect(() => {
     if (isExit) {
+      console.log("isExit");
+      console.log(isExit);
       handleSaveImage();
     }
   }, [isExit]);

@@ -3,7 +3,7 @@ import SoundOffElem from "../sideNavAtoms/soundElems/soundOffElem";
 import SoundOnElem from "../sideNavAtoms/soundElems/soundOnElem";
 
 function SoundOnOffMolecule() {
-  const [isSoundOn, setisSoundOn] = useState(false);
+  const [isSoundOn, setisSoundOn] = useState(true);
   const toggleSoundHandler = () => {
     setisSoundOn(!isSoundOn);
   };

@@ -29,28 +29,21 @@ import Palette from "../drawTools/palette";
 import PaletteComponent from "../palette/palette";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { useDispatch } from "react-redux";
+import { isExitt } from "../../states/isExitSlice";
 
 // interface Props {
 //   isHintImageOn: boolean;
 //   setisHintImageOn: Dispatch<SetStateAction<boolean>>;
 // }
 
-function SideNav({
-  users,
-  Image,
-  setIsExit,
-}: {
-  users: any;
-  Image: string;
-  setIsExit: (isExit: boolean) => void;
-}) {
+function SideNav({ users, Image }: { users: any; Image: string }) {
   const navigate = useNavigate();
-  const formData = new FormData();
-  const svgImage = useSelector((state: RootState) => state.svgImage.image);
+  const dispatch = useDispatch();
 
   const [isHintImageOn, setisHintImageOn] = useState(false);
   const [isChatOn, setisChatOn] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
+  const [modalshow, setmodalshow] = useState(false);
   const [isClickPen, setisClickPen] = useState(false);
   const [isSizeOn, setisSizeOn] = useState(false);
   const [isPaletteOn, setisPaletteOn] = useState(false);
@@ -80,23 +73,10 @@ function SideNav({
     setisPaletteOn(!isPaletteOn);
   };
 
-  const handleExit = () => {
-    setIsExit(true);
-    axios
-      .post("/room/save/" + sessionStorage.getItem("roomId"), svgImage, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setIsExit(false);
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const goHome = () => {
+    navigate("/");
   };
+
   const [color, setColor] = useState([]);
 
   useEffect(() => {
@@ -117,12 +97,7 @@ function SideNav({
     <div className="flex h-full  left-0 border border-purple-800  z-50">
       <nav className="flex flex-col justify-between w-20 h-screen bg-white ">
         <div className="flex justify-center pt-3">
-          <img
-            onClick={handleExit}
-            src={logoSmall}
-            alt="logo"
-            width="45px"
-          ></img>
+          <img onClick={goHome} src={logoSmall} alt="logo" width="45px"></img>
         </div>
         <div className="side-nav">
           <ul className="flex flex-col justify-center pt-10">
@@ -191,7 +166,7 @@ function SideNav({
 
               <li
                 className="my-12 text-center"
-                onClick={() => setModalShow(true)}
+                onClick={() => setmodalshow(true)}
               >
                 <a href="#">
                   <span className="h-6 w-6 text-gray-500  mx-auto hover:text-gray-800  transition-colors duration-200">
@@ -203,9 +178,9 @@ function SideNav({
           </div>
         </div>
         <CloseRoomModal
-          show={modalShow}
-          setModalShow={setModalShow}
-          onHide={() => setModalShow(false)}
+          show={modalshow}
+          setModalShow={setmodalshow}
+          onHide={() => setmodalshow(false)}
         />
       </nav>
 

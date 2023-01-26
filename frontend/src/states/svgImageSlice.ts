@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface svgImage {
-  image: FormData;
+  formData: FormData;
 }
 
 const initialState: svgImage = {
-  image: new FormData(),
+  formData: new FormData(),
 };
 
 export const svgImageSlice = createSlice({
@@ -13,7 +13,7 @@ export const svgImageSlice = createSlice({
   initialState,
   reducers: {
     saveImage: (state, action: PayloadAction<FormData>) => {
-      state.image = action.payload;
+      state.formData = action.payload;
     },
   },
 });

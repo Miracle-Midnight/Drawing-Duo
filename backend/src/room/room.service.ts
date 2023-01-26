@@ -38,7 +38,7 @@ export class RoomService {
 
   async getAllImage() {
     return await this.imageRepository.find({
-      where: { type: true },
+      where: { type: true, modified: false },
       cache: 60000,
     });
   }
