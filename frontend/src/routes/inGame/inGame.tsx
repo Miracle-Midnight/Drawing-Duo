@@ -1,12 +1,15 @@
 /* library */
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 /* module from local */
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
 
-import axios from "axios";
 import { Canvas } from "../../components/canvas/canvas";
 import VoiceChat from "../../components/voiceChat/voiceChat";
+import { useYjsProvider } from "../../hooks/useYjsProvider";
+import { setYjs } from "../../states/yjsSlice";
 // import * as HtmlToImage from "html-to-image";
 // const toImage = HtmlToImage.toImage as any;
 
@@ -16,9 +19,13 @@ function InGame() {
   const [users, setUsers] = useState<any>([]);
   const [color, setColor] = useState([]);
 
+  const dispatch = useDispatch();
+  const { yLines, provider, undoManager, doc, awareness } = useYjsProvider();
+  dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
+
   useEffect(() => {
     axios
-      .get("/game/" + sessionStorage.getItem("roomId"))
+      .get("https://drawingduo.shop/game/" + sessionStorage.getItem("roomId"))
       .then((res) => {
         setFrameImage(res.data.data.frameImage);
         setImage(res.data.data.originImage);

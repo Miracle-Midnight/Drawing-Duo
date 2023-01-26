@@ -27,7 +27,9 @@ import Redo from "../drawTools/redo";
 import { useLines } from "../../hooks/useLines";
 import Palette from "../drawTools/palette";
 import PaletteComponent from "../palette/palette";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import * as Y from "yjs";
 // interface Props {
 //   isHintImageOn: boolean;
 //   setisHintImageOn: Dispatch<SetStateAction<boolean>>;
@@ -68,7 +70,10 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
     setisPaletteOn(!isPaletteOn);
   };
 
+  const [provider] = useSelector((state: RootState) => [state.yjs.provider]);
+
   const handleExit = () => {
+    provider?.disconnect();
     axios
       .post("/room/save/" + sessionStorage.getItem("roomId"), {
         userId: sessionStorage.getItem("userid"),
@@ -85,7 +90,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
 
   useEffect(() => {
     axios
-      .get("/game/" + sessionStorage.getItem("roomId"))
+      .get("https://drawingduo.shop/game/" + sessionStorage.getItem("roomId"))
       .then((res) => {
         setColor(res.data.data.rgb);
       })
@@ -102,6 +107,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
       <nav className="flex flex-col justify-between w-20 h-screen bg-white ">
         <div className="flex justify-center pt-3">
           <img
+            id="hi"
             onClick={handleExit}
             src={logoSmall}
             alt="logo"

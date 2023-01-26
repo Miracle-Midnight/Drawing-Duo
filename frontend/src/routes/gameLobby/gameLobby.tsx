@@ -46,8 +46,6 @@ function GameLobby() {
 
   const handleReady = () => {
     setIsReady(true);
-    const { yLines, provider, undoManager, doc, awareness } = useYjsProvider();
-    dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
   };
 
   const handleStart = () => {

@@ -7,15 +7,11 @@ import { useYjsProvider } from "../../hooks/useYjsProvider";
 import { setYjs } from "../../states/yjsSlice";
 
 function Card({ title, frameImageSrc, needTitle, roomId, users }: any) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const joinRoom = () => {
     sessionStorage.setItem("roomTitle", title);
     sessionStorage.setItem("roomId", roomId);
-
-    const { yLines, provider, undoManager, doc, awareness } = useYjsProvider();
-    dispatch(setYjs({ yLines, provider, undoManager, doc, awareness }));
 
     navigate(`/Room/${roomId}/InGame`);
   };
