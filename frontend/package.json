@@ -28,6 +28,7 @@
     "axios": "^1.2.2",
     "babel-loader": "^9.1.2",
     "bootstrap": "^5.2.3",
+    "canvas2image": "^1.0.5",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.3",
     "env-cmd": "^10.1.0",
@@ -67,7 +68,7 @@
     "yjs": "^13.5.44"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start, --history-api-fallback",
     "build": "webpack -w",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

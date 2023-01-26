@@ -1,5 +1,5 @@
 /* library */
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 /* module from local */
 import { useLines } from "../../hooks/useLines";
@@ -117,11 +117,15 @@ export function Canvas({ frameImage }: { frameImage: string }) {
 
     await html2canvas(element as HTMLElement).then(function (canvas) {
       console.log("들어옵니다!");
-      const link = document.createElement("a");
-      link.href = canvas.toDataURL("image/png");
-      link.download = `${sessionStorage.getItem("roomId")}.png`;
+      const blob = new Blob([canvas.toDataURL("image/png")]);
+      const file = new File([blob], `${sessionStorage.getItem("roomId")}.png`);
+      formData.set("image", file);
 
-      formData.set("image", link.download);
+      // const link = document.createElement("a");
+      // link.href = URL.createObjectURL(blob);
+      // link.download = `${sessionStorage.getItem("roomId")}.png`;
+
+      // formData.set("image", blob, link.download);
     });
     console.log("gkgkgkkgkgkgkgkgkgkgkgkgkgkgk");
     console.log(formData.get("image"));
@@ -139,19 +143,9 @@ export function Canvas({ frameImage }: { frameImage: string }) {
         navigate("/");
       })
       .catch((err) => {
+        console.log(formData.get("image"));
         console.log(err);
       });
-
-    // const image = new Image();
-    // const element = document.getElementById("saveImage");
-    // if (element) {
-    //   // htmlToImage.toPng(element as HTMLElement).then(function (dataUrl) {
-    //   await html2canvas(element).then(async function (canvas) {
-    //     image.src = canvas.toDataURL("image/png");
-    //     formData.set("image", image.src);
-    //   });
-    //   dispatch(saveImage(formData));
-    // }
   };
 
   useEffect(() => {
@@ -159,6 +153,7 @@ export function Canvas({ frameImage }: { frameImage: string }) {
       console.log("isExit");
       console.log(isExit);
       handleSaveImage();
+      // handleClick();
     }
   }, [isExit]);
 
