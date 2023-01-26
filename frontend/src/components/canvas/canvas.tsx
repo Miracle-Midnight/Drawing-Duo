@@ -107,26 +107,29 @@ export function Canvas({ frameImage }: { frameImage: string }) {
   );
 
   const handleSaveImage = async () => {
-    const element = document.getElementById("saveImage");
-    const childNodes = element?.childNodes;
-    childNodes?.forEach((child) => {
-      if (child.nodeName == "circle" || child.nodeName == "text") {
-        child.remove();
-      }
-    });
+    // const element = document.getElementById("saveImage");
+    // const childNodes = element?.childNodes;
+    // childNodes?.forEach((child) => {
+    //   if (child.nodeName == "circle" || child.nodeName == "text") {
+    //     child.remove();
+    //   }
+    // });
 
-    await html2canvas(element as HTMLElement).then(function (canvas) {
-      console.log("들어옵니다!");
-      const blob = new Blob([canvas.toDataURL("image/png")]);
-      const file = new File([blob], `${sessionStorage.getItem("roomId")}.png`);
-      formData.set("image", file);
+    // await html2canvas(element as HTMLElement).then(function (canvas) {
+    //   console.log("들어옵니다!");
+    //   const blob = new Blob([canvas.toDataURL("image/png")]);
+    //   const file = new File([blob], `${sessionStorage.getItem("roomId")}.png`, {
+    //     type: "image/png",
+    //   });
+    //   formData.set("image", file);
 
-      // const link = document.createElement("a");
-      // link.href = URL.createObjectURL(blob);
-      // link.download = `${sessionStorage.getItem("roomId")}.png`;
+    //   // const link = document.createElement("a");
+    //   // link.href = URL.createObjectURL(blob);
+    //   // link.download = `${sessionStorage.getItem("roomId")}.png`;
 
-      // formData.set("image", blob, link.download);
-    });
+    //   // formData.set("image", blob, link.download);
+    // });
+    formData.set("image", frameImage);
     console.log("gkgkgkkgkgkgkgkgkgkgkgkgkgkgk");
     console.log(formData.get("image"));
     dispatch(saveImage(formData));
