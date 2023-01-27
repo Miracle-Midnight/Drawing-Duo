@@ -13,7 +13,6 @@ import { SelectImageDto } from './dto/select-image.dto';
 import { ConfigService } from '@nestjs/config';
 import * as AWS from 'aws-sdk';
 import * as path from 'path';
-import console from 'console';
 
 @Injectable()
 export class RoomService {
