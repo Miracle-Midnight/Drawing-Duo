@@ -1,10 +1,11 @@
 /* library */
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 /* module from local */
+import { RootState } from "../../store";
 import "./inGame.css";
 import SideNav from "../../components/sideNav/sideNav";
-
-import axios from "axios";
 import { Canvas } from "../../components/canvas/canvas";
 import VoiceChat from "../../components/voiceChat/voiceChat";
 // import * as HtmlToImage from "html-to-image";
@@ -15,6 +16,13 @@ function InGame() {
   const [frameImage, setFrameImage] = useState<string>("");
   const [users, setUsers] = useState<any>([]);
   const [color, setColor] = useState([]);
+
+  const provider = useSelector((state: RootState) => state.yjs.provider);
+  useEffect(() => {
+    return () => {
+      provider?.disconnect;
+    };
+  }, []);
 
   useEffect(() => {
     axios

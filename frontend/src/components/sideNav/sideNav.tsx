@@ -79,7 +79,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
       .catch((err) => {
         console.log(err);
       });
-    navigate("/");
+    document.location.href = "/";
   };
   const [color, setColor] = useState([]);
 
