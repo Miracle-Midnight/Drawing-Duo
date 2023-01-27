@@ -13,6 +13,7 @@ import { SelectImageDto } from './dto/select-image.dto';
 import { ConfigService } from '@nestjs/config';
 import * as AWS from 'aws-sdk';
 import * as path from 'path';
+import console from 'console';
 
 @Injectable()
 export class RoomService {
@@ -112,7 +113,7 @@ export class RoomService {
       file.originalname,
     )}`.replace(/ /g, '');
 
-    const imagePath = `https://${this.S3_BUCKET_NAME}.s3.amazonaws.com/${key}`;
+    const imagePath = `/${key}`;
     // 이미지 파일 S3에 저장.
     try {
       const s3Object = await this.awsS3
@@ -134,8 +135,7 @@ export class RoomService {
 
     // 만약 기존 이미지 엔티티가 수정된 엔티티면 삭제.
     if (curroom.image.modified == true) {
-      const parts = curroom.image.frameImage.split('/');
-      const deleteKey = parts[parts.length - 2] + '/' + parts[parts.length - 1];
+      const deleteKey = curroom.image.frameImage;
       await this.imageRepository.remove(curroom.image);
       try {
         const s3Object = await this.awsS3
