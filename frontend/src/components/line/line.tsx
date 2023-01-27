@@ -22,23 +22,19 @@ memo를 활용하여서, 부모 component가 re-render되었을때, 자식 compo
 !!!! responsive하게 하기 위해서 추후 성능 고려
 */
 export const Line = function Line({ line, idx }: LineProps) {
-  const { points, color, isComplete, size, windowSize } = useLine(line); // size 받기
+  const { points, color, isComplete, size, windowSize } = useLine(line);
 
-  const newPoints: number[][] = [];
-  if (windowSize) {
-    points.map((e) => {
-      const newPointX = (window.innerWidth * e[0]) / windowSize[0];
-      const newPointY = (window.innerHeight * e[1]) / windowSize[1];
-      newPoints.push([newPointX, newPointY]);
-    });
-  }
-  let newSize = size;
-  if (windowSize && size) {
-    newSize = size / (windowSize[0] / window.innerWidth);
-  }
+  // const newPoints: number[][] = [];
+  // if (windowSize) {
+  //   points.map((e) => {
+  //     const newPointX = (window.innerWidth * e[0]) / windowSize[0];
+  //     const newPointY = (window.innerHeight * e[1]) / windowSize[1];
+  //     newPoints.push([newPointX, newPointY]);
+  //   });
+  // }
 
   const pathData = getSvgPathFromStroke(
-    getStroke(newPoints, { size: newSize, simulatePressure: false })
+    getStroke(points, { size: size, simulatePressure: false })
   );
 
   return <path d={pathData} data-id={`${idx}`} fill={color} />;

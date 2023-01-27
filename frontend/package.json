@@ -74,7 +74,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "aws s3 sync ./build s3://drawingduo.site --profile=drawing-duo",
-    "invalidate": "aws cloudfront create-invalidation --profile=drawing-duo --distribution-id E2SCF2TRV15IVX --paths /* "
+    "invalidate": "aws cloudfront create-invalidation --profile=drawing-duo --distribution-id E2SCF2TRV15IVX --paths /141c51815ae8c9a17979a9fbf2c958ff.png /149d3161776e7756f9705c8366356372.png /1bf8442a97b82c922dddc8212c5cf752.png /3e414f9cff3b0bd4d3eb05a9187a7baf.png /index.html /index.js /node_modules_web-vitals_dist_web-vitals_js.index.js"
   },
   "eslintConfig": {
     "extends": [

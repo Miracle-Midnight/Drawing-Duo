@@ -100,12 +100,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
     <div className="flex h-full  left-0 border border-purple-800  z-50">
       <nav className="flex flex-col justify-between w-20 h-screen bg-white ">
         <div className="flex justify-center pt-3">
-          <img
-            onClick={handleClick}
-            src={logoSmall}
-            alt="logo"
-            width="45px"
-          ></img>
+          <img onClick={goHome} src={logoSmall} alt="logo" width="45px"></img>
         </div>
         <div className="side-nav">
           <ul className="flex flex-col justify-center pt-10">
