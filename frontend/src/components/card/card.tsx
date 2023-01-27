@@ -30,6 +30,7 @@ function Card({ title, frameImageSrc, needTitle, roomId, users }: any) {
           >
             <div className="prod-img">
               <img
+                referrerPolicy="no-referrer"
                 src={frameImageSrc}
                 className="object-cover object-center w-80"
               />

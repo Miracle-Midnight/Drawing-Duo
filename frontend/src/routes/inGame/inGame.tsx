@@ -37,6 +37,7 @@ function InGame() {
         console.log(err);
       });
   }, []);
+
   return (
     <div className="h-full grid grid-cols-12 overflow-hidden w-full no-scroll">
       <div className="flex h-full">
