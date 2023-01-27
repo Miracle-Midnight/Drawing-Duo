@@ -34,17 +34,17 @@ export function Canvas({ frameImage }: { frameImage: string }) {
 
   useKeyboardEvents();
 
-  const handleMouseOver = useCallback(
-    (e: any) => {
-      const starget = e.target as HTMLElement;
-      const eidx = starget.dataset.id;
+  // const handleMouseOver = useCallback(
+  //   (e: any) => {
+  //     const starget = e.target as HTMLElement;
+  //     const eidx = starget.dataset.id;
 
-      if (drawTool == "erase" && eidx !== undefined) {
-        yLines.delete(+eidx, 1);
-      }
-    },
-    [drawTool]
-  );
+  //     if (drawTool == "erase" && eidx !== undefined) {
+  //       yLines.delete(+eidx, 1);
+  //     }
+  //   },
+  //   [drawTool]
+  // );
 
   const handlePointerDown = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
@@ -55,7 +55,13 @@ export function Canvas({ frameImage }: { frameImage: string }) {
         window.innerHeight,
       ]);
 
-      if (drawTool == "draw") {
+      const starget = e.target as HTMLElement;
+      const eidx = starget.dataset.id;
+      if (drawTool === "erase" && eidx !== undefined) {
+        yLines.delete(+eidx, 1);
+      }
+
+      if (drawTool === "draw") {
         const canvasElement = document.getElementById("svgCanvas");
         const status = canvasElement?.getBoundingClientRect();
         if (status?.left) {
@@ -101,7 +107,7 @@ export function Canvas({ frameImage }: { frameImage: string }) {
         onPointerUp={handlePointerUp}
         onPointerEnter={() => awareness.setLocalStateField("isActive", true)}
         onPointerLeave={() => awareness.setLocalStateField("isActive", false)}
-        onMouseOver={handleMouseOver}
+        // onMouseOver={handleMouseOver}
         className="w-full h-full overflow-hidden object-cover absolute"
         style={{
           pointerEvents: drawTool == "fill" ? "none" : "auto",
