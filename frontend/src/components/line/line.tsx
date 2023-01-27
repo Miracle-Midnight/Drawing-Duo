@@ -32,8 +32,13 @@ export const Line = function Line({ line, idx }: LineProps) {
       newPoints.push([newPointX, newPointY]);
     });
   }
+  let newSize = size;
+  if (windowSize && size) {
+    newSize = size / (windowSize[0] / window.innerWidth);
+  }
+
   const pathData = getSvgPathFromStroke(
-    getStroke(newPoints, { size: size, simulatePressure: false })
+    getStroke(newPoints, { size: newSize, simulatePressure: false })
   );
 
   return <path d={pathData} data-id={`${idx}`} fill={color} />;
