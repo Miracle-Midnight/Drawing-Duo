@@ -118,18 +118,36 @@ export function Canvas({ frameImage }: { frameImage: string }) {
     // await html2canvas(element as HTMLElement).then(function (canvas) {
     //   console.log("들어옵니다!");
     //   const blob = new Blob([canvas.toDataURL("image/png")]);
-    //   const file = new File([blob], `${sessionStorage.getItem("roomId")}.png`, {
-    //     type: "image/png",
-    //   });
-    //   formData.set("image", file);
+    //   // const file = new File([blob], `${sessionStorage.getItem("roomId")}.png`, {
+    //   //   type: "image/png",
+    //   // });
+    //   // formData.set("image", file);
 
-    //   // const link = document.createElement("a");
-    //   // link.href = URL.createObjectURL(blob);
-    //   // link.download = `${sessionStorage.getItem("roomId")}.png`;
+    //   const link = document.createElement("a");
+    //   link.href = URL.createObjectURL(blob);
+    //   link.download = `${sessionStorage.getItem("roomId")}.png`;
 
-    //   // formData.set("image", blob, link.download);
+    //   formData.set("image", blob, link.download);
     // });
-    formData.set("image", frameImage);
+    //-------------------------------------------------------------------------------------------------------
+    // const file = new File(
+    //   [frameImage],
+    //   `${sessionStorage.getItem("roomId")}.png`,
+    //   {
+    //     type: "image/png",
+    //   }
+    // );
+    const image = new Image();
+    image.src = frameImage;
+    const file = new File(
+      [image.src],
+      `${sessionStorage.getItem("roomId")}.png`,
+      {
+        type: "image/png",
+      }
+    );
+
+    formData.set("image", file, file.name);
     console.log("gkgkgkkgkgkgkgkgkgkgkgkgkgkgk");
     console.log(formData.get("image"));
     dispatch(saveImage(formData));
@@ -143,7 +161,7 @@ export function Canvas({ frameImage }: { frameImage: string }) {
       .then((res) => {
         console.log(res);
         dispatch(isExitt(false));
-        navigate("/");
+        document.location.href = "/";
       })
       .catch((err) => {
         console.log(formData.get("image"));
