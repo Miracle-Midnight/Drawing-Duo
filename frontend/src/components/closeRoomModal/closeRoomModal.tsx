@@ -14,21 +14,9 @@ function CloseRoomModal(props: any) {
   const svgImage = useSelector((state: RootState) => state.svgImage.formData);
   const isExit = useSelector((state: RootState) => state.isExit.isExit);
 
-  // const [roomName, setRoomName] = useState("");
-
-  // const onEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === "Enter") {
-  //     handleCreateRoom();
-  //   }
-  // };
-
-  // const handleInputRoomName = (e: any) => {
-  //   setRoomName(e.target.value);
-  // };
-
   const handleExit = () => {
     // navigate("/");
-    dispatch(isExitt(true));
+    // dispatch(isExitt(true));
   };
 
   return (
@@ -49,7 +37,7 @@ function CloseRoomModal(props: any) {
             className="float-right ml-3"
             // onClick={handleCreateRoom}
 
-            onClick={handleExit}
+            // onClick={useSaveImage}
           >
             종료
           </Button>

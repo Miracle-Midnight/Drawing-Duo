@@ -31,6 +31,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useDispatch } from "react-redux";
 import { isExitt } from "../../states/isExitSlice";
+import useSaveImage from "../../hooks/useSaveImage";
 
 // interface Props {
 //   isHintImageOn: boolean;
@@ -93,11 +94,18 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
   const { lines, startLine, addPointToLine, completeLine, undoLine, redoLine } =
     useLines();
 
+  const { divRef, handleClick } = useSaveImage();
+
   return (
     <div className="flex h-full  left-0 border border-purple-800  z-50">
       <nav className="flex flex-col justify-between w-20 h-screen bg-white ">
         <div className="flex justify-center pt-3">
-          <img onClick={goHome} src={logoSmall} alt="logo" width="45px"></img>
+          <img
+            onClick={handleClick}
+            src={logoSmall}
+            alt="logo"
+            width="45px"
+          ></img>
         </div>
         <div className="side-nav">
           <ul className="flex flex-col justify-center pt-10">
@@ -164,10 +172,7 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
                 setisChatOn={setisChatOn}
               />
 
-              <li
-                className="my-12 text-center"
-                onClick={() => setmodalshow(true)}
-              >
+              <li className="my-12 text-center">
                 <a href="#">
                   <span className="h-6 w-6 text-gray-500  mx-auto hover:text-gray-800  transition-colors duration-200">
                     <CloseButtonElem></CloseButtonElem>
@@ -177,11 +182,6 @@ function SideNav({ users, Image }: { users: any; Image: string }) {
             </ul>
           </div>
         </div>
-        <CloseRoomModal
-          show={modalshow}
-          setModalShow={setmodalshow}
-          onHide={() => setmodalshow(false)}
-        />
       </nav>
 
       {isChatOn === true ? (

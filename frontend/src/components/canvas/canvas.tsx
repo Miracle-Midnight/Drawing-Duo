@@ -11,7 +11,7 @@ import { UserCursor } from "../userCursor/usercursor";
 import { Line } from "../line/line";
 import { RootState } from "../../store";
 import { ImageCanvas } from "./ImageCanvas";
-import { saveImage } from "../../states/svgImageSlice";
+import { saveImagee } from "../../states/SaveImageSlice";
 import { useDispatch } from "react-redux";
 import html2canvas from "html2canvas";
 import { saveAs } from "file-saver";
@@ -20,6 +20,7 @@ import { getType } from "@reduxjs/toolkit";
 import { isExitt } from "../../states/isExitSlice";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSaveImage } from "../../hooks/useSaveImage";
 
 function getPoint(x: number, y: number) {
   return [x, y];
@@ -28,7 +29,8 @@ function getPoint(x: number, y: number) {
 export function Canvas({ frameImage }: { frameImage: string }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const formData = useSelector((state: RootState) => state.svgImage.formData);
+  // const formData = useSelector((state: RootState) => state.svgImage.formData);
+  const formData = new FormData();
   const isExit = useSelector((state: RootState) => state.isExit.isExit);
 
   const sizeState = useSelector((state: RootState) => state.size.value);
@@ -40,13 +42,13 @@ export function Canvas({ frameImage }: { frameImage: string }) {
   const { lines, startLine, addPointToLine, completeLine, undoLine, redoLine } =
     useLines();
 
-  useConnection();
-
   const drawTool = useSelector(
     (state: RootState) => state.drawTool.currentTool
   );
 
   useKeyboardEvents();
+
+  const { divRef, handleClick } = useSaveImage();
 
   // const handleMouseOver = useCallback(
   //   (e: any) => {
@@ -112,80 +114,14 @@ export function Canvas({ frameImage }: { frameImage: string }) {
     [completeLine]
   );
 
-  const handleSaveImage = async () => {
-    // const element = document.getElementById("saveImage");
-    // const childNodes = element?.childNodes;
-    // childNodes?.forEach((child) => {
-    //   if (child.nodeName == "circle" || child.nodeName == "text") {
-    //     child.remove();
-    //   }
-    // });
-
-    // await html2canvas(element as HTMLElement).then(function (canvas) {
-    //   console.log("들어옵니다!");
-    //   const blob = new Blob([canvas.toDataURL("image/png")]);
-    //   // const file = new File([blob], `${sessionStorage.getItem("roomId")}.png`, {
-    //   //   type: "image/png",
-    //   // });
-    //   // formData.set("image", file);
-
-    //   const link = document.createElement("a");
-    //   link.href = URL.createObjectURL(blob);
-    //   link.download = `${sessionStorage.getItem("roomId")}.png`;
-
-    //   formData.set("image", blob, link.download);
-    // });
-    //-------------------------------------------------------------------------------------------------------
-    // const file = new File(
-    //   [frameImage],
-    //   `${sessionStorage.getItem("roomId")}.png`,
-    //   {
-    //     type: "image/png",
-    //   }
-    // );
-    const image = new Image();
-    image.src = frameImage;
-    const file = new File(
-      [image.src],
-      `${sessionStorage.getItem("roomId")}.png`,
-      {
-        type: "image/png",
-      }
-    );
-
-    formData.set("image", file, file.name);
-    console.log("gkgkgkkgkgkgkgkgkgkgkgkgkgkgk");
-    console.log(formData.get("image"));
-    dispatch(saveImage(formData));
-
-    axios
-      .post(`/room/save/${sessionStorage.getItem("roomId")}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        dispatch(isExitt(false));
-        document.location.href = "/";
-      })
-      .catch((err) => {
-        console.log(formData.get("image"));
-        console.log(err);
-      });
-  };
-
   useEffect(() => {
-    if (isExit) {
-      console.log("isExit");
-      console.log(isExit);
-      handleSaveImage();
-      // handleClick();
+    if (divRef.current) {
+      dispatch(saveImagee({ divRef: divRef.current }));
     }
-  }, [isExit]);
+  }, [dispatch, divRef]);
 
   return (
-    <div className="relative h-full" id="saveImage">
+    <div ref={divRef} className="relative h-full" id="saveImage">
       <svg
         id="svgCanvas"
         onPointerDown={handlePointerDown}

@@ -11,6 +11,7 @@ import { yjsReducer } from "./states/yjsSlice";
 import { micReducer } from "./states/micSlice";
 import { svgImageReducer } from "./states/svgImageSlice";
 import { isExitReducer } from "./states/isExitSlice";
+import { saveImageReducer } from "./states/SaveImageSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     mic: micReducer,
     svgImage: svgImageReducer,
     isExit: isExitReducer,
+    saveImage: saveImageReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),
