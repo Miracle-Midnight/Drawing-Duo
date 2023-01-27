@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Res } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Room } from 'src/room/entities/room.entity';
 import { User } from 'src/user/entities/user.entity';
@@ -6,9 +6,20 @@ import { Repository } from 'typeorm';
 import { Game } from './entities/game.entity';
 import { GameUserReadyDto } from './dto/game-user-ready.dto';
 import { EnterGameDto } from './dto/enter-game.dto';
+import { ConfigService } from '@nestjs/config';
+import * as AWS from 'aws-sdk';
+import * as path from 'path';
+import {
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common/exceptions';
+import { Image } from 'src/room/entities/image.entity';
 
 @Injectable()
 export class GameService {
+  private readonly awsS3: AWS.S3;
+  public readonly S3_BUCKET_NAME: string;
+
   constructor(
     @InjectRepository(Game)
     private gameRepository: Repository<Game>,
@@ -16,7 +27,17 @@ export class GameService {
     private roomRepository: Repository<Room>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
-  ) {}
+    @InjectRepository(Image)
+    private imageRepository: Repository<Image>,
+    private readonly configService: ConfigService,
+  ) {
+    this.awsS3 = new AWS.S3({
+      accessKeyId: this.configService.get('AWS_S3_ACCESS_KEY'), // process.env.AWS_S3_ACCESS_KEY
+      secretAccessKey: this.configService.get('AWS_S3_SECRET_KEY'),
+      region: this.configService.get('AWS_S3_REGION'),
+    });
+    this.S3_BUCKET_NAME = this.configService.get('AWS_S3_BUCKET_NAME'); // nest-s3
+  }
 
   async userReady(gameUserReadyDto: GameUserReadyDto) {
     const { userid, gameid } = gameUserReadyDto;

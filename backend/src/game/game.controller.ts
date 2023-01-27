@@ -9,9 +9,15 @@ import {
 import { PositiveIntPipe } from 'src/common/pipes/positiveInt.pipe';
 import { GameUserReadyDto } from './dto/game-user-ready.dto';
 import { GameService } from './game.service';
-import { Body } from '@nestjs/common/decorators';
+import {
+  Body,
+  Res,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common/decorators';
 // import { EnterGameDto } from './dto/enter-game.dto';
 import { ApiOperation } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('game')
 export class GameController {
