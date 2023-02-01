@@ -13,6 +13,7 @@
 
 
 ### 2. 친구와 함께 원하는 그림을 같이 골라보아요!
+![Screen Recording 2023-02-02 at 7 47 14 AM](https://user-images.githubusercontent.com/81807434/216183069-792b917d-cc0c-4d74-9d40-07c7a15100a2.gif)
 
 ### 3. 대화를 하며 친구와 함께 그림을 그려보아요!
 
