@@ -81,6 +81,7 @@ $ npm run start:dev
 
 ### 윤영운
 
+- DB 설계
 - NEST JS REST API
 - JWT 로그인, 회원가입
 - 이미지 파일 업로드
@@ -101,6 +102,7 @@ $ npm run start:dev
 
 ### 김영우
 
+- DB 설계
 - Nest JS API 개발
 - 시그널링 서버 구축
   - 실시간 음성 채팅
