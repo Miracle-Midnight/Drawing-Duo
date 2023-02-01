@@ -40,6 +40,7 @@
 <br/>
 
 ## 포스터
+
 <p align="center">
   <img src="https://user-images.githubusercontent.com/108216455/216051043-249296e1-f6cf-403d-996f-2ce5d136ebcd.jpg">
 </p>
@@ -73,12 +74,8 @@ $ npm run start:dev
 ### 김채욱
 
 - 인게임 로직 구현
-  - 방 마다 Yjs Doc을 별도 관리
-    - session storage에 저장된 roomid를 Yjs 라이브러리 전용 WebrtcProvider의 roomId로 사용하여 room 안에 들어온 유저들의 데이터를 독립적으로 관리
-    - 방에서 그려진 svg선들은 방에서 나갈시 html2canvas를 이용해 canvas와 svg선들을 감싸고 있는 DOM을 screenshot하여서 저장
+  - 방 마다 그림 데이터 별도 관리
   - 동시적 선 그리기 구현
-    - Yjs Doc에 event handler를 달아서, svg 선의 [x,y] 좌표값이 추가,삭제시 상대방의 에게 전송
-    - 마우스의 down, move, up 모션에 따른 다른 event handler를 추가하여서 Yjs Doc안에 선의 좌표값들을 추가
 - 초기 백엔드 세팅 및 데이터베이스 설계
   - 애플리케이션 서비스를 고려해 entity의 관계 설정
 
