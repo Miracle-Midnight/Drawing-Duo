@@ -117,4 +117,18 @@ $ npm run start:dev
 - Socket.IO를 활용한 소켓 프로그래밍
 - GitHub Actions와 AWS CodeDeploy를 이용하여 CI/CD 구축 및 Dockerizing
 
+### 김승덕
+- UX/UI 디자인
+- 컴포넌트 구현
+    - Atomic design system 적용
+    - tailwind.css를 활용한 스타일링
+- 프론트엔드 서버 배포
+    - AWS S3를 활용한 정적 웹 호스팅
+    - AWS CloudFront를 활용한 CDN 배포
+    - AWS Route53을 활용한 도메인 연결
+    - AWS Certificate Manager을 활용한 SSL 인증서 발급
+- 프로젝트 관리
+    - Notion을 활용한 프로젝트 관리
+    - Github Project를 활용한 이슈 관리
+
 Copyright to [@Miracle-Midnight](https://github.com/Miracle-Midnight/Drawing-Duo)
