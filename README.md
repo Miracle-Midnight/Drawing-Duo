@@ -16,8 +16,8 @@
 ![Screen Recording 2023-02-02 at 7 47 14 AM](https://user-images.githubusercontent.com/81807434/216183069-792b917d-cc0c-4d74-9d40-07c7a15100a2.gif)
 
 ### 3. 대화를 하며 친구와 함께 그림을 그려보아요!
+![Drawing-Duo - 7 (1)](https://user-images.githubusercontent.com/81807434/216184505-f8cd824f-0a15-4537-aef1-41afaee4a44b.gif)
 
-### 4. 서비스 시연 영상 [⬇️ youtube](https://youtu.be/XEffEqWXxaA)
 
 ---
 
@@ -47,7 +47,6 @@
 <p align="center">
   <img src="https://user-images.githubusercontent.com/108216455/216051043-249296e1-f6cf-403d-996f-2ce5d136ebcd.jpg">
 </p>
-<!-- 포스터 파일 받고 넣을 예정 -->
 
 ---
 
