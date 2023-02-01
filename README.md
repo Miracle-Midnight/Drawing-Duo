@@ -40,7 +40,9 @@
 <br/>
 
 ## 포스터
-
+<p align="center">
+  <img src="https://github.com/Miracle-Midnight/Drawing-Duo/files/10557111/default.pdf">
+</p>
 <!-- 포스터 파일 받고 넣을 예정 -->
 
 ---
