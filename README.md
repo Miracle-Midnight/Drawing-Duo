@@ -1,46 +1,56 @@
-# Getting Started with Create React App
+# 드로잉 듀오
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br/>
 
-## Available Scripts
+## 소개
+### 친구, 가족과 함께 피포페인팅 드로잉 듀오!
+제작 기간 : 2022.12.17 ~ 2023.01.28
 
-In the project directory, you can run:
+### 1. 메인 화면에서 그동안 그렸던 그림을 확인해보아요!
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 2. 친구와 함께 원하는 그림을 같이 골라보아요!
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+### 3. 대화를 하며 친구와 함께 그림을 그려보아요!
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### 4. 서비스 시연 영상 [⬇️ youtube](https://youtu.be/XEffEqWXxaA)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br/>
+<br/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 주요 기능
 
-### `npm run eject`
+• ✅  음성채팅 ( Peer to Peer )
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+• ✅  그림 그리기 ( Peer to Peer )
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+• ✅  그림 저장
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+• ✅  그림 불러오기
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<br/>
+<br/>
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<br/>
+<br/>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 포스터
+<!-- 포스터 파일 받고 넣을 예정 -->
+
+---
+
+<br/>
+<br/>
+
+## Steps to run
+---
+
+<!-- 내용 보완 예정 -->
+
+Copyright to [@Miracle-Midnight](https://github.com/Suyeon-B/Nolmungshimung)
