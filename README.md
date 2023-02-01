@@ -122,7 +122,7 @@ $ npm run start:dev
 
 ### 김승덕
 - UX/UI 디자인
-- 컴포넌트 구현
+- 페이지 별 컴포넌트 구현
     - Atomic design system 적용
     - tailwind.css를 활용한 스타일링
 - 프론트엔드 서버 배포
