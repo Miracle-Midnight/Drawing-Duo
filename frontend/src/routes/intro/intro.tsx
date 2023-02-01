@@ -2,10 +2,19 @@ import { useEffect, useState } from "react";
 import HeaderNav from "../../components/headerNav/header";
 import Card from "../../components/card/card";
 import "./intro.css";
+
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 function Intro() {
   const [lobbyList, setLobbyList] = useState([]);
+
+  const provider = useSelector((state: RootState) => state.yjs.provider);
+
+  if (provider !== null) {
+    provider.destroy();
+  }
 
   useEffect(() => {
     sessionStorage.removeItem("roomId");

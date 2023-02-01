@@ -5,7 +5,7 @@ import { RootState } from "../../store";
 import "./userState.css";
 
 const UserState = ({ name }: any) => {
-  const [isMicOn, setisMicOn] = useState(false);
+  const [isMicOn, setisMicOn] = useState(true);
   // const micOnOff = useSelector((state: RootState) => state.mic.isMicOn);
   // const dispatch = useDispatch();
 

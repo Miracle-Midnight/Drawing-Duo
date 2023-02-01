@@ -3,7 +3,7 @@ import MicOffElem from "../sideNavAtoms/micElems/micOffElem";
 import MicOnElem from "../sideNavAtoms/micElems/micOnElem";
 
 function MicOnOffMolecule() {
-  const [isMicOn, setisMicOn] = useState(false);
+  const [isMicOn, setisMicOn] = useState(true);
   const toggleMicHandler = () => {
     // isMicOn의 상태를 변경하는 메소드를 구현
     setisMicOn(!isMicOn);

@@ -41,7 +41,7 @@ function VoiceChat({
 
       const stream = await navigator.mediaDevices.getUserMedia({
         video: false,
-        audio: true,
+        audio: { echoCancellation: false },
       });
 
       if (myVideoRef.current) {
@@ -264,6 +264,7 @@ function VoiceChat({
     <div>
       <audio autoPlay muted ref={myVideoRef} />
       <audio autoPlay ref={remoteVideoRef} />
+      <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
     </div>
   );
 }
