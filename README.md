@@ -9,14 +9,18 @@
 제작 기간 : 2022.12.17 ~ 2023.01.28
 
 ### 1. 메인 화면에서 그동안 그렸던 그림을 확인해보아요!
-![Screen Recording 2023-02-02 at 7 43 55 AM](https://user-images.githubusercontent.com/81807434/216181678-286999ed-2136-4b5c-aa3e-22b76acf0bac.gif)
+
+<img src="https://user-images.githubusercontent.com/81807434/216181678-286999ed-2136-4b5c-aa3e-22b76acf0bac.gif"  width="70%">
 
 
 ### 2. 친구와 함께 원하는 그림을 같이 골라보아요!
-![Screen Recording 2023-02-02 at 7 47 14 AM](https://user-images.githubusercontent.com/81807434/216183069-792b917d-cc0c-4d74-9d40-07c7a15100a2.gif)
+
+<img src="https://user-images.githubusercontent.com/81807434/216183069-792b917d-cc0c-4d74-9d40-07c7a15100a2.gif"  width="70%">
 
 ### 3. 대화를 하며 친구와 함께 그림을 그려보아요!
-![Drawing-Duo - 7 (1)](https://user-images.githubusercontent.com/81807434/216184505-f8cd824f-0a15-4537-aef1-41afaee4a44b.gif)
+
+<img src="https://user-images.githubusercontent.com/81807434/216184505-f8cd824f-0a15-4537-aef1-41afaee4a44b.gif"  width="70%">
+
 
 
 ---
