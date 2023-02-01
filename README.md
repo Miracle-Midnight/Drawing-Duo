@@ -134,4 +134,6 @@ $ npm run start:dev
     - Notion을 활용한 프로젝트 관리
     - Github Project를 활용한 이슈 관리
 
+---
+
 Copyright to [@Miracle-Midnight](https://github.com/Miracle-Midnight/Drawing-Duo)
