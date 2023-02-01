@@ -1,4 +1,4 @@
-# 드로잉 듀오
+# 🎨 드로잉 듀오
 
 <br/>
 
@@ -9,6 +9,7 @@
 제작 기간 : 2022.12.17 ~ 2023.01.28
 
 ### 1. 메인 화면에서 그동안 그렸던 그림을 확인해보아요!
+
 
 ### 2. 친구와 함께 원하는 그림을 같이 골라보아요!
 
@@ -111,4 +112,4 @@ $ npm run start:dev
 - Socket.IO를 활용한 소켓 프로그래밍
 - GitHub Actions와 AWS CodeDeploy를 이용하여 CI/CD 구축 및 Dockerizing
 
-Copyright to [@Miracle-Midnight](https://github.com/Suyeon-B/Nolmungshimung)
+Copyright to [@Miracle-Midnight](https://github.com/Miracle-Midnight/Drawing-Duo)
