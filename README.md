@@ -43,9 +43,6 @@
 
 ---
 
-<br/>
-<br/>
-
 ## 포스터
 
 <p align="center">
@@ -58,8 +55,6 @@
 <br/>
 
 ## Steps to run
-
----
 
 ```
 Frontend
@@ -75,7 +70,6 @@ $ npm run start:dev
 
 ## Authors
 
----
 
 ### 김채욱
 
