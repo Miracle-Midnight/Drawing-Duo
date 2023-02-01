@@ -1,32 +1,40 @@
 # 🎨 드로잉 듀오
 
-<br/>
+## 목차
 
-## 소개
+1.  [프로젝트 개요](#프로젝트-개요)
+2.  [서비스 소개](#서비스-소개)
+3.  [주요 기능](#주요-기능)
+4.  [서비스 구조도](#서비스-구조도)
+5.  [프로젝트 포스터](#프로젝트-포스터)
+6.  [사용해보기](#사용해보기)
+7.  [팀원](#)
 
-### 친구, 가족과 함께 피포페인팅 드로잉 듀오!
+## 프로젝트 개요
 
 제작 기간 : 2022.12.17 ~ 2023.01.28
 
-### 1. 메인 화면에서 그동안 그렸던 그림을 확인해보아요!
+팀원 : 5명
+
+웹사이트 : [바로가기](https://drawingduo.shop)
+
+## 서비스 소개
+
+### 친구, 가족과 함께 피포페인팅! 드로잉 듀오
+
+1. 메인 화면에서 그동안 그렸던 그림을 확인해볼 수 있습니다.
 
 <img src="https://user-images.githubusercontent.com/81807434/216181678-286999ed-2136-4b5c-aa3e-22b76acf0bac.gif"  width="70%">
 
 
-### 2. 친구와 함께 원하는 그림을 같이 골라보아요!
+2. 친구와 함께 원하는 그림을 같이 고를 수 있습니다.
 
 <img src="https://user-images.githubusercontent.com/81807434/216183069-792b917d-cc0c-4d74-9d40-07c7a15100a2.gif"  width="70%">
 
-### 3. 대화를 하며 친구와 함께 그림을 그려보아요!
+3. 대화를 하며 친구와 함께 그림을 그릴 수 있습니다.
 
 <img src="https://user-images.githubusercontent.com/81807434/216184505-f8cd824f-0a15-4537-aef1-41afaee4a44b.gif"  width="70%">
 
-
-
----
-
-<br/>
-<br/>
 
 ## 주요 기능
 
@@ -38,23 +46,21 @@
 
 • ✅  그림 불러오기
 
-<br/>
-<br/>
+## 서비스 구조도
 
----
+![서비스 구조도](https://user-images.githubusercontent.com/81807434/216191326-ef1c4f13-8a1a-4eec-b63d-ceb48680d714.png)
 
-## 포스터
+
+
+
+## 프로젝트 포스터
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/108216455/216051043-249296e1-f6cf-403d-996f-2ce5d136ebcd.jpg">
 </p>
 
----
 
-<br/>
-<br/>
-
-## Steps to run
+## 사용해보기
 
 ```
 Frontend
@@ -67,6 +73,9 @@ $ cd backend
 $ npm install
 $ npm run start:dev
 ```
+
+
+
 
 ## Authors
 
