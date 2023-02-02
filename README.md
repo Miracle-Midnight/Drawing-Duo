@@ -130,7 +130,7 @@ $ npm run start:dev
   - CRDT 라이브러리(Yjs)
 - 통신 안정성을 위한 TURN 서버 구축
 - Socket.IO를 활용한 소켓 프로그래밍
-- GitHub Actions와 AWS CodeDeploy를 이용하여 CI/CD 구축 및 Dockerizing
+- GitHub Actions와 AWS CodeDeploy를 이용한 CI/CD 구축 및 Dockerizing
 
 ### 김승덕
 - UX/UI 디자인
