@@ -69,13 +69,16 @@
 
 ## 사용해보기
 
+### Frontend
+
 ```
-Frontend
+
 $ cd frontend
 $ npm install
 $ npm run start
-
-Backend
+```
+### Backend
+```
 $ cd backend
 $ npm install
 $ npm run start:dev
