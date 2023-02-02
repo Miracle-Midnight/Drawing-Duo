@@ -137,8 +137,7 @@ $ npm run start:dev
     - AWS CloudFront를 활용한 CDN 배포
     - AWS Route53을 활용한 도메인 연결
     - AWS Certificate Manager을 활용한 SSL 인증서 발급
-- 프로젝트 관리
-    - Notion을 활용한 프로젝트 관리
+
 
 ---
 
