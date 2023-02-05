@@ -117,9 +117,6 @@ $ npm run start:dev
 - 페이지 별 컴포넌트 구현
 - 그림 저장 기능 구현
   - 방대한 양의 path 데이터를 저장하기 위해 이미지 파일로 변환 후 저장함
-  - Html2canvas 메서드로 DOM을 canvas 객체로 변환
-  - toBlob 메서드로 canvas 객체를 blob 객체로 변환
-  - blob 객체를 FormData 형식으로 Post요청해 성공 시 서버에 저장
 
 ### 김영우
 
