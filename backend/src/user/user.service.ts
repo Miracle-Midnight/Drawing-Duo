@@ -155,8 +155,8 @@ export class UserService {
       files[1].originalname,
     )}`.replace(/ /g, '');
 
-    const imagePath1 = `https://${this.S3_BUCKET_NAME}.s3.amazonaws.com/${key1}`;
-    const imagePath2 = `https://${this.S3_BUCKET_NAME}.s3.amazonaws.com/${key2}`;
+    const imagePath1 = `/${key1}`;
+    const imagePath2 = `/${key2}`;
     try {
       const s3Object = await this.awsS3
         .putObject({
