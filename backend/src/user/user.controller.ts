@@ -32,13 +32,11 @@ export class UserController {
     @UploadedFile() file: Express.Multer.File,
     @Body() userDto: UserDto,
   ) {
-    return this.userService.signUp(userDto, 'profile', file);
+    return this.userService.signUp(userDto);
   }
 
   @Post('login')
   GetUserId(@Body() userDto: UserDto) {
-    // return 'GetUserId';
-    // return this.userService.GetUserId(userDto, res);
     return this.authService.jwtLogIn(userDto);
   }
 

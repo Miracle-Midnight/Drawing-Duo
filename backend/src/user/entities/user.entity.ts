@@ -51,6 +51,8 @@ export class User extends BaseEntity {
 
   @OneToMany((type) => User, (user) => user.parentUser)
   childUser: User[];
-  // @ManyToOne(() => Friend, (friend) => friend.users, { cascade: true })
-  // friend: Friend;
+
+  @ManyToMany(() => User, (user) => user.friends)
+  @JoinTable()
+  friends: User[];
 }
