@@ -57,7 +57,8 @@ export class FriendService {
       where: { id: userid },
       relations: ['friends', 'friends.profile'],
     });
-    return user.childUser.map(this.childuserFilterAddnic);
+    console.log(user);
+    return user.friends.map(this.childuserFilterAddnic);
   }
 
   async inviteFriend(inviteDto: InviteDto) {
