@@ -42,7 +42,7 @@ import { AppService } from './app.service';
         database: configService.get('DB_DATABASE'),
         entities: ['dist/src/*/entities/*.entity.{js,ts}'],
         migrations: ['dist/db/migrations/*.{js.ts}'],
-        synchronize: false,
+        synchronize: true,
         logging: true,
         cache: true,
       }),

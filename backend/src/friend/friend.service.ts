@@ -20,7 +20,6 @@ export class FriendService {
     const user = await this.userRepository.find({
       where: { userid: Like(`%${friendname}%`) },
     });
-    console.log(user);
     return user.map(this.childuserFilter);
   }
 
@@ -29,29 +28,36 @@ export class FriendService {
 
     const user = await this.userRepository.findOne({
       where: { id: userId },
-      relations: ['childUser'],
+      relations: {
+        friends: true,
+      },
     });
 
-    user.childUser.forEach((element) => {
-      if (element.id == friendId) {
-        throw new Error('이미 친구입니다.');
+    // 친구 중복 체크
+    if (user.friends.length > 0) {
+      const DuplicateFriends = user.friends.find(
+        (element) => element.id == friendId,
+      );
+      if (DuplicateFriends) {
+        throw new ForbiddenException('이미 친구입니다.');
       }
-    });
+    }
 
     const friend = await this.userRepository.findOne({
       where: { id: friendId },
     });
-    user.childUser.push(friend);
+    user.friends.push(friend);
     await this.userRepository.save(user);
-    return user.childUser.map(this.childuserFilter);
+    return user.friends.map(this.childuserFilter);
   }
 
   async getFriendList(userid) {
     const user = await this.userRepository.findOne({
       where: { id: userid },
-      relations: ['childUser', 'childUser.profile'],
+      relations: ['friends', 'friends.profile'],
     });
-    return user.childUser.map(this.childuserFilterAddnic);
+    console.log(user);
+    return user.friends.map(this.childuserFilterAddnic);
   }
 
   async inviteFriend(inviteDto: InviteDto) {

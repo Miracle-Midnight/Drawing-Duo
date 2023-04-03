@@ -51,11 +51,7 @@ export class UserService {
     // res.redirect('/lobby');
   }
 
-  async signUp(
-    @Body() userDto: UserDto,
-    folder: string,
-    file: Express.Multer.File,
-  ) {
+  async signUp(@Body() userDto: UserDto) {
     const { userid, password, nickname } = userDto;
     const isUserExist = await this.userRepository.findOne({
       where: { userid: userDto.userid },
@@ -71,56 +67,6 @@ export class UserService {
 
     if (isNicknameExist) {
       throw new UnauthorizedException('이미 존재하는 닉네임입니다.');
-    }
-
-    if (file != null) {
-      const key = `${folder}/${Date.now()}_${path.basename(
-        file.originalname,
-      )}`.replace(/ /g, '');
-
-      try {
-        const s3Object = await this.awsS3
-          .putObject({
-            Bucket: this.S3_BUCKET_NAME,
-            Key: key,
-            Body: file.buffer,
-            ACL: 'public-read',
-            ContentType: file.mimetype,
-          })
-          .promise();
-
-        // 유저 정보 생성 및 저장.
-        const newuser = await this.userRepository.create();
-        const hashedPassword = await bcrypt.hash(password, 10);
-        newuser.userid = userid;
-        newuser.password = hashedPassword;
-        const user = await this.userRepository.save(newuser);
-
-        // 프로필 정보 생성 및 저장.
-        const newProfile = await this.profileRepository.create();
-        newProfile.nickname = nickname;
-        newProfile.user = user;
-
-        const imagePath = `https://${this.S3_BUCKET_NAME}.s3.amazonaws.com/${key}`;
-        const newimage = await this.imageRepository.create();
-        newimage.image = imagePath;
-        newimage.type = false;
-        await this.imageRepository.save(newimage);
-
-        newProfile.image = newimage;
-        const profile = await this.profileRepository.save(newProfile);
-
-        return {
-          nickname: profile.nickname,
-          userid: user.id,
-          image: newimage.image,
-          level: profile.level,
-          rank: profile.rank,
-          introduction: profile.introduction,
-        };
-      } catch (error) {
-        throw new BadRequestException(`File upload failed : ${error}`);
-      }
     }
 
     // 유저 정보 생성 및 저장.
