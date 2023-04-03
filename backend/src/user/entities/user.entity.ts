@@ -46,12 +46,6 @@ export class User extends BaseEntity {
   @JoinTable()
   room: Room[];
 
-  @ManyToOne((type) => User, (user) => user.childUser)
-  parentUser: User;
-
-  @OneToMany((type) => User, (user) => user.parentUser)
-  childUser: User[];
-
   @ManyToMany(() => User, (user) => user.friends)
   @JoinTable()
   friends: User[];

@@ -20,7 +20,6 @@ export class FriendService {
     const user = await this.userRepository.find({
       where: { userid: Like(`%${friendname}%`) },
     });
-    console.log(user);
     return user.map(this.childuserFilter);
   }
 
