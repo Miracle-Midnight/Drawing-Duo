@@ -47,6 +47,8 @@
 
 ### 대화를 하며 친구와 함께 그림을 그릴 수 있습니다.
 
+<img src="https://user-images.githubusercontent.com/108216455/232295606-7cefeb02-cf09-49b2-a412-e33576a65a5f.gif"  width="70%">
+
 <img src="https://user-images.githubusercontent.com/81807434/216184505-f8cd824f-0a15-4537-aef1-41afaee4a44b.gif"  width="70%">  
 
 
